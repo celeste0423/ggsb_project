@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "523019401155",
+    "project_id": "ggsbproject-fc5ba",
+    "storage_bucket": "ggsbproject-fc5ba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:523019401155:android:80eab1a8e6d5357100ef76",
+        "android_client_info": {
+          "package_name": "com.baekho.ggsb_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "523019401155-c3dnfr8e5k3lfbo0j8cr1n743it5nrim.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.baekho.ggsb_project",
+            "certificate_hash": "f7554489d1497eb0f1b8251a39657e23dd9fd2cf"
+          }
+        },
+        {
+          "client_id": "523019401155-l9m2edt905n0o8bvardpq0ffbdojbujp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.baekho.ggsb_project",
+            "certificate_hash": "17d2b0afff8097a6dc7d0cac245758afb60625da"
+          }
+        },
+        {
+          "client_id": "523019401155-rds345jphddgpc6gh08rqc4je60fsdmk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.baekho.ggsb_project",
+            "certificate_hash": "8e9f1d07392a09a15a3930a52f81d6a5260fa665"
+          }
+        },
+        {
+          "client_id": "523019401155-90q3kqpi5ss75ctfr0mel5o9qedfm9um.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7TqR0fAKEL2k-5ox2tqFQeZmXTJhpQ7w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "523019401155-90q3kqpi5ss75ctfr0mel5o9qedfm9um.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "523019401155-fl16ai4ju62c52864thgvvieq11k0foj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.baekho.ggsbProject"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
