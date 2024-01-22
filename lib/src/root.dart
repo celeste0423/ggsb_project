@@ -5,6 +5,7 @@ import 'package:ggsb_project/src/app.dart';
 import 'package:ggsb_project/src/feature/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/feature/auth/pages/signup_page.dart';
 import 'package:ggsb_project/src/feature/auth/pages/welcome_page.dart';
+import 'package:ggsb_project/src/feature/auth/widgets/full_size_loading_indicator.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
 
 class Root extends GetView<AuthController> {
@@ -19,7 +20,9 @@ class Root extends GetView<AuthController> {
           return FutureBuilder<UserModel?>(
               future: controller.loginUser(user.data!.uid),
               builder: (context, snapshot) {
-                if (snapshot.hasData) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return fullSizeLoadingIndicator();
+                } else if (snapshot.hasData) {
                   return const App();
                 } else {
                   return Obx(

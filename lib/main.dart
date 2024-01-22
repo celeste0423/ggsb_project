@@ -2,15 +2,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:ggsb_project/src/binding/init_binding.dart';
 import 'package:ggsb_project/src/root.dart';
 import 'package:ggsb_project/src/theme/base_theme.dart';
 
 import 'firebase_options.dart';
 
 void main() async {
-  runApp(const MyApp());
   //파이어베이스 설정
-  // WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       defaultTransition: Transition.fadeIn,
+      initialBinding: InitBinding(),
       title: 'GongGeomSeungBu',
       theme: baseTheme(),
       home: Root(),

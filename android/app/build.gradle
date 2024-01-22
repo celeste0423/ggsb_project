@@ -22,6 +22,13 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+// start of Gradle 서명 구성 시작
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
     namespace "com.baekho.ggsb_project"
     compileSdkVersion flutter.compileSdkVersion
@@ -48,6 +55,7 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
     }
 
     signingConfigs {
