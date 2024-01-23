@@ -28,17 +28,17 @@ class FacebookLoginButton extends StatelessWidget {
           Container(
             height: 50,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Color(0xff1877F2),
               borderRadius: BorderRadius.circular(15),
               border: Border.all(color: Colors.black.withOpacity(0.2)),
             ),
             child: Center(
               child: Text(
-                '페이스북으로 로그인',
+                'Facebook으로 로그인',
                 style: TextStyle(
                   fontFamily: 'Roboto',
                   fontSize: 15,
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
               ),
             ),
@@ -47,7 +47,7 @@ class FacebookLoginButton extends StatelessWidget {
             left: 10,
             top: 10,
             child: Image.asset(
-              'assets/icons/google.png',
+              'assets/icons/facebook.png',
               height: 30,
             ),
           ),

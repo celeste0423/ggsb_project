@@ -34,7 +34,7 @@ class GoogleLoginButton extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                '구글로 로그인',
+                'Google로 로그인',
                 style: TextStyle(
                   fontFamily: 'Roboto',
                   fontSize: 15,
