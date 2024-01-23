@@ -97,16 +97,21 @@ class UserRepository {
 
   //페이스북 로그인
   static Future<UserCredential> signInWithFacebook() async {
+    print('로그인 시작');
     final facebook.LoginResult result =
-        await facebook.FacebookAuth.instance.login();
+        await facebook.FacebookAuth.instance.login(
+      permissions: ['public_profile', 'email'],
+    );
     if (result.status == facebook.LoginStatus.success) {
+      print('로그인 완료');
       final facebook.AccessToken accessToken = result.accessToken!;
       final OAuthCredential facebookAuthCredential =
-          FacebookAuthProvider.credential(accessToken.toString());
+          FacebookAuthProvider.credential(accessToken.token);
       // Once signed in, return the UserCredential
       return await FirebaseAuth.instance
           .signInWithCredential(facebookAuthCredential);
     } else {
+      print('로그인 실패');
       return openAlertDialog(title: '유저 정보가 없습니다.');
     }
   }

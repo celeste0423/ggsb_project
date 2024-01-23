@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/constants/service_urls.dart';
 import 'package:ggsb_project/src/features/auth/controllers/welcome_page_controller.dart';
+import 'package:ggsb_project/src/features/auth/widgets/facebook_login_button.dart';
 import 'package:ggsb_project/src/features/auth/widgets/google_login_button.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
@@ -71,6 +72,7 @@ class WelcomePage extends GetView<WelcomePageController> {
           children: [
             SizedBox(height: 50),
             GoogleLoginButton(),
+            FacebookLoginButton(),
             SizedBox(height: 50),
             _infoText(),
           ],
