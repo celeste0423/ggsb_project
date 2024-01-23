@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:ggsb_project/src/feature/auth/controllers/welcome_page_controller.dart';
-import 'package:ggsb_project/src/feature/auth/widgets/google_login_button.dart';
+import 'package:ggsb_project/src/features/auth/controllers/welcome_page_controller.dart';
+import 'package:ggsb_project/src/features/auth/widgets/google_login_button.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 
 class WelcomePage extends GetView<WelcomePageController> {

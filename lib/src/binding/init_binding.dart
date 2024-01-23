@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:ggsb_project/src/feature/auth/controllers/auth_controller.dart';
+import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 
 class InitBinding extends Bindings {
   @override

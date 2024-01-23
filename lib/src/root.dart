@@ -2,10 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/app.dart';
-import 'package:ggsb_project/src/feature/auth/controllers/auth_controller.dart';
-import 'package:ggsb_project/src/feature/auth/pages/signup_page.dart';
-import 'package:ggsb_project/src/feature/auth/pages/welcome_page.dart';
-import 'package:ggsb_project/src/feature/auth/widgets/full_size_loading_indicator.dart';
+import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
+import 'package:ggsb_project/src/features/auth/pages/signup_page.dart';
+import 'package:ggsb_project/src/features/auth/pages/welcome_page.dart';
+import 'package:ggsb_project/src/features/auth/widgets/full_size_loading_indicator.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
 
 class Root extends GetView<AuthController> {
