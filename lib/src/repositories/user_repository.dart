@@ -65,6 +65,7 @@ class UserRepository {
   //   return await FirebaseAuth.instance.signInWithCredential(oauthCredential);
   // }
 
+  //구글 로그인
   static Future<UserCredential> signInWithGoogle() async {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final google.GoogleSignIn googleSignIn = google.GoogleSignIn(
