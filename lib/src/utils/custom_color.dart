@@ -16,4 +16,5 @@ class CustomColors {
 
   //배경 색
   static const Color whiteBackground = Color(0xFFFFFFFF);
+  // static const Color blueBackground = Color(0xFF5FA3D4);
 }
