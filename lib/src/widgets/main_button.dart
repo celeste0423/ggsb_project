@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ggsb_project/src/utils/custom_color.dart';
 
 class MainButton extends StatelessWidget {
   String buttonText;
@@ -28,7 +29,7 @@ class MainButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 30),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25),
-            color: buttonColor ?? CustomColors.mainPink,
+            color: buttonColor ?? CustomColors.mainBlue,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.3),

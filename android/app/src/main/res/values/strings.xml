@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">공검승부</string>
+    <string name="facebook_app_id">1095966244764492</string>
+    <string name="fb_login_protocol_scheme">fb1095966244764492</string>
+</resources>

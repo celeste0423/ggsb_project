@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart' as facebook;
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:google_sign_in/google_sign_in.dart' as google;
@@ -92,6 +93,22 @@ class UserRepository {
     );
     print('(user repo) credential $credential');
     return await auth.signInWithCredential(credential);
+  }
+
+  //페이스북 로그인
+  static Future<UserCredential> signInWithFacebook() async {
+    final facebook.LoginResult result =
+        await facebook.FacebookAuth.instance.login();
+    if (result.status == facebook.LoginStatus.success) {
+      final facebook.AccessToken accessToken = result.accessToken!;
+      final OAuthCredential facebookAuthCredential =
+          FacebookAuthProvider.credential(accessToken.toString());
+      // Once signed in, return the UserCredential
+      return await FirebaseAuth.instance
+          .signInWithCredential(facebookAuthCredential);
+    } else {
+      return openAlertDialog(title: '유저 정보가 없습니다.');
+    }
   }
 
   static Future<UserModel?> loginUserByUid(String uid) async {

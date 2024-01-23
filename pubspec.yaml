@@ -45,6 +45,7 @@ dependencies:
   url_launcher: ^6.2.4
   package_info_plus: ^5.0.1
   sign_in_with_apple: ^5.0.0
+  flutter_facebook_auth: ^6.0.4
 
 dev_dependencies:
   flutter_test:

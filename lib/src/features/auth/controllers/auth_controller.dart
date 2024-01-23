@@ -34,4 +34,9 @@ class AuthController extends GetxController {
   Future<UserCredential> signInWithGoogle() async {
     return await UserRepository.signInWithGoogle();
   }
+
+  //페이스북 로그인
+  Future<UserCredential> signInWithFacebook() async {
+    return await UserRepository.signInWithFacebook();
+  }
 }
