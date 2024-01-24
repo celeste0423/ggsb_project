@@ -20,36 +20,48 @@ class WelcomePage extends GetView<WelcomePageController> {
     );
   }
 
-  Widget _logo() {
-    return Center(
-      child: SvgPicture.asset(
-        'assets/images/logo.svg',
-        width: 120,
-        height: 120,
-      ),
-    );
-  }
+  // Widget _logo() {
+  //   return Center(
+  //     child: SvgPicture.asset(
+  //       'assets/images/logo.svg',
+  //       width: 120,
+  //       height: 120,
+  //     ),
+  //   );
+  // }
 
   Widget _title() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        Padding(
+          padding: const EdgeInsets.only(right: 210),
+          child: SvgPicture.asset(
+            'assets/images/logo.svg',
+            width: 100,
+            height: 100,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 150, top:20),
+          child: SvgPicture.asset(
+            'assets/images/caption.svg',
+            width: 175,
+            height: 45,
+          ),
+        ),
         const Padding(
-          padding: EdgeInsets.only(bottom: 3, right: 5),
+          padding: EdgeInsets.only(right:200),
           child: Text(
             '공부로 대결하는\n한판 진검승부',
-            textAlign: TextAlign.end,
+            textAlign: TextAlign.left,
             style: TextStyle(
               color: Colors.white,
               fontSize: 15,
             ),
           ),
         ),
-        SvgPicture.asset(
-          'assets/images/caption.svg',
-          width: 175,
-          height: 45,
-        )
+
       ],
     );
   }
@@ -178,7 +190,7 @@ class WelcomePage extends GetView<WelcomePageController> {
                   flex: 3,
                   child: SizedBox(),
                 ),
-                Expanded(flex: 2, child: _logo()),
+                // Expanded(flex: 2, child: _logo()),
                 Expanded(flex: 3, child: _title()),
                 _bottomTab()
               ],
