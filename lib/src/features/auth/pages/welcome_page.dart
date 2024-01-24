@@ -20,16 +20,6 @@ class WelcomePage extends GetView<WelcomePageController> {
     );
   }
 
-  // Widget _logo() {
-  //   return Center(
-  //     child: SvgPicture.asset(
-  //       'assets/images/logo.svg',
-  //       width: 120,
-  //       height: 120,
-  //     ),
-  //   );
-  // }
-
   Widget _title() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -43,7 +33,7 @@ class WelcomePage extends GetView<WelcomePageController> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(right: 150, top:20),
+          padding: const EdgeInsets.only(right: 150, top: 20),
           child: SvgPicture.asset(
             'assets/images/caption.svg',
             width: 175,
@@ -51,7 +41,7 @@ class WelcomePage extends GetView<WelcomePageController> {
           ),
         ),
         const Padding(
-          padding: EdgeInsets.only(right:200),
+          padding: EdgeInsets.only(right: 200),
           child: Text(
             '공부로 대결하는\n한판 진검승부',
             textAlign: TextAlign.left,
@@ -61,7 +51,6 @@ class WelcomePage extends GetView<WelcomePageController> {
             ),
           ),
         ),
-
       ],
     );
   }
@@ -161,7 +150,7 @@ class WelcomePage extends GetView<WelcomePageController> {
                 );
               } else {
                 // Future가 데이터를 가져오지 못한 경우에 대한 처리를 할 수 있습니다.
-                return Text('Error: Failed to get version information');
+                return Text('오류 : 버전정보를 가져올 수 없습니다.');
               }
             } else {
               return Text('Unknown error');
@@ -176,26 +165,27 @@ class WelcomePage extends GetView<WelcomePageController> {
   Widget build(BuildContext context) {
     Get.put(WelcomePageController());
     return Scaffold(
-        backgroundColor: CustomColors.mainBlue,
-        body: Stack(
-          children: [
-            Column(
-              children: [
-                _backgroundLogo(),
-              ],
-            ),
-            Column(
-              children: [
-                const Expanded(
-                  flex: 3,
-                  child: SizedBox(),
-                ),
-                // Expanded(flex: 2, child: _logo()),
-                Expanded(flex: 3, child: _title()),
-                _bottomTab()
-              ],
-            ),
-          ],
-        ));
+      backgroundColor: CustomColors.mainBlue,
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              _backgroundLogo(),
+            ],
+          ),
+          Column(
+            children: [
+              const Expanded(
+                child: SizedBox(),
+              ),
+              Expanded(
+                child: _title(),
+              ),
+              _bottomTab()
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }

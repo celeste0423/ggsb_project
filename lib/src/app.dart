@@ -24,14 +24,6 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: CustomColors.mainBlack,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.7),
-            spreadRadius: 1,
-            blurRadius: 3,
-            offset: Offset(0, -3), // Offset(수평, 수직)
-          ),
-        ],
       ),
       child: TabBar(
         indicator: CircleTabIndicator(
@@ -64,13 +56,12 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
             ),
           ),
           Tab(
-            child: SvgPicture.asset(
-              'assets/icons/ranking.svg',
-              height: 30,
+            child: Icon(
+              Icons.analytics_outlined,
+              size: 35,
               color: _tabController.index == 2
                   ? CustomColors.mainBlue
                   : Colors.white,
-              colorBlendMode: BlendMode.modulate,
             ),
           ),
           Tab(
