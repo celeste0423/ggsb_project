@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
       defaultTransition: Transition.fadeIn,
       initialBinding: InitBinding(),
       title: 'GongGeomSeungBu',
-      theme: baseTheme(),
+      theme: baseTheme(context),
       home: Root(),
     );
   }

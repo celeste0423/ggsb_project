@@ -34,7 +34,7 @@ class HomePage extends GetView<HomePageController> {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 20,
-        vertical: 20,
+        vertical: 30,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -70,7 +70,44 @@ class HomePage extends GetView<HomePageController> {
   }
 
   Widget _bottomTab() {
-    return Container();
+    return Expanded(
+      child: Container(
+        width: Get.width,
+        decoration: BoxDecoration(
+          color: CustomColors.mainBlack,
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(50)),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              '오늘 누적 공부시간',
+              style: TextStyle(
+                color: CustomColors.greyText,
+                fontSize: 12,
+              ),
+            ),
+            Text(
+              '00:01:52',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 45,
+                fontFamily: 'nanum',
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            Text(
+              '1/24 수',
+              style: TextStyle(
+                color: CustomColors.greyText,
+                fontSize: 12,
+              ),
+            ),
+            SizedBox(height: 50),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
