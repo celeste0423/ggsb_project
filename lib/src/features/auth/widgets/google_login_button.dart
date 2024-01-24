@@ -38,6 +38,7 @@ class GoogleLoginButton extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: 'Roboto',
                   fontSize: 15,
+                  fontWeight: FontWeight.w500,
                   color: Colors.black,
                 ),
               ),
