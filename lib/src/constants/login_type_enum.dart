@@ -33,4 +33,17 @@ extension LoginTypeExtension on LoginType {
         throw ArgumentError('Invalid login type: $value');
     }
   }
+
+  static String fromLoginType(LoginType loginType) {
+    switch (loginType) {
+      case LoginType.google:
+        return '구글';
+      case LoginType.apple:
+        return '애플';
+      case LoginType.facebook:
+        return '페이스북';
+      case LoginType.email:
+        return '이메일';
+    }
+  }
 }

@@ -132,12 +132,14 @@ class UserRepository {
     }
   }
 
-  static Future<bool> signup(UserModel user) async {
+  static Future<void> signup(UserModel user) async {
     try {
-      await FirebaseFirestore.instance.collection('users').add(user.toJson());
-      return true;
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .set(user.toJson());
     } catch (e) {
-      return false;
+      openAlertDialog(title: '회원가입에 실패했습니다', content: e.toString());
     }
   }
 }

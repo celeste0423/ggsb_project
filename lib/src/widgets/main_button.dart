@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 
@@ -5,7 +6,7 @@ class MainButton extends StatelessWidget {
   String buttonText;
   VoidCallback onTap;
   Color? buttonColor;
-  Color? textColor;
+  TextStyle? textStyle;
   double? width;
   double? height;
 
@@ -14,36 +15,32 @@ class MainButton extends StatelessWidget {
     required this.buttonText,
     required this.onTap,
     this.buttonColor,
-    this.textColor,
+    this.textStyle,
     this.width,
     this.height,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      onPressed: onTap,
       child: Container(
         width: width,
-        height: height ?? 45,
+        height: height ?? 55,
         padding: const EdgeInsets.symmetric(horizontal: 30),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25),
-            color: buttonColor ?? CustomColors.mainBlue,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                offset: Offset(0, 0),
-                blurRadius: 5,
-              ),
-            ]),
+          borderRadius: BorderRadius.circular(20),
+          color: buttonColor ?? CustomColors.mainBlue,
+        ),
         child: Center(
           child: Text(
             buttonText,
-            style: TextStyle(
-              color: textColor ?? Colors.white,
-              fontSize: 18,
-            ),
+            style: textStyle ??
+                TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
           ),
         ),
       ),

@@ -32,7 +32,7 @@ class GoogleLoginButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
               border: Border.all(color: Colors.black.withOpacity(0.2)),
             ),
-            child: Center(
+            child: const Center(
               child: Text(
                 'Google로 로그인',
                 style: TextStyle(
