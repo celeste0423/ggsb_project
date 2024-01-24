@@ -28,7 +28,7 @@ class FacebookLoginButton extends StatelessWidget {
           Container(
             height: 50,
             decoration: BoxDecoration(
-              color: Color(0xff1877F2),
+              color: Colors.white,
               borderRadius: BorderRadius.circular(15),
               border: Border.all(color: Colors.black.withOpacity(0.2)),
             ),
@@ -38,7 +38,8 @@ class FacebookLoginButton extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: 'Roboto',
                   fontSize: 15,
-                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
                 ),
               ),
             ),
