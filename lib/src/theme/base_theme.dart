@@ -7,6 +7,10 @@ ThemeData baseTheme(BuildContext context) {
     brightness: Brightness.light,
     //배경 색
     scaffoldBackgroundColor: CustomColors.whiteBackground,
+    //appbar
+    appBarTheme: AppBarTheme(
+      backgroundColor: Colors.white,
+    ),
     //textStyle
     textTheme: Theme.of(context).textTheme.apply(
         fontFamily: 'nanum',

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:ggsb_project/src/binding/init_binding.dart';
 import 'package:ggsb_project/src/root.dart';
 import 'package:ggsb_project/src/theme/base_theme.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import 'firebase_options.dart';
 
@@ -29,6 +30,8 @@ void main() async {
       ),
     );
   });
+  //날짜 언어 세팅
+  initializeDateFormatting('ko-KR');
 }
 
 class MyApp extends StatelessWidget {

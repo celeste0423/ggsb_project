@@ -5,16 +5,19 @@ import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/home/controllers/home_page_controller.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/widgets/main_button.dart';
-import 'package:ggsb_project/src/widgets/title_text.dart';
 
 class HomePage extends GetView<HomePageController> {
   const HomePage({super.key});
 
   PreferredSizeWidget _appBar() {
     return AppBar(
-      leading: Padding(
-        padding: const EdgeInsets.only(left: 20),
-        child: TitleText(text: '홈'),
+      title: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        child: SvgPicture.asset(
+          'assets/images/caption_logo.svg',
+          height: 30,
+          color: CustomColors.mainBlue,
+        ),
       ),
     );
   }
@@ -97,7 +100,7 @@ class HomePage extends GetView<HomePageController> {
               ),
             ),
             Text(
-              '1/24 수',
+              controller.today.value,
               style: TextStyle(
                 color: CustomColors.greyText,
                 fontSize: 12,
