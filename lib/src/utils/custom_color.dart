@@ -12,9 +12,11 @@ class CustomColors {
   static const Color blackText = Color(0xFF171717);
   static const Color darkGreyText = Color(0xFF2F2F2F);
   static const Color greyText = Color(0xFF7C7C7C);
+  static const Color lightGreyText = Color(0xFFA8A8A8);
   static const Color whiteText = Color(0xFF7C7C7C);
 
   //배경 색
   static const Color whiteBackground = Color(0xFFFFFFFF);
+  static const Color lightGreyBackground = Color(0xFFF1F1F1);
   // static const Color blueBackground = Color(0xFF5FA3D4);
 }

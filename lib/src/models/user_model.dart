@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:ggsb_project/src/constants/login_type_enum.dart';
 
 class UserModel {
@@ -49,7 +47,9 @@ class UserModel {
     return {
       'uid': uid,
       'nickname': nickname,
-      'loginType': loginType,
+      'loginType': loginType == null
+          ? null
+          : LoginTypeExtension.fromLoginType(loginType!),
       'email': email,
       'gender': gender,
       'school': school,
