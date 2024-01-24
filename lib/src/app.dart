@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ggsb_project/src/features/home/pages/home_page.dart';
+import 'package:ggsb_project/src/features/my/pages/my_page.dart';
+import 'package:ggsb_project/src/features/ranking/pages/ranking_page.dart';
+import 'package:ggsb_project/src/features/room_list/pages/room_list_page.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 
 class App extends StatefulWidget {
@@ -16,7 +20,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
   Widget _tabBar() {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
-      height: 75,
+      height: 65,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: CustomColors.mainBlack,
@@ -30,49 +34,52 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
         ],
       ),
       child: TabBar(
-        indicator: CircleTabIndicator(color: Colors.white, radius: 5),
+        indicator: CircleTabIndicator(
+          color: CustomColors.mainBlue,
+          radius: 3,
+        ),
         controller: _tabController,
         indicatorWeight: 4,
         splashFactory: NoSplash.splashFactory,
         dividerColor: Colors.transparent,
         tabs: [
           Tab(
-            child: Image.asset(
-              'assets/icons/home.png',
-              width: 50,
+            child: SvgPicture.asset(
+              'assets/icons/home.svg',
+              height: 25,
               color: _tabController.index == 0
-                  ? Colors.white
-                  : Colors.white.withOpacity(0.7),
+                  ? CustomColors.mainBlue
+                  : Colors.white,
               colorBlendMode: BlendMode.modulate,
             ),
           ),
           Tab(
-            child: Image.asset(
-              'assets/icons/note.png',
-              width: 50,
+            child: SvgPicture.asset(
+              'assets/icons/room_list.svg',
+              height: 30,
               color: _tabController.index == 1
-                  ? Colors.white
-                  : Colors.white.withOpacity(0.7),
+                  ? CustomColors.mainBlue
+                  : Colors.white,
               colorBlendMode: BlendMode.modulate,
             ),
           ),
           Tab(
-            child: Image.asset(
-              'assets/icons/book.png',
-              width: 50,
+            child: SvgPicture.asset(
+              'assets/icons/ranking.svg',
+              height: 30,
               color: _tabController.index == 2
-                  ? Colors.white
-                  : Colors.white.withOpacity(0.7),
+                  ? CustomColors.mainBlue
+                  : Colors.white,
               colorBlendMode: BlendMode.modulate,
             ),
           ),
           Tab(
-            child: Image.asset(
-              'assets/icons/person.png',
-              width: 50,
+            child: SvgPicture.asset(
+              'assets/icons/my.svg',
+              height: 25,
               color: _tabController.index == 3
-                  ? Colors.white
-                  : Colors.white.withOpacity(0.7),
+                  ? CustomColors.mainBlue
+                  : Colors.white,
               colorBlendMode: BlendMode.modulate,
             ),
           ),
@@ -93,6 +100,9 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
         viewportFraction: 1,
         children: const [
           HomePage(),
+          RoomListPage(),
+          RankingPage(),
+          MyPage(),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -125,7 +135,7 @@ class _CirclePainter extends BoxPainter {
   @override
   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
     final rect = offset & configuration.size!;
-    final center = Offset(rect.center.dx, rect.bottom - radius);
+    final center = Offset(rect.center.dx, rect.bottom - radius - 10);
 
     canvas.drawCircle(center, radius, _paint);
   }
