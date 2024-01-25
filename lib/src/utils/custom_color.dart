@@ -34,4 +34,66 @@ class CustomColors {
   static const Color brownRoom = Color(0xFF815B46);
   static const Color greyRoom = Color(0xFFB9B9B9);
   static const Color blackRoom = Color(0xFF212121);
+
+  static String roomColorToName(Color color) {
+    switch (color) {
+      case redRoom:
+        return 'redRoom';
+      case orangeRoom:
+        return 'orangeRoom';
+      case yellowRoom:
+        return 'yellowRoom';
+      case lightGreenRoom:
+        return 'lightGreenRoom';
+      case greenRoom:
+        return 'greenRoom';
+      case darkGreenRoom:
+        return 'darkGreenRoom';
+      case blueRoom:
+        return 'blueRoom';
+      case darkBlueRoom:
+        return 'darkBlueRoom';
+      case purpleRoom:
+        return 'purpleRoom';
+      case brownRoom:
+        return 'brownRoom';
+      case greyRoom:
+        return 'greyRoom';
+      case blackRoom:
+        return 'blackRoom';
+      default:
+        return '';
+    }
+  }
+
+  static Color nameToRoomColor(String colorName) {
+    switch (colorName) {
+      case 'redRoom':
+        return redRoom;
+      case 'orangeRoom':
+        return orangeRoom;
+      case 'yellowRoom':
+        return yellowRoom;
+      case 'lightGreenRoom':
+        return lightGreenRoom;
+      case 'greenRoom':
+        return greenRoom;
+      case 'darkGreenRoom':
+        return darkGreenRoom;
+      case 'blueRoom':
+        return blueRoom;
+      case 'darkBlueRoom':
+        return darkBlueRoom;
+      case 'purpleRoom':
+        return purpleRoom;
+      case 'brownRoom':
+        return brownRoom;
+      case 'greyRoom':
+        return greyRoom;
+      case 'blackRoom':
+        return blackRoom;
+      default:
+        return Color(0xFF000000);
+    }
+  }
 }

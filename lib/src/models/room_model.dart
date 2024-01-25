@@ -9,8 +9,8 @@ class RoomModel {
 
   RoomModel({
     this.roomId,
-    this.roomType,
     this.creatorUid,
+    this.roomType,
     this.color,
     this.uidList,
     this.createdAt,

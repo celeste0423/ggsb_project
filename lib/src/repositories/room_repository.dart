@@ -6,7 +6,7 @@ class RoomRepository {
   static Future<void> createRoom(RoomModel roomModel) async {
     try {
       await FirebaseFirestore.instance
-          .collection('users')
+          .collection('rooms')
           .doc(roomModel.roomId)
           .set(roomModel.toJson());
     } catch (e) {

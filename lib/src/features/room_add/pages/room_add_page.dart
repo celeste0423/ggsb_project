@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:ggsb_project/src/features/auth/widgets/full_size_loading_indicator.dart';
 import 'package:ggsb_project/src/features/room_add/controllers/room_add_page_controller.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/widgets/main_button.dart';
@@ -68,59 +69,204 @@ class RoomAddPage extends GetView<RoomAddPageController> {
           ),
         ),
         SizedBox(height: 10),
-        PopupMenuButton<String>(
+        CupertinoButton(
           padding: EdgeInsets.zero,
-          offset: Offset(1, 55),
-          shape: ShapeBorder.lerp(
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            1,
-          ),
-          splashRadius: 0,
-          onSelected: (String roomType) {},
-          surfaceTintColor: CustomColors.whiteBackground,
-          itemBuilder: (BuildContext context) {
-            return [
-              PopupMenuItem(
-                value: 'day',
-                child: Text('매일'),
-              ),
-              PopupMenuItem(
-                value: 'week',
-                child: Text('매주'),
-              ),
-            ];
+          onPressed: () {
+            controller.isRoomTypeDrop(true);
+            Future.delayed(Duration(milliseconds: 200), () {
+              controller.isRoomType(true);
+            });
           },
-          child: Container(
-            padding: const EdgeInsets.only(left: 30, right: 20),
-            decoration: BoxDecoration(
-              color: CustomColors.lightGreyBackground,
-              borderRadius: const BorderRadius.all(
-                Radius.circular(20),
+          child: Obx(
+            () => AnimatedContainer(
+              duration: Duration(milliseconds: 200),
+              padding: const EdgeInsets.only(left: 30, right: 20),
+              decoration: BoxDecoration(
+                color: CustomColors.lightGreyBackground,
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(20),
+                ),
               ),
-            ),
-            height: 55,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '새로 경쟁할 주기를 선택해 주세요',
-                  style: TextStyle(
-                    color: CustomColors.lightGreyText,
-                    fontSize: 16,
+              height: controller.isRoomTypeDrop.value ? 130 : 55,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        controller.roomType.value == ''
+                            ? '새로 경쟁할 주기를 선택해 주세요'
+                            : controller.roomType.value == 'day'
+                                ? '매일'
+                                : '매주',
+                        style: TextStyle(
+                          color: controller.roomType.value == ''
+                              ? CustomColors.lightGreyText
+                              : CustomColors.blackText,
+                          fontSize: 16,
+                        ),
+                      ),
+                      SvgPicture.asset(
+                        'assets/icons/drop_down.svg',
+                        width: 12,
+                      ),
+                    ],
                   ),
-                ),
-                SvgPicture.asset(
-                  'assets/icons/drop_down.svg',
-                  width: 12,
-                ),
-              ],
+                  !controller.isRoomType.value
+                      ? Container()
+                      : Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    controller.roomType('week');
+                                    controller.isRoomType(false);
+                                    Future.delayed(Duration(milliseconds: 200),
+                                        () {
+                                      controller.isRoomTypeDrop(false);
+                                    });
+                                  },
+                                  child: AnimatedContainer(
+                                    height: 55,
+                                    decoration: BoxDecoration(
+                                      color: controller.roomType.value == 'week'
+                                          ? CustomColors.mainBlack
+                                          : CustomColors.whiteBackground,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(20)),
+                                    ),
+                                    duration: Duration(milliseconds: 100),
+                                    child: Center(
+                                      child: Text(
+                                        '매주',
+                                        style: TextStyle(
+                                          color: controller.roomType.value ==
+                                                  'week'
+                                              ? Colors.white
+                                              : CustomColors.lightGreyText,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 20),
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    controller.roomType('day');
+                                    controller.isRoomType(false);
+                                    Future.delayed(Duration(milliseconds: 200),
+                                        () {
+                                      controller.isRoomTypeDrop(false);
+                                    });
+                                  },
+                                  child: AnimatedContainer(
+                                    height: 55,
+                                    decoration: BoxDecoration(
+                                      color: controller.roomType.value == 'day'
+                                          ? CustomColors.mainBlack
+                                          : CustomColors.whiteBackground,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(20)),
+                                    ),
+                                    duration: Duration(milliseconds: 100),
+                                    child: Center(
+                                      child: Text(
+                                        '매일',
+                                        style: TextStyle(
+                                          color:
+                                              controller.roomType.value == 'day'
+                                                  ? Colors.white
+                                                  : CustomColors.lightGreyText,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                ],
+              ),
             ),
           ),
         ),
       ],
     );
   }
+
+  // Widget _cycleSelectButton() {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text(
+  //         '어떤 주기로 경쟁할까요?',
+  //         style: TextStyle(
+  //           fontWeight: FontWeight.w700,
+  //           fontSize: 16,
+  //         ),
+  //       ),
+  //       SizedBox(height: 10),
+  //       PopupMenuButton<String>(
+  //         padding: EdgeInsets.zero,
+  //         offset: Offset(1, 55),
+  //         shape: ShapeBorder.lerp(
+  //           RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+  //           RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+  //           1,
+  //         ),
+  //         splashRadius: 0,
+  //         onSelected: (String roomType) {},
+  //         surfaceTintColor: CustomColors.whiteBackground,
+  //         itemBuilder: (BuildContext context) {
+  //           return [
+  //             PopupMenuItem(
+  //               value: 'day',
+  //               child: Text('매일'),
+  //             ),
+  //             PopupMenuItem(
+  //               value: 'week',
+  //               child: Text('매주'),
+  //             ),
+  //           ];
+  //         },
+  //         child: Container(
+  //           padding: const EdgeInsets.only(left: 30, right: 20),
+  //           decoration: BoxDecoration(
+  //             color: CustomColors.lightGreyBackground,
+  //             borderRadius: const BorderRadius.all(
+  //               Radius.circular(20),
+  //             ),
+  //           ),
+  //           height: 55,
+  //           child: Row(
+  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //             children: [
+  //               Text(
+  //                 '새로 경쟁할 주기를 선택해 주세요',
+  //                 style: TextStyle(
+  //                   color: CustomColors.lightGreyText,
+  //                   fontSize: 16,
+  //                 ),
+  //               ),
+  //               SvgPicture.asset(
+  //                 'assets/icons/drop_down.svg',
+  //                 width: 12,
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget _inviteCodeButton() {
     return Column(
@@ -263,19 +409,34 @@ class RoomAddPage extends GetView<RoomAddPageController> {
   @override
   Widget build(BuildContext context) {
     Get.put(RoomAddPageController());
-    return Scaffold(
-      appBar: _appBar(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _title(),
-            Expanded(child: _inputTextFields()),
-            _addButton(),
-          ],
+    return Stack(
+      children: [
+        Scaffold(
+          resizeToAvoidBottomInset: true,
+          appBar: _appBar(),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: SingleChildScrollView(
+              child: Container(
+                height: Get.height - 105,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _title(),
+                    Expanded(child: _inputTextFields()),
+                    _addButton(),
+                  ],
+                ),
+              ),
+            ),
+          ),
         ),
-      ),
+        Obx(() => controller.isRoomAddLoading.value
+            ? FullSizeLoadingIndicator(
+                backgroundColor: Colors.black.withOpacity(0.5),
+              )
+            : SizedBox()),
+      ],
     );
   }
 }
