@@ -10,6 +10,8 @@ class RoomAddPageController extends GetxController {
 
   TextEditingController roomNameController = TextEditingController();
 
+  Rx<String> roomId = ''.obs;
+
   List<Color> colors = [
     CustomColors.redRoom,
     CustomColors.orangeRoom,
@@ -25,6 +27,17 @@ class RoomAddPageController extends GetxController {
     CustomColors.blackRoom,
   ];
   Rx<Color> selectedColor = CustomColors.redRoom.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+
+    setRoomId();
+  }
+
+  void setRoomId() {
+    roomId(uuid.v4().toString().substring(0, 18));
+  }
 
   void inviteCodeCopyButton() {
     Clipboard.setData(

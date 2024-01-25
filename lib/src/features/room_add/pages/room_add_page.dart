@@ -151,11 +151,13 @@ class RoomAddPage extends GetView<RoomAddPageController> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'adgadgadgadgasdgasdgadsga',
-                  style: TextStyle(
-                    color: CustomColors.lightGreyText,
-                    fontSize: 16,
+                Obx(
+                  () => Text(
+                    controller.roomId.value,
+                    style: TextStyle(
+                      color: CustomColors.lightGreyText,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
                 Icon(
@@ -229,7 +231,7 @@ class RoomAddPage extends GetView<RoomAddPageController> {
       width: 45,
       height: 45,
       decoration: BoxDecoration(
-        color: isSelected ? color.withOpacity(0.7) : color,
+        color: color,
         borderRadius: BorderRadius.circular(45),
       ),
       child: isSelected
