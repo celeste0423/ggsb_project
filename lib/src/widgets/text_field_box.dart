@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 
-class BackgroundTextField extends StatelessWidget {
+class TextFieldBox extends StatelessWidget {
   TextEditingController textEditingController;
   String? hintText;
   double? fontSize;
@@ -13,7 +13,7 @@ class BackgroundTextField extends StatelessWidget {
   Function()? suffixOnPressed;
   TextInputType? textInputType;
 
-  BackgroundTextField({
+  TextFieldBox({
     Key? key,
     required this.textEditingController,
     this.hintText,
