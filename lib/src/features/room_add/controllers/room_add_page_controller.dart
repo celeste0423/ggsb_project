@@ -89,16 +89,17 @@ class RoomAddPageController extends GetxController {
       );
       RoomRepository().createRoom(roomModel);
       //개인 데이터 업데이트
-      UserModel updatedUserModel = AuthController.to.user.value;
-      updatedUserModel.copyWith(
-        roomIdList: updatedUserModel.roomIdList == null
+      UserModel userModel = AuthController.to.user.value;
+      print('룸 아이디 업데이트${roomId.value}');
+      UserModel updatedUserModel = userModel.copyWith(
+        roomIdList: userModel.roomIdList == null
             ? [roomId.value]
             : [
-                ...updatedUserModel.roomIdList!,
+                ...userModel.roomIdList!,
                 roomId.value,
               ],
       );
-      UserRepository().updateUserData(updatedUserModel);
+      UserRepository.updateUserData(updatedUserModel);
       Get.back();
     }
   }

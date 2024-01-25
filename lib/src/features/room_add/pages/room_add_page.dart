@@ -17,14 +17,12 @@ class RoomAddPage extends GetView<RoomAddPageController> {
     return AppBar(
       leadingWidth: 75,
       title: TitleText(text: '새 공부방'),
-      actions: [
-        SvgIconButton(
-          assetName: 'assets/icons/back.svg',
-          onTap: () {
-            Get.back();
-          },
-        ),
-      ],
+      leading: SvgIconButton(
+        assetName: 'assets/icons/back.svg',
+        onTap: () {
+          Get.back();
+        },
+      ),
     );
   }
 

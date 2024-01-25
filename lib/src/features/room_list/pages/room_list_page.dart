@@ -42,7 +42,7 @@ class RoomListPage extends GetView<RoomListPageController> {
   }
 
   Widget _roomList() {
-    return controller.isRoomList.value
+    return Obx(() => controller.isRoomList.value
         ? FutureBuilder<List<RoomModel>>(
             future: controller.getRoomList(),
             builder: (
@@ -55,25 +55,36 @@ class RoomListPage extends GetView<RoomListPageController> {
                 return Text('에러 발생');
               } else {
                 List<RoomModel> roomList = snapshot.data!;
-                return GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
+                return Container(
+                  width: 300,
+                  height: 500,
+                  child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                    ),
+                    itemCount: roomList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      print('방 개수 ${roomList.length}');
+                      return _roomCard(roomList[index]);
+                    },
                   ),
-                  itemCount: roomList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return _roomCard(roomList[index]);
-                  },
                 );
               }
             },
           )
-        : Container();
+        : Container(
+            height: 20,
+            width: 50,
+            color: Colors.red,
+          ));
   }
 
   Widget _roomCard(RoomModel roomModel) {
     return Container(
+      width: 50,
+      height: 50,
       decoration: BoxDecoration(
         color: CustomColors.nameToRoomColor(roomModel.color!),
         borderRadius: BorderRadius.circular(20),

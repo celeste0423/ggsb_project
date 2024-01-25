@@ -6,9 +6,6 @@ import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:google_sign_in/google_sign_in.dart' as google;
 
 class UserRepository {
-  CollectionReference collection =
-      FirebaseFirestore.instance.collection('users');
-
   // static Future<UserCredential> appleFlutterWebAuth() async {
   //   final clientState = Uuid().v4();
   //   final url = Uri.https('appleid.apple.com', '/auth/authorize', {
@@ -124,7 +121,7 @@ class UserRepository {
         .collection('users')
         .where('uid', isEqualTo: uid)
         .get();
-    print('유저 로그인 완료');
+    // print('유저 로그인 완료');
     if (data.size == 0) {
       print('데이터 없음');
       return null;
@@ -135,8 +132,17 @@ class UserRepository {
     }
   }
 
-  Future<void> updateUserData(UserModel userModel) async {
-    await collection.doc(userModel.uid).update(userModel.toJson());
+  //작동이 안됨..;;
+  static Future<void> updateUserData(UserModel userModel) async {
+    print(userModel.roomIdList);
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userModel.uid)
+          .update(userModel.toJson());
+    } catch (e) {
+      openAlertDialog(title: '오류 발생', content: e.toString());
+    }
   }
 
   static Future<void> signup(UserModel user) async {

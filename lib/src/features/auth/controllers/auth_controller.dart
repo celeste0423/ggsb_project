@@ -11,9 +11,9 @@ class AuthController extends GetxController {
   static String? loginType;
 
   Future<UserModel?> loginUser(String uid) async {
-    print('로그인 중');
+    // print('로그인 중');
     var userData = await UserRepository.getUserData(uid);
-    print('유저 데이터 ${userData}');
+    // print('유저 데이터 ${userData}');
     if (userData != null) {
       user(userData);
       InitBinding.additionalBinding();

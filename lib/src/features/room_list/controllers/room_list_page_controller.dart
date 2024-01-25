@@ -14,15 +14,18 @@ class RoomListPageController extends GetxController {
     _checkIsRoomList();
   }
 
-  void _checkIsRoomList() {
-    isRoomList(AuthController.to.user.value.roomIdList == null);
+  void _checkIsRoomList() async {
+    await AuthController.to.loginUser(AuthController.to.user.value.uid!);
+    print('방 있나? ${AuthController.to.user.value.roomIdList}');
+    isRoomList(AuthController.to.user.value.roomIdList != null);
+    print('방 있나? ${isRoomList.value}');
   }
 
   Future<List<RoomModel>> getRoomList() async {
     //유저 정보 업데이트
-    await AuthController.to.loginUser(AuthController.to.user.value.uid!);
     List<RoomModel> roomList = await RoomRepository()
         .getRoomList(AuthController.to.user.value.roomIdList!);
+    print('방 개수 ${roomList.length}');
     return roomList;
   }
 }
