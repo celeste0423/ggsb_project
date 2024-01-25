@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/room_list/controllers/room_list_page_controller.dart';
 
@@ -9,7 +8,6 @@ class RoomListPage extends GetView<RoomListPageController> {
   @override
   Widget build(BuildContext context) {
     Get.put(RoomListPageController());
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     return SafeArea(
       child: Scaffold(
         body: Container(

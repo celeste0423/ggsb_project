@@ -15,8 +15,8 @@ class HomePage extends GetView<HomePageController> {
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: SvgPicture.asset(
           'assets/images/caption_logo.svg',
-          height: 30,
-          color: CustomColors.mainBlue,
+          height: 25,
+          color: CustomColors.mainBlack,
         ),
       ),
     );
@@ -60,7 +60,9 @@ class HomePage extends GetView<HomePageController> {
                 color: CustomColors.lightGreyText,
               ),
               backgroundColor: CustomColors.lightGreyBackground,
-              onTap: () {},
+              onTap: () {
+                controller.addRoomButton();
+              },
               icon: SvgPicture.asset(
                 'assets/icons/add.svg',
                 width: 20,

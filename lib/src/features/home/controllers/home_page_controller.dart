@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:ggsb_project/src/features/room_add/pages/room_add_page.dart';
 import 'package:intl/intl.dart';
 
 class HomePageController extends GetxController {
@@ -10,5 +11,9 @@ class HomePageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+  }
+
+  void addRoomButton() {
+    Get.to(RoomAddPage());
   }
 }

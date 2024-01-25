@@ -10,6 +10,8 @@ ThemeData baseTheme(BuildContext context) {
     //appbar
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.white,
+      centerTitle: true,
+      toolbarHeight: 75,
     ),
     //textStyle
     textTheme: Theme.of(context).textTheme.apply(

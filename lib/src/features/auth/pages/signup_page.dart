@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/signup_page_controller.dart';
@@ -178,6 +179,7 @@ class SignupPage extends GetView<SignupPageController> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     Get.put(SignupPageController());
     controller.uid(uid);
     controller.email(email);

@@ -22,10 +22,10 @@ void main() async {
     SystemChrome.setSystemUIOverlayStyle(
       //상단바 테마
       SystemUiOverlayStyle.dark.copyWith(
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: Brightness.dark,
         statusBarColor: Colors.transparent,
         systemNavigationBarDividerColor: Colors.transparent,
-        systemNavigationBarIconBrightness: Brightness.light,
+        systemNavigationBarIconBrightness: Brightness.dark,
         systemNavigationBarColor: Colors.white,
       ),
     );

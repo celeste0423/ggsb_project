@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/constants/service_urls.dart';
@@ -163,6 +164,7 @@ class WelcomePage extends GetView<WelcomePageController> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     Get.put(WelcomePageController());
     return Scaffold(
       backgroundColor: CustomColors.mainBlue,
