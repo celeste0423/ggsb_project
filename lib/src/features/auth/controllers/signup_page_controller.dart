@@ -18,10 +18,10 @@ class SignupPageController extends GetxController {
 
   Future<void> signUpButton() async {
     isSignupLoading(true);
-    if (nicknameController.text == null) {
+    if (nicknameController.text == '') {
       isSignupLoading(false);
       openAlertDialog(title: '닉네임을 입력해주세요');
-    } else if (schoolController.text == null) {
+    } else if (schoolController.text == '') {
       isSignupLoading(false);
       openAlertDialog(title: '학교를 입력해주세요');
     } else {

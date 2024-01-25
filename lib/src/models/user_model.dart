@@ -9,6 +9,7 @@ class UserModel {
   final String? school;
   final bool? isTimer;
   final int? totalSeconds;
+  final List<String>? roomIdList;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
@@ -21,6 +22,7 @@ class UserModel {
     this.school,
     this.isTimer,
     this.totalSeconds,
+    this.roomIdList,
     this.createdAt,
     this.updatedAt,
   });
@@ -38,6 +40,9 @@ class UserModel {
       isTimer: json['isTimer'] == null ? null : json['isTimer'] as bool,
       totalSeconds:
           json['totalSeconds'] == null ? null : json['totalSeconds'] as int,
+      roomIdList: json['roomIdList'] == null
+          ? null
+          : List<String>.from(json['roomIdList']),
       createdAt: json['createdAt'] == null ? null : json['createdAt'].toDate(),
       updatedAt: json['updatedAt'] == null ? null : json['createdAt'].toDate(),
     );
@@ -55,6 +60,7 @@ class UserModel {
       'school': school,
       'isTimer': isTimer,
       'totalSeconds': totalSeconds,
+      'roomIdList': roomIdList,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
     };
@@ -69,6 +75,7 @@ class UserModel {
     String? school,
     bool? isTimer,
     int? totalSeconds,
+    List<String>? roomIdList,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -81,6 +88,7 @@ class UserModel {
       isTimer: isTimer ?? this.isTimer,
       totalSeconds: totalSeconds ?? this.totalSeconds,
       school: school ?? this.school,
+      roomIdList: roomIdList ?? this.roomIdList,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.createdAt,
     );

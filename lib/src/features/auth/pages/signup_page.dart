@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/signup_page_controller.dart';
 import 'package:ggsb_project/src/features/auth/widgets/full_size_loading_indicator.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
-import 'package:ggsb_project/src/widgets/input_textfield.dart';
 import 'package:ggsb_project/src/widgets/main_button.dart';
+import 'package:ggsb_project/src/widgets/text_field_box.dart';
 
 class SignupPage extends GetView<SignupPageController> {
   final String uid;
@@ -82,13 +82,13 @@ class SignupPage extends GetView<SignupPageController> {
                     borderRadius: BorderRadius.circular(100),
                   ),
                 ),
-                BackgroundTextField(
+                TextFieldBox(
                   textEditingController: controller.nicknameController,
                   backgroundColor: CustomColors.lightGreyBackground,
                   hintText: '닉네임(2~5자)',
                   maxLength: 5,
                 ),
-                BackgroundTextField(
+                TextFieldBox(
                   textEditingController: controller.schoolController,
                   backgroundColor: CustomColors.lightGreyBackground,
                   hintText: '학교',

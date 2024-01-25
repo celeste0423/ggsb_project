@@ -15,8 +15,12 @@ ThemeData baseTheme(BuildContext context) {
     ),
     //textStyle
     textTheme: Theme.of(context).textTheme.apply(
-        fontFamily: 'nanum',
-        bodyColor: Colors.white,
-        displayColor: Colors.white),
+          fontFamily: 'nanum',
+          bodyColor: CustomColors.mainBlack,
+          displayColor: CustomColors.mainBlack,
+        ),
+    popupMenuTheme: PopupMenuThemeData(
+      surfaceTintColor: CustomColors.whiteBackground, // 원하는 배경 색으로 변경
+    ),
   );
 }

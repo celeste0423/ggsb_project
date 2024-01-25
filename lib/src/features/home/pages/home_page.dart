@@ -11,6 +11,7 @@ class HomePage extends GetView<HomePageController> {
 
   PreferredSizeWidget _appBar() {
     return AppBar(
+      centerTitle: false,
       title: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: SvgPicture.asset(

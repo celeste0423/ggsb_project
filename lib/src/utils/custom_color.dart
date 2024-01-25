@@ -20,4 +20,80 @@ class CustomColors {
   static const Color lightGreyBackground = Color(0xFFF1F1F1);
   static const Color greyBackground = Color(0xFFBBBBBB);
   // static const Color blueBackground = Color(0xFF5FA3D4);
+
+  //방 색
+  static const Color redRoom = Color(0xFFF58181);
+  static const Color orangeRoom = Color(0xFFFFB46E);
+  static const Color yellowRoom = Color(0xFFFBE38F);
+  static const Color lightGreenRoom = Color(0xFFA5D480);
+  static const Color greenRoom = Color(0xFF749857);
+  static const Color darkGreenRoom = Color(0xFF468B59);
+  static const Color blueRoom = Color(0xFF5FA3D4);
+  static const Color darkBlueRoom = Color(0xFF5F6BD4);
+  static const Color purpleRoom = Color(0xFF9F63EB);
+  static const Color brownRoom = Color(0xFF815B46);
+  static const Color greyRoom = Color(0xFFB9B9B9);
+  static const Color blackRoom = Color(0xFF212121);
+
+  static String roomColorToName(Color color) {
+    switch (color) {
+      case redRoom:
+        return 'redRoom';
+      case orangeRoom:
+        return 'orangeRoom';
+      case yellowRoom:
+        return 'yellowRoom';
+      case lightGreenRoom:
+        return 'lightGreenRoom';
+      case greenRoom:
+        return 'greenRoom';
+      case darkGreenRoom:
+        return 'darkGreenRoom';
+      case blueRoom:
+        return 'blueRoom';
+      case darkBlueRoom:
+        return 'darkBlueRoom';
+      case purpleRoom:
+        return 'purpleRoom';
+      case brownRoom:
+        return 'brownRoom';
+      case greyRoom:
+        return 'greyRoom';
+      case blackRoom:
+        return 'blackRoom';
+      default:
+        return '';
+    }
+  }
+
+  static Color nameToRoomColor(String colorName) {
+    switch (colorName) {
+      case 'redRoom':
+        return redRoom;
+      case 'orangeRoom':
+        return orangeRoom;
+      case 'yellowRoom':
+        return yellowRoom;
+      case 'lightGreenRoom':
+        return lightGreenRoom;
+      case 'greenRoom':
+        return greenRoom;
+      case 'darkGreenRoom':
+        return darkGreenRoom;
+      case 'blueRoom':
+        return blueRoom;
+      case 'darkBlueRoom':
+        return darkBlueRoom;
+      case 'purpleRoom':
+        return purpleRoom;
+      case 'brownRoom':
+        return brownRoom;
+      case 'greyRoom':
+        return greyRoom;
+      case 'blackRoom':
+        return blackRoom;
+      default:
+        return Color(0xFF000000);
+    }
+  }
 }
