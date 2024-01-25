@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ggsb_project/src/constants/login_type_enum.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 
@@ -19,7 +18,7 @@ class FacebookLoginButton extends StatelessWidget {
           openAlertDialog(title: '로그인 실패');
         } else {
           print('(fac but) ${AuthController.to.user.value.nickname}');
-          AuthController.loginType = LoginType.facebook;
+          AuthController.loginType = 'facebook';
         }
         Get.back();
       },

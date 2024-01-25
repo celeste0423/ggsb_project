@@ -124,13 +124,13 @@ class UserRepository {
         .collection('users')
         .where('uid', isEqualTo: uid)
         .get();
-
+    print('유저 로그인 완료');
     if (data.size == 0) {
       print('데이터 없음');
       return null;
     } else {
       //데이터 있음
-      // print(data.docs.first.data());
+      print(data.docs.first.data());
       return UserModel.fromJson(data.docs.first.data());
     }
   }

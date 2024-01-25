@@ -1,9 +1,7 @@
-import 'package:ggsb_project/src/constants/login_type_enum.dart';
-
 class UserModel {
   final String? uid;
   final String? nickname;
-  final LoginType? loginType;
+  final String? loginType;
   final String? email;
   final String? gender;
   final String? school;
@@ -31,9 +29,7 @@ class UserModel {
     return UserModel(
       uid: json['uid'] == null ? null : json['uid'] as String,
       nickname: json['nickname'] == null ? null : json['nickname'] as String,
-      loginType: json['loginType'] == null
-          ? null
-          : LoginTypeExtension.fromString(json['loginType'] as String),
+      loginType: json['loginType'] == null ? null : json['loginType'] as String,
       email: json['email'] == null ? null : json['email'] as String,
       gender: json['gender'] == null ? null : json['gender'] as String,
       school: json['school'] == null ? null : json['school'] as String,
@@ -52,9 +48,7 @@ class UserModel {
     return {
       'uid': uid,
       'nickname': nickname,
-      'loginType': loginType == null
-          ? null
-          : LoginTypeExtension.fromLoginType(loginType!),
+      'loginType': loginType,
       'email': email,
       'gender': gender,
       'school': school,
@@ -69,7 +63,7 @@ class UserModel {
   UserModel copyWith({
     String? uid,
     String? nickname,
-    LoginType? loginType,
+    String? loginType,
     String? email,
     String? gender,
     String? school,
