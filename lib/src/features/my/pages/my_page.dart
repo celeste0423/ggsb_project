@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/my/controllers/my_page_controller.dart';
+import 'package:ggsb_project/src/features/my/setting_focus.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
 import 'package:ggsb_project/src/widgets/title_text_bold.dart';
 
@@ -236,6 +237,10 @@ class MyPage extends GetView<MyPageController> {
 
           Padding(
             padding: const EdgeInsets.only(bottom: 0),
+            child: GestureDetector(
+              onTap: () {
+                Get.to(SettingFocus());
+              },
             child: Container(
               decoration: myDecoration,
               width: 333,
@@ -265,6 +270,7 @@ class MyPage extends GetView<MyPageController> {
                   ),
                 ],
               ),
+            ),
               // child: Align(
               //   alignment: Alignment.centerLeft,
               //   child: Padding(
