@@ -16,13 +16,13 @@ class RoomAddPage extends GetView<RoomAddPageController> {
   PreferredSizeWidget _appBar() {
     return AppBar(
       leadingWidth: 75,
+      title: TitleText(text: '새 공부방'),
       leading: SvgIconButton(
         assetName: 'assets/icons/back.svg',
         onTap: () {
           Get.back();
         },
       ),
-      title: TitleText(text: '새 공부방'),
     );
   }
 
