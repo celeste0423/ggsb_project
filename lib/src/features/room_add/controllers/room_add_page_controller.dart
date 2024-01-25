@@ -6,6 +6,7 @@ import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:ggsb_project/src/repositories/room_repository.dart';
+import 'package:ggsb_project/src/repositories/user_repository.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:uuid/uuid.dart';
 
@@ -76,6 +77,7 @@ class RoomAddPageController extends GetxController {
     } else {
       RoomModel roomModel = RoomModel(
         roomId: roomId.value,
+        roomName: roomNameController.text,
         creatorUid: AuthController.to.user.value.uid,
         roomType: roomType.value,
         color: CustomColors.roomColorToName(selectedColor.value),
@@ -85,16 +87,18 @@ class RoomAddPageController extends GetxController {
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
-      RoomRepository.createRoom(roomModel);
+      RoomRepository().createRoom(roomModel);
       //개인 데이터 업데이트
       UserModel updatedUserModel = AuthController.to.user.value;
       updatedUserModel.copyWith(
-          roomIdList: updatedUserModel.roomIdList == null
-              ? [roomId.value]
-              : [
-                  ...updatedUserModel.roomIdList!,
-                  roomId.value,
-                ]);
+        roomIdList: updatedUserModel.roomIdList == null
+            ? [roomId.value]
+            : [
+                ...updatedUserModel.roomIdList!,
+                roomId.value,
+              ],
+      );
+      UserRepository().updateUserData(updatedUserModel);
       Get.back();
     }
   }

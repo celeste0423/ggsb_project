@@ -6,6 +6,9 @@ import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:google_sign_in/google_sign_in.dart' as google;
 
 class UserRepository {
+  CollectionReference collection =
+      FirebaseFirestore.instance.collection('users');
+
   // static Future<UserCredential> appleFlutterWebAuth() async {
   //   final clientState = Uuid().v4();
   //   final url = Uri.https('appleid.apple.com', '/auth/authorize', {
@@ -116,7 +119,7 @@ class UserRepository {
     }
   }
 
-  static Future<UserModel?> loginUserByUid(String uid) async {
+  static Future<UserModel?> getUserData(String uid) async {
     var data = await FirebaseFirestore.instance
         .collection('users')
         .where('uid', isEqualTo: uid)
@@ -130,6 +133,10 @@ class UserRepository {
       // print(data.docs.first.data());
       return UserModel.fromJson(data.docs.first.data());
     }
+  }
+
+  Future<void> updateUserData(UserModel userModel) async {
+    await collection.doc(userModel.uid).update(userModel.toJson());
   }
 
   static Future<void> signup(UserModel user) async {

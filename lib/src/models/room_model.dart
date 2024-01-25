@@ -1,5 +1,6 @@
 class RoomModel {
   final String? roomId;
+  final String? roomName;
   final String? creatorUid;
   final String? roomType;
   final String? color;
@@ -9,6 +10,7 @@ class RoomModel {
 
   RoomModel({
     this.roomId,
+    this.roomName,
     this.creatorUid,
     this.roomType,
     this.color,
@@ -20,6 +22,7 @@ class RoomModel {
   factory RoomModel.fromJson(Map<String, dynamic> json) {
     return RoomModel(
       roomId: json['roomId'] == null ? null : json['roomId'] as String,
+      roomName: json['roomName'] == null ? null : json['roomName'] as String,
       creatorUid:
           json['creatorUid'] == null ? null : json['creatorUid'] as String,
       roomType: json['roomType'] == null ? null : json['roomType'] as String,
@@ -34,6 +37,7 @@ class RoomModel {
   Map<String, dynamic> toJson() {
     return {
       'roomId': roomId,
+      'roomName': roomName,
       'creatorUid': creatorUid,
       'roomType': roomType,
       'color': color,
@@ -45,6 +49,7 @@ class RoomModel {
 
   RoomModel copyWith({
     String? roomId,
+    String? roomName,
     String? creatorUid,
     String? roomType,
     String? color,
@@ -54,6 +59,7 @@ class RoomModel {
   }) {
     return RoomModel(
       roomId: roomId ?? this.roomId,
+      roomName: roomName ?? this.roomName,
       creatorUid: creatorUid ?? this.creatorUid,
       roomType: roomType ?? this.roomType,
       color: color ?? this.color,

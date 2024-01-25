@@ -56,12 +56,13 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
             ),
           ),
           Tab(
-            child: Icon(
-              Icons.analytics_outlined,
-              size: 35,
+            child: Image.asset(
+              'assets/icons/ranking.png',
+              width: 35,
               color: _tabController.index == 2
                   ? CustomColors.mainBlue
                   : Colors.white,
+              colorBlendMode: BlendMode.modulate,
             ),
           ),
           Tab(
