@@ -184,28 +184,29 @@ class SignupPage extends GetView<SignupPageController> {
     controller.uid(uid);
     controller.email(email);
     return Scaffold(
-        resizeToAvoidBottomInset: true,
-        backgroundColor: CustomColors.mainBlue,
-        body: SafeArea(
-          child: Stack(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _logoCaption(),
-                  SizedBox(height: 45),
-                  _announcementText(),
-                  SizedBox(height: 30),
-                  _inputTab(),
-                ],
-              ),
-              Obx(() => controller.isSignupLoading.value
-                  ? FullSizeLoadingIndicator(
-                      backgroundColor: Colors.black.withOpacity(0.5),
-                    )
-                  : SizedBox()),
-            ],
-          ),
-        ));
+      resizeToAvoidBottomInset: true,
+      backgroundColor: CustomColors.mainBlue,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _logoCaption(),
+                SizedBox(height: 45),
+                _announcementText(),
+                SizedBox(height: 30),
+                _inputTab(),
+              ],
+            ),
+            Obx(() => controller.isSignupLoading.value
+                ? FullSizeLoadingIndicator(
+                    backgroundColor: Colors.black.withOpacity(0.5),
+                  )
+                : SizedBox()),
+          ],
+        ),
+      ),
+    );
   }
 }

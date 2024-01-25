@@ -26,15 +26,15 @@ class WelcomePage extends GetView<WelcomePageController> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(right: 210),
+          padding: const EdgeInsets.only(right: 205),
           child: SvgPicture.asset(
             'assets/images/logo.svg',
-            width: 100,
-            height: 100,
+            width: 120,
+            height: 120,
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(right: 150, top: 20),
+          padding: const EdgeInsets.only(right: 150, top: 20, bottom: 10),
           child: SvgPicture.asset(
             'assets/images/caption.svg',
             width: 175,

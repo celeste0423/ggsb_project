@@ -77,7 +77,7 @@ class HomePage extends GetView<HomePageController> {
   Widget _bottomTab() {
     return Expanded(
       child: Container(
-        width: Get.width,
+    width: Get.width,
         decoration: BoxDecoration(
           color: CustomColors.mainBlack,
           borderRadius: BorderRadius.only(topLeft: Radius.circular(50)),
@@ -89,7 +89,8 @@ class HomePage extends GetView<HomePageController> {
               '오늘 누적 공부시간',
               style: TextStyle(
                 color: CustomColors.greyText,
-                fontSize: 12,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
               ),
             ),
             Text(
@@ -105,7 +106,8 @@ class HomePage extends GetView<HomePageController> {
               controller.today.value,
               style: TextStyle(
                 color: CustomColors.greyText,
-                fontSize: 12,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
               ),
             ),
             SizedBox(height: 50),
