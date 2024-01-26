@@ -11,7 +11,6 @@ openAlertDialog({
   VoidCallback? secondfunction,
 }) {
   return Get.dialog(AlertDialog(
-    backgroundColor: Colors.white,
     title: Text(
       title,
       style: TextStyle(

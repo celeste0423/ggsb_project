@@ -22,5 +22,7 @@ ThemeData baseTheme(BuildContext context) {
     popupMenuTheme: PopupMenuThemeData(
       surfaceTintColor: CustomColors.whiteBackground, // 원하는 배경 색으로 변경
     ),
+    //dialog
+    dialogBackgroundColor: Colors.white,
   );
 }
