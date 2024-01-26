@@ -30,7 +30,6 @@ class TimerPageController extends GetxController
 
     await getRoomList();
     _secondsTimer = Timer.periodic(Duration(seconds: 1), (timer) {
-      print('1초');
       update();
     });
   }

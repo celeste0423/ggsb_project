@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -74,16 +75,19 @@ class TimerPage extends GetView<TimerPageController> {
   }
 
   Widget _playButton() {
-    return Container(
-      width: 60,
-      height: 60,
-      padding: EdgeInsets.only(left: 19, right: 16),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-        color: CustomColors.mainBlue,
-      ),
-      child: SvgPicture.asset(
-        'assets/icons/play.svg',
+    return CupertinoButton(
+      onPressed: () {},
+      child: Container(
+        width: 60,
+        height: 60,
+        padding: EdgeInsets.only(left: 19, right: 16),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          color: CustomColors.mainBlue,
+        ),
+        child: SvgPicture.asset(
+          'assets/icons/play.svg',
+        ),
       ),
     );
   }
