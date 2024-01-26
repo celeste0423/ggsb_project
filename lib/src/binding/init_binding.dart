@@ -12,11 +12,11 @@ class InitBinding extends Bindings {
 
   static additionalBinding() {
     Get.put(HomePageController(), permanent: true);
-    Get.put(RoomListPage(), permanent: true);
+    Get.put(RoomListPage());
   }
 
   void refreshControllers() {
     Get.delete<RoomListPageController>();
-    Get.put(RoomListPageController(), permanent: true);
+    Get.put(RoomListPageController());
   }
 }

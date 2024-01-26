@@ -39,8 +39,8 @@ class UserModel {
       roomIdList: json['roomIdList'] == null
           ? null
           : List<String>.from(json['roomIdList']),
-      createdAt: json['createdAt'] == null ? null : json['createdAt'].toDate(),
-      updatedAt: json['updatedAt'] == null ? null : json['createdAt'].toDate(),
+      createdAt: json['createdAt'] == null ? null : json["createdAt"].toDate(),
+      updatedAt: json['updatedAt'] == null ? null : json["updatedAt"].toDate(),
     );
   }
 

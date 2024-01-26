@@ -4,8 +4,10 @@ import 'package:ggsb_project/src/binding/init_binding.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
+import 'package:ggsb_project/src/models/room_stream_model.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:ggsb_project/src/repositories/room_repository.dart';
+import 'package:ggsb_project/src/repositories/room_stream_repository.dart';
 import 'package:ggsb_project/src/repositories/user_repository.dart';
 
 class RoomListPageController extends GetxController {
@@ -44,7 +46,6 @@ class RoomListPageController extends GetxController {
       openAlertDialog(title: '방 초대 코드를 입력해주세요');
     } else {
       isRoomListLoading(true);
-      //방 정보 업데이트
       RoomModel? roomModel =
           await RoomRepository().getRoomModel(joinRoomIdController.text!);
       if (roomModel == null) {
@@ -52,6 +53,7 @@ class RoomListPageController extends GetxController {
         openAlertDialog(title: '방 정보가 없습니다.');
         isRoomListLoading(false);
       } else {
+        //방 정보 업데이트
         RoomModel updatedRoomModel = roomModel.copyWith(
           uidList: [
             ...roomModel.uidList!,
@@ -59,6 +61,17 @@ class RoomListPageController extends GetxController {
           ],
         );
         RoomRepository().updateRoomModel(updatedRoomModel);
+        //RoomStream업로드
+        RoomStreamModel newRoomStreamModel = RoomStreamModel(
+          uid: AuthController.to.user.value.uid,
+          roomId: roomModel.roomId,
+          nickname: AuthController.to.user.value.nickname,
+          totalSeconds: 0,
+          isTimer: true,
+          startTime: DateTime.now(),
+          lastTime: null,
+        );
+        RoomStreamRepository().uploadRoomStream(newRoomStreamModel);
         //유저 정보 업데이트
         await AuthController.to
             .updateAuthController(AuthController.to.user.value.uid!);
@@ -73,6 +86,7 @@ class RoomListPageController extends GetxController {
                 ],
         );
         UserRepository().updateUserModel(updatedUserModel);
+        AuthController.to.user(updatedUserModel);
         InitBinding().refreshControllers();
         Get.back();
         joinRoomIdController.dispose();

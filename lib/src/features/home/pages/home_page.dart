@@ -46,7 +46,9 @@ class HomePage extends GetView<HomePageController> {
           Expanded(
             child: MainButton(
               buttonText: '시간 측정',
-              onTap: () {},
+              onTap: () {
+                controller.timerPageButton();
+              },
               icon: SvgPicture.asset(
                 'assets/icons/play.svg',
                 width: 20,
@@ -99,7 +101,6 @@ class HomePage extends GetView<HomePageController> {
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 45,
-                fontFamily: 'nanum',
                 fontWeight: FontWeight.w800,
               ),
             ),
