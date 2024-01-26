@@ -105,5 +105,6 @@ class TimerPageController extends GetxController
   @override
   void dispose() {
     super.dispose();
+    _secondsTimer.cancel();
   }
 }
