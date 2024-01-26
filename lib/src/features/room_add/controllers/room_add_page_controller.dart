@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:ggsb_project/src/binding/init_binding.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
@@ -18,9 +19,7 @@ class RoomAddPageController extends GetxController {
 
   Rx<bool> isRoomAddLoading = false.obs;
 
-  Rx<bool> isRoomTypeDrop = false.obs;
-  Rx<bool> isRoomType = false.obs;
-  Rx<String> roomType = ''.obs;
+  Rx<String> roomType = 'day'.obs;
 
   Rx<String> roomId = ''.obs;
 
@@ -71,14 +70,12 @@ class RoomAddPageController extends GetxController {
     if (roomNameController.text == '') {
       isRoomAddLoading(false);
       openAlertDialog(title: '방 이름을 입력해주세요');
-    } else if (roomType.value == null) {
-      isRoomAddLoading(false);
-      openAlertDialog(title: '경쟁 주기를 설정해주세요');
     } else {
       RoomModel roomModel = RoomModel(
         roomId: roomId.value,
         roomName: roomNameController.text,
         creatorUid: AuthController.to.user.value.uid,
+        creatorName: AuthController.to.user.value.nickname,
         roomType: roomType.value,
         color: CustomColors.roomColorToName(selectedColor.value),
         uidList: [
@@ -100,6 +97,7 @@ class RoomAddPageController extends GetxController {
               ],
       );
       UserRepository.updateUserData(updatedUserModel);
+      InitBinding().refreshControllers();
       Get.back();
     }
   }
