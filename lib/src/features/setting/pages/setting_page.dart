@@ -3,14 +3,14 @@ import 'package:get/get.dart';
 import 'package:ggsb_project/src/widgets/text_regular.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
 
-class SettingFocus extends StatefulWidget {
-  const SettingFocus({super.key});
+class SettingPage extends StatefulWidget {
+  const SettingPage({super.key});
 
   @override
-  State<SettingFocus> createState() => _SettingFocusState();
+  State<SettingPage> createState() => _SettingPageState();
 }
 
-class _SettingFocusState extends State<SettingFocus> {
+class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

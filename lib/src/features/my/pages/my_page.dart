@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/my/controllers/my_page_controller.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
+import 'package:ggsb_project/src/features/setting/pages/setting_page.dart';
 
 class MyPage extends GetView<MyPageController> {
   const MyPage({super.key});
@@ -59,7 +60,7 @@ class MyPage extends GetView<MyPageController> {
                     color: Colors.black.withOpacity(0.1),
                     spreadRadius: 0,
                     blurRadius: 4,
-                    offset: Offset(0, 2))
+                    offset: Offset(0, 2),)
               ],
             ),
           ),
@@ -118,7 +119,9 @@ class MyPage extends GetView<MyPageController> {
               color: Colors.black,
             ),
             '설정',
-            () {},
+            () {
+              Get.to(SettingPage());
+            },
           ),
           _button(
             Icon(
@@ -158,7 +161,7 @@ class MyPage extends GetView<MyPageController> {
             icon,
             SizedBox(width: 10),
             Text(
-              '문의하기',
+            text,
               style: TextStyle(
                 color: CustomColors.blackText,
                 fontSize: 13,
