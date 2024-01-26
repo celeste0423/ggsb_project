@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/my/controllers/my_page_controller.dart';
-import 'package:ggsb_project/src/features/my/setting_focus.dart';
+import 'package:ggsb_project/src/features/setting/pages/setting_page.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
 import 'package:ggsb_project/src/widgets/title_text_bold.dart';
 
