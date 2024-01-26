@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
@@ -13,6 +15,8 @@ class TimerPageController extends GetxController
 
   Rx<bool> isPageLoading = false.obs;
 
+  late Timer _secondsTimer;
+
   late List<RoomModel> roomList;
   late TabController roomTabController;
   Rx<bool> noRooms = false.obs;
@@ -25,6 +29,10 @@ class TimerPageController extends GetxController
     super.onInit();
 
     await getRoomList();
+    _secondsTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+      print('1초');
+      update();
+    });
   }
 
   Future<void> getRoomList() async {

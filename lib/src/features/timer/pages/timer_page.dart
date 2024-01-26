@@ -137,16 +137,20 @@ class TimerPage extends GetView<TimerPageController> {
                     fontSize: 16,
                   ),
                 ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: roomStreamList.length,
-                  itemBuilder: (context, index) {
-                    return _rankingCard(
-                      index,
-                      roomStreamList[index],
+                GetBuilder<TimerPageController>(
+                  builder: (controller) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: roomStreamList.length,
+                      itemBuilder: (context, index) {
+                        return _rankingCard(
+                          index,
+                          roomStreamList[index],
+                        );
+                      },
                     );
                   },
-                )
+                ),
               ],
             );
           }
@@ -159,41 +163,49 @@ class TimerPage extends GetView<TimerPageController> {
     RoomStreamModel liveRoomStreamModel =
         controller.calcTotalLiveSec(roomStreamModel);
     //시간 계산
+    String digits(int number) {
+      return number.toString().padLeft(2, '0');
+    }
+
     int hour = (liveRoomStreamModel.totalLiveSeconds! / 3600).toInt();
     int minute = ((liveRoomStreamModel.totalLiveSeconds! % 3600) / 60).toInt();
     int second = (liveRoomStreamModel.totalLiveSeconds! % 60).toInt();
-    String liveTotalTimer = '${hour}:${minute}:${second}';
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          '${index + 1}등',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
-            fontSize: 24,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Text(
-            roomStreamModel.nickname!,
+    String liveTotalTimer =
+        '${digits(hour)}:${digits(minute)}:${digits(second)}';
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            '${index + 1}등',
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w600,
               fontSize: 24,
             ),
           ),
-        ),
-        Text(
-          liveTotalTimer,
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
-            fontSize: 24,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Text(
+              roomStreamModel.nickname!,
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+                fontSize: 24,
+              ),
+            ),
           ),
-        ),
-      ],
+          Text(
+            liveTotalTimer,
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+              fontSize: 24,
+            ),
+          ),
+        ],
+      ),
     );
   }
 

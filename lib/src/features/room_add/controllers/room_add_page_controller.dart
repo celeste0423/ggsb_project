@@ -92,7 +92,7 @@ class RoomAddPageController extends GetxController {
         roomId: roomId.value,
         nickname: AuthController.to.user.value.nickname,
         totalSeconds: 0,
-        isTimer: true,
+        isTimer: false,
         startTime: DateTime.now(),
         lastTime: null,
       );
