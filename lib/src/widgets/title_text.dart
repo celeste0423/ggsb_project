@@ -4,11 +4,13 @@ import 'package:ggsb_project/src/utils/custom_color.dart';
 class TitleText extends StatelessWidget {
   String text;
   Color? color;
+  double? fontSize;
 
   TitleText({
     Key? key,
     required this.text,
     this.color,
+    this.fontSize,
   }) : super(key: key);
 
   @override
@@ -17,7 +19,7 @@ class TitleText extends StatelessWidget {
       text,
       style: TextStyle(
         color: color ?? CustomColors.blackText,
-        fontSize: 22,
+        fontSize: fontSize ?? 22,
         fontWeight: FontWeight.w800,
       ),
     );
