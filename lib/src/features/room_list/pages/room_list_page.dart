@@ -50,7 +50,7 @@ class RoomListPage extends GetView<RoomListPageController> {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Obx(
         () => !controller.isRoomListLoading.value
-            ? controller.isRoomList.value
+            ? !controller.isNoRoomList.value
                 ? FutureBuilder<List<RoomModel>>(
                     future: controller.getRoomList(),
                     builder: (
@@ -86,10 +86,27 @@ class RoomListPage extends GetView<RoomListPageController> {
                       }
                     },
                   )
-                : Container(
-                    height: 20,
-                    width: 50,
-                    color: Colors.red,
+                : CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      Get.dialog(_joinRoomDialog());
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/add.svg',
+                          color: CustomColors.greyBackground,
+                        ),
+                        SizedBox(height: 20),
+                        Text(
+                          '화면을 터치해 방에 가입해 보세요',
+                          style: TextStyle(
+                            color: CustomColors.greyText,
+                          ),
+                        ),
+                      ],
+                    ),
                   )
             : const Center(
                 child: CircularProgressIndicator(
@@ -239,6 +256,7 @@ class RoomListPage extends GetView<RoomListPageController> {
           children: [
             _sayingBox(),
             Expanded(child: _roomList()),
+            SizedBox(height: 75),
           ],
         ),
       ),

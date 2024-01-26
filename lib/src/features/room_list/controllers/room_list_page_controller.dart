@@ -12,7 +12,7 @@ class RoomListPageController extends GetxController {
   static RoomListPageController get to => Get.find();
 
   Rx<bool> isRoomListLoading = false.obs;
-  Rx<bool> isRoomList = false.obs;
+  Rx<bool> isNoRoomList = false.obs;
 
   TextEditingController joinRoomIdController = TextEditingController();
 
@@ -26,7 +26,8 @@ class RoomListPageController extends GetxController {
     isRoomListLoading(true);
     await AuthController.to
         .updateAuthController(AuthController.to.user.value.uid!);
-    isRoomList(AuthController.to.user.value.roomIdList != null);
+    isNoRoomList(AuthController.to.user.value.roomIdList == null ||
+        AuthController.to.user.value.roomIdList!.isEmpty);
     isRoomListLoading(false);
   }
 
@@ -61,7 +62,7 @@ class RoomListPageController extends GetxController {
         //유저 정보 업데이트
         await AuthController.to
             .updateAuthController(AuthController.to.user.value.uid!);
-        isRoomList(AuthController.to.user.value.roomIdList != null);
+        isNoRoomList(AuthController.to.user.value.roomIdList != null);
         UserModel userModel = AuthController.to.user.value;
         UserModel updatedUserModel = userModel.copyWith(
           roomIdList: userModel.roomIdList == null
