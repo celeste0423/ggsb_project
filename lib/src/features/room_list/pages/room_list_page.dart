@@ -215,7 +215,9 @@ class RoomListPage extends GetView<RoomListPageController> {
                 Expanded(
                   child: MainButton(
                     buttonText: '참가',
-                    onTap: () {},
+                    onTap: () {
+                      controller.joinRoomButton();
+                    },
                     height: 45,
                   ),
                 ),

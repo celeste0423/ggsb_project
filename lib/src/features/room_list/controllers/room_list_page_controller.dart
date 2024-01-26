@@ -44,31 +44,37 @@ class RoomListPageController extends GetxController {
     } else {
       isRoomListLoading(true);
       //방 정보 업데이트
-      RoomModel roomModel =
+      RoomModel? roomModel =
           await RoomRepository().getRoomModel(joinRoomIdController.text!);
-      RoomModel updatedRoomModel = roomModel.copyWith(
-        uidList: [
-          ...roomModel.uidList!,
-          AuthController.to.user.value.uid!,
-        ],
-      );
-      RoomRepository().updateRoomModel(updatedRoomModel);
-      //유저 정보 업데이트
-      await AuthController.to
-          .updateAuthController(AuthController.to.user.value.uid!);
-      isRoomList(AuthController.to.user.value.roomIdList != null);
-      UserModel userModel = AuthController.to.user.value;
-      UserModel updatedUserModel = userModel.copyWith(
-        roomIdList: userModel.roomIdList == null
-            ? [joinRoomIdController.text]
-            : [
-                ...userModel.roomIdList!,
-                joinRoomIdController.text,
-              ],
-      );
-      UserRepository().updateUserModel(updatedUserModel);
-      InitBinding().refreshControllers();
-      isRoomListLoading(false);
+      if (roomModel == null) {
+        Get.back();
+        openAlertDialog(title: '방 정보가 없습니다.');
+        isRoomListLoading(false);
+      } else {
+        RoomModel updatedRoomModel = roomModel.copyWith(
+          uidList: [
+            ...roomModel.uidList!,
+            AuthController.to.user.value.uid!,
+          ],
+        );
+        RoomRepository().updateRoomModel(updatedRoomModel);
+        //유저 정보 업데이트
+        await AuthController.to
+            .updateAuthController(AuthController.to.user.value.uid!);
+        isRoomList(AuthController.to.user.value.roomIdList != null);
+        UserModel userModel = AuthController.to.user.value;
+        UserModel updatedUserModel = userModel.copyWith(
+          roomIdList: userModel.roomIdList == null
+              ? [joinRoomIdController.text]
+              : [
+                  ...userModel.roomIdList!,
+                  joinRoomIdController.text,
+                ],
+        );
+        UserRepository().updateUserModel(updatedUserModel);
+        InitBinding().refreshControllers();
+        isRoomListLoading(false);
+      }
     }
   }
 }

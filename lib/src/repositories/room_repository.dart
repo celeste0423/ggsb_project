@@ -33,20 +33,20 @@ class RoomRepository {
     return roomList;
   }
 
-  Future<RoomModel> getRoomModel(String roomId) async {
+  Future<RoomModel?> getRoomModel(String roomId) async {
     try {
       DocumentSnapshot roomDoc = await FirebaseFirestore.instance
           .collection('rooms')
           .doc(roomId)
           .get();
+      print('방 찾는 중 ${roomDoc.exists}');
       if (roomDoc.exists) {
         return RoomModel.fromJson(roomDoc.data()! as Map<String, dynamic>);
       } else {
-        return Future.error('Room not found');
+        return null;
       }
     } catch (e) {
-      print('방 정보 가져오기에 실패했습니다. $e');
-      return Future.error('Failed to get room data');
+      openAlertDialog(title: '방 정보 가져오기에 실패했습니다.');
     }
   }
 
