@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/widgets/text_regular.dart';
-import 'package:ggsb_project/src/widgets/title_text_bold.dart';
-
-
+import 'package:ggsb_project/src/widgets/title_text.dart';
 
 class SettingFocus extends StatefulWidget {
   const SettingFocus({super.key});
@@ -11,6 +9,7 @@ class SettingFocus extends StatefulWidget {
   @override
   State<SettingFocus> createState() => _SettingFocusState();
 }
+
 class _SettingFocusState extends State<SettingFocus> {
   @override
   Widget build(BuildContext context) {
@@ -32,7 +31,7 @@ class _SettingFocusState extends State<SettingFocus> {
             color: Colors.white,
             child: Padding(
               padding: const EdgeInsets.only(left: 0),
-              child: TitleText_bold(text: '설정'),
+              child: TitleText(text: '설정'),
             ),
           ),
         ),
@@ -40,6 +39,7 @@ class _SettingFocusState extends State<SettingFocus> {
     );
   }
 }
+
 Widget _supportBox() {
   return Column(
     children: [
@@ -84,17 +84,14 @@ Widget _supportBox() {
 }
 
 @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          // appBar: _settingBox(),
-          body: Column(
-            children: [
-              _supportBox(),
-
-            ],
-          )
-      ),
-    );
-  }
-
+Widget build(BuildContext context) {
+  return SafeArea(
+    child: Scaffold(
+        // appBar: _settingBox(),
+        body: Column(
+      children: [
+        _supportBox(),
+      ],
+    )),
+  );
+}
