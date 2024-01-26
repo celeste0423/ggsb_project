@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:ggsb_project/src/binding/init_binding.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
@@ -79,6 +80,7 @@ class RoomAddPageController extends GetxController {
         roomId: roomId.value,
         roomName: roomNameController.text,
         creatorUid: AuthController.to.user.value.uid,
+        creatorName: AuthController.to.user.value.nickname,
         roomType: roomType.value,
         color: CustomColors.roomColorToName(selectedColor.value),
         uidList: [
@@ -100,6 +102,7 @@ class RoomAddPageController extends GetxController {
               ],
       );
       UserRepository.updateUserData(updatedUserModel);
+      InitBinding().refreshControllers();
       Get.back();
     }
   }

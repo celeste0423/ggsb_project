@@ -18,17 +18,30 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
       TabController(length: 4, vsync: this);
 
   Widget _tabBar() {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20),
-      height: 65,
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 300),
+      height: 75,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: CustomColors.mainBlack,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, -3),
+            blurRadius: 20,
+            color: _tabController.index == 0
+                ? Colors.transparent
+                : Colors.black.withOpacity(0.15),
+          ),
+        ],
+        color:
+            _tabController.index == 0 ? CustomColors.mainBlack : Colors.white,
       ),
       child: TabBar(
         indicator: CircleTabIndicator(
           color: CustomColors.mainBlue,
-          radius: 3,
+          radius: 2,
         ),
         controller: _tabController,
         indicatorWeight: 4,
@@ -41,7 +54,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
               height: 25,
               color: _tabController.index == 0
                   ? CustomColors.mainBlue
-                  : Colors.white,
+                  : CustomColors.mainBlack,
               colorBlendMode: BlendMode.modulate,
             ),
           ),
@@ -51,7 +64,9 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
               height: 30,
               color: _tabController.index == 1
                   ? CustomColors.mainBlue
-                  : Colors.white,
+                  : _tabController.index == 0
+                      ? Colors.white
+                      : CustomColors.mainBlack,
               colorBlendMode: BlendMode.modulate,
             ),
           ),
@@ -61,7 +76,9 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
               width: 35,
               color: _tabController.index == 2
                   ? CustomColors.mainBlue
-                  : Colors.white,
+                  : _tabController.index == 0
+                      ? Colors.white
+                      : CustomColors.mainBlack,
               colorBlendMode: BlendMode.modulate,
             ),
           ),
@@ -71,7 +88,9 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
               height: 25,
               color: _tabController.index == 3
                   ? CustomColors.mainBlue
-                  : Colors.white,
+                  : _tabController.index == 0
+                      ? Colors.white
+                      : CustomColors.mainBlack,
               colorBlendMode: BlendMode.modulate,
             ),
           ),
@@ -97,7 +116,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
           MyPage(),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: _tabBar(),
     );
   }
@@ -127,7 +146,7 @@ class _CirclePainter extends BoxPainter {
   @override
   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
     final rect = offset & configuration.size!;
-    final center = Offset(rect.center.dx, rect.bottom - radius - 10);
+    final center = Offset(rect.center.dx, rect.bottom - radius - 15);
 
     canvas.drawCircle(center, radius, _paint);
   }
