@@ -78,7 +78,7 @@ class HomePage extends GetView<HomePageController> {
   Widget _bottomTab() {
     return Expanded(
       child: Container(
-    width: Get.width,
+        width: Get.width,
         decoration: BoxDecoration(
           color: CustomColors.mainBlack,
           borderRadius: BorderRadius.only(topLeft: Radius.circular(50)),

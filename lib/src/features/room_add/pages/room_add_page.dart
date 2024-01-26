@@ -357,6 +357,7 @@ class RoomAddPage extends GetView<RoomAddPageController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(height: 20),
                     _title(),
                     Expanded(child: _inputTextFields()),
                     _addButton(),

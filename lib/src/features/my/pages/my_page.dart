@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/my/controllers/my_page_controller.dart';
+import 'package:ggsb_project/src/features/setting/pages/setting_page.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
-import 'package:ggsb_project/src/features/setting/pages/setting_page.dart';
 
 class MyPage extends GetView<MyPageController> {
   const MyPage({super.key});
@@ -26,7 +27,7 @@ class MyPage extends GetView<MyPageController> {
       children: [
         Expanded(
           child: Text(
-            '사용자님 \n안녕하세요 :)',
+            '${AuthController.to.user.value.nickname}님 \n안녕하세요 :)',
             style: TextStyle(
               color: CustomColors.blackText,
               fontSize: 24,
@@ -57,10 +58,11 @@ class MyPage extends GetView<MyPageController> {
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    spreadRadius: 0,
-                    blurRadius: 4,
-                    offset: Offset(0, 2),)
+                  color: Colors.black.withOpacity(0.1),
+                  spreadRadius: 0,
+                  blurRadius: 4,
+                  offset: Offset(0, 2),
+                )
               ],
             ),
           ),
@@ -161,7 +163,7 @@ class MyPage extends GetView<MyPageController> {
             icon,
             SizedBox(width: 10),
             Text(
-            text,
+              text,
               style: TextStyle(
                 color: CustomColors.blackText,
                 fontSize: 13,
@@ -180,13 +182,13 @@ class MyPage extends GetView<MyPageController> {
       child: Scaffold(
           appBar: _appBar(),
           body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Column(
               children: [
                 _profile(),
                 _graphBox(),
                 _buttons(),
-                SizedBox(height: 85),
+                SizedBox(height: 95),
               ],
             ),
           )),

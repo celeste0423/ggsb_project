@@ -17,7 +17,7 @@ class RoomListPage extends GetView<RoomListPageController> {
       leadingWidth: 75,
       centerTitle: false,
       title: Padding(
-        padding: const EdgeInsets.only(left: 10),
+        padding: const EdgeInsets.only(left: 20),
         child: TitleText(text: '방 목록'),
       ),
       // actions: [
@@ -34,7 +34,7 @@ class RoomListPage extends GetView<RoomListPageController> {
 
   Widget _sayingBox() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
       child: Container(
         height: 60,
         decoration: BoxDecoration(
@@ -47,7 +47,7 @@ class RoomListPage extends GetView<RoomListPageController> {
 
   Widget _roomList() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
       child: Obx(
         () => !controller.isRoomListLoading.value
             ? !controller.isNoRoomList.value
@@ -71,8 +71,8 @@ class RoomListPage extends GetView<RoomListPageController> {
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            crossAxisSpacing: 20,
-                            mainAxisSpacing: 20,
+                            crossAxisSpacing: 30,
+                            mainAxisSpacing: 30,
                           ),
                           itemCount: roomList.length + 1,
                           itemBuilder: (BuildContext context, int index) {
