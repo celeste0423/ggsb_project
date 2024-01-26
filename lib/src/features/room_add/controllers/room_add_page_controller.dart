@@ -47,7 +47,7 @@ class RoomAddPageController extends GetxController {
   }
 
   void setRoomId() {
-    roomId(uuid.v4().toString().substring(0, 18));
+    roomId(uuid.v4().toString().substring(0, 7));
   }
 
   void inviteCodeCopyButton() {
