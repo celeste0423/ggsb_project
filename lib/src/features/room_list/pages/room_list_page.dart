@@ -18,15 +18,15 @@ class RoomListPage extends GetView<RoomListPageController> {
         padding: const EdgeInsets.only(left: 10),
         child: TitleText(text: '방 목록'),
       ),
-      actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 20),
-          child: Image.asset(
-            'assets/icons/setting.png',
-            width: 30,
-          ),
-        ),
-      ],
+      // actions: [
+      //   Padding(
+      //     padding: const EdgeInsets.only(right: 20),
+      //     child: Image.asset(
+      //       'assets/icons/setting.png',
+      //       width: 30,
+      //     ),
+      //   ),
+      // ],
     );
   }
 
@@ -47,45 +47,52 @@ class RoomListPage extends GetView<RoomListPageController> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Obx(
-        () => controller.isRoomList.value
-            ? FutureBuilder<List<RoomModel>>(
-                future: controller.getRoomList(),
-                builder: (
-                  BuildContext context,
-                  AsyncSnapshot<List<RoomModel>> snapshot,
-                ) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: CircularProgressIndicator(
-                        color: CustomColors.mainBlue,
-                      ),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Text('에러 발생');
-                  } else {
-                    List<RoomModel> roomList = snapshot.data!;
-                    return GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20,
-                      ),
-                      itemCount: roomList.length + 1,
-                      itemBuilder: (BuildContext context, int index) {
-                        if (index < roomList.length) {
-                          return _roomCard(roomList[index]);
-                        } else {
-                          return _addRoomCard();
-                        }
-                      },
-                    );
-                  }
-                },
-              )
-            : Container(
-                height: 20,
-                width: 50,
-                color: Colors.red,
+        () => !controller.isRoomListLoading.value
+            ? controller.isRoomList.value
+                ? FutureBuilder<List<RoomModel>>(
+                    future: controller.getRoomList(),
+                    builder: (
+                      BuildContext context,
+                      AsyncSnapshot<List<RoomModel>> snapshot,
+                    ) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: CustomColors.mainBlue,
+                          ),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text('에러 발생');
+                      } else {
+                        List<RoomModel> roomList = snapshot.data!;
+                        return GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 20,
+                            mainAxisSpacing: 20,
+                          ),
+                          itemCount: roomList.length + 1,
+                          itemBuilder: (BuildContext context, int index) {
+                            if (index < roomList.length) {
+                              return _roomCard(roomList[index]);
+                            } else {
+                              return _addRoomCard();
+                            }
+                          },
+                        );
+                      }
+                    },
+                  )
+                : Container(
+                    height: 20,
+                    width: 50,
+                    color: Colors.red,
+                  )
+            : const Center(
+                child: CircularProgressIndicator(
+                  color: CustomColors.mainBlue,
+                ),
               ),
       ),
     );

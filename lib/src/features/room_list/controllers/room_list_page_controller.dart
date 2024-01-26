@@ -6,6 +6,7 @@ import 'package:ggsb_project/src/repositories/room_repository.dart';
 class RoomListPageController extends GetxController {
   static RoomListPageController get to => Get.find();
 
+  Rx<bool> isRoomListLoading = false.obs;
   Rx<bool> isRoomList = false.obs;
 
   @override
@@ -15,10 +16,10 @@ class RoomListPageController extends GetxController {
   }
 
   void _checkIsRoomList() async {
+    isRoomListLoading(true);
     await AuthController.to.loginUser(AuthController.to.user.value.uid!);
-    print('방 있나? ${AuthController.to.user.value.roomIdList}');
     isRoomList(AuthController.to.user.value.roomIdList != null);
-    print('방 있나? ${isRoomList.value}');
+    isRoomListLoading(false);
   }
 
   Future<List<RoomModel>> getRoomList() async {
