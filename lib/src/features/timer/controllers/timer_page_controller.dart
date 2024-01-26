@@ -43,6 +43,21 @@ class TimerPageController extends GetxController
     isPageLoading(false);
   }
 
+  RoomStreamModel calcTotalLiveSec(RoomStreamModel roomStreamModel) {
+    late int liveTotalSeconds;
+    if (roomStreamModel.isTimer == false) {
+      liveTotalSeconds = roomStreamModel.totalSeconds!;
+    } else {
+      int calcSec =
+          DateTime.now().difference(roomStreamModel.startTime!).inSeconds;
+      liveTotalSeconds = calcSec;
+    }
+    RoomStreamModel updatedRoomStreamModel = roomStreamModel.copyWith(
+      totalLiveSeconds: liveTotalSeconds,
+    );
+    return updatedRoomStreamModel;
+  }
+
   Stream<List<RoomStreamModel>> roomListStream(String roomId) {
     return RoomStreamRepository().roomListStream(roomId);
   }

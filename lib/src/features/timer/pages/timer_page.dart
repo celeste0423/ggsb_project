@@ -40,6 +40,7 @@ class TimerPage extends GetView<TimerPageController> {
           _map(),
           _time(),
           _playButton(),
+          SizedBox(height: 20),
           _roomTabView(),
         ],
       ),
@@ -155,9 +156,12 @@ class TimerPage extends GetView<TimerPageController> {
   }
 
   Widget _rankingCard(int index, RoomStreamModel roomStreamModel) {
-    int hour = (roomStreamModel.totalLiveSeconds! / 3600).toInt();
-    int minute = ((roomStreamModel.totalLiveSeconds! % 3600) / 60).toInt();
-    int second = (roomStreamModel.totalLiveSeconds! % 60).toInt();
+    RoomStreamModel liveRoomStreamModel =
+        controller.calcTotalLiveSec(roomStreamModel);
+    //시간 계산
+    int hour = (liveRoomStreamModel.totalLiveSeconds! / 3600).toInt();
+    int minute = ((liveRoomStreamModel.totalLiveSeconds! % 3600) / 60).toInt();
+    int second = (liveRoomStreamModel.totalLiveSeconds! % 60).toInt();
     String liveTotalTimer = '${hour}:${minute}:${second}';
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
