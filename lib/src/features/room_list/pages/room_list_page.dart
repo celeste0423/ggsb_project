@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/room_list/controllers/room_list_page_controller.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
+import 'package:ggsb_project/src/widgets/main_button.dart';
+import 'package:ggsb_project/src/widgets/text_field_box.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
 
 class RoomListPage extends GetView<RoomListPageController> {
@@ -77,7 +79,7 @@ class RoomListPage extends GetView<RoomListPageController> {
                             if (index < roomList.length) {
                               return _roomCard(roomList[index]);
                             } else {
-                              return _addRoomCard();
+                              return _joinRoomCard();
                             }
                           },
                         );
@@ -148,10 +150,12 @@ class RoomListPage extends GetView<RoomListPageController> {
     );
   }
 
-  Widget _addRoomCard() {
+  Widget _joinRoomCard() {
     return CupertinoButton(
       padding: EdgeInsets.zero,
-      onPressed: () {},
+      onPressed: () {
+        Get.dialog(_joinRoomDialog());
+      },
       child: Container(
         decoration: BoxDecoration(
           color: CustomColors.lightGreyBackground,
@@ -163,6 +167,61 @@ class RoomListPage extends GetView<RoomListPageController> {
             width: 25,
             color: CustomColors.greyBackground,
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _joinRoomDialog() {
+    return Dialog(
+      child: Container(
+        height: 200,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        decoration: BoxDecoration(
+          color: CustomColors.whiteBackground,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '방에 참가하기',
+              style: TextStyle(
+                color: CustomColors.blackText,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            TextFieldBox(
+              textEditingController: controller.joinRoomIdController,
+              hintText: '초대코드를 입력해주세요',
+              backgroundColor: CustomColors.lightGreyBackground,
+            ),
+            SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(
+                  child: MainButton(
+                    buttonText: '취소',
+                    onTap: () {
+                      Get.back();
+                    },
+                    backgroundColor: CustomColors.greyBackground,
+                    height: 45,
+                  ),
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: MainButton(
+                    buttonText: '참가',
+                    onTap: () {},
+                    height: 45,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

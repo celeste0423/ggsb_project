@@ -132,9 +132,7 @@ class UserRepository {
     }
   }
 
-  //작동이 안됨..;;
-  static Future<void> updateUserData(UserModel userModel) async {
-    print(userModel.roomIdList);
+  Future<void> updateUserModel(UserModel userModel) async {
     try {
       await FirebaseFirestore.instance
           .collection('users')

@@ -21,6 +21,17 @@ class AuthController extends GetxController {
     return userData;
   }
 
+  Future<UserModel?> updateAuthController(String uid) async {
+    // print('로그인 중');
+    var userData = await UserRepository.getUserData(uid);
+    // print('유저 데이터 ${userData}');
+    if (userData != null) {
+      user(userData);
+      InitBinding.additionalBinding();
+    }
+    return userData;
+  }
+
   // 애플 로그인
   // Future<UserCredential> signInWithApple() async {
   //   bool isAvailable = await SignInWithApple.isAvailable();

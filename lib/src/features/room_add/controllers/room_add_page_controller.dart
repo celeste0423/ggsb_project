@@ -87,7 +87,7 @@ class RoomAddPageController extends GetxController {
       RoomRepository().createRoom(roomModel);
       //개인 데이터 업데이트
       UserModel userModel = AuthController.to.user.value;
-      print('룸 아이디 업데이트${roomId.value}');
+      // print('룸 아이디 업데이트${roomId.value}');
       UserModel updatedUserModel = userModel.copyWith(
         roomIdList: userModel.roomIdList == null
             ? [roomId.value]
@@ -96,7 +96,7 @@ class RoomAddPageController extends GetxController {
                 roomId.value,
               ],
       );
-      UserRepository.updateUserData(updatedUserModel);
+      UserRepository().updateUserModel(updatedUserModel);
       InitBinding().refreshControllers();
       Get.back();
     }

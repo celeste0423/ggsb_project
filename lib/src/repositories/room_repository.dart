@@ -32,4 +32,32 @@ class RoomRepository {
     }
     return roomList;
   }
+
+  Future<RoomModel> getRoomModel(String roomId) async {
+    try {
+      DocumentSnapshot roomDoc = await FirebaseFirestore.instance
+          .collection('rooms')
+          .doc(roomId)
+          .get();
+      if (roomDoc.exists) {
+        return RoomModel.fromJson(roomDoc.data()! as Map<String, dynamic>);
+      } else {
+        return Future.error('Room not found');
+      }
+    } catch (e) {
+      print('방 정보 가져오기에 실패했습니다. $e');
+      return Future.error('Failed to get room data');
+    }
+  }
+
+  Future<void> updateRoomModel(RoomModel roomModel) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('rooms')
+          .doc(roomModel.roomId)
+          .update(roomModel.toJson());
+    } catch (e) {
+      openAlertDialog(title: '오류 발생', content: e.toString());
+    }
+  }
 }
