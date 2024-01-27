@@ -8,6 +8,7 @@ import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
+import 'package:ggsb_project/src/utils/seconds_to_time.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
 
 class TimerPage extends GetView<TimerPageController> {
@@ -202,16 +203,6 @@ class TimerPage extends GetView<TimerPageController> {
   Widget _rankingCard(int index, RoomStreamModel roomStreamModel) {
     RoomStreamModel liveRoomStreamModel =
         controller.calcTotalLiveSec(roomStreamModel);
-    //시간 계산
-    String digits(int number) {
-      return number.toString().padLeft(2, '0');
-    }
-
-    int hour = (liveRoomStreamModel.totalLiveSeconds! / 3600).toInt();
-    int minute = ((liveRoomStreamModel.totalLiveSeconds! % 3600) / 60).toInt();
-    int second = (liveRoomStreamModel.totalLiveSeconds! % 60).toInt();
-    String liveTotalTimer =
-        '${digits(hour)}:${digits(minute)}:${digits(second)}';
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: index == 0 ? 50 : 80,
@@ -240,7 +231,7 @@ class TimerPage extends GetView<TimerPageController> {
             ),
           ),
           Text(
-            liveTotalTimer,
+            SecondsToTime.convert(liveRoomStreamModel.totalLiveSeconds!),
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w600,
