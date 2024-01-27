@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'package:animate_icons/animate_icons.dart' as animateIcon;
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/widgets/full_size_loading_indicator.dart';
 import 'package:ggsb_project/src/features/timer/controllers/timer_page_controller.dart';
@@ -14,6 +14,10 @@ class TimerPage extends GetView<TimerPageController> {
 
   PreferredSizeWidget _appBar() {
     return AppBar(
+      backgroundColor: Colors.transparent,
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.dark,
+      ),
       leadingWidth: 75,
       title: Text(
         controller.today.value,
@@ -23,11 +27,14 @@ class TimerPage extends GetView<TimerPageController> {
           fontWeight: FontWeight.w800,
         ),
       ),
-      leading: SvgIconButton(
-        assetName: 'assets/icons/back.svg',
-        onTap: () {
-          Get.back();
-        },
+      leading: Visibility(
+        visible: !controller.isTimer.value,
+        child: SvgIconButton(
+          assetName: 'assets/icons/back.svg',
+          onTap: () {
+            Get.back();
+          },
+        ),
       ),
     );
   }
@@ -35,14 +42,17 @@ class TimerPage extends GetView<TimerPageController> {
   Widget _content() {
     return Container(
       width: Get.width,
-      height: Get.height - 75,
+      height: Get.height,
       child: Column(
         children: [
+          SizedBox(height: 75 + MediaQuery.of(Get.context!).padding.top),
           _map(),
           _time(),
           _playButton(),
           SizedBox(height: 20),
           _roomTabView(),
+          _tabIndicator(),
+          SizedBox(height: 20),
         ],
       ),
     );
@@ -50,7 +60,7 @@ class TimerPage extends GetView<TimerPageController> {
 
   Widget _map() {
     return Container(
-      margin: EdgeInsets.all(30),
+      margin: EdgeInsets.only(bottom: 30),
       height: 250,
       width: 250,
       decoration: BoxDecoration(
@@ -62,31 +72,49 @@ class TimerPage extends GetView<TimerPageController> {
 
   Widget _time() {
     return Padding(
-      padding: const EdgeInsets.only(top: 30, bottom: 20),
-      child: Text(
-        '00:01:52',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 40,
-          fontWeight: FontWeight.w800,
+      padding: const EdgeInsets.only(top: 40),
+      child: Obx(
+        () => Text(
+          '00:01:52',
+          style: TextStyle(
+            color:
+                controller.isTimer.value ? CustomColors.mainBlue : Colors.white,
+            fontSize: 35,
+            fontWeight: FontWeight.w800,
+          ),
         ),
       ),
     );
   }
 
   Widget _playButton() {
-    return CupertinoButton(
-      onPressed: () {},
-      child: Container(
+    return Obx(
+      () => AnimatedContainer(
+        duration: Duration(milliseconds: 200),
         width: 60,
         height: 60,
-        padding: EdgeInsets.only(left: 19, right: 16),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          color: CustomColors.mainBlue,
+          color: controller.isTimer.value
+              ? CustomColors.greyBackground
+              : CustomColors.mainBlue,
         ),
-        child: SvgPicture.asset(
-          'assets/icons/play.svg',
+        child: animateIcon.AnimateIcons(
+          duration: Duration(milliseconds: 200),
+          startIcon: Icons.play_arrow_rounded,
+          endIcon: Icons.pause,
+          size: 45,
+          controller: controller.animateIconController,
+          onStartIconPress: () {
+            controller.playButton();
+            return true;
+          },
+          onEndIconPress: () {
+            controller.stopButton();
+            return true;
+          },
+          startIconColor: Colors.white,
+          endIconColor: Colors.white,
         ),
       ),
     );
@@ -98,8 +126,8 @@ class TimerPage extends GetView<TimerPageController> {
         return controller.noRooms.value
             ? Center(
                 child: Text(
-                  '나만의 버꿍리스트를 만들어보세요',
-                  style: TextStyle(color: CustomColors.blackText),
+                  '방을 만들거나 방에 가입해보세요',
+                  style: TextStyle(color: Colors.white),
                 ),
               )
             : controller.isPageLoading.value
@@ -132,6 +160,7 @@ class TimerPage extends GetView<TimerPageController> {
           } else {
             List<RoomStreamModel> roomStreamList = snapshot.data!;
             return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
                   roomModel.roomName!,
@@ -142,16 +171,20 @@ class TimerPage extends GetView<TimerPageController> {
                   ),
                 ),
                 GetBuilder<TimerPageController>(
+                  id: 'roomListTimer',
                   builder: (controller) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: roomStreamList.length,
-                      itemBuilder: (context, index) {
-                        return _rankingCard(
-                          index,
-                          roomStreamList[index],
-                        );
-                      },
+                    return SingleChildScrollView(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        padding: EdgeInsets.zero,
+                        itemCount: roomStreamList.length,
+                        itemBuilder: (context, index) {
+                          return _rankingCard(
+                            index,
+                            roomStreamList[index],
+                          );
+                        },
+                      ),
                     );
                   },
                 ),
@@ -177,16 +210,19 @@ class TimerPage extends GetView<TimerPageController> {
     String liveTotalTimer =
         '${digits(hour)}:${digits(minute)}:${digits(second)}';
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      padding: EdgeInsets.symmetric(
+        horizontal: index == 0 ? 50 : 80,
+        vertical: 10,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            '${index + 1}등',
+            controller.toOrdinal(index + 1),
             style: TextStyle(
               color: Colors.white,
-              fontWeight: FontWeight.w600,
-              fontSize: 24,
+              fontWeight: FontWeight.w800,
+              fontSize: index == 0 ? 24 : 16,
             ),
           ),
           Padding(
@@ -195,8 +231,8 @@ class TimerPage extends GetView<TimerPageController> {
               roomStreamModel.nickname!,
               style: TextStyle(
                 color: Colors.white,
-                fontWeight: FontWeight.w600,
-                fontSize: 24,
+                fontWeight: index == 0 ? FontWeight.w600 : FontWeight.w400,
+                fontSize: index == 0 ? 20 : 16,
               ),
             ),
           ),
@@ -205,7 +241,7 @@ class TimerPage extends GetView<TimerPageController> {
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w600,
-              fontSize: 24,
+              fontSize: index == 0 ? 20 : 16,
             ),
           ),
         ],
@@ -213,18 +249,46 @@ class TimerPage extends GetView<TimerPageController> {
     );
   }
 
+  Widget _tabIndicator() {
+    return GetBuilder<TimerPageController>(
+      id: 'tabIndicator',
+      builder: (controller) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(
+            controller.indicatorCount.value,
+            (index) => Container(
+              margin: const EdgeInsets.symmetric(horizontal: 7),
+              width: 4,
+              height: 4,
+              decoration: BoxDecoration(
+                color: controller.roomTabController.index == index
+                    ? Colors.white
+                    : Colors.white.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(3),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Widget _background() {
     return Positioned(
       bottom: 0,
-      child: AnimatedContainer(
-        duration: Duration(milliseconds: 300),
-        height: Get.height - 415,
-        width: Get.width,
-        decoration: BoxDecoration(
-          color: CustomColors.mainBlack,
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(50),
-            topLeft: Radius.circular(50),
+      child: Obx(
+        () => AnimatedContainer(
+          duration: Duration(milliseconds: 500),
+          curve: Curves.easeInOutBack,
+          height: controller.isTimer.value ? Get.height : Get.height - 395,
+          width: Get.width,
+          decoration: BoxDecoration(
+            color: CustomColors.mainBlack,
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(controller.isTimer.value ? 0 : 50),
+              topLeft: Radius.circular(controller.isTimer.value ? 0 : 50),
+            ),
           ),
         ),
       ),
@@ -237,14 +301,18 @@ class TimerPage extends GetView<TimerPageController> {
     return Stack(
       children: [
         Scaffold(
-            resizeToAvoidBottomInset: true,
-            appBar: _appBar(),
-            body: Stack(
+          extendBodyBehindAppBar: true,
+          appBar: _appBar(),
+          body: Container(
+            height: Get.height,
+            child: Stack(
               children: [
                 _background(),
                 _content(),
               ],
-            )),
+            ),
+          ),
+        ),
         Obx(
           () => controller.isPageLoading.value
               ? FullSizeLoadingIndicator(

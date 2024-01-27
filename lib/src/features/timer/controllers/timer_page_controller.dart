@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:animate_icons/animate_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
@@ -14,23 +15,46 @@ class TimerPageController extends GetxController
   static TimerPageController get to => Get.find();
 
   Rx<bool> isPageLoading = false.obs;
+  Rx<bool> isTimer = false.obs;
 
   late Timer _secondsTimer;
+
+  final Rx<String> today =
+      DateFormat('M/d E', 'ko_KR').format(DateTime.now()).obs;
+
+  AnimateIconController animateIconController = AnimateIconController();
 
   late List<RoomModel> roomList;
   late TabController roomTabController;
   Rx<bool> noRooms = false.obs;
 
-  final Rx<String> today =
-      DateFormat('M/d E', 'ko_KR').format(DateTime.now()).obs;
+  String toOrdinal(int number) {
+    if (number % 100 >= 11 && number % 100 <= 13) {
+      return '$number' + 'th';
+    }
+    switch (number % 10) {
+      case 1:
+        return '$number' + 'st';
+      case 2:
+        return '$number' + 'nd';
+      case 3:
+        return '$number' + 'rd';
+      default:
+        return '$number' + 'th';
+    }
+  }
+
+  Rx<int> indicatorCount = 0.obs;
 
   @override
   void onInit() async {
     super.onInit();
-
     await getRoomList();
     _secondsTimer = Timer.periodic(Duration(seconds: 1), (timer) {
-      update();
+      update(['roomListTimer']);
+    });
+    roomTabController.addListener(() {
+      update(['tabIndicator']);
     });
   }
 
@@ -47,6 +71,8 @@ class TimerPageController extends GetxController
       length: noRooms.value ? 0 : roomList!.length,
       vsync: this,
     );
+    indicatorCount(noRooms.value ? 0 : roomList!.length);
+    update(['tabIndicator']);
     isPageLoading(false);
   }
 
@@ -69,7 +95,8 @@ class TimerPageController extends GetxController
     return RoomStreamRepository().roomListStream(roomId);
   }
 
-  Future<void> timerButton() async {
+  Future<void> playButton() async {
+    isTimer(true);
     //방별 roomStream 설정
     roomList.forEach((RoomModel roomModel) async {
       RoomStreamModel roomStreamModel =
@@ -86,6 +113,7 @@ class TimerPageController extends GetxController
   }
 
   Future<void> stopButton() async {
+    isTimer(false);
     //방별 roomStream 설정
     roomList.forEach((RoomModel roomModel) async {
       RoomStreamModel roomStreamModel =
