@@ -15,7 +15,12 @@ class InitBinding extends Bindings {
     Get.put(RoomListPage(), permanent: true);
   }
 
-  void refreshControllers() {
+  // void refreshHomePageController() {
+  //   Get.delete<HomePageController>();
+  //   Get.put(HomePageController(), permanent: true);
+  // }
+
+  void refreshRoomListPageController() {
     Get.delete<RoomListPageController>();
     Get.put(RoomListPageController(), permanent: true);
   }

@@ -8,7 +8,7 @@ import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
-import 'package:ggsb_project/src/utils/seconds_to_time.dart';
+import 'package:ggsb_project/src/utils/seconds_util.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
 
 class TimerPage extends GetView<TimerPageController> {
@@ -79,7 +79,7 @@ class TimerPage extends GetView<TimerPageController> {
       padding: const EdgeInsets.only(top: 40),
       child: Obx(
         () => Text(
-          '00:01:52',
+          controller.totalLiveTime.value,
           style: TextStyle(
             color:
                 controller.isTimer.value ? CustomColors.mainBlue : Colors.white,
@@ -202,7 +202,7 @@ class TimerPage extends GetView<TimerPageController> {
 
   Widget _rankingCard(int index, RoomStreamModel roomStreamModel) {
     RoomStreamModel liveRoomStreamModel =
-        controller.calcTotalLiveSec(roomStreamModel);
+        controller.calcTotalLiveSecInRoomStream(roomStreamModel);
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: index == 0 ? 50 : 80,
@@ -231,7 +231,8 @@ class TimerPage extends GetView<TimerPageController> {
             ),
           ),
           Text(
-            SecondsToTime.convert(liveRoomStreamModel.totalLiveSeconds!),
+            SecondsUtil.convertToDigitString(
+                liveRoomStreamModel.totalLiveSeconds!),
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w600,

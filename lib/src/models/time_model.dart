@@ -2,7 +2,6 @@ class TimeModel {
   final String? uid;
   final String? day;
   final int? totalSeconds;
-  final int? totalLiveSeconds;
   final bool? isTimer;
   final DateTime? startTime;
   final DateTime? lastTime;
@@ -11,7 +10,6 @@ class TimeModel {
     this.uid,
     this.day,
     this.totalSeconds,
-    this.totalLiveSeconds,
     this.isTimer,
     this.startTime,
     this.lastTime,
@@ -23,9 +21,6 @@ class TimeModel {
       day: json['day'] == null ? null : json['day'] as String,
       totalSeconds:
           json['totalSeconds'] == null ? null : json['totalSeconds'] as int,
-      totalLiveSeconds: json['totalLiveSeconds'] == null
-          ? null
-          : json['totalLiveSeconds'] as int,
       isTimer: json['isTimer'] == null ? null : json['isTimer'] as bool,
       startTime: json['startTime'] == null ? null : json["startTime"].toDate(),
       lastTime: json['lastTime'] == null ? null : json["lastTime"].toDate(),
@@ -37,7 +32,6 @@ class TimeModel {
       'uid': uid,
       'day': day,
       'totalSeconds': totalSeconds,
-      'totalLiveSeconds': totalLiveSeconds,
       'isTimer': isTimer,
       'startTime': startTime,
       'lastTime': lastTime,
@@ -57,7 +51,6 @@ class TimeModel {
       uid: uid ?? this.uid,
       day: day ?? this.day,
       totalSeconds: totalSeconds ?? this.totalSeconds,
-      totalLiveSeconds: totalLiveSeconds ?? this.totalLiveSeconds,
       isTimer: isTimer ?? this.isTimer,
       startTime: startTime ?? this.startTime,
       lastTime: lastTime ?? this.lastTime,

@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:ggsb_project/src/app.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
-import 'package:ggsb_project/src/repositories/user_repository.dart';
 
 class SignupPageController extends GetxController {
   Rx<String> uid = ''.obs;
@@ -37,9 +35,8 @@ class SignupPageController extends GetxController {
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
-      await UserRepository.signup(userData);
+      await AuthController.to.signUp(userData);
       isSignupLoading(false);
-      Get.off(App());
     }
   }
 }

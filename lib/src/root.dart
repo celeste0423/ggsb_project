@@ -28,7 +28,7 @@ class Root extends GetView<AuthController> {
                   return Obx(
                     () => controller.user.value.uid != null
                         //받은 컨트롤러의 유저 데이터가 이미 있을경우 앱으로, 아니면 회원가입창으로
-                        ? const App()
+                        ? App()
                         : SignupPage(
                             uid: user.data!.uid,
                             email: user.data!.email!,

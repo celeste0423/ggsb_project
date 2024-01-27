@@ -4,10 +4,14 @@ import 'package:animate_icons/animate_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
+import 'package:ggsb_project/src/features/home/controllers/home_page_controller.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
+import 'package:ggsb_project/src/models/time_model.dart';
 import 'package:ggsb_project/src/repositories/room_repository.dart';
 import 'package:ggsb_project/src/repositories/room_stream_repository.dart';
+import 'package:ggsb_project/src/repositories/time_repository.dart';
+import 'package:ggsb_project/src/utils/seconds_util.dart';
 import 'package:intl/intl.dart';
 
 class TimerPageController extends GetxController
@@ -23,6 +27,8 @@ class TimerPageController extends GetxController
       DateFormat('M/d E', 'ko_KR').format(DateTime.now()).obs;
 
   AnimateIconController animateIconController = AnimateIconController();
+
+  Rx<String> totalLiveTime = '00:00:00'.obs;
 
   late List<RoomModel> roomList;
   late TabController roomTabController;
@@ -50,12 +56,30 @@ class TimerPageController extends GetxController
   void onInit() async {
     super.onInit();
     await getRoomList();
+    calcTotalLiveSec();
     _secondsTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+      calcTotalLiveSec();
       update(['roomListTimer']);
     });
     roomTabController.addListener(() {
       update(['tabIndicator']);
     });
+  }
+
+  void calcTotalLiveSec() {
+    late int liveTotalSeconds;
+    TimeModel timeModel = AuthController.to.timeModel.value;
+    if (timeModel.isTimer == false) {
+      liveTotalSeconds = timeModel.totalSeconds!;
+    } else {
+      print('시간 확인 ${AuthController.to.timeModel.value.toJson()}');
+      int calcSec = SecondsUtil.calculateDifferenceInSeconds(
+        timeModel.startTime!,
+        DateTime.now(),
+      );
+      liveTotalSeconds = timeModel.totalSeconds! + calcSec;
+    }
+    totalLiveTime(SecondsUtil.convertToDigitString(liveTotalSeconds));
   }
 
   Future<void> getRoomList() async {
@@ -76,14 +100,17 @@ class TimerPageController extends GetxController
     isPageLoading(false);
   }
 
-  RoomStreamModel calcTotalLiveSec(RoomStreamModel roomStreamModel) {
+  RoomStreamModel calcTotalLiveSecInRoomStream(
+      RoomStreamModel roomStreamModel) {
     late int liveTotalSeconds;
     if (roomStreamModel.isTimer == false) {
       liveTotalSeconds = roomStreamModel.totalSeconds!;
     } else {
-      int calcSec =
-          DateTime.now().difference(roomStreamModel.startTime!).inSeconds;
-      liveTotalSeconds = calcSec;
+      int calcSec = SecondsUtil.calculateDifferenceInSeconds(
+        roomStreamModel.startTime!,
+        DateTime.now(),
+      );
+      liveTotalSeconds = roomStreamModel.totalSeconds! + calcSec;
     }
     RoomStreamModel updatedRoomStreamModel = roomStreamModel.copyWith(
       totalLiveSeconds: liveTotalSeconds,
@@ -96,7 +123,15 @@ class TimerPageController extends GetxController
   }
 
   Future<void> playButton() async {
+    DateTime now = DateTime.now();
     isTimer(true);
+    //개인 timeModel 설정
+    TimeModel updatedTimeModel = AuthController.to.timeModel.value.copyWith(
+      isTimer: true,
+      startTime: now,
+    );
+    AuthController.to.timeModel(updatedTimeModel);
+    TimeRepository().updateTimeModel(updatedTimeModel);
     //방별 roomStream 설정
     roomList.forEach((RoomModel roomModel) async {
       RoomStreamModel roomStreamModel =
@@ -106,14 +141,29 @@ class TimerPageController extends GetxController
       );
       RoomStreamModel updatedRoomStreamModel = roomStreamModel.copyWith(
         isTimer: true,
-        startTime: DateTime.now(),
+        startTime: now,
       );
       await RoomStreamRepository().updateRoomStream(updatedRoomStreamModel);
     });
   }
 
   Future<void> stopButton() async {
+    DateTime now = DateTime.now();
     isTimer(false);
+    //개인 timeModel 업로드
+    int diffSec = SecondsUtil.calculateDifferenceInSeconds(
+      AuthController.to.timeModel.value.startTime!,
+      now,
+    );
+    int totalSec = AuthController.to.timeModel.value.totalSeconds! + diffSec;
+    TimeModel updatedTimeModel = AuthController.to.timeModel.value.copyWith(
+      isTimer: false,
+      lastTime: now,
+      totalSeconds: totalSec,
+    );
+    AuthController.to.timeModel(updatedTimeModel);
+    TimeRepository().updateTimeModel(updatedTimeModel);
+    HomePageController.to.totalTime(totalLiveTime.value);
     //방별 roomStream 설정
     roomList.forEach((RoomModel roomModel) async {
       RoomStreamModel roomStreamModel =
@@ -121,10 +171,11 @@ class TimerPageController extends GetxController
         roomModel.roomId!,
         AuthController.to.user.value.uid!,
       );
-      //Todo: totalSeconds 계산
+      int totalSec = roomStreamModel.totalSeconds! + diffSec;
       RoomStreamModel updatedRoomStreamModel = roomStreamModel.copyWith(
         isTimer: false,
-        lastTime: DateTime.now(),
+        lastTime: now,
+        totalSeconds: totalSec,
       );
       await RoomStreamRepository().updateRoomStream(updatedRoomStreamModel);
     });

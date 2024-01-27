@@ -71,6 +71,7 @@ class RoomAddPageController extends GetxController {
       openAlertDialog(title: '방 이름을 입력해주세요');
     } else {
       isRoomAddLoading(true);
+      print('유저 컨트롤러 정보 ${AuthController.to.user.value.toJson()}');
       //방 모델 업로드
       RoomModel roomModel = RoomModel(
         roomId: roomId.value,
@@ -109,7 +110,7 @@ class RoomAddPageController extends GetxController {
               ],
       );
       UserRepository().updateUserModel(updatedUserModel);
-      InitBinding().refreshControllers();
+      InitBinding().refreshRoomListPageController();
       Get.back();
     }
   }

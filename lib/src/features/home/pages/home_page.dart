@@ -96,12 +96,14 @@ class HomePage extends GetView<HomePageController> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            Text(
-              '00:01:52',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 45,
-                fontWeight: FontWeight.w800,
+            Obx(
+              () => Text(
+                controller.totalTime.value,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 45,
+                  fontWeight: FontWeight.w800,
+                ),
               ),
             ),
             Text(
