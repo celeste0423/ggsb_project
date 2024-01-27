@@ -58,7 +58,7 @@ class HomePage extends GetView<HomePageController> {
           SizedBox(width: 20),
           Expanded(
             child: MainButton(
-              buttonText: '방 추가',
+              buttonText: '방 생성',
               textStyle: TextStyle(
                 color: CustomColors.lightGreyText,
               ),

@@ -179,10 +179,24 @@ class RoomListPage extends GetView<RoomListPageController> {
           borderRadius: BorderRadius.circular(20),
         ),
         child: Center(
-          child: SvgPicture.asset(
-            'assets/icons/add.svg',
-            width: 25,
-            color: CustomColors.greyBackground,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 16),
+              SvgPicture.asset(
+                'assets/icons/add.svg',
+                width: 25,
+                color: CustomColors.greyBackground,
+              ),
+              SizedBox(height: 20),
+              Text(
+                '방에 참가하기',
+                style: TextStyle(
+                  color: CustomColors.lightGreyText,
+                  fontSize: 16,
+                ),
+              ),
+            ],
           ),
         ),
       ),
