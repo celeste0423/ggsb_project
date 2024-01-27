@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/widgets/full_size_loading_indicator.dart';
 import 'package:ggsb_project/src/features/timer/controllers/timer_page_controller.dart';
+import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
@@ -27,13 +28,15 @@ class TimerPage extends GetView<TimerPageController> {
           fontWeight: FontWeight.w800,
         ),
       ),
-      leading: Visibility(
-        visible: !controller.isTimer.value,
-        child: SvgIconButton(
-          assetName: 'assets/icons/back.svg',
-          onTap: () {
-            Get.back();
-          },
+      leading: Obx(
+        () => Visibility(
+          visible: !controller.isTimer.value,
+          child: SvgIconButton(
+            assetName: 'assets/icons/back.svg',
+            onTap: () {
+              Get.back();
+            },
+          ),
         ),
       ),
     );
@@ -280,7 +283,7 @@ class TimerPage extends GetView<TimerPageController> {
       child: Obx(
         () => AnimatedContainer(
           duration: Duration(milliseconds: 500),
-          curve: Curves.easeInOutBack,
+          curve: Curves.easeInOutCubic,
           height: controller.isTimer.value ? Get.height : Get.height - 395,
           width: Get.width,
           decoration: BoxDecoration(
@@ -298,29 +301,39 @@ class TimerPage extends GetView<TimerPageController> {
   @override
   Widget build(BuildContext context) {
     Get.put(TimerPageController());
-    return Stack(
-      children: [
-        Scaffold(
-          extendBodyBehindAppBar: true,
-          appBar: _appBar(),
-          body: Container(
-            height: Get.height,
-            child: Stack(
-              children: [
-                _background(),
-                _content(),
-              ],
+    return WillPopScope(
+      onWillPop: () {
+        if (controller.isTimer.value) {
+          openAlertDialog(title: '타이머를 멈추고 나가주세요');
+        } else {
+          Get.back();
+        }
+        return Future(() => false);
+      },
+      child: Stack(
+        children: [
+          Scaffold(
+            extendBodyBehindAppBar: true,
+            appBar: _appBar(),
+            body: Container(
+              height: Get.height,
+              child: Stack(
+                children: [
+                  _background(),
+                  _content(),
+                ],
+              ),
             ),
           ),
-        ),
-        Obx(
-          () => controller.isPageLoading.value
-              ? FullSizeLoadingIndicator(
-                  backgroundColor: Colors.black.withOpacity(0.5),
-                )
-              : SizedBox(),
-        ),
-      ],
+          Obx(
+            () => controller.isPageLoading.value
+                ? FullSizeLoadingIndicator(
+                    backgroundColor: Colors.black.withOpacity(0.5),
+                  )
+                : SizedBox(),
+          ),
+        ],
+      ),
     );
   }
 }
