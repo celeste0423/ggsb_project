@@ -6,6 +6,7 @@ import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart'
 import 'package:ggsb_project/src/features/auth/pages/signup_page.dart';
 import 'package:ggsb_project/src/features/auth/pages/welcome_page.dart';
 import 'package:ggsb_project/src/features/auth/widgets/full_size_loading_indicator.dart';
+import 'package:ggsb_project/src/features/timer/pages/timer_page.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
 
 class Root extends GetView<AuthController> {
@@ -22,18 +23,24 @@ class Root extends GetView<AuthController> {
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const FullSizeLoadingIndicator();
-                } else if (snapshot.hasData) {
-                  return const App();
                 } else {
-                  return Obx(
-                    () => controller.user.value.uid != null
-                        //받은 컨트롤러의 유저 데이터가 이미 있을경우 앱으로, 아니면 회원가입창으로
-                        ? App()
-                        : SignupPage(
-                            uid: user.data!.uid,
-                            email: user.data!.email!,
-                          ),
-                  );
+                  return Obx(() {
+                    if (controller.user.value.uid != null) {
+                      //받은 컨트롤러의 유저 데이터가 이미 있을경우 앱으로, 아니면 회원가입창으로
+                      if (!controller.timeModel.value.isTimer!) {
+                        return App();
+                      } else {
+                        print('시간 측정중이었음');
+                        // Get.to(() => TimerPage());
+                        return TimerPage();
+                      }
+                    } else {
+                      return SignupPage(
+                        uid: user.data!.uid,
+                        email: user.data!.email!,
+                      );
+                    }
+                  });
                   // : SignupPage(uid: user.data!.uid));
                 }
               });

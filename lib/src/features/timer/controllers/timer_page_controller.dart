@@ -56,6 +56,7 @@ class TimerPageController extends GetxController
   void onInit() async {
     super.onInit();
     await getRoomList();
+    isTimerCheck();
     calcTotalLiveSec();
     _secondsTimer = Timer.periodic(Duration(seconds: 1), (timer) {
       calcTotalLiveSec();
@@ -66,13 +67,20 @@ class TimerPageController extends GetxController
     });
   }
 
+  void isTimerCheck() {
+    isTimer(AuthController.to.timeModel.value.isTimer);
+    if (isTimer.value) {
+      animateIconController.animateToEnd();
+    }
+  }
+
   void calcTotalLiveSec() {
     late int liveTotalSeconds;
     TimeModel timeModel = AuthController.to.timeModel.value;
     if (timeModel.isTimer == false) {
       liveTotalSeconds = timeModel.totalSeconds!;
     } else {
-      print('시간 확인 ${AuthController.to.timeModel.value.toJson()}');
+      // print('시간 확인 ${AuthController.to.timeModel.value.toJson()}');
       int calcSec = SecondsUtil.calculateDifferenceInSeconds(
         timeModel.startTime!,
         DateTime.now(),
