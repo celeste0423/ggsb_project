@@ -23,10 +23,10 @@ class HomePageController extends GetxController {
   }
 
   void addRoomButton() {
-    Get.to(RoomAddPage());
+    Get.to(() => RoomAddPage());
   }
 
   void timerPageButton() {
-    Get.to(TimerPage());
+    Get.to(() => TimerPage());
   }
 }

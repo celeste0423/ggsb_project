@@ -20,7 +20,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
   Widget _tabBar() {
     return AnimatedContainer(
       duration: Duration(milliseconds: 300),
-      height: 75,
+      height: 85,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20),
