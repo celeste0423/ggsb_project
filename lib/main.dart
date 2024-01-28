@@ -19,16 +19,17 @@ void main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(const MyApp());
-    SystemChrome.setSystemUIOverlayStyle(
-      //상단바 테마
-      SystemUiOverlayStyle.dark.copyWith(
-        statusBarIconBrightness: Brightness.dark,
-        statusBarColor: Colors.transparent,
-        systemNavigationBarDividerColor: Colors.transparent,
-        systemNavigationBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: Colors.white,
-      ),
-    );
+    // SystemChrome.setSystemUIOverlayStyle(
+    //   //상단바 테마
+    //   SystemUiOverlayStyle.dark.copyWith(
+    //     statusBarIconBrightness: Brightness.dark,
+    //     statusBarColor: Colors.transparent,
+    //     systemStatusBarContrastEnforced: true,
+    //     systemNavigationBarColor: Colors.transparent,
+    //     systemNavigationBarDividerColor: Colors.transparent,
+    //     systemNavigationBarIconBrightness: Brightness.dark,
+    //   ),
+    // );
   });
   //날짜 언어 세팅
   initializeDateFormatting('ko-KR');

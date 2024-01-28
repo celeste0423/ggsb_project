@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/home/controllers/home_page_controller.dart';
@@ -124,17 +123,15 @@ class HomePage extends GetView<HomePageController> {
   @override
   Widget build(BuildContext context) {
     Get.put(HomePageController());
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
-    return SafeArea(
-      child: Scaffold(
-        appBar: _appBar(),
-        body: Column(
-          children: [
-            _charactorBox(),
-            _buttonsRow(),
-            _bottomTab(),
-          ],
-        ),
+    return Scaffold(
+      extendBody: true,
+      appBar: _appBar(),
+      body: Column(
+        children: [
+          _charactorBox(),
+          _buttonsRow(),
+          _bottomTab(),
+        ],
       ),
     );
   }

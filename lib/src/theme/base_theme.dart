@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 
 ThemeData baseTheme(BuildContext context) {
@@ -12,6 +13,14 @@ ThemeData baseTheme(BuildContext context) {
       backgroundColor: Colors.white,
       centerTitle: true,
       toolbarHeight: 75,
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.dark,
+        statusBarColor: Colors.transparent,
+        systemStatusBarContrastEnforced: true,
+        systemNavigationBarColor: Colors.transparent,
+        systemNavigationBarDividerColor: Colors.transparent,
+        systemNavigationBarIconBrightness: Brightness.dark,
+      ),
     ),
     //textStyle
     textTheme: Theme.of(context).textTheme.apply(
