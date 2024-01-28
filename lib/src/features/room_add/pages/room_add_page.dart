@@ -245,7 +245,7 @@ class RoomAddPage extends GetView<RoomAddPageController> {
                   Icons.copy,
                   size: 20,
                   color: CustomColors.greyBackground,
-                )
+                ),
               ],
             ),
           ),

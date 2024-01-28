@@ -54,7 +54,7 @@ class RoomAddPageController extends GetxController {
 
   void inviteCodeCopyButton() {
     Clipboard.setData(
-      ClipboardData(text: '예시 코드'),
+      ClipboardData(text: roomId.value),
     ).then(
       (_) {
         Get.snackbar(

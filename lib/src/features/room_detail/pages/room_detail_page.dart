@@ -257,6 +257,48 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
     );
   }
 
+  Widget _floatingActionButton() {
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      onPressed: () {
+        controller.inviteCodeCopyButton();
+      },
+      child: Container(
+        height: 60,
+        width: 300,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(0, 4),
+              blurRadius: 4,
+              color: Colors.black.withOpacity(0.1),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              '초대 코드 복사 (${controller.roomModel.roomId!})',
+              style: TextStyle(
+                color: CustomColors.lightGreyText,
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(width: 10),
+            Icon(
+              Icons.copy,
+              size: 20,
+              color: CustomColors.greyBackground,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Get.put(RoomDetailPageController());
@@ -269,6 +311,8 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
           _content(),
         ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: _floatingActionButton(),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
@@ -27,6 +28,20 @@ class RoomDetailPageController extends GetxController {
 
   Stream<List<RoomStreamModel>> roomUserListStream() {
     return RoomStreamRepository().roomListStream(roomModel.roomId!);
+  }
+
+  void inviteCodeCopyButton() {
+    Clipboard.setData(
+      ClipboardData(text: roomModel.roomId!),
+    ).then(
+      (_) {
+        Get.snackbar(
+          '방 초대 코드가 복사되었습니다.',
+          '친구들에게 코드를 보내주세요!',
+          snackPosition: SnackPosition.TOP,
+        );
+      },
+    );
   }
 
   @override
