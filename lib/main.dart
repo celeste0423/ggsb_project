@@ -1,8 +1,10 @@
+import 'package:cron/cron.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/binding/init_binding.dart';
+import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/root.dart';
 import 'package:ggsb_project/src/theme/base_theme.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -33,6 +35,13 @@ void main() async {
   });
   //날짜 언어 세팅
   initializeDateFormatting('ko-KR');
+  //새벽 4시에 초기화
+  Cron().schedule(Schedule.parse('01 04 * * *'), () async {
+    print("새벽 4시입니다.");
+    if (!AuthController.to.timeModel.value.isTimer!) {
+      AuthController().loginUser(AuthController.to.user.value.uid!);
+    }
+  });
 }
 
 class MyApp extends StatelessWidget {
