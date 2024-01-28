@@ -58,7 +58,7 @@ class WelcomePage extends GetView<WelcomePageController> {
 
   Widget _bottomTab() {
     return Container(
-      height: 300,
+      height: 250,
       width: double.infinity,
       decoration: const BoxDecoration(
         color: Colors.white,
