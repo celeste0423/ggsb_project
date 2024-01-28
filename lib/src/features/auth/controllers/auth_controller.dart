@@ -34,9 +34,21 @@ class AuthController extends GetxController {
       DateUtil.getDayOfWeek(DateTime.now()),
     );
     if (timeData != null) {
+      if (DateUtil.calculateDateDifference(timeData.lastTime!, DateTime.now()) >
+          4) {
+        timeData = timeData.copyWith(
+          totalSeconds: 0,
+        );
+        print('잘 못 지나감');
+      }
+      print('잘 지나감');
       timeModel(timeData);
     }
   }
+
+  // void updateOfflineTimeModel(TimeModel newTimeModel) {
+  //   timeModel(newTimeModel);
+  // }
 
   Future<UserModel?> updateAuthController(String uid) async {
     // print('로그인 중');
