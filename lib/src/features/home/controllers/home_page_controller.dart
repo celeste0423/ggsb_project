@@ -33,8 +33,6 @@ class HomePageController extends GetxController {
   Future<void> countUpHours() async {
     int i = 0;
     void count() {
-      print(SecondsUtil.convertToHours(
-          AuthController.to.timeModel.value.totalSeconds!));
       i++;
       if (i <=
           SecondsUtil.convertToHours(

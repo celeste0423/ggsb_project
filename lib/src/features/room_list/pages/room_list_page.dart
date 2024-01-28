@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:ggsb_project/src/features/room_detail/pages/room_detail_page.dart';
 import 'package:ggsb_project/src/features/room_list/controllers/room_list_page_controller.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
@@ -16,6 +18,9 @@ class RoomListPage extends GetView<RoomListPageController> {
     return AppBar(
       leadingWidth: 75,
       centerTitle: false,
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+      ),
       title: Padding(
         padding: const EdgeInsets.only(left: 20),
         child: TitleText(text: '방 목록'),
@@ -120,7 +125,9 @@ class RoomListPage extends GetView<RoomListPageController> {
   Widget _roomCard(RoomModel roomModel) {
     return CupertinoButton(
       padding: EdgeInsets.zero,
-      onPressed: () {},
+      onPressed: () {
+        Get.to(() => RoomDetailPage(), arguments: roomModel);
+      },
       child: Container(
         decoration: BoxDecoration(
           color: CustomColors.nameToRoomColor(roomModel.color!),

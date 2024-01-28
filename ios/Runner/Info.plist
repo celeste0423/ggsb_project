@@ -45,6 +45,8 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+    <false/>
 	<array>
     		<dict>
     			<key>CFBundleTypeRole</key>

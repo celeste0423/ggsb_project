@@ -1,12 +1,12 @@
 import 'package:animate_icons/animate_icons.dart' as animateIcon;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/widgets/full_size_loading_indicator.dart';
 import 'package:ggsb_project/src/features/timer/controllers/timer_page_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
+import 'package:ggsb_project/src/utils/calcTotalLiveSeconds.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
@@ -17,9 +17,9 @@ class TimerPage extends GetView<TimerPageController> {
   PreferredSizeWidget _appBar() {
     return AppBar(
       backgroundColor: Colors.transparent,
-      systemOverlayStyle: SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness.dark,
-      ),
+      // systemOverlayStyle: SystemUiOverlayStyle(
+      //   statusBarIconBrightness: Brightness.dark,
+      // ),
       leadingWidth: 75,
       title: Text(
         controller.today.value,
@@ -33,7 +33,7 @@ class TimerPage extends GetView<TimerPageController> {
         () => Visibility(
           visible: !controller.isTimer.value,
           child: SvgIconButton(
-            assetName: 'assets/icons/back.svg',
+            assetPath: 'assets/icons/back.svg',
             onTap: () {
               Get.back();
             },
@@ -202,7 +202,7 @@ class TimerPage extends GetView<TimerPageController> {
 
   Widget _rankingCard(int index, RoomStreamModel roomStreamModel) {
     RoomStreamModel liveRoomStreamModel =
-        controller.calcTotalLiveSecInRoomStream(roomStreamModel);
+        CalcTotalLiveSeconds.calcTotalLiveSecInRoomStream(roomStreamModel);
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: index == 0 ? 50 : 80,

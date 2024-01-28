@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 
 class SvgIconButton extends StatelessWidget {
-  String assetName;
+  String assetPath;
   VoidCallback onTap;
   Color? iconColor;
   double? width;
@@ -11,8 +11,9 @@ class SvgIconButton extends StatelessWidget {
 
   SvgIconButton({
     Key? key,
-    required this.assetName,
+    required this.assetPath,
     required this.onTap,
+    this.iconColor,
     this.width,
     this.height,
   }) : super(key: key);
@@ -23,7 +24,7 @@ class SvgIconButton extends StatelessWidget {
       padding: EdgeInsets.zero,
       onPressed: onTap,
       child: SvgPicture.asset(
-        assetName,
+        assetPath,
         color: iconColor ?? CustomColors.greyBackground,
       ),
     );

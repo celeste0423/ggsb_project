@@ -11,8 +11,10 @@ import 'package:ggsb_project/src/models/time_model.dart';
 import 'package:ggsb_project/src/repositories/room_repository.dart';
 import 'package:ggsb_project/src/repositories/room_stream_repository.dart';
 import 'package:ggsb_project/src/repositories/time_repository.dart';
+import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
 import 'package:intl/intl.dart';
+import 'package:status_bar_control/status_bar_control.dart';
 
 class TimerPageController extends GetxController
     with GetTickerProviderStateMixin {
@@ -108,24 +110,6 @@ class TimerPageController extends GetxController
     isPageLoading(false);
   }
 
-  RoomStreamModel calcTotalLiveSecInRoomStream(
-      RoomStreamModel roomStreamModel) {
-    late int liveTotalSeconds;
-    if (roomStreamModel.isTimer == false) {
-      liveTotalSeconds = roomStreamModel.totalSeconds!;
-    } else {
-      int calcSec = SecondsUtil.calculateDifferenceInSeconds(
-        roomStreamModel.startTime!,
-        DateTime.now(),
-      );
-      liveTotalSeconds = roomStreamModel.totalSeconds! + calcSec;
-    }
-    RoomStreamModel updatedRoomStreamModel = roomStreamModel.copyWith(
-      totalLiveSeconds: liveTotalSeconds,
-    );
-    return updatedRoomStreamModel;
-  }
-
   Stream<List<RoomStreamModel>> roomListStream(String roomId) {
     return RoomStreamRepository().roomListStream(roomId);
   }
@@ -133,6 +117,9 @@ class TimerPageController extends GetxController
   Future<void> playButton() async {
     DateTime now = DateTime.now();
     isTimer(true);
+    //상단바 색상
+    await StatusBarControl.setColor(CustomColors.mainBlack, animated: true);
+    // await StatusBarControl.setStyle(StatusBarStyle.LIGHT_CONTENT);
     //개인 timeModel 설정
     TimeModel updatedTimeModel = AuthController.to.timeModel.value.copyWith(
       isTimer: true,
@@ -158,6 +145,9 @@ class TimerPageController extends GetxController
   Future<void> stopButton() async {
     DateTime now = DateTime.now();
     isTimer(false);
+    //상단바 색상
+    await StatusBarControl.setColor(Colors.white, animated: true);
+    // await StatusBarControl.setStyle(StatusBarStyle.DARK_CONTENT);
     //개인 timeModel 업로드
     int diffSec = SecondsUtil.calculateDifferenceInSeconds(
       AuthController.to.timeModel.value.startTime!,
