@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/my/controllers/my_page_controller.dart';
 import 'package:ggsb_project/src/features/setting/pages/setting_page.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
+import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
 
 class MyPage extends GetView<MyPageController> {
@@ -63,7 +65,7 @@ class MyPage extends GetView<MyPageController> {
               ],
             ),
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 20),
           //height 원래 20이였으나 임시로 10으로 바꿈
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,49 +93,47 @@ class MyPage extends GetView<MyPageController> {
   }
 
   Widget _buttons() {
-    return Expanded(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _button(
-            Icon(
-              Icons.content_paste_search_sharp,
-              size: 25,
-              color: Colors.black,
-            ),
-            '기록 분석',
-            () {},
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        _button(
+          Image.asset(
+            'assets/icons/my_data_analyze.png',
+            width: 30,
+            height: 30,
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 5),
-            child: Container(
-              color: CustomColors.lightGreyBackground,
-              width: 100,
-              height: 1,
-            ),
+          '기록 분석',
+          () {},
+        ),
+        SizedBox(height: 40),
+        Container(
+          color: CustomColors.lightGreyBackground,
+          width: 100,
+          height: 1,
+        ),
+        SizedBox(height: 40),
+        _button(
+          Image.asset(
+            'assets/icons/my_settings.png',
+            width: 30,
+            height: 30,
           ),
-          _button(
-            Icon(
-              Icons.settings,
-              size: 25,
-              color: Colors.black,
-            ),
-            '설정',
-            () {
-              Get.to(SettingPage());
-            },
+          '설정',
+          () {
+            Get.to(SettingPage());
+          },
+        ),
+        SizedBox(height: 10),
+        _button(
+          Image.asset(
+            'assets/icons/my_report.png',
+            width: 30,
+            height: 30,
           ),
-          _button(
-            Icon(
-              Icons.report_gmailerrorred,
-              size: 25,
-              color: Colors.black,
-            ),
-            '문의하기',
-            () {},
-          ),
-        ],
-      ),
+          '문의하기',
+          () {},
+        ),
+      ],
     );
   }
 
@@ -179,16 +179,18 @@ class MyPage extends GetView<MyPageController> {
     return SafeArea(
       child: Scaffold(
           appBar: _appBar(),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Column(
-              children: [
-                _profile(),
-                _graphBox(),
-                _buttons(),
-                SizedBox(height: 85),
-                //height원래 95였으나 에러로 85로 임시로 바꿈
-              ],
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Column(
+                children: [
+                  _profile(),
+                  _graphBox(),
+                  _buttons(),
+                  SizedBox(height: 95),
+                  //height원래 95였으나 에러로 85로 임시로 바꿈
+                ],
+              ),
             ),
           )),
     );

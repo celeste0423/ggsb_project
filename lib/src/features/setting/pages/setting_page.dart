@@ -12,15 +12,13 @@ class SettingPage extends GetView<SettingPageController> {
 
   PreferredSizeWidget _appBar() {
     return AppBar(
-      centerTitle: false,
+      centerTitle: true,
       leading: SvgIconButton(
         assetPath: 'assets/icons/back.svg',
         onTap: Get.back,
       ),
-      title: Center(
-        child: TitleText(
-          text: '설정',
-        ),
+      title: TitleText(
+        text: '설정',
       ),
     );
   }
@@ -32,47 +30,35 @@ class SettingPage extends GetView<SettingPageController> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           _titlebox('고객지원'),
-          SizedBox(height: 10,),
           _button(
             '리뷰 남기기',
                 () {},
           ),
-          SizedBox(height: 10,),
           _linebox(),
-          SizedBox(height: 10,),
           _button(
             '앱 버전',
                 () {
             },
           ),
-          SizedBox(height: 10,),
           _linebox(),
-          SizedBox(height: 10,),
           _button(
             '이용약관',
                 () {},
           ),
-          SizedBox(height: 50,),
           _titlebox('계정'),
-          SizedBox(height: 10,),
           _linebox(),
-          SizedBox(height: 10,),
           _button(
             '연결된 계정',
                 () {
             },
           ),
-          SizedBox(height: 10,),
           _linebox(),
-          SizedBox(height: 10,),
           _button(
             '로그아웃',
                 () {
             },
           ),
-          SizedBox(height: 10,),
           _linebox(),
-          SizedBox(height: 10,),
         ],
       ),
     );
@@ -80,7 +66,7 @@ class SettingPage extends GetView<SettingPageController> {
 
   Widget _button(String text,  VoidCallback onTap) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Row(
         children: [
           SizedBox(width: 10),
@@ -99,30 +85,36 @@ class SettingPage extends GetView<SettingPageController> {
 
 
   Widget _linebox(){
-    return Center(
-      child: Container(
-        width: 330,
-        height: 1,
-        decoration: BoxDecoration(
-          color: CustomColors.lightGreyText,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      child: Center(
+        child: Container(
+          width: 314,
+          height: 1,
+          decoration: BoxDecoration(
+            color: CustomColors.lightGreyBackground,
+          ),
         ),
       ),
     );
   }
 
   Widget _titlebox(String text){
-    return Row(
-      children: [
-        SizedBox(width: 10,),
-        Text(
-          text,
-          style: TextStyle(
-            color: CustomColors.blackText,
-            fontSize: 16,
-            fontWeight: FontWeight.w600
-          ),
-        )
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      child: Row(
+        children: [
+          SizedBox(width: 10),
+          Text(
+            text,
+            style: TextStyle(
+              color: CustomColors.blackText,
+              fontSize: 16,
+              fontWeight: FontWeight.w600
+            ),
+          )
+        ],
+      ),
     );
   }
 
