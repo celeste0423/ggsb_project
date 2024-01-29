@@ -97,7 +97,8 @@ class HomePage extends GetView<HomePageController> {
             ),
             Obx(
               () => Text(
-                '${controller.totalHours}:${controller.totalMinutes}:${controller.totalSeconds}',
+                // '${controller.totalHours}:${controller.totalMinutes}:${controller.totalSeconds}',
+                controller.totalTime.value,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 45,

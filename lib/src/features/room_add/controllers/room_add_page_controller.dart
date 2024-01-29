@@ -116,8 +116,8 @@ class RoomAddPageController extends GetxController {
   }
 
   @override
-  void dispose() {
+  void onClose() {
+    super.onClose();
     roomNameController.dispose();
-    super.dispose();
   }
 }
