@@ -23,7 +23,7 @@ class WelcomePage extends GetView<WelcomePageController> {
 
   Widget _title() {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, bottom: 20),
+      padding: const EdgeInsets.only(left: 30, bottom: 20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,7 +64,7 @@ class WelcomePage extends GetView<WelcomePageController> {
         ),
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(horizontal: 30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

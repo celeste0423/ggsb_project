@@ -114,7 +114,7 @@ class HomePage extends GetView<HomePageController> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(height: 50),
+            SizedBox(height: 85),
           ],
         ),
       ),

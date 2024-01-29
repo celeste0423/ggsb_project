@@ -1,17 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/ranking/controllers/ranking_page_controller.dart';
+import 'package:ggsb_project/src/widgets/title_text.dart';
 
 class RankingPage extends GetView<RankingPageController> {
   const RankingPage({super.key});
+
+  PreferredSizeWidget _appBar() {
+    return AppBar(
+      centerTitle: false,
+      title: TitleText(
+        text: '랭킹',
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     Get.put(RankingPageController());
     return Scaffold(
-      body: Container(
-        color: Colors.white,
-        child: Text('랭킹페이지- 추후 구현 예정'),
+      appBar: _appBar(),
+      body: Center(
+        child: Container(
+          color: Colors.white,
+          child: Text('추후 구현 예정입니다'),
+        ),
       ),
     );
   }
