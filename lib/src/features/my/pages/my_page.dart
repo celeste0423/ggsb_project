@@ -13,11 +13,8 @@ class MyPage extends GetView<MyPageController> {
   PreferredSizeWidget _appBar() {
     return AppBar(
       centerTitle: false,
-      title: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-        child: TitleText(
-          text: 'My',
-        ),
+      title: TitleText(
+        text: 'My',
       ),
     );
   }
@@ -66,7 +63,8 @@ class MyPage extends GetView<MyPageController> {
               ],
             ),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 10),
+          //height 원래 20이였으나 임시로 10으로 바꿈
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -188,7 +186,8 @@ class MyPage extends GetView<MyPageController> {
                 _profile(),
                 _graphBox(),
                 _buttons(),
-                SizedBox(height: 95),
+                SizedBox(height: 85),
+                //height원래 95였으나 에러로 85로 임시로 바꿈
               ],
             ),
           )),

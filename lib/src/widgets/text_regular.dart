@@ -8,7 +8,7 @@ class TextRegular extends StatelessWidget {
   TextRegular({
     Key? key,
     required this.text,
-    this.color,
+    this.color, required TextStyle style,
   }) : super(key: key);
 
   @override

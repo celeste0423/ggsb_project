@@ -4,6 +4,7 @@ import 'package:ggsb_project/src/features/home/pages/home_page.dart';
 import 'package:ggsb_project/src/features/my/pages/my_page.dart';
 import 'package:ggsb_project/src/features/ranking/pages/ranking_page.dart';
 import 'package:ggsb_project/src/features/room_list/pages/room_list_page.dart';
+import 'package:ggsb_project/src/features/setting/pages/setting_page.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 
 class App extends StatefulWidget {
