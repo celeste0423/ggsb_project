@@ -183,9 +183,12 @@ class TimerPage extends GetView<TimerPageController> {
                         padding: EdgeInsets.zero,
                         itemCount: roomStreamList.length,
                         itemBuilder: (context, index) {
-                          return _rankingCard(
-                            index,
-                            roomStreamList[index],
+                          return FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: _rankingCard(
+                              index,
+                              roomStreamList[index],
+                            ),
                           );
                         },
                       ),

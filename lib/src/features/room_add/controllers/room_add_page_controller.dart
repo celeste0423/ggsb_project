@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:ggsb_project/src/binding/init_binding.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
+import 'package:ggsb_project/src/features/room_list/controllers/room_list_page_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
@@ -112,7 +112,7 @@ class RoomAddPageController extends GetxController {
               ],
       );
       UserRepository().updateUserModel(updatedUserModel);
-      InitBinding().refreshRoomListPageController();
+      RoomListPageController().checkIsRoomList();
       Get.back();
     }
   }

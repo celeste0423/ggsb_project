@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:ggsb_project/src/binding/init_binding.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
@@ -87,7 +86,7 @@ class RoomListPageController extends GetxController {
         );
         UserRepository().updateUserModel(updatedUserModel);
         AuthController.to.user(updatedUserModel);
-        InitBinding().refreshRoomListPageController();
+        checkIsRoomList();
         joinRoomIdController.dispose();
         Get.back();
         isRoomListLoading(false);

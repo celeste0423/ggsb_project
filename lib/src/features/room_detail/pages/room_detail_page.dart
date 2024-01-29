@@ -220,27 +220,27 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                       () => CircularProgressIndicator(
                         strokeCap: StrokeCap.round,
                         strokeWidth: 8,
-                        // value: ((roomStreamModel.totalLiveSeconds ??
-                        //         0 / controller.roomBestSeconds.value)
-                        //     .toDouble()),
-                        value: 0.5,
+                        value:
+                            ((0 / controller.roomBestSeconds.value).toDouble()),
+                        // value: 0.5,
                       ),
                     ),
                   ),
-                  Positioned(
-                      top: 32,
-                      right: 25,
-                      child: Obx(
-                        () => Text(
-                          // '${((roomStreamModel.totalLiveSeconds ?? 0 / controller.roomBestSeconds.value) * 100).toInt()}%',
-                          // '${controller.roomTotalSeconds.value}%',
-                          '테스트',
-                          style: TextStyle(
-                            color: CustomColors.lightGreyText,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ))
+                  // Positioned(
+                  //   top: 32,
+                  //   right: 25,
+                  //   child: Obx(
+                  //     () => Text(
+                  //       // '${((roomStreamModel.totalLiveSeconds ?? 0 / controller.roomBestSeconds.value) * 100).toInt()}%',
+                  //       // '${controller.roomTotalSeconds.value}%',
+                  //       '테스트',
+                  //       style: TextStyle(
+                  //         color: CustomColors.lightGreyText,
+                  //         fontSize: 12,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ],
