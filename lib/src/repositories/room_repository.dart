@@ -27,7 +27,7 @@ class RoomRepository {
           roomList.add(roomModel);
         }
       } catch (e) {
-        openAlertDialog(title: '방 불러오기에 실패했습니다.', content: e.toString());
+        openAlertDialog(title: '방 리스트 불러오기에 실패했습니다.', content: e.toString());
       }
     }
     return roomList;
@@ -57,7 +57,47 @@ class RoomRepository {
           .doc(roomModel.roomId)
           .update(roomModel.toJson());
     } catch (e) {
-      openAlertDialog(title: '오류 발생', content: e.toString());
+      openAlertDialog(title: '방 정보 업데이트에 실패했습니다', content: e.toString());
+    }
+  }
+
+  Future<void> deleteRoomModel(RoomModel roomModel) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('rooms')
+          .doc(roomModel.roomId)
+          .collection('roomStream')
+          .get()
+          .then((snapshot) {
+        for (DocumentSnapshot ds in snapshot.docs) {
+          ds.reference.delete();
+        }
+      });
+      await FirebaseFirestore.instance
+          .collection('rooms')
+          .doc(roomModel.roomId)
+          .delete();
+    } catch (e) {
+      openAlertDialog(title: '방 삭제에 실패했습니다.', content: e.toString());
+    }
+  }
+
+  Future<void> removeUid(String roomId, String uidToRemove) async {
+    RoomModel? roomModel = await getRoomModel(roomId);
+    if (roomModel != null) {
+      List<String> updatedUidList = List<String>.from(roomModel.uidList!);
+      updatedUidList.remove(uidToRemove);
+      try {
+        await FirebaseFirestore.instance
+            .collection('rooms')
+            .doc(roomModel.roomId)
+            .update({'uidList': updatedUidList});
+      } catch (e) {
+        // 업데이트 중 오류 발생 처리
+        print('Error updating user data: $e');
+      }
+    } else {
+      openAlertDialog(title: '방 정보가 없습니다.');
     }
   }
 }

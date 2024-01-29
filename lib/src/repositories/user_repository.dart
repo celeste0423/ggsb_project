@@ -153,4 +153,23 @@ class UserRepository {
       openAlertDialog(title: '회원가입에 실패했습니다', content: e.toString());
     }
   }
+
+  static Future<void> removeRoomId(String uid, String roomIdToRemove) async {
+    UserModel? userModel = await getUserData(uid);
+    if (userModel != null) {
+      List<String> updatedRoomIdList = List<String>.from(userModel.roomIdList!);
+      updatedRoomIdList.remove(roomIdToRemove);
+      try {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userModel.uid)
+            .update({'roomIdList': updatedRoomIdList});
+      } catch (e) {
+        // 업데이트 중 오류 발생 처리
+        print('Error updating user data: $e');
+      }
+    } else {
+      openAlertDialog(title: '유저 정보가 없습니다.');
+    }
+  }
 }

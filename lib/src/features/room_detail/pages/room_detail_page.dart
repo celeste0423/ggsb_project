@@ -49,22 +49,31 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
         ),
       ),
       actions: [
-        Visibility(
-          visible: controller.roomModel.creatorUid ==
-              AuthController.to.user.value.uid,
-          child: CupertinoButton(
-            padding: EdgeInsets.zero,
-            onPressed: () {},
-            child: Text(
-              '방 삭제',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
+        controller.roomModel.creatorUid == AuthController.to.user.value.uid
+            ? CupertinoButton(
+                padding: EdgeInsets.zero,
+                onPressed: () {},
+                child: Text(
+                  '방 삭제',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              )
+            : CupertinoButton(
+                padding: EdgeInsets.zero,
+                onPressed: () {},
+                child: Text(
+                  '방 나가기',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
         SizedBox(width: 30),
       ],
     );
@@ -225,10 +234,13 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
           right: 0,
           child: Visibility(
             visible: controller.roomModel.creatorUid ==
-                AuthController.to.user.value.uid,
+                    AuthController.to.user.value.uid &&
+                roomStreamModel.uid != AuthController.to.user.value.uid,
             child: SvgIconButton(
               assetPath: 'assets/icons/cancel.svg',
-              onTap: () {},
+              onTap: () {
+                controller.deleteUserButton(roomStreamModel);
+              },
             ),
           ),
         ),

@@ -2,9 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
+import 'package:ggsb_project/src/repositories/room_repository.dart';
 import 'package:ggsb_project/src/repositories/room_stream_repository.dart';
+import 'package:ggsb_project/src/repositories/user_repository.dart';
+import 'package:ggsb_project/src/utils/custom_color.dart';
 
 class RoomDetailPageController extends GetxController {
   static RoomDetailPageController get to => Get.find();
@@ -28,6 +32,29 @@ class RoomDetailPageController extends GetxController {
 
   Stream<List<RoomStreamModel>> roomUserListStream() {
     return RoomStreamRepository().roomListStream(roomModel.roomId!);
+  }
+
+  void deleteUserButton(RoomStreamModel roomStreamModel) {
+    openAlertDialog(
+      title: '유저 삭제',
+      content: '해당 유저를 방에서 내보내시겠습니까?',
+      btnText: '내보내기',
+      mainBtnColor: CustomColors.redText,
+      secondButtonText: '취소',
+      mainfunction: () async {
+        //유저 정보에서 방리스트 삭제
+        UserRepository.removeRoomId(
+            roomStreamModel.uid!, roomStreamModel.roomId!);
+        //roomStream 삭제
+        RoomStreamRepository().deleteRoomStream(roomStreamModel);
+        //roomModel에서 uid 삭제
+        RoomRepository()
+            .removeUid(roomStreamModel.roomId!, roomStreamModel.uid!);
+      },
+      secondfunction: () {
+        Get.back();
+      },
+    );
   }
 
   void inviteCodeCopyButton() {

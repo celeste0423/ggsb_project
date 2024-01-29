@@ -62,6 +62,24 @@ class RoomStreamRepository {
     }
   }
 
+  Future<void> deleteRoomStream(
+    RoomStreamModel roomStreamModel,
+  ) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('rooms')
+          .doc(roomStreamModel.roomId)
+          .collection('roomStream')
+          .doc(roomStreamModel.uid)
+          .delete();
+    } catch (e) {
+      openAlertDialog(
+        title: '룸 스트림 삭제 중 오류 발생',
+        content: e.toString(),
+      );
+    }
+  }
+
   Stream<List<RoomStreamModel>> roomListStream(String roomId) {
     return FirebaseFirestore.instance
         .collection('rooms')

@@ -6,6 +6,7 @@ openAlertDialog({
   required String title,
   String? content,
   String? btnText,
+  Color? mainBtnColor,
   String? secondButtonText,
   VoidCallback? mainfunction,
   VoidCallback? secondfunction,
@@ -59,7 +60,7 @@ openAlertDialog({
           btnText ?? "확인",
           style: TextStyle(
             fontSize: 13,
-            color: CustomColors.mainBlue,
+            color: mainBtnColor ?? CustomColors.mainBlue,
           ),
         ),
       ),
