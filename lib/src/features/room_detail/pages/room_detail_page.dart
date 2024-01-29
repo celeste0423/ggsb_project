@@ -125,18 +125,25 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                       GetBuilder<RoomDetailPageController>(
                         id: 'roomUserListTimer',
                         builder: (controller) {
-                          return SingleChildScrollView(
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              padding: EdgeInsets.zero,
-                              itemCount: roomStreamList.length,
-                              itemBuilder: (context, index) {
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            padding: EdgeInsets.zero,
+                            itemCount: roomStreamList.length + 1,
+                            itemBuilder: (context, index) {
+                              if (index < roomStreamList.length) {
                                 return _rankingCard(
                                   index,
                                   roomStreamList[index],
                                 );
-                              },
-                            ),
+                              } else {
+                                // return SizedBox(height: 105);
+                                return Container(
+                                  color: Colors.red,
+                                  height: 2,
+                                  width: 50,
+                                );
+                              }
+                            },
                           );
                         },
                       ),
@@ -196,7 +203,10 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                       liveRoomStreamModel.totalLiveSeconds!,
                     ),
                     style: TextStyle(
-                      color: CustomColors.blackText,
+                      color: liveRoomStreamModel.isTimer!
+                          ? CustomColors.nameToRoomColor(
+                              controller.roomModel.color!)
+                          : CustomColors.blackText,
                       fontWeight: FontWeight.w600,
                       fontSize: index == 0 ? 20 : 16,
                     ),
@@ -218,6 +228,8 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                     width: 80,
                     height: 80,
                     child: CircularProgressIndicator(
+                      color: CustomColors.nameToRoomColor(
+                          controller.roomModel.color!),
                       strokeCap: StrokeCap.round,
                       strokeWidth: 8,
                       value: ((liveRoomStreamModel.totalLiveSeconds! /

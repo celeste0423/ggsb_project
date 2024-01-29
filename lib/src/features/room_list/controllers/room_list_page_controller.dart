@@ -87,7 +87,7 @@ class RoomListPageController extends GetxController {
         UserRepository().updateUserModel(updatedUserModel);
         AuthController.to.user(updatedUserModel);
         checkIsRoomList();
-        joinRoomIdController.dispose();
+        joinRoomIdController.clear();
         Get.back();
         isRoomListLoading(false);
       }

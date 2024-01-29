@@ -237,7 +237,7 @@ class TimerPage extends GetView<TimerPageController> {
             SecondsUtil.convertToDigitString(
                 liveRoomStreamModel.totalLiveSeconds!),
             style: TextStyle(
-              color: roomStreamModel.isTimer!
+              color: liveRoomStreamModel.isTimer!
                   ? CustomColors.mainBlue
                   : Colors.white,
               fontWeight: FontWeight.w600,

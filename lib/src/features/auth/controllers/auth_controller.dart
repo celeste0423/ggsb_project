@@ -104,7 +104,8 @@ class AuthController extends GetxController {
       );
       await TimeRepository().uploadTimeModel(timeModel);
     }
-    loginUser(userData.uid!);
+    await loginUser(userData.uid!);
     print('uid야 ${user.value.uid}');
+    print('total time이야 ${timeModel.value.totalSeconds}');
   }
 }

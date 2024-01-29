@@ -20,7 +20,7 @@ class HomePageController extends GetxController {
     super.onInit();
     totalTime(
       SecondsUtil.convertToDigitString(
-        AuthController.to.timeModel.value.totalSeconds!,
+        AuthController.to.timeModel.value.totalSeconds ?? 0,
       ),
     );
     // countUpHours();
