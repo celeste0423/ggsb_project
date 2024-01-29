@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
@@ -15,6 +16,7 @@ class RoomDetailPageController extends GetxController {
 
   RoomModel roomModel = Get.arguments;
   late Timer _secondsTimer;
+  Rx<bool> isPageLoading = false.obs;
 
   Rx<bool> backgroundAnimation = false.obs;
 
@@ -30,6 +32,15 @@ class RoomDetailPageController extends GetxController {
     });
   }
 
+  Future<void> deleteUser(RoomStreamModel roomStreamModel) async {
+    //유저 정보에서 방리스트 삭제
+    UserRepository.removeRoomId(roomStreamModel.uid!, roomStreamModel.roomId!);
+    //roomStream 삭제
+    RoomStreamRepository().deleteRoomStream(roomStreamModel);
+    //roomModel에서 uid 삭제
+    RoomRepository().removeUid(roomStreamModel.roomId!, roomStreamModel.uid!);
+  }
+
   Stream<List<RoomStreamModel>> roomUserListStream() {
     return RoomStreamRepository().roomListStream(roomModel.roomId!);
   }
@@ -42,19 +53,30 @@ class RoomDetailPageController extends GetxController {
       mainBtnColor: CustomColors.redText,
       secondButtonText: '취소',
       mainfunction: () async {
-        //유저 정보에서 방리스트 삭제
-        UserRepository.removeRoomId(
-            roomStreamModel.uid!, roomStreamModel.roomId!);
-        //roomStream 삭제
-        RoomStreamRepository().deleteRoomStream(roomStreamModel);
-        //roomModel에서 uid 삭제
-        RoomRepository()
-            .removeUid(roomStreamModel.roomId!, roomStreamModel.uid!);
+        deleteUser(roomStreamModel);
       },
       secondfunction: () {
         Get.back();
       },
     );
+  }
+
+  void getOutButton() {
+    RoomStreamModel roomStreamModel = RoomStreamModel(
+      uid: AuthController.to.user.value.uid,
+      roomId: roomModel.roomId,
+    );
+    deleteUser(roomStreamModel);
+    Get.back();
+  }
+
+  void deleteRoomButton() {
+    //모든 유저에 대해 roomId 삭제
+    for (String uid in roomModel.uidList!) {
+      UserRepository.removeRoomId(uid, roomModel.roomId!);
+    }
+    //roomModel 삭제
+    RoomRepository().deleteRoomModel(roomModel);
   }
 
   void inviteCodeCopyButton() {

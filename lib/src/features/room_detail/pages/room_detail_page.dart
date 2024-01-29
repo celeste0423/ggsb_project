@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
+import 'package:ggsb_project/src/features/auth/widgets/full_size_loading_indicator.dart';
 import 'package:ggsb_project/src/features/room_detail/controllers/room_detail_page_controller.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
 import 'package:ggsb_project/src/utils/calcTotalLiveSeconds.dart';
@@ -52,7 +53,9 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
         controller.roomModel.creatorUid == AuthController.to.user.value.uid
             ? CupertinoButton(
                 padding: EdgeInsets.zero,
-                onPressed: () {},
+                onPressed: () {
+                  controller.deleteRoomButton();
+                },
                 child: Text(
                   '방 삭제',
                   style: TextStyle(
@@ -64,7 +67,9 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
               )
             : CupertinoButton(
                 padding: EdgeInsets.zero,
-                onPressed: () {},
+                onPressed: () {
+                  controller.getOutButton();
+                },
                 child: Text(
                   '방 나가기',
                   style: TextStyle(
@@ -321,6 +326,14 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
         children: [
           _background(),
           _content(),
+          Obx(
+            () => Visibility(
+              visible: controller.isPageLoading.value,
+              child: FullSizeLoadingIndicator(
+                backgroundColor: Colors.black.withOpacity(0.5),
+              ),
+            ),
+          ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

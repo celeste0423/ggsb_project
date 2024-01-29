@@ -318,11 +318,12 @@ class TimerPage extends GetView<TimerPageController> {
             ),
           ),
           Obx(
-            () => controller.isPageLoading.value
-                ? FullSizeLoadingIndicator(
-                    backgroundColor: Colors.black.withOpacity(0.5),
-                  )
-                : SizedBox(),
+            () => Visibility(
+              visible: controller.isPageLoading.value,
+              child: FullSizeLoadingIndicator(
+                backgroundColor: Colors.black.withOpacity(0.5),
+              ),
+            ),
           ),
         ],
       ),
