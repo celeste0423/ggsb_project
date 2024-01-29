@@ -57,10 +57,12 @@ class RoomAddPageController extends GetxController {
       ClipboardData(text: roomId.value),
     ).then(
       (_) {
-        Get.snackbar(
-          '방 초대 코드가 복사되었습니다.',
-          '친구들에게 코드를 보내주세요!',
-          snackPosition: SnackPosition.TOP,
+        openAlertDialog(
+          title: '방 초대 코드가 복사되었습니다.',
+          content: '친구들에게 코드를 보내주세요!',
+          mainfunction: () {
+            Get.back();
+          },
         );
       },
     );

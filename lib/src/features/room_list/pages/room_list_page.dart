@@ -16,15 +16,11 @@ class RoomListPage extends GetView<RoomListPageController> {
 
   PreferredSizeWidget _appBar() {
     return AppBar(
-      leadingWidth: 75,
       centerTitle: false,
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
       ),
-      title: Padding(
-        padding: const EdgeInsets.only(left: 20),
-        child: TitleText(text: '방 목록'),
-      ),
+      title: TitleText(text: '방 목록'),
       // actions: [
       //   Padding(
       //     padding: const EdgeInsets.only(right: 20),

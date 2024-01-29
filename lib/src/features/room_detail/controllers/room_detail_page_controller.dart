@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
+import 'package:ggsb_project/src/features/room_list/controllers/room_list_page_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
@@ -19,6 +20,9 @@ class RoomDetailPageController extends GetxController {
   Rx<bool> isPageLoading = false.obs;
 
   Rx<bool> backgroundAnimation = false.obs;
+
+  // Rx<int> roomTotalSeconds = 0.obs;
+  Rx<int> roomBestSeconds = 0.obs;
 
   @override
   void onInit() async {
@@ -53,7 +57,11 @@ class RoomDetailPageController extends GetxController {
       mainBtnColor: CustomColors.redText,
       secondButtonText: '취소',
       mainfunction: () async {
-        deleteUser(roomStreamModel);
+        isPageLoading(true);
+        await deleteUser(roomStreamModel);
+        RoomListPageController().checkIsRoomList();
+        isPageLoading(false);
+        Get.back();
       },
       secondfunction: () {
         Get.back();
@@ -67,6 +75,7 @@ class RoomDetailPageController extends GetxController {
       roomId: roomModel.roomId,
     );
     deleteUser(roomStreamModel);
+    RoomListPageController().checkIsRoomList();
     Get.back();
   }
 
@@ -77,6 +86,8 @@ class RoomDetailPageController extends GetxController {
     }
     //roomModel 삭제
     RoomRepository().deleteRoomModel(roomModel);
+    RoomListPageController().checkIsRoomList();
+    Get.back();
   }
 
   void inviteCodeCopyButton() {
@@ -84,10 +95,12 @@ class RoomDetailPageController extends GetxController {
       ClipboardData(text: roomModel.roomId!),
     ).then(
       (_) {
-        Get.snackbar(
-          '방 초대 코드가 복사되었습니다.',
-          '친구들에게 코드를 보내주세요!',
-          snackPosition: SnackPosition.TOP,
+        openAlertDialog(
+          title: '방 초대 코드가 복사되었습니다.',
+          content: '친구들에게 코드를 보내주세요!',
+          mainfunction: () {
+            Get.back();
+          },
         );
       },
     );

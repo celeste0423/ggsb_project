@@ -15,12 +15,15 @@ class TitleText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: TextStyle(
-        color: color ?? CustomColors.blackText,
-        fontSize: fontSize ?? 22,
-        fontWeight: FontWeight.w800,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: color ?? CustomColors.blackText,
+          fontSize: fontSize ?? 22,
+          fontWeight: FontWeight.w800,
+        ),
       ),
     );
   }

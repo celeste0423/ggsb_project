@@ -154,18 +154,22 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
   Widget _rankingCard(int index, RoomStreamModel roomStreamModel) {
     RoomStreamModel liveRoomStreamModel =
         CalcTotalLiveSeconds.calcTotalLiveSecInRoomStream(roomStreamModel);
+    if (controller.roomBestSeconds.value <
+        liveRoomStreamModel.totalLiveSeconds!) {
+      controller.roomBestSeconds(liveRoomStreamModel.totalLiveSeconds!);
+    }
     return Stack(
       children: [
         Container(
           height: 110,
-          padding: EdgeInsets.symmetric(horizontal: 30),
-          margin: EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          margin: const EdgeInsets.symmetric(vertical: 10),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                offset: Offset(0, 4),
+                offset: const Offset(0, 4),
                 blurRadius: 4,
                 color: Colors.black.withOpacity(0.1),
               ),
@@ -212,23 +216,31 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                   Container(
                     width: 80,
                     height: 80,
-                    child: CircularProgressIndicator(
-                      strokeCap: StrokeCap.round,
-                      strokeWidth: 8,
-                      value: 0.5,
+                    child: Obx(
+                      () => CircularProgressIndicator(
+                        strokeCap: StrokeCap.round,
+                        strokeWidth: 8,
+                        // value: ((roomStreamModel.totalLiveSeconds ??
+                        //         0 / controller.roomBestSeconds.value)
+                        //     .toDouble()),
+                        value: 0.5,
+                      ),
                     ),
                   ),
                   Positioned(
-                    top: 32,
-                    right: 25,
-                    child: Text(
-                      '60%',
-                      style: TextStyle(
-                        color: CustomColors.lightGreyText,
-                        fontSize: 12,
-                      ),
-                    ),
-                  )
+                      top: 32,
+                      right: 25,
+                      child: Obx(
+                        () => Text(
+                          // '${((roomStreamModel.totalLiveSeconds ?? 0 / controller.roomBestSeconds.value) * 100).toInt()}%',
+                          // '${controller.roomTotalSeconds.value}%',
+                          '테스트',
+                          style: TextStyle(
+                            color: CustomColors.lightGreyText,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ))
                 ],
               ),
             ],
@@ -274,7 +286,7 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
     );
   }
 
-  Widget _floatingActionButton() {
+  Widget _copyCodeButton() {
     return CupertinoButton(
       padding: EdgeInsets.zero,
       onPressed: () {
@@ -337,7 +349,7 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: _floatingActionButton(),
+      floatingActionButton: _copyCodeButton(),
     );
   }
 }

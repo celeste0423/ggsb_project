@@ -21,10 +21,10 @@ class RoomListPageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _checkIsRoomList();
+    checkIsRoomList();
   }
 
-  void _checkIsRoomList() async {
+  void checkIsRoomList() async {
     isRoomListLoading(true);
     await AuthController.to
         .updateAuthController(AuthController.to.user.value.uid!);
