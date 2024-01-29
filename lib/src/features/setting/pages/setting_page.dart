@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/setting/controllers/setting_page_controller.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
@@ -25,96 +26,151 @@ class SettingPage extends GetView<SettingPageController> {
 
 
   Widget _buttons() {
-    return Expanded(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          _titlebox('고객지원'),
-          _button(
-            '리뷰 남기기',
-                () {},
-          ),
-          _linebox(),
-          _button(
-            '앱 버전',
-                () {
-            },
-          ),
-          _linebox(),
-          _button(
-            '이용약관',
-                () {},
-          ),
-          _titlebox('계정'),
-          _linebox(),
-          _button(
-            '연결된 계정',
-                () {
-            },
-          ),
-          _linebox(),
-          _button(
-            '로그아웃',
-                () {
-            },
-          ),
-          _linebox(),
-        ],
-      ),
-    );
-  }
-
-  Widget _button(String text,  VoidCallback onTap) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      child: Row(
-        children: [
-          SizedBox(width: 10),
-          Text(
-            text,
-            style: TextStyle(
-              color: CustomColors.blackText,
-              fontSize: 14,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(height: 20),
+            _titlebox('고객지원'),
+            SizedBox(height: 4),
+            _button(
+              '리뷰 남기기',
+                  () {},
+              true,
+              true
             ),
-          ),
-        ],
-      ),
+            _linebox(),
+            _button(
+              '앱 버전',
+                  () {
+              },
+              false,
+              true
+            ),
+            _linebox(),
+            _button(
+              '이용약관',
+                  () {},
+              true,
+              true
+            ),
+            SizedBox(height: 34),
+            _titlebox('계정'),
+            _linebox(),
+            _button(
+              '연결된 계정',
+                  () {
+              },
+              true,
+              true
+            ),
+            _linebox(),
+            _button(
+              '로그아웃',
+                  () {
+              },
+              false,
+              false
+            ),
+            _linebox(),
+          ],
+        ),
+        SizedBox(height: 32),
+        _quitBox(),
+      ],
     );
   }
 
-
-
-  Widget _linebox(){
+  Widget _quitBox(){
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Center(
-        child: Container(
-          width: 314,
-          height: 1,
-          decoration: BoxDecoration(
-            color: CustomColors.lightGreyBackground,
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Container(
+        height: 47,
+        decoration: BoxDecoration(
+          color: CustomColors.subRed,
+          borderRadius: BorderRadius.all(Radius.circular(15))
+        ),
+        child: Center(
+          child: Text(
+            '탈퇴하기',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 14,
+              fontWeight: FontWeight.w800
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _titlebox(String text){
+
+  Widget _button(String text, VoidCallback onTap, bool hasIcon, bool isblackText) {
+    Color textColor = isblackText ? CustomColors.blackText : Colors.red;
+    Widget iconWidget;
+
+    if (hasIcon) {
+      iconWidget = SvgPicture.asset('assets/icons/back_right.svg');
+    } else {
+      iconWidget = SizedBox();
+    }
+
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 10),
       child: Row(
         children: [
-          SizedBox(width: 10),
-          Text(
-            text,
-            style: TextStyle(
-              color: CustomColors.blackText,
-              fontSize: 16,
-              fontWeight: FontWeight.w600
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Text(
+                    text,
+                    style: TextStyle(
+                      color: textColor,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+                iconWidget,
+              ],
             ),
-          )
+          ),
         ],
       ),
+    );
+  }
+
+
+
+
+  Widget _linebox(){
+    return Center(
+      child: Container(
+        width: 314,
+        height: 1,
+        decoration: BoxDecoration(
+          color: CustomColors.lightGreyBackground,
+        ),
+      ),
+    );
+  }
+
+  Widget _titlebox(String text){
+    return Row(
+      children: [
+        SizedBox(width: 10),
+        Text(
+          text,
+          style: TextStyle(
+            color: CustomColors.blackText,
+            fontSize: 16,
+            fontWeight: FontWeight.w600
+          ),
+        )
+      ],
     );
   }
 
@@ -133,7 +189,6 @@ class SettingPage extends GetView<SettingPageController> {
             children: [
               _buttons(),
 
-
             ],
           ),
         ),
@@ -141,168 +196,3 @@ class SettingPage extends GetView<SettingPageController> {
     );
   }
 }
-  // Widget _supportBox() {
-  //   return Column(
-  //     children: [
-  //       Container(
-  //         padding: EdgeInsets.only(top: 45, bottom: 10),
-  //         child: TextRegular(
-  //           text: text,
-  //           style: TextStyle(
-  //             color: isBlack ? Colors.black : CustomColors.redRoom,
-  //           ),
-  //         ),
-  //       ),
-  //       Padding(
-  //         padding: const EdgeInsets.only(top: 0),
-  //         child: Container(
-  //           width: 314,
-  //           height: 1,
-  //           color: CustomColors.lightGreyText,
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-
-
-// class SettingPage extends GetView<SettingPageController> {
-//   const SettingPage({super.key});
-//
-//   @override
-//   State<SettingPage> createState() => _SettingPageState();
-// }
-//
-// class _SettingPageState extends State<SettingPage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         leading: SvgIconButton(
-//           assetName: 'assets/icons/back.svg',
-//           onTap: Get.back,
-//         ),
-//         title: Padding(
-//           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-//           child: Container(
-//             color: Colors.white,
-//             child: Padding(
-//               padding: const EdgeInsets.only(left: 0),
-//               child: TitleText(text: '설정'),
-//             ),
-//           ),
-//         ),
-//       ),
-//       body: Column(
-//         children: [
-//           _supportBox(),
-//         ],
-//       ),
-//     );
-//   }
-// }
-//
-// @override
-// Widget build(BuildContext context) {
-//   Get.put(SettingPageController());
-//   return SafeArea(
-//     child: Scaffold(
-//         appBar: _appBar(),
-//         body: Padding(
-//           padding: const EdgeInsets.symmetric(horizontal: 20),
-//           child: Column(
-//             children: [
-//              SettingPage,
-//               SizedBox(height: 85),
-//             ],
-//           ),
-//         )),
-//   );
-// }
-
-// Widget _supportBox() {
-//   return Column(
-//     children: [
-//       Container(
-//         padding: EdgeInsets.only(top: 45, bottom: 10),
-//         child: TextRegular(text: '고객 지원'),
-//       ),
-//       Padding(
-//         padding: const EdgeInsets.only(top: 0),
-//         child: Container(
-//           width: 314,
-//           height: 1,
-//           color: CustomColors.lightGreyText,
-//         ),
-//       ),
-//       Container(
-//         padding: EdgeInsets.symmetric(vertical: 10),
-//         child: Text(
-//           '리뷰 남기기',
-//         ),
-//       ),
-//       Container(
-//         width: 314,
-//         height: 1,
-//         color: CustomColors.lightGreyText,
-//       ),
-//       Container(
-//         padding: EdgeInsets.symmetric(vertical: 10.0),
-//         child: Text(
-//           '앱 버전',
-//         ),
-//       ),
-//       Container(
-//         width: 314,
-//         height: 1,
-//         color: CustomColors.lightGreyText,
-//       ),
-//       Container(
-//         padding: EdgeInsets.symmetric(vertical: 10.0),
-//         child: Text(
-//           '이용약관',
-//         ),
-//       ),
-//       Container(
-//         width: 314,
-//         height: 1,
-//         color: CustomColors.lightGreyText,
-//       ),
-//       Container(
-//         padding: EdgeInsets.symmetric(vertical: 10.0),
-//         child: Text(
-//           '계정',
-//         ),
-//       ),
-//       Container(
-//         width: 314,
-//         height: 1,
-//         color: CustomColors.lightGreyText,
-//       ),
-//       Container(
-//         padding: EdgeInsets.symmetric(vertical: 10.0),
-//         child: Text(
-//           '연결된 게정',
-//         ),
-//       ),
-//       Container(
-//         width: 314,
-//         height: 1,
-//         color: CustomColors.lightGreyText,
-//       ),
-//       Container(
-//         padding: EdgeInsets.symmetric(vertical: 10.0),
-//         child: Text(
-//           '로그아웃',
-//           style: TextStyle(color: CustomColors.redRoom),
-//         ),
-//       ),
-//       Container(
-//         width: 314,
-//         height: 1,
-//         color: CustomColors.lightGreyText,
-//       ),
-//     ],
-//   );
-// }
-
