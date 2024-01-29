@@ -22,28 +22,25 @@ class WelcomePage extends GetView<WelcomePageController> {
   }
 
   Widget _title() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(right: 205),
-          child: SvgPicture.asset(
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, bottom: 20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SvgPicture.asset(
             'assets/images/logo.svg',
             width: 120,
             height: 120,
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(right: 150, top: 20, bottom: 10),
-          child: SvgPicture.asset(
+          SizedBox(height: 10),
+          SvgPicture.asset(
             'assets/images/caption.svg',
             width: 175,
             height: 45,
           ),
-        ),
-        const Padding(
-          padding: EdgeInsets.only(right: 200),
-          child: Text(
+          SizedBox(height: 10),
+          Text(
             '공부로 대결하는\n한판 진검승부',
             textAlign: TextAlign.left,
             style: TextStyle(
@@ -51,14 +48,13 @@ class WelcomePage extends GetView<WelcomePageController> {
               fontSize: 15,
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
   Widget _bottomTab() {
     return Container(
-      height: 250,
       width: double.infinity,
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -72,11 +68,13 @@ class WelcomePage extends GetView<WelcomePageController> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(height: 50),
+            SizedBox(height: 40),
             GoogleLoginButton(),
+            SizedBox(height: 10),
             FacebookLoginButton(),
-            SizedBox(height: 50),
+            SizedBox(height: 40),
             _infoText(),
+            SizedBox(height: 10)
           ],
         ),
       ),
@@ -176,10 +174,8 @@ class WelcomePage extends GetView<WelcomePageController> {
             ],
           ),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Expanded(
-                child: SizedBox(),
-              ),
               Expanded(
                 child: _title(),
               ),
