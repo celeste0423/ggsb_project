@@ -85,7 +85,7 @@ class RoomStreamRepository {
         .collection('rooms')
         .doc(roomId)
         .collection('roomStream')
-        .orderBy('totalSeconds')
+        .orderBy('totalSeconds', descending: true)
         .snapshots()
         .map((event) {
       List<RoomStreamModel> roomStreams = [];

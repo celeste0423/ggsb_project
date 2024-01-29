@@ -154,9 +154,10 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
   Widget _rankingCard(int index, RoomStreamModel roomStreamModel) {
     RoomStreamModel liveRoomStreamModel =
         CalcTotalLiveSeconds.calcTotalLiveSecInRoomStream(roomStreamModel);
-    if (controller.roomBestSeconds.value <
-        liveRoomStreamModel.totalLiveSeconds!) {
-      controller.roomBestSeconds(liveRoomStreamModel.totalLiveSeconds!);
+    // print(
+    //     '내 시간${liveRoomStreamModel.totalLiveSeconds} 최고 시간 ${controller.roomBestSeconds}');
+    if (controller.roomBestSeconds < liveRoomStreamModel.totalLiveSeconds!) {
+      controller.roomBestSeconds = liveRoomStreamModel.totalLiveSeconds!;
     }
     return Stack(
       children: [
@@ -216,31 +217,26 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                   Container(
                     width: 80,
                     height: 80,
-                    child: Obx(
-                      () => CircularProgressIndicator(
-                        strokeCap: StrokeCap.round,
-                        strokeWidth: 8,
-                        value:
-                            ((0 / controller.roomBestSeconds.value).toDouble()),
-                        // value: 0.5,
+                    child: CircularProgressIndicator(
+                      strokeCap: StrokeCap.round,
+                      strokeWidth: 8,
+                      value: ((liveRoomStreamModel.totalLiveSeconds! /
+                              controller.roomBestSeconds)
+                          .toDouble()),
+                      // value: 0.5,
+                    ),
+                  ),
+                  Positioned(
+                    top: 32,
+                    right: 25,
+                    child: Text(
+                      '${((liveRoomStreamModel.totalLiveSeconds! / controller.roomBestSeconds) * 100).toInt()}%',
+                      style: TextStyle(
+                        color: CustomColors.lightGreyText,
+                        fontSize: 12,
                       ),
                     ),
                   ),
-                  // Positioned(
-                  //   top: 32,
-                  //   right: 25,
-                  //   child: Obx(
-                  //     () => Text(
-                  //       // '${((roomStreamModel.totalLiveSeconds ?? 0 / controller.roomBestSeconds.value) * 100).toInt()}%',
-                  //       // '${controller.roomTotalSeconds.value}%',
-                  //       '테스트',
-                  //       style: TextStyle(
-                  //         color: CustomColors.lightGreyText,
-                  //         fontSize: 12,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
                 ],
               ),
             ],

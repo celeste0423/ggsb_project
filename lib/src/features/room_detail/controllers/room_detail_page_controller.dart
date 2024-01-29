@@ -22,7 +22,7 @@ class RoomDetailPageController extends GetxController {
   Rx<bool> backgroundAnimation = false.obs;
 
   // Rx<int> roomTotalSeconds = 0.obs;
-  Rx<int> roomBestSeconds = 0.obs;
+  int roomBestSeconds = 0;
 
   @override
   void onInit() async {
