@@ -39,9 +39,7 @@ class AuthController extends GetxController {
         timeData = timeData.copyWith(
           totalSeconds: 0,
         );
-        print('잘 못 지나감');
       }
-      print('잘 지나감');
       timeModel(timeData);
     }
   }

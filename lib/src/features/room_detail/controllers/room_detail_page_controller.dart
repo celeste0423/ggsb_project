@@ -45,8 +45,8 @@ class RoomDetailPageController extends GetxController {
   }
 
   @override
-  void dispose() {
-    super.dispose();
+  void onClose() {
+    super.onClose();
     _secondsTimer.cancel();
   }
 }

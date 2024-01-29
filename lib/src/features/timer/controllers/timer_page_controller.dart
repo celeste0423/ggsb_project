@@ -62,7 +62,10 @@ class TimerPageController extends GetxController
     isTimerCheck();
     calcTotalLiveSec();
     _secondsTimer = Timer.periodic(Duration(seconds: 1), (timer) {
-      calcTotalLiveSec();
+      print('타이머 작동중');
+      if (isTimer.value) {
+        calcTotalLiveSec();
+      }
       update(['roomListTimer']);
     });
     roomTabController.addListener(() {
@@ -98,7 +101,7 @@ class TimerPageController extends GetxController
   void calcTotalLiveSec() {
     late int liveTotalSeconds;
     TimeModel timeModel = AuthController.to.timeModel.value;
-    print('이전 전체 시간 ${timeModel.totalSeconds}');
+    // print('이전 전체 시간 ${timeModel.totalSeconds}');
     if (timeModel.isTimer == false) {
       liveTotalSeconds = timeModel.totalSeconds!;
     } else {
@@ -225,8 +228,8 @@ class TimerPageController extends GetxController
   }
 
   @override
-  void dispose() {
-    super.dispose();
+  void onClose() {
+    super.onClose();
     _secondsTimer.cancel();
   }
 }
