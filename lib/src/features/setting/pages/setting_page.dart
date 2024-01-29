@@ -7,6 +7,7 @@ import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
 import 'package:ggsb_project/src/widgets/text_regular.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
+// import 'package:ggsb-project/src/features/setting/setting_account_page.dart';
 
 class SettingPage extends GetView<SettingPageController> {
   const SettingPage({super.key});
@@ -58,10 +59,12 @@ class SettingPage extends GetView<SettingPageController> {
             ),
             SizedBox(height: 34),
             _titlebox('계정'),
+            SizedBox(height: 20),
             _linebox(),
             _button(
               '연결된 계정',
                   () {
+                // Get.to(Setting_Account_Page());
               },
               true,
               true
@@ -117,28 +120,31 @@ class SettingPage extends GetView<SettingPageController> {
       iconWidget = SizedBox();
     }
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 10),
-      child: Row(
-        children: [
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Text(
-                    text,
-                    style: TextStyle(
-                      color: textColor,
-                      fontSize: 14,
+    return CupertinoButton(
+      onPressed: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 19),
+        child: Row(
+          children: [
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Text(
+                      text,
+                      style: TextStyle(
+                        color: textColor,
+                        fontSize: 14,
+                      ),
                     ),
                   ),
-                ),
-                iconWidget,
-              ],
+                  iconWidget,
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -167,7 +173,7 @@ class SettingPage extends GetView<SettingPageController> {
           style: TextStyle(
             color: CustomColors.blackText,
             fontSize: 16,
-            fontWeight: FontWeight.w600
+            fontWeight: FontWeight.w800
           ),
         )
       ],

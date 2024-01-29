@@ -183,12 +183,9 @@ class TimerPage extends GetView<TimerPageController> {
                         padding: EdgeInsets.zero,
                         itemCount: roomStreamList.length,
                         itemBuilder: (context, index) {
-                          return FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: _rankingCard(
-                              index,
-                              roomStreamList[index],
-                            ),
+                          return _rankingCard(
+                            index,
+                            roomStreamList[index],
                           );
                         },
                       ),
@@ -211,40 +208,41 @@ class TimerPage extends GetView<TimerPageController> {
         horizontal: index == 0 ? 50 : 80,
         vertical: 10,
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            controller.toOrdinal(index + 1),
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w800,
-              fontSize: index == 0 ? 24 : 16,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Text(
-              roomStreamModel.nickname!,
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              controller.toOrdinal(index + 1),
               style: TextStyle(
                 color: Colors.white,
-                fontWeight: index == 0 ? FontWeight.w600 : FontWeight.w400,
+                fontWeight: FontWeight.w800,
+                fontSize: index == 0 ? 24 : 16,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Text(
+                roomStreamModel.nickname!,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: index == 0 ? FontWeight.w600 : FontWeight.w400,
+                  fontSize: index == 0 ? 20 : 16,
+                ),
+              ),
+            ),
+            Text(
+              SecondsUtil.convertToDigitString(
+                  liveRoomStreamModel.totalLiveSeconds!),
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
                 fontSize: index == 0 ? 20 : 16,
               ),
             ),
-          ),
-          Text(
-            SecondsUtil.convertToDigitString(
-                liveRoomStreamModel.totalLiveSeconds!),
-            style: TextStyle(
-              color: liveRoomStreamModel.isTimer!
-                  ? CustomColors.mainBlue
-                  : Colors.white,
-              fontWeight: FontWeight.w600,
-              fontSize: index == 0 ? 20 : 16,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
