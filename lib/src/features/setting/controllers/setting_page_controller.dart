@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/constants/service_urls.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
@@ -18,29 +19,35 @@ class SettingPageController extends GetxController {
   }
 
 
-  void settingButton2() {
 
-    if( AuthController.to.user.value.loginType == 'google'){
-      openAlertDialog(
-        title: '방 초대 코드가 복사되었습니다.',
-        // content: '친구들에게 코드를 보내주세요!',
-        mainfunction: () {
-          Get.back();
-        },
-      );
-    }
 
-    else if ( AuthController.to.user.value.loginType == 'facebook'){
-      openAlertDialog(
-        title: '방 초대 코드가 복사되었습니다.',
-        // content: '친구들에게 코드를 보내주세요!',
-        mainfunction: () {
-          Get.back();
-        },
-      );
-    }
 
-  }
+
+
+
+  // void settingButton2() {
+  //
+  //   if( AuthController.to.user.value.loginType == 'google'){
+  //     openAlertDialog(
+  //       title: '방 초대 코드가 복사되었습니다.',
+  //       // content: '친구들에게 코드를 보내주세요!',
+  //       mainfunction: () {
+  //         Get.back();
+  //       },
+  //     );
+  //   }
+  //
+  //   else if ( AuthController.to.user.value.loginType == 'facebook'){
+  //     openAlertDialog(
+  //       title: '방 초대 코드가 복사되었습니다.',
+  //       // content: '친구들에게 코드를 보내주세요!',
+  //       mainfunction: () {
+  //         Get.back();
+  //       },
+  //     );
+  //   }
+  //
+  // }
 
 
    Future<void> serviceTermsButton() async {

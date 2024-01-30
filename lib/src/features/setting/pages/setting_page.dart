@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/constants/service_urls.dart';
+import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/setting/controllers/setting_page_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
@@ -43,14 +44,12 @@ class SettingPage extends GetView<SettingPageController> {
             _linebox(),
             _button('이용약관', () async {
               await controller.serviceTermsButton();
-            }, true, true),
+              }, true, true),
             SizedBox(height: 34),
             _titlebox('계정'),
             SizedBox(height: 20),
             _linebox(),
-            _button('연결된 계정', () {
-              controller.settingButton();
-            }, true, true),
+            _button('연결된 계정', () {Get.dialog(_settingDialog());}, true, true),
             _linebox(),
             _button('로그아웃', () {}, false, false),
             _linebox(),
@@ -152,6 +151,93 @@ class SettingPage extends GetView<SettingPageController> {
       ],
     );
   }
+
+  Widget _settingDialog() {
+    String loginType = AuthController.to.user.value.loginType ?? '';
+    Widget icon;
+
+    switch (loginType) {
+      case 'google':
+        icon = Image.asset(
+          'assets/icons/google.png',
+          height: 30,
+        );
+        break;
+      case 'facebook':
+        icon = Image.asset(
+          'assets/icons/facebook.png',
+          height: 30,
+        );
+        break;
+      case 'apple':
+        icon = Image.asset(
+          'assets/icons/apple.png',
+          height: 30,
+        );
+        break;
+      default:
+        icon = SizedBox(); // 기본값은 빈 위젯
+        break;
+    }
+
+    return Dialog(
+      child: Container(
+        height: 100,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        decoration: BoxDecoration(
+          color: CustomColors.whiteBackground,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Row(
+          children: [
+            icon,
+            SizedBox(width: 10),
+            Text(
+              AuthController.to.user.value.email ?? '',
+              style: TextStyle(
+                color: CustomColors.blackText,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+
+  // Widget _settingDialog() {
+  //   return Dialog(
+  //     child: Container(
+  //       height: 100,
+  //       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+  //       decoration: BoxDecoration(
+  //         color: CustomColors.whiteBackground,
+  //         borderRadius: BorderRadius.circular(20),
+  //       ),
+  //       child: Row(
+  //         children: [
+  //           Image.asset(
+  //             'assets/icons/google.png',
+  //             height: 30,
+  //           ),
+  //           SizedBox(width: 10),
+  //           Text(
+  //             // '${AuthController.currentUser.email}',
+  //             '${AuthController.to.user.value.email}',
+  //             style: TextStyle(
+  //               color: CustomColors.blackText,
+  //               fontSize: 16,
+  //               fontWeight: FontWeight.bold,
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+
 
   @override
   Widget build(BuildContext context) {
