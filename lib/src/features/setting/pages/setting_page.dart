@@ -54,7 +54,10 @@ class SettingPage extends GetView<SettingPageController> {
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         final version = snapshot.data!.version;
-                        return Text('v $version');
+                        return Text(
+                          'v $version',
+                          style: TextStyle(color: CustomColors.lightGreyText),
+                        );
                       } else {
                         return SizedBox();
                       }
