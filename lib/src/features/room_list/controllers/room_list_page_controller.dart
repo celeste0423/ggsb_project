@@ -51,6 +51,10 @@ class RoomListPageController extends GetxController {
         Get.back();
         openAlertDialog(title: '방 정보가 없습니다.');
         isRoomListLoading(false);
+      } else if (roomModel.uidList!.length >= 7) {
+        Get.back();
+        openAlertDialog(title: '방이 가득 찼습니다.');
+        isRoomListLoading(false);
       } else {
         //방 정보 업데이트
         RoomModel updatedRoomModel = roomModel.copyWith(

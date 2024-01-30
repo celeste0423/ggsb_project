@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
@@ -10,6 +11,7 @@ import 'package:ggsb_project/src/models/room_stream_model.dart';
 import 'package:ggsb_project/src/repositories/room_repository.dart';
 import 'package:ggsb_project/src/repositories/room_stream_repository.dart';
 import 'package:ggsb_project/src/repositories/user_repository.dart';
+import 'package:ggsb_project/src/utils/calcTotalLiveSeconds.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 
 class RoomDetailPageController extends GetxController {
@@ -21,8 +23,10 @@ class RoomDetailPageController extends GetxController {
 
   Rx<bool> backgroundAnimation = false.obs;
 
-  // Rx<int> roomTotalSeconds = 0.obs;
+  List<RoomStreamModel> roomStreamList = [];
+  List<RoomStreamModel> liveRoomStreamList = [];
   int roomBestSeconds = 0;
+  // int roomTotalSeconds = 0;
 
   @override
   void onInit() async {
@@ -47,6 +51,28 @@ class RoomDetailPageController extends GetxController {
 
   Stream<List<RoomStreamModel>> roomUserListStream() {
     return RoomStreamRepository().roomStreamListStream(roomModel.roomId!);
+  }
+
+  void arrangeSnapshot(AsyncSnapshot<List<RoomStreamModel>> snapshot) {
+    roomStreamList = snapshot.data!;
+    for (int i = 0; i < roomStreamList.length; i++) {
+      RoomStreamModel roomStreamModel = roomStreamList[i];
+      RoomStreamModel liveRoomStreamModel =
+          CalcTotalLiveSeconds.calcTotalLiveSecInRoomStream(roomStreamModel);
+      // liveRoomStreamModel을 기존 리스트의 해당 인덱스에 업데이트
+      if (liveRoomStreamList.length <= i) {
+        liveRoomStreamList.add(liveRoomStreamModel);
+      } else {
+        liveRoomStreamList[i] = liveRoomStreamModel;
+      }
+      if (roomBestSeconds < liveRoomStreamModel.totalLiveSeconds!) {
+        print(roomBestSeconds);
+        roomBestSeconds = liveRoomStreamModel.totalLiveSeconds!;
+      }
+      // print(
+      //     (liveRoomStreamModel.totalLiveSeconds! / roomBestSeconds).toString());
+      // print(liveRoomStreamModel.totalLiveSeconds);
+    }
   }
 
   Future<bool> backButton() async {

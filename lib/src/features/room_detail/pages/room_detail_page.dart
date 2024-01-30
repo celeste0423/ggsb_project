@@ -6,7 +6,6 @@ import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart'
 import 'package:ggsb_project/src/features/auth/widgets/full_size_loading_indicator.dart';
 import 'package:ggsb_project/src/features/room_detail/controllers/room_detail_page_controller.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
-import 'package:ggsb_project/src/utils/calcTotalLiveSeconds.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
@@ -103,14 +102,14 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                 } else if (snapshot.hasError) {
                   return const Text('불러오는 중 에러가 발생했습니다.');
                 } else {
-                  List<RoomStreamModel> roomStreamList = snapshot.data!;
                   return GetBuilder<RoomDetailPageController>(
                     id: 'roomUserListTimer',
                     builder: (controller) {
+                      controller.arrangeSnapshot(snapshot);
                       return ListView.builder(
                         shrinkWrap: true,
                         padding: const EdgeInsets.fromLTRB(0, 0, 0, 100),
-                        itemCount: roomStreamList.length + 1,
+                        itemCount: controller.roomStreamList.length + 1,
                         itemBuilder: (context, index) {
                           if (index == 0) {
                             return Container(
@@ -130,8 +129,8 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                             );
                           } else {
                             return _rankingCard(
-                              index,
-                              roomStreamList[index - 1],
+                              index - 1,
+                              controller.roomStreamList[index - 1],
                             );
                           }
                         },
@@ -148,13 +147,8 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
   }
 
   Widget _rankingCard(int index, RoomStreamModel roomStreamModel) {
-    RoomStreamModel liveRoomStreamModel =
-        CalcTotalLiveSeconds.calcTotalLiveSecInRoomStream(roomStreamModel);
     // print(
-    //     '내 시간${liveRoomStreamModel.totalLiveSeconds} 최고 시간 ${controller.roomBestSeconds}');
-    if (controller.roomBestSeconds < liveRoomStreamModel.totalLiveSeconds!) {
-      controller.roomBestSeconds = liveRoomStreamModel.totalLiveSeconds!;
-    }
+    //     '${((controller.liveRoomStreamList[index].totalLiveSeconds!).toDouble() / (controller.roomBestSeconds).toInt()).toString()}');
     return Stack(
       children: [
         Container(
@@ -190,10 +184,10 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                   ),
                   Text(
                     SecondsUtil.convertToDigitString(
-                      liveRoomStreamModel.totalLiveSeconds!,
+                      controller.liveRoomStreamList[index].totalLiveSeconds!,
                     ),
                     style: TextStyle(
-                      color: liveRoomStreamModel.isTimer!
+                      color: controller.liveRoomStreamList[index].isTimer!
                           ? CustomColors.nameToRoomColor(
                               controller.roomModel.color!)
                           : CustomColors.blackText,
@@ -222,9 +216,14 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                           controller.roomModel.color!),
                       strokeCap: StrokeCap.round,
                       strokeWidth: 8,
-                      value: ((liveRoomStreamModel.totalLiveSeconds ??
-                              0 / controller.roomBestSeconds)
-                          .toDouble()),
+                      value: controller
+                                  .liveRoomStreamList[index].totalLiveSeconds !=
+                              null
+                          ? ((controller.liveRoomStreamList[index]
+                                      .totalLiveSeconds!)
+                                  .toDouble() /
+                              (controller.roomBestSeconds).toDouble())
+                          : 0,
                       // value: 0.5,
                     ),
                   ),
@@ -232,7 +231,7 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                     top: 32,
                     right: 25,
                     child: Text(
-                      '${((liveRoomStreamModel.totalLiveSeconds ?? 0 / controller.roomBestSeconds) * 100).toInt()}%',
+                      '${controller.liveRoomStreamList[index].totalLiveSeconds != null ? ((controller.liveRoomStreamList[index].totalLiveSeconds!).toDouble() / (controller.roomBestSeconds).toDouble() * 100).toInt() : 0}%',
                       style: const TextStyle(
                         color: CustomColors.lightGreyText,
                         fontSize: 12,
