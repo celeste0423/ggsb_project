@@ -23,7 +23,7 @@ class TimerPage extends GetView<TimerPageController> {
       leadingWidth: 75,
       title: Text(
         controller.today.value,
-        style: TextStyle(
+        style: const TextStyle(
           color: CustomColors.lightGreyText,
           fontSize: 20,
           fontWeight: FontWeight.w800,
@@ -128,14 +128,14 @@ class TimerPage extends GetView<TimerPageController> {
     return Expanded(
       child: Obx(() {
         return controller.noRooms.value
-            ? Center(
+            ? const Center(
                 child: Text(
                   '방을 만들거나 방에 가입해보세요',
                   style: TextStyle(color: Colors.white),
                 ),
               )
             : controller.isPageLoading.value
-                ? Center(
+                ? const Center(
                     child: CircularProgressIndicator(
                       color: CustomColors.mainBlue,
                     ),
@@ -154,7 +154,7 @@ class TimerPage extends GetView<TimerPageController> {
         stream: controller.roomListStream(roomModel.roomId!),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(
                 color: CustomColors.mainBlue,
               ),
@@ -168,7 +168,7 @@ class TimerPage extends GetView<TimerPageController> {
               children: [
                 Text(
                   roomModel.roomName!,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: CustomColors.lightGreyText,
                     fontWeight: FontWeight.w600,
                     fontSize: 16,
@@ -310,7 +310,7 @@ class TimerPage extends GetView<TimerPageController> {
           Scaffold(
             extendBodyBehindAppBar: true,
             appBar: _appBar(),
-            body: Container(
+            body: SizedBox(
               height: Get.height,
               child: Stack(
                 children: [
