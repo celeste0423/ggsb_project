@@ -264,32 +264,57 @@ class RoomAddPage extends GetView<RoomAddPageController> {
               Radius.circular(20),
             ),
           ),
-          height: 135,
+          height: 125,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: GetBuilder<RoomAddPageController>(
               builder: (RoomAddPageController controller) {
-                return GridView(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 6,
-                    crossAxisSpacing: 8,
-                    mainAxisSpacing: 8,
-                  ),
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: List.generate(12, (index) {
-                    return CupertinoButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        controller.selectedColor(controller.colors[index]);
-                        controller.update();
-                      },
-                      child: _colorIcon(
-                        controller.colors[index],
-                        controller.colors[index] ==
-                            controller.selectedColor.value,
+                return Column(
+                  children: [
+                    Row(
+                      children: List.generate(
+                        6,
+                        (index) => Expanded(
+                          child: CupertinoButton(
+                            padding: EdgeInsets.zero,
+                            onPressed: () {
+                              int itemIndex = index;
+                              controller
+                                  .selectedColor(controller.colors[itemIndex]);
+                              controller.update();
+                            },
+                            child: _colorIcon(
+                              controller.colors[index],
+                              controller.colors[index] ==
+                                  controller.selectedColor.value,
+                            ),
+                          ),
+                        ),
                       ),
-                    );
-                  }),
+                    ),
+                    const SizedBox(height: 8), // 두 번째 Row와의 간격
+                    Row(
+                      children: List.generate(
+                        6,
+                        (index) => Expanded(
+                          child: CupertinoButton(
+                            padding: EdgeInsets.zero,
+                            onPressed: () {
+                              int itemIndex = index + 6;
+                              controller
+                                  .selectedColor(controller.colors[itemIndex]);
+                              controller.update();
+                            },
+                            child: _colorIcon(
+                              controller.colors[index + 6],
+                              controller.colors[index + 6] ==
+                                  controller.selectedColor.value,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 );
               },
             ),
