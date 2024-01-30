@@ -273,6 +273,7 @@ class RoomAddPage extends GetView<RoomAddPageController> {
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 6,
                     crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
                   ),
                   physics: const NeverScrollableScrollPhysics(),
                   children: List.generate(12, (index) {

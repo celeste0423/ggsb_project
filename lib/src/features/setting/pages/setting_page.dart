@@ -2,12 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:ggsb_project/src/constants/service_urls.dart';
 import 'package:ggsb_project/src/features/setting/controllers/setting_page_controller.dart';
+import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
 import 'package:ggsb_project/src/widgets/text_regular.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
-// import 'package:ggsb-project/src/features/setting/setting_account_page.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingPage extends GetView<SettingPageController> {
   const SettingPage({super.key});
@@ -25,7 +27,6 @@ class SettingPage extends GetView<SettingPageController> {
     );
   }
 
-
   Widget _buttons() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -36,47 +37,22 @@ class SettingPage extends GetView<SettingPageController> {
             SizedBox(height: 20),
             _titlebox('고객지원'),
             SizedBox(height: 4),
-            _button(
-              '리뷰 남기기',
-                  () {},
-              true,
-              true
-            ),
+            _button('리뷰 남기기', () {}, true, true),
             _linebox(),
-            _button(
-              '앱 버전',
-                  () {
-              },
-              false,
-              true
-            ),
+            _button('앱 버전', () {}, false, true),
             _linebox(),
-            _button(
-              '이용약관',
-                  () {},
-              true,
-              true
-            ),
+            _button('이용약관', () async {
+              await controller.serviceTermsButton();
+            }, true, true),
             SizedBox(height: 34),
             _titlebox('계정'),
             SizedBox(height: 20),
             _linebox(),
-            _button(
-              '연결된 계정',
-                  () {
-                // Get.to(Setting_Account_Page());
-              },
-              true,
-              true
-            ),
+            _button('연결된 계정', () {
+              controller.settingButton();
+            }, true, true),
             _linebox(),
-            _button(
-              '로그아웃',
-                  () {
-              },
-              false,
-              false
-            ),
+            _button('로그아웃', () {}, false, false),
             _linebox(),
           ],
         ),
@@ -86,31 +62,32 @@ class SettingPage extends GetView<SettingPageController> {
     );
   }
 
-  Widget _quitBox(){
+  Widget _quitBox() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
         height: 47,
         decoration: BoxDecoration(
-          color: CustomColors.subRed,
-          borderRadius: BorderRadius.all(Radius.circular(15))
-        ),
+            color: CustomColors.subRed,
+            borderRadius: BorderRadius.all(Radius.circular(15))),
         child: Center(
           child: Text(
             '탈퇴하기',
             style: TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-              fontWeight: FontWeight.w800
-            ),
+                color: Colors.white, fontSize: 14, fontWeight: FontWeight.w800),
           ),
         ),
       ),
     );
   }
 
-
-  Widget _button(String text, VoidCallback onTap, bool hasIcon, bool isblackText) {
+  // VoidCallback onTap,
+  Widget _button(
+    String text,
+    VoidCallback onPressed,
+    bool hasIcon,
+    bool isblackText,
+  ) {
     Color textColor = isblackText ? CustomColors.blackText : Colors.red;
     Widget iconWidget;
 
@@ -121,7 +98,7 @@ class SettingPage extends GetView<SettingPageController> {
     }
 
     return CupertinoButton(
-      onPressed: onTap,
+      onPressed: onPressed,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 19),
         child: Row(
@@ -149,10 +126,7 @@ class SettingPage extends GetView<SettingPageController> {
     );
   }
 
-
-
-
-  Widget _linebox(){
+  Widget _linebox() {
     return Center(
       child: Container(
         width: 314,
@@ -164,24 +138,20 @@ class SettingPage extends GetView<SettingPageController> {
     );
   }
 
-  Widget _titlebox(String text){
+  Widget _titlebox(String text) {
     return Row(
       children: [
         SizedBox(width: 10),
         Text(
           text,
           style: TextStyle(
-            color: CustomColors.blackText,
-            fontSize: 16,
-            fontWeight: FontWeight.w800
-          ),
+              color: CustomColors.blackText,
+              fontSize: 16,
+              fontWeight: FontWeight.w800),
         )
       ],
     );
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -194,7 +164,6 @@ class SettingPage extends GetView<SettingPageController> {
           child: Column(
             children: [
               _buttons(),
-
             ],
           ),
         ),
