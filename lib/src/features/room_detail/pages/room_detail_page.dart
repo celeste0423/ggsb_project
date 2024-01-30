@@ -109,8 +109,8 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                     builder: (controller) {
                       return ListView.builder(
                         shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        itemCount: roomStreamList.length + 2,
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 100),
+                        itemCount: roomStreamList.length + 1,
                         itemBuilder: (context, index) {
                           if (index == 0) {
                             return Container(
@@ -128,14 +128,11 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                                 ],
                               ),
                             );
-                          } else if (index < roomStreamList.length + 1) {
+                          } else {
                             return _rankingCard(
                               index,
                               roomStreamList[index - 1],
                             );
-                          } else {
-                            // return SizedBox(height: 105);
-                            return const SizedBox(height: 100);
                           }
                         },
                       );

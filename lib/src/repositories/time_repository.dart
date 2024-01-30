@@ -60,19 +60,19 @@ class TimeRepository {
     }
   }
 
-  Stream<List<TimeModel>> roomListStream(String roomId) {
+  Stream<List<TimeModel>> timeListStream(String uid) {
     return FirebaseFirestore.instance
-        .collection('rooms')
-        .doc(roomId)
-        .collection('roomStream')
-        .orderBy('totalSeconds')
+        .collection('users')
+        .doc(uid)
+        .collection('time')
+        .orderBy('day')
         .snapshots()
         .map((event) {
-      List<TimeModel> roomStreams = [];
-      for (var roomStream in event.docs) {
-        roomStreams.add(TimeModel.fromJson(roomStream.data()));
+      List<TimeModel> timeModels = [];
+      for (var timeModel in event.docs) {
+        timeModels.add(TimeModel.fromJson(timeModel.data()));
       }
-      return roomStreams;
+      return timeModels;
     });
   }
 }

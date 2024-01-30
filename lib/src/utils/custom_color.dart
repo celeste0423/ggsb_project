@@ -6,6 +6,7 @@ class CustomColors {
   //앱 대표 색
   static const Color mainBlue = Color(0xFF5FA3D4);
   static const Color subLightBlue = Color(0xFF85AAD7);
+  static const Color subPaleBlue = Color(0xFFE2F3FF);
   static const Color mainBlack = Color(0xFF212121);
   static const Color subRed = Color(0xFFF14B40);
 
