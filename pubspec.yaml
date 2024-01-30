@@ -51,6 +51,7 @@ dependencies:
   status_bar_control: ^3.2.1
   cron: ^0.6.0
   flutter_launcher_icons: ^0.13.1
+  firebase_analytics: ^10.8.0
 
 dev_dependencies:
   flutter_test:

@@ -46,7 +46,7 @@ class RoomDetailPageController extends GetxController {
   }
 
   Stream<List<RoomStreamModel>> roomUserListStream() {
-    return RoomStreamRepository().roomListStream(roomModel.roomId!);
+    return RoomStreamRepository().roomStreamListStream(roomModel.roomId!);
   }
 
   Future<bool> backButton() async {

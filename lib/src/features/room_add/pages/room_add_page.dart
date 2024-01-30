@@ -264,7 +264,7 @@ class RoomAddPage extends GetView<RoomAddPageController> {
               Radius.circular(20),
             ),
           ),
-          height: 125,
+          height: 135,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: GetBuilder<RoomAddPageController>(

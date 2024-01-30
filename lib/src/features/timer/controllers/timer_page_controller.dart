@@ -117,16 +117,16 @@ class TimerPageController extends GetxController
   }
 
   Stream<List<RoomStreamModel>> roomListStream(String roomId) {
-    return RoomStreamRepository().roomListStream(roomId);
+    return RoomStreamRepository().roomStreamListStream(roomId);
   }
 
-  Future<void> playButton() async {
+  Future<void> startButton() async {
     DateTime now = DateTime.now();
     isTimer(true);
     //상단바 색상
     await StatusBarControl.setColor(CustomColors.mainBlack, animated: true);
-    print('타이머 시작');
     // await StatusBarControl.setStyle(StatusBarStyle.LIGHT_CONTENT);
+
     //개인 timeModel 설정
     AuthController().updateTimeModel(AuthController.to.user.value.uid!);
     TimeModel updatedTimeModel = AuthController.to.timeModel.value.copyWith(
@@ -146,27 +146,37 @@ class TimerPageController extends GetxController
         isTimer: true,
         startTime: now,
       );
+      if (roomModel.roomType == 'day') {
+        updatedRoomStreamModel = updatedRoomStreamModel.copyWith(
+          totalSeconds: updatedTimeModel.totalSeconds,
+        );
+      }
       await RoomStreamRepository().updateRoomStream(updatedRoomStreamModel);
     });
   }
 
   Future<void> stopButton() async {
     DateTime now = DateTime.now();
+    int totalSec = 0;
+    int totalSecRoomStream = 0;
+    int diffSec = 0;
+
     isTimer(false);
     //상단바 색상
     await StatusBarControl.setColor(Colors.white, animated: true);
     // await StatusBarControl.setStyle(StatusBarStyle.DARK_CONTENT);
+
     //개인 timeModel 업로드
     TimeModel timeModel = AuthController.to.timeModel.value;
     if (DateUtil.calculateDateDifference(timeModel.startTime!, now) >= 1) {
       //시간 측정중 하루가 넘어감
       datePassedWhileIsTimer(now);
     } else {
-      int diffSec = SecondsUtil.calculateDifferenceInSeconds(
+      diffSec = SecondsUtil.calculateDifferenceInSeconds(
         AuthController.to.timeModel.value.startTime!,
         now,
       );
-      int totalSec = AuthController.to.timeModel.value.totalSeconds! + diffSec;
+      totalSec = AuthController.to.timeModel.value.totalSeconds! + diffSec;
       TimeModel updatedTimeModel = AuthController.to.timeModel.value.copyWith(
         isTimer: false,
         lastTime: now,
@@ -178,21 +188,21 @@ class TimerPageController extends GetxController
     }
 
     //방별 roomStream 설정
-    int diffSec = SecondsUtil.calculateDifferenceInSeconds(
-      AuthController.to.timeModel.value.startTime!,
-      now,
-    );
     roomList.forEach((RoomModel roomModel) async {
       RoomStreamModel roomStreamModel =
           await RoomStreamRepository().getRoomStream(
         roomModel.roomId!,
         AuthController.to.user.value.uid!,
       );
-      int totalSec = roomStreamModel.totalSeconds! + diffSec;
+      if (roomModel.roomType == 'day') {
+        totalSecRoomStream = totalSec;
+      } else if (roomModel.roomType == 'week') {
+        totalSecRoomStream = roomStreamModel.totalSeconds! + diffSec;
+      }
       RoomStreamModel updatedRoomStreamModel = roomStreamModel.copyWith(
         isTimer: false,
         lastTime: now,
-        totalSeconds: totalSec,
+        totalSeconds: totalSecRoomStream,
       );
       await RoomStreamRepository().updateRoomStream(updatedRoomStreamModel);
     });

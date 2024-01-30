@@ -225,8 +225,8 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                           controller.roomModel.color!),
                       strokeCap: StrokeCap.round,
                       strokeWidth: 8,
-                      value: ((liveRoomStreamModel.totalLiveSeconds! /
-                              controller.roomBestSeconds)
+                      value: ((liveRoomStreamModel.totalLiveSeconds ??
+                              0 / controller.roomBestSeconds)
                           .toDouble()),
                       // value: 0.5,
                     ),
@@ -235,7 +235,7 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                     top: 32,
                     right: 25,
                     child: Text(
-                      '${((liveRoomStreamModel.totalLiveSeconds! / controller.roomBestSeconds) * 100).toInt()}%',
+                      '${((liveRoomStreamModel.totalLiveSeconds ?? 0 / controller.roomBestSeconds) * 100).toInt()}%',
                       style: const TextStyle(
                         color: CustomColors.lightGreyText,
                         fontSize: 12,

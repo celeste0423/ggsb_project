@@ -27,7 +27,10 @@ class RoomRepository {
           roomList.add(roomModel);
         }
       } catch (e) {
-        openAlertDialog(title: '방 리스트 불러오기에 실패했습니다.', content: e.toString());
+        openAlertDialog(
+          title: '방 리스트 불러오기에 실패했습니다.',
+          content: e.toString(),
+        );
       }
     }
     return roomList;

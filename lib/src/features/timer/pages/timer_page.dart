@@ -110,7 +110,7 @@ class TimerPage extends GetView<TimerPageController> {
           size: 45,
           controller: controller.animateIconController,
           onStartIconPress: () {
-            controller.playButton();
+            controller.startButton();
             return true;
           },
           onEndIconPress: () {

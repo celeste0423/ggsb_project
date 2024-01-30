@@ -80,7 +80,7 @@ class RoomStreamRepository {
     }
   }
 
-  Stream<List<RoomStreamModel>> roomListStream(String roomId) {
+  Stream<List<RoomStreamModel>> roomStreamListStream(String roomId) {
     return FirebaseFirestore.instance
         .collection('rooms')
         .doc(roomId)
