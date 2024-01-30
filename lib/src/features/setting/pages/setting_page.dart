@@ -10,6 +10,7 @@ import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
 import 'package:ggsb_project/src/widgets/text_regular.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingPage extends GetView<SettingPageController> {
@@ -40,16 +41,40 @@ class SettingPage extends GetView<SettingPageController> {
             SizedBox(height: 4),
             _button('리뷰 남기기', () {}, true, true),
             _linebox(),
-            _button('앱 버전', () {}, false, true),
+            Row(
+              children: [
+                Expanded(
+                  child: _button('앱 버전', () {}, false, true),
+                ),
+                // 앱 버전옆에 표시
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 35),
+                  child: FutureBuilder<PackageInfo>(
+                    future: PackageInfo.fromPlatform(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        final version = snapshot.data!.version;
+                        return Text('v $version');
+                      } else {
+                        return SizedBox();
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
+            // _button('앱 버전', () {}, false, true),
             _linebox(),
             _button('이용약관', () async {
               await controller.serviceTermsButton();
-              }, true, true),
+            }, true, true),
             SizedBox(height: 34),
             _titlebox('계정'),
             SizedBox(height: 20),
             _linebox(),
-            _button('연결된 계정', () {Get.dialog(_settingDialog());}, true, true),
+            _button('연결된 계정', () {
+              Get.dialog(_settingDialog());
+            }, true, true),
             _linebox(),
             _button('로그아웃', () {}, false, false),
             _linebox(),
@@ -191,7 +216,7 @@ class SettingPage extends GetView<SettingPageController> {
         child: Row(
           children: [
             icon,
-            SizedBox(width: 10),
+            SizedBox(width: 20),
             Text(
               AuthController.to.user.value.email ?? '',
               style: TextStyle(
@@ -205,7 +230,6 @@ class SettingPage extends GetView<SettingPageController> {
       ),
     );
   }
-
 
   // Widget _settingDialog() {
   //   return Dialog(
@@ -237,7 +261,6 @@ class SettingPage extends GetView<SettingPageController> {
   //     ),
   //   );
   // }
-
 
   @override
   Widget build(BuildContext context) {
