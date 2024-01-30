@@ -45,7 +45,7 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
           assetPath: 'assets/icons/back.svg',
           iconColor: Colors.white,
           onTap: () {
-            Get.back();
+            controller.backButton();
           },
         ),
       ),
@@ -68,7 +68,7 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
             : CupertinoButton(
                 padding: EdgeInsets.zero,
                 onPressed: () {
-                  controller.getOutButton();
+                  controller.outOfRoomButton();
                 },
                 child: const Text(
                   '방 나가기',
@@ -332,25 +332,31 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
   @override
   Widget build(BuildContext context) {
     Get.put(RoomDetailPageController());
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: _appBar(),
-      body: Stack(
-        children: [
-          _background(),
-          _content(),
-          Obx(
-            () => Visibility(
-              visible: controller.isPageLoading.value,
-              child: FullSizeLoadingIndicator(
-                backgroundColor: Colors.black.withOpacity(0.5),
+
+    return WillPopScope(
+      onWillPop: () {
+        return Future(() => controller.backButton());
+      },
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: _appBar(),
+        body: Stack(
+          children: [
+            _background(),
+            _content(),
+            Obx(
+              () => Visibility(
+                visible: controller.isPageLoading.value,
+                child: FullSizeLoadingIndicator(
+                  backgroundColor: Colors.black.withOpacity(0.5),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: _copyCodeButton(),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: _copyCodeButton(),
     );
   }
 }

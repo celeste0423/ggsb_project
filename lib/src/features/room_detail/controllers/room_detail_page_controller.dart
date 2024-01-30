@@ -49,6 +49,12 @@ class RoomDetailPageController extends GetxController {
     return RoomStreamRepository().roomListStream(roomModel.roomId!);
   }
 
+  Future<bool> backButton() async {
+    RoomListPageController().checkIsRoomList();
+    Get.back();
+    return true; // 뒤로 가기를 허용할지 여부를 반환
+  }
+
   void deleteUserButton(RoomStreamModel roomStreamModel) {
     openAlertDialog(
       title: '유저 삭제',
@@ -69,7 +75,7 @@ class RoomDetailPageController extends GetxController {
     );
   }
 
-  void getOutButton() {
+  void outOfRoomButton() {
     RoomStreamModel roomStreamModel = RoomStreamModel(
       uid: AuthController.to.user.value.uid,
       roomId: roomModel.roomId,
