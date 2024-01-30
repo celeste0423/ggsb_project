@@ -12,6 +12,9 @@ class TextFieldBox extends StatelessWidget {
   Color? hintColor;
   Function()? suffixOnPressed;
   TextInputType? textInputType;
+  Function(String)? onSubmitted;
+  TextInputAction? textInputAction;
+  bool? autoFocus;
 
   TextFieldBox({
     Key? key,
@@ -25,6 +28,9 @@ class TextFieldBox extends StatelessWidget {
     this.hintColor,
     this.suffixOnPressed,
     this.textInputType,
+    this.onSubmitted,
+    this.textInputAction,
+    this.autoFocus,
   }) : super(key: key);
 
   @override
@@ -56,6 +62,9 @@ class TextFieldBox extends StatelessWidget {
           counterText: '',
           border: InputBorder.none,
         ),
+        onSubmitted: onSubmitted,
+        textInputAction: textInputAction,
+        autofocus: autoFocus ?? false,
       ),
     );
   }

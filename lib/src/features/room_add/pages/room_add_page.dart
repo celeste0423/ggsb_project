@@ -26,33 +26,24 @@ class RoomAddPage extends GetView<RoomAddPageController> {
   }
 
   Widget _title() {
-    return Text(
-      '새로운 방을\n만들어 볼까요?',
-      style: TextStyle(
-        color: CustomColors.mainBlue,
-        fontWeight: FontWeight.w800,
-        fontSize: 30,
+    return const Padding(
+      padding: EdgeInsets.symmetric(vertical: 20),
+      child: Text(
+        '새로운 방을\n만들어 볼까요?',
+        style: TextStyle(
+          color: CustomColors.mainBlue,
+          fontWeight: FontWeight.w800,
+          fontSize: 30,
+        ),
       ),
     );
   }
 
-  Widget _inputTextFields() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          TextFieldBox(
-            textEditingController: controller.roomNameController,
-            hintText: '방 이름을 설정해 주세요',
-            backgroundColor: CustomColors.lightGreyBackground,
-          ),
-          _cycleSelectButton(),
-          _inviteCodeButton(),
-          _colorSelector(),
-        ],
-      ),
+  Widget _roomNameTextField() {
+    return TextFieldBox(
+      textEditingController: controller.roomNameController,
+      hintText: '방 이름을 설정해 주세요',
+      backgroundColor: CustomColors.lightGreyBackground,
     );
   }
 
@@ -258,18 +249,18 @@ class RoomAddPage extends GetView<RoomAddPageController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           '원하시는 대표 색상을 골라 주세요',
           style: TextStyle(
             fontWeight: FontWeight.w700,
             fontSize: 16,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: CustomColors.lightGreyBackground,
-            borderRadius: const BorderRadius.all(
+            borderRadius: BorderRadius.all(
               Radius.circular(20),
             ),
           ),
@@ -278,13 +269,13 @@ class RoomAddPage extends GetView<RoomAddPageController> {
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: GetBuilder<RoomAddPageController>(
               builder: (RoomAddPageController controller) {
-                return GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                return GridView(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 6,
                     crossAxisSpacing: 8,
                   ),
-                  itemCount: 12,
-                  itemBuilder: (context, index) {
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: List.generate(12, (index) {
                     return CupertinoButton(
                       padding: EdgeInsets.zero,
                       onPressed: () {
@@ -297,7 +288,7 @@ class RoomAddPage extends GetView<RoomAddPageController> {
                             controller.selectedColor.value,
                       ),
                     );
-                  },
+                  }),
                 );
               },
             ),
@@ -326,18 +317,16 @@ class RoomAddPage extends GetView<RoomAddPageController> {
   }
 
   Widget _addButton() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: MainButton(
-        buttonText: '방 완성',
-        textStyle: TextStyle(
-          fontWeight: FontWeight.w600,
-          color: Colors.white,
-        ),
-        onTap: () {
-          controller.addRoomButton();
-        },
+    return MainButton(
+      buttonText: '방 완성',
+      width: Get.width - 40,
+      textStyle: const TextStyle(
+        fontWeight: FontWeight.w600,
+        color: Colors.white,
       ),
+      onTap: () {
+        controller.addRoomButton();
+      },
     );
   }
 
@@ -347,31 +336,39 @@ class RoomAddPage extends GetView<RoomAddPageController> {
     return Stack(
       children: [
         Scaffold(
-          resizeToAvoidBottomInset: true,
           appBar: _appBar(),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: SingleChildScrollView(
-              child: Container(
-                height: Get.height - 105,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 20),
-                    _title(),
-                    Expanded(child: _inputTextFields()),
-                    _addButton(),
-                  ],
-                ),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  _title(),
+                  _roomNameTextField(),
+                  SizedBox(height: 30),
+                  _cycleSelectButton(),
+                  SizedBox(height: 30),
+                  _inviteCodeButton(),
+                  SizedBox(height: 30),
+                  _colorSelector(),
+                  SizedBox(height: 90),
+                ],
               ),
             ),
           ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
+          floatingActionButton: _addButton(),
         ),
-        Obx(() => controller.isRoomAddLoading.value
-            ? FullSizeLoadingIndicator(
-                backgroundColor: Colors.black.withOpacity(0.5),
-              )
-            : SizedBox()),
+        Obx(
+          () => Visibility(
+            visible: controller.isPageLoading.value,
+            child: FullSizeLoadingIndicator(
+              backgroundColor: Colors.black.withOpacity(0.5),
+            ),
+          ),
+        ),
       ],
     );
   }

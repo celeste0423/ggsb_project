@@ -19,7 +19,7 @@ class RoomAddPageController extends GetxController {
 
   TextEditingController roomNameController = TextEditingController();
 
-  Rx<bool> isRoomAddLoading = false.obs;
+  Rx<bool> isPageLoading = false.obs;
 
   Rx<String> roomType = 'day'.obs;
 
@@ -72,7 +72,7 @@ class RoomAddPageController extends GetxController {
     if (roomNameController.text == '') {
       openAlertDialog(title: '방 이름을 입력해주세요');
     } else {
-      isRoomAddLoading(true);
+      isPageLoading(true);
       print('유저 컨트롤러 정보 ${AuthController.to.user.value.toJson()}');
       //방 모델 업로드
       RoomModel roomModel = RoomModel(

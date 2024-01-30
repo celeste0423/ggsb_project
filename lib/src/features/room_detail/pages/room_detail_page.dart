@@ -19,7 +19,7 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
     return AppBar(
       backgroundColor: Colors.transparent,
       centerTitle: false,
-      systemOverlayStyle: SystemUiOverlayStyle(
+      systemOverlayStyle: const SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.light,
         statusBarColor: Colors.transparent,
         statusBarBrightness: Brightness.light,
@@ -32,7 +32,7 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
           ),
           Text(
             '${controller.roomModel.uidList!.length}/6명 ${controller.roomModel.creatorName}',
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 12,
             ),
@@ -56,7 +56,7 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                 onPressed: () {
                   controller.deleteRoomButton();
                 },
-                child: Text(
+                child: const Text(
                   '방 삭제',
                   style: TextStyle(
                     color: Colors.white,
@@ -70,7 +70,7 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                 onPressed: () {
                   controller.getOutButton();
                 },
-                child: Text(
+                child: const Text(
                   '방 나가기',
                   style: TextStyle(
                     color: Colors.white,
@@ -89,69 +89,61 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Column(
         children: [
-          SizedBox(height: 105),
-          StreamBuilder(
-            stream: controller.roomUserListStream(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: CircularProgressIndicator(
-                    color: CustomColors.mainBlue,
-                  ),
-                );
-              } else if (snapshot.hasError) {
-                return Text('불러오는 중 에러가 발생했습니다.');
-              } else {
-                List<RoomStreamModel> roomStreamList = snapshot.data!;
-                return SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: Get.width - 60,
-                        margin: EdgeInsets.symmetric(vertical: 20),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: Offset(0, 4),
-                              blurRadius: 4,
-                              color: Colors.black.withOpacity(0.1),
-                            ),
-                          ],
-                        ),
-                      ),
-                      GetBuilder<RoomDetailPageController>(
-                        id: 'roomUserListTimer',
-                        builder: (controller) {
-                          return ListView.builder(
-                            shrinkWrap: true,
-                            padding: EdgeInsets.zero,
-                            itemCount: roomStreamList.length + 1,
-                            itemBuilder: (context, index) {
-                              if (index < roomStreamList.length) {
-                                return _rankingCard(
-                                  index,
-                                  roomStreamList[index],
-                                );
-                              } else {
-                                // return SizedBox(height: 105);
-                                return Container(
-                                  color: Colors.red,
-                                  height: 2,
-                                  width: 50,
-                                );
-                              }
-                            },
-                          );
+          const SizedBox(height: 105),
+          Expanded(
+            child: StreamBuilder(
+              stream: controller.roomUserListStream(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: CustomColors.mainBlue,
+                    ),
+                  );
+                } else if (snapshot.hasError) {
+                  return const Text('불러오는 중 에러가 발생했습니다.');
+                } else {
+                  List<RoomStreamModel> roomStreamList = snapshot.data!;
+                  return GetBuilder<RoomDetailPageController>(
+                    id: 'roomUserListTimer',
+                    builder: (controller) {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        padding: EdgeInsets.zero,
+                        itemCount: roomStreamList.length + 2,
+                        itemBuilder: (context, index) {
+                          if (index == 0) {
+                            return Container(
+                              height: Get.width - 60,
+                              margin: const EdgeInsets.symmetric(vertical: 20),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    offset: const Offset(0, 4),
+                                    blurRadius: 4,
+                                    color: Colors.black.withOpacity(0.1),
+                                  ),
+                                ],
+                              ),
+                            );
+                          } else if (index < roomStreamList.length + 1) {
+                            return _rankingCard(
+                              index,
+                              roomStreamList[index - 1],
+                            );
+                          } else {
+                            // return SizedBox(height: 105);
+                            return const SizedBox(height: 100);
+                          }
                         },
-                      ),
-                    ],
-                  ),
-                );
-              }
-            },
+                      );
+                    },
+                  );
+                }
+              },
+            ),
           ),
         ],
       ),
@@ -193,9 +185,10 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                   Text(
                     roomStreamModel.nickname!,
                     style: TextStyle(
-                      color: CustomColors.mainBlue,
+                      color: CustomColors.nameToRoomColor(
+                          controller.roomModel.color!),
                       fontWeight: FontWeight.w400,
-                      fontSize: 16,
+                      fontSize: 20,
                     ),
                   ),
                   Text(
@@ -208,14 +201,14 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                               controller.roomModel.color!)
                           : CustomColors.blackText,
                       fontWeight: FontWeight.w600,
-                      fontSize: index == 0 ? 20 : 16,
+                      fontSize: 20,
                     ),
                   ),
                 ],
               ),
               Stack(
                 children: [
-                  Container(
+                  const SizedBox(
                     width: 80,
                     height: 80,
                     child: CircularProgressIndicator(
@@ -224,7 +217,7 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                       value: 1,
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     width: 80,
                     height: 80,
                     child: CircularProgressIndicator(
@@ -243,7 +236,7 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                     right: 25,
                     child: Text(
                       '${((liveRoomStreamModel.totalLiveSeconds! / controller.roomBestSeconds) * 100).toInt()}%',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: CustomColors.lightGreyText,
                         fontSize: 12,
                       ),

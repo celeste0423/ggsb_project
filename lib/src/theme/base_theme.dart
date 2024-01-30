@@ -11,6 +11,8 @@ ThemeData baseTheme(BuildContext context) {
     //appbar
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.white,
+      elevation: 0,
+      surfaceTintColor: Colors.transparent,
       centerTitle: true,
       toolbarHeight: 75,
       systemOverlayStyle: SystemUiOverlayStyle(

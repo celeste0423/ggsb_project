@@ -87,12 +87,16 @@ class SignupPage extends GetView<SignupPageController> {
                   backgroundColor: CustomColors.lightGreyBackground,
                   hintText: '닉네임(2~5자)',
                   maxLength: 5,
+                  textInputAction: TextInputAction.next,
+                  onSubmitted: (_) => FocusScope.of(Get.context!).nextFocus(),
+                  autoFocus: true,
                 ),
                 TextFieldBox(
-                  textEditingController: controller.schoolController,
-                  backgroundColor: CustomColors.lightGreyBackground,
-                  hintText: '학교',
-                ),
+                    textEditingController: controller.schoolController,
+                    backgroundColor: CustomColors.lightGreyBackground,
+                    hintText: '학교',
+                    textInputAction: TextInputAction.next,
+                    onSubmitted: (_) => FocusScope.of(Get.context!).unfocus()),
                 Obx(() {
                   return Row(
                     children: [
