@@ -29,7 +29,10 @@ class LiveSecondsUtil {
     DateTime now,
   ) {
     if (roomModel.roomType == 'day' &&
-        DateUtil.calculateDateDifference(liveRoomStreamModel.lastTime!, now) >=
+        DateUtil.calculateDateDifference(
+              liveRoomStreamModel.lastTime ?? now,
+              now,
+            ) >=
             1) {
       return 0;
     }

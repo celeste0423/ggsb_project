@@ -9,6 +9,8 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // firebase analytics 설정
         classpath 'com.google.gms:google-services:4.4.0'
+        // local notification 설정
+        classpath 'com.android.tools.build:gradle:7.3.1'
     }
 }
 

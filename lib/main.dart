@@ -2,6 +2,7 @@ import 'package:cron/cron.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/binding/init_binding.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
@@ -17,21 +18,12 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  //알림 설정
+  await _initNotificationSetting();
   //화면 회전 불가
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(const MyApp());
-    // SystemChrome.setSystemUIOverlayStyle(
-    //   //상단바 테마
-    //   SystemUiOverlayStyle.dark.copyWith(
-    //     statusBarIconBrightness: Brightness.dark,
-    //     statusBarColor: Colors.transparent,
-    //     systemStatusBarContrastEnforced: true,
-    //     systemNavigationBarColor: Colors.transparent,
-    //     systemNavigationBarDividerColor: Colors.transparent,
-    //     systemNavigationBarIconBrightness: Brightness.dark,
-    //   ),
-    // );
   });
   //날짜 언어 세팅
   initializeDateFormatting('ko-KR');
@@ -42,6 +34,26 @@ void main() async {
       AuthController().loginUser(AuthController.to.user.value.uid!);
     }
   });
+}
+
+Future<void> _initNotificationSetting() async {
+  final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  //안드로이드 초기 세팅
+  final AndroidInitializationSettings androidInitializationSettings =
+      AndroidInitializationSettings('@mipmap/ic_launcher');
+  //ios 초기 세팅
+  final DarwinInitializationSettings darwinInitializationSettings =
+      DarwinInitializationSettings(
+    requestAlertPermission: true,
+    requestBadgePermission: true,
+    requestSoundPermission: true,
+  );
+  //notification 초기 세팅
+  final InitializationSettings initializationSettings = InitializationSettings(
+    android: androidInitializationSettings,
+    iOS: darwinInitializationSettings,
+  );
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 }
 
 class MyApp extends StatelessWidget {
