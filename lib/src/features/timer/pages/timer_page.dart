@@ -248,19 +248,22 @@ class TimerPage extends GetView<TimerPageController> {
     return GetBuilder<TimerPageController>(
       id: 'tabIndicator',
       builder: (controller) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(
-            controller.indicatorCount.value,
-            (index) => Container(
-              margin: const EdgeInsets.symmetric(horizontal: 7),
-              width: 4,
-              height: 4,
-              decoration: BoxDecoration(
-                color: controller.roomTabController.index == index
-                    ? Colors.white
-                    : Colors.white.withOpacity(0.5),
-                borderRadius: BorderRadius.circular(3),
+        return Visibility(
+          visible: controller.indicatorCount != 1,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+              controller.indicatorCount,
+              (index) => Container(
+                margin: const EdgeInsets.symmetric(horizontal: 7),
+                width: 4,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: controller.roomTabController.index == index
+                      ? Colors.white
+                      : Colors.white.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(3),
+                ),
               ),
             ),
           ),

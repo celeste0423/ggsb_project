@@ -56,7 +56,7 @@ class TimerPageController extends GetxController
     }
   }
 
-  Rx<int> indicatorCount = 0.obs;
+  int indicatorCount = 0;
 
   @override
   void onInit() async {
@@ -89,7 +89,7 @@ class TimerPageController extends GetxController
       length: noRooms.value ? 0 : roomList!.length,
       vsync: this,
     );
-    indicatorCount(noRooms.value ? 0 : roomList!.length);
+    indicatorCount = noRooms.value ? 0 : roomList!.length;
     update(['tabIndicator']);
     isPageLoading(false);
   }
