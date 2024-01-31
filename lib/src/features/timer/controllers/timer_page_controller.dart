@@ -216,7 +216,7 @@ class TimerPageController extends GetxController
       );
       if (roomModel.roomType == 'day') {
         totalSecRoomStream = totalSec;
-      } else if (roomModel.roomType == 'week') {
+      } else {
         totalSecRoomStream = roomStreamModel.totalSeconds! + diffSec;
       }
       RoomStreamModel updatedRoomStreamModel = roomStreamModel.copyWith(
