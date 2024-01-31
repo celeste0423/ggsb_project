@@ -11,6 +11,7 @@ import 'package:ggsb_project/src/models/time_model.dart';
 import 'package:ggsb_project/src/repositories/room_repository.dart';
 import 'package:ggsb_project/src/repositories/room_stream_repository.dart';
 import 'package:ggsb_project/src/repositories/time_repository.dart';
+import 'package:ggsb_project/src/utils/calcTotalLiveSeconds.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
@@ -33,9 +34,11 @@ class TimerPageController extends GetxController
 
   Rx<String> totalLiveTime = '00:00:00'.obs;
 
+  Rx<bool> noRooms = false.obs;
   late List<RoomModel> roomList;
   late TabController roomTabController;
-  Rx<bool> noRooms = false.obs;
+  List<RoomStreamModel> roomStreamList = [];
+  List<RoomStreamModel> liveRoomStreamList = [];
 
   String toOrdinal(int number) {
     if (number % 100 >= 11 && number % 100 <= 13) {
@@ -118,6 +121,19 @@ class TimerPageController extends GetxController
 
   Stream<List<RoomStreamModel>> roomListStream(String roomId) {
     return RoomStreamRepository().roomStreamListStream(roomId);
+  }
+
+  void arrangeSnapshot(AsyncSnapshot<List<RoomStreamModel>> snapshot) {
+    roomStreamList = snapshot.data!;
+    liveRoomStreamList = List.from(roomStreamList);
+    // liveRoomStreamList에 대한 totalLiveSeconds 계산
+    for (int i = 0; i < liveRoomStreamList.length; i++) {
+      liveRoomStreamList[i] = CalcTotalLiveSeconds.calcTotalLiveSecInRoomStream(
+          liveRoomStreamList[i]);
+    }
+    // totalLiveSeconds를 기준으로 리스트를 큰 순서대로 정렬
+    liveRoomStreamList
+        .sort((a, b) => b.totalLiveSeconds!.compareTo(a.totalLiveSeconds!));
   }
 
   Future<void> startButton() async {

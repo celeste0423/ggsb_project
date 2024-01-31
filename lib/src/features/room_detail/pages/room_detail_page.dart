@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/auth/widgets/full_size_loading_indicator.dart';
 import 'package:ggsb_project/src/features/room_detail/controllers/room_detail_page_controller.dart';
-import 'package:ggsb_project/src/models/room_stream_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
@@ -128,10 +127,7 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                               ),
                             );
                           } else {
-                            return _rankingCard(
-                              index - 1,
-                              controller.roomStreamList[index - 1],
-                            );
+                            return _rankingCard(index - 1);
                           }
                         },
                       );
@@ -146,9 +142,7 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
     );
   }
 
-  Widget _rankingCard(int index, RoomStreamModel roomStreamModel) {
-    // print(
-    //     '${((controller.liveRoomStreamList[index].totalLiveSeconds!).toDouble() / (controller.roomBestSeconds).toInt()).toString()}');
+  Widget _rankingCard(int index) {
     return Stack(
       children: [
         Container(
@@ -174,7 +168,7 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    roomStreamModel.nickname!,
+                    controller.liveRoomStreamList[index].nickname!,
                     style: TextStyle(
                       color: CustomColors.nameToRoomColor(
                           controller.roomModel.color!),
@@ -249,11 +243,13 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
           child: Visibility(
             visible: controller.roomModel.creatorUid ==
                     AuthController.to.user.value.uid &&
-                roomStreamModel.uid != AuthController.to.user.value.uid,
+                controller.liveRoomStreamList[index].uid !=
+                    AuthController.to.user.value.uid,
             child: SvgIconButton(
               assetPath: 'assets/icons/cancel.svg',
               onTap: () {
-                controller.deleteUserButton(roomStreamModel);
+                controller
+                    .deleteUserButton(controller.liveRoomStreamList[index]);
               },
             ),
           ),

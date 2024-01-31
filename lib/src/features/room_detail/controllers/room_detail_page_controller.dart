@@ -55,23 +55,18 @@ class RoomDetailPageController extends GetxController {
 
   void arrangeSnapshot(AsyncSnapshot<List<RoomStreamModel>> snapshot) {
     roomStreamList = snapshot.data!;
-    for (int i = 0; i < roomStreamList.length; i++) {
-      RoomStreamModel roomStreamModel = roomStreamList[i];
-      RoomStreamModel liveRoomStreamModel =
-          CalcTotalLiveSeconds.calcTotalLiveSecInRoomStream(roomStreamModel);
-      // liveRoomStreamModel을 기존 리스트의 해당 인덱스에 업데이트
-      if (liveRoomStreamList.length <= i) {
-        liveRoomStreamList.add(liveRoomStreamModel);
-      } else {
-        liveRoomStreamList[i] = liveRoomStreamModel;
-      }
-      if (roomBestSeconds < liveRoomStreamModel.totalLiveSeconds!) {
-        print(roomBestSeconds);
-        roomBestSeconds = liveRoomStreamModel.totalLiveSeconds!;
-      }
-      // print(
-      //     (liveRoomStreamModel.totalLiveSeconds! / roomBestSeconds).toString());
-      // print(liveRoomStreamModel.totalLiveSeconds);
+    liveRoomStreamList = List.from(roomStreamList);
+    // liveRoomStreamList에 대한 totalLiveSeconds 계산
+    for (int i = 0; i < liveRoomStreamList.length; i++) {
+      liveRoomStreamList[i] = CalcTotalLiveSeconds.calcTotalLiveSecInRoomStream(
+          liveRoomStreamList[i]);
+    }
+    // totalLiveSeconds를 기준으로 리스트를 큰 순서대로 정렬
+    liveRoomStreamList
+        .sort((a, b) => b.totalLiveSeconds!.compareTo(a.totalLiveSeconds!));
+    // 정렬된 리스트의 첫 번째 요소의 totalLiveSeconds를 roomBestSeconds로 설정
+    if (liveRoomStreamList.isNotEmpty) {
+      roomBestSeconds = liveRoomStreamList.first.totalLiveSeconds!;
     }
   }
 

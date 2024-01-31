@@ -5,8 +5,6 @@ import 'package:ggsb_project/src/features/auth/widgets/full_size_loading_indicat
 import 'package:ggsb_project/src/features/timer/controllers/timer_page_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
-import 'package:ggsb_project/src/models/room_stream_model.dart';
-import 'package:ggsb_project/src/utils/calcTotalLiveSeconds.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
@@ -160,9 +158,8 @@ class TimerPage extends GetView<TimerPageController> {
               ),
             );
           } else if (snapshot.hasError) {
-            return Text('불러오는 중 에러가 발생했습니다.');
+            return const Text('불러오는 중 에러가 발생했습니다.');
           } else {
-            List<RoomStreamModel> roomStreamList = snapshot.data!;
             return Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -174,23 +171,23 @@ class TimerPage extends GetView<TimerPageController> {
                     fontSize: 16,
                   ),
                 ),
-                GetBuilder<TimerPageController>(
-                  id: 'roomListTimer',
-                  builder: (controller) {
-                    return SingleChildScrollView(
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        itemCount: roomStreamList.length,
-                        itemBuilder: (context, index) {
-                          return _rankingCard(
-                            index,
-                            roomStreamList[index],
-                          );
-                        },
-                      ),
-                    );
-                  },
+                Expanded(
+                  child: GetBuilder<TimerPageController>(
+                    id: 'roomListTimer',
+                    builder: (controller) {
+                      controller.arrangeSnapshot(snapshot);
+                      return SingleChildScrollView(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          padding: EdgeInsets.zero,
+                          itemCount: controller.roomStreamList.length,
+                          itemBuilder: (context, index) {
+                            return _rankingCard(index);
+                          },
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             );
@@ -200,9 +197,7 @@ class TimerPage extends GetView<TimerPageController> {
     }).toList();
   }
 
-  Widget _rankingCard(int index, RoomStreamModel roomStreamModel) {
-    RoomStreamModel liveRoomStreamModel =
-        CalcTotalLiveSeconds.calcTotalLiveSecInRoomStream(roomStreamModel);
+  Widget _rankingCard(int index) {
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: index == 0 ? 50 : 80,
@@ -224,7 +219,7 @@ class TimerPage extends GetView<TimerPageController> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Text(
-                roomStreamModel.nickname!,
+                controller.liveRoomStreamList[index].nickname!,
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: index == 0 ? FontWeight.w600 : FontWeight.w400,
@@ -234,9 +229,11 @@ class TimerPage extends GetView<TimerPageController> {
             ),
             Text(
               SecondsUtil.convertToDigitString(
-                  liveRoomStreamModel.totalLiveSeconds!),
+                  controller.liveRoomStreamList[index].totalLiveSeconds!),
               style: TextStyle(
-                color: Colors.white,
+                color: controller.liveRoomStreamList[index].isTimer!
+                    ? CustomColors.mainBlue
+                    : Colors.white,
                 fontWeight: FontWeight.w600,
                 fontSize: index == 0 ? 20 : 16,
               ),
