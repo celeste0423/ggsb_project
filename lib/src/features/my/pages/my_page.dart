@@ -8,6 +8,7 @@ import 'package:ggsb_project/src/models/time_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MyPage extends GetView<MyPageController> {
   const MyPage({super.key});
@@ -187,7 +188,7 @@ class MyPage extends GetView<MyPageController> {
             height: 30,
           ),
           '문의하기',
-          () {},
+          _onKakaoChannelPressed,
         ),
       ],
     );
@@ -228,6 +229,17 @@ class MyPage extends GetView<MyPageController> {
       ),
     );
   }
+
+
+  _onKakaoChannelPressed() async {
+    const kakaoChannelUrl = 'https://pf.kakao.com/_xjxndSG';
+    if (await canLaunch(kakaoChannelUrl)) {
+      await launch(kakaoChannelUrl);
+    } else {
+      throw '카카오톡 채널을 열 수 없습니다: $kakaoChannelUrl';
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
