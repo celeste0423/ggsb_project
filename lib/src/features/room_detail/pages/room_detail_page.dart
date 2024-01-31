@@ -77,7 +77,7 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                   ),
                 ),
               ),
-        SizedBox(width: 30),
+        const SizedBox(width: 30),
       ],
     );
   }
@@ -143,6 +143,14 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
   }
 
   Widget _rankingCard(int index) {
+    double percent =
+        controller.liveRoomStreamList[index].totalLiveSeconds != null
+            ? controller.roomBestSeconds != 0
+                ? ((controller.liveRoomStreamList[index].totalLiveSeconds!)
+                        .toDouble() /
+                    (controller.roomBestSeconds).toDouble())
+                : 0
+            : 0;
     return Stack(
       children: [
         Container(
@@ -210,22 +218,14 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                           controller.roomModel.color!),
                       strokeCap: StrokeCap.round,
                       strokeWidth: 8,
-                      value: controller
-                                  .liveRoomStreamList[index].totalLiveSeconds !=
-                              null
-                          ? ((controller.liveRoomStreamList[index]
-                                      .totalLiveSeconds!)
-                                  .toDouble() /
-                              (controller.roomBestSeconds).toDouble())
-                          : 0,
-                      // value: 0.5,
+                      value: percent,
                     ),
                   ),
                   Positioned(
                     top: 32,
                     right: 25,
                     child: Text(
-                      '${controller.liveRoomStreamList[index].totalLiveSeconds != null ? ((controller.liveRoomStreamList[index].totalLiveSeconds!).toDouble() / (controller.roomBestSeconds).toDouble() * 100).toInt() : 0}%',
+                      '${(percent * 100).toInt()}%',
                       style: const TextStyle(
                         color: CustomColors.lightGreyText,
                         fontSize: 12,
@@ -263,13 +263,13 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
       top: 0,
       child: Obx(
         () => AnimatedContainer(
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOutCubic,
           height: controller.backgroundAnimation.value ? 275 : 0,
           width: Get.width,
           decoration: BoxDecoration(
             color: CustomColors.nameToRoomColor(controller.roomModel.color!),
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(50),
               bottomRight: Radius.circular(50),
             ),
@@ -293,7 +293,7 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
             BoxShadow(
-              offset: Offset(0, 4),
+              offset: const Offset(0, 4),
               blurRadius: 4,
               color: Colors.black.withOpacity(0.1),
             ),
@@ -304,13 +304,13 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
           children: [
             Text(
               '초대 코드 복사 (${controller.roomModel.roomId!})',
-              style: TextStyle(
+              style: const TextStyle(
                 color: CustomColors.lightGreyText,
                 fontSize: 16,
               ),
             ),
-            SizedBox(width: 10),
-            Icon(
+            const SizedBox(width: 10),
+            const Icon(
               Icons.copy,
               size: 20,
               color: CustomColors.greyBackground,

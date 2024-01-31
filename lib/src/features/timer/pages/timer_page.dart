@@ -1,4 +1,4 @@
-import 'package:animate_icons/animate_icons.dart' as animateIcon;
+import 'package:animate_icons/animate_icons.dart' as animate_icon;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/widgets/full_size_loading_indicator.dart';
@@ -42,7 +42,7 @@ class TimerPage extends GetView<TimerPageController> {
   }
 
   Widget _content() {
-    return Container(
+    return SizedBox(
       width: Get.width,
       height: Get.height,
       child: Column(
@@ -51,10 +51,10 @@ class TimerPage extends GetView<TimerPageController> {
           _map(),
           _time(),
           _playButton(),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           _roomTabView(),
           _tabIndicator(),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
         ],
       ),
     );
@@ -62,7 +62,7 @@ class TimerPage extends GetView<TimerPageController> {
 
   Widget _map() {
     return Container(
-      margin: EdgeInsets.only(bottom: 30),
+      margin: const EdgeInsets.only(bottom: 30),
       height: 250,
       width: 250,
       decoration: BoxDecoration(
@@ -92,7 +92,7 @@ class TimerPage extends GetView<TimerPageController> {
   Widget _playButton() {
     return Obx(
       () => AnimatedContainer(
-        duration: Duration(milliseconds: 200),
+        duration: const Duration(milliseconds: 200),
         width: 60,
         height: 60,
         decoration: BoxDecoration(
@@ -101,8 +101,8 @@ class TimerPage extends GetView<TimerPageController> {
               ? CustomColors.greyBackground
               : CustomColors.mainBlue,
         ),
-        child: animateIcon.AnimateIcons(
-          duration: Duration(milliseconds: 200),
+        child: animate_icon.AnimateIcons(
+          duration: const Duration(milliseconds: 200),
           startIcon: Icons.play_arrow_rounded,
           endIcon: Icons.pause,
           size: 45,
@@ -182,7 +182,7 @@ class TimerPage extends GetView<TimerPageController> {
                           padding: EdgeInsets.zero,
                           itemCount: controller.roomStreamList.length,
                           itemBuilder: (context, index) {
-                            return _rankingCard(index);
+                            return _rankingCard(index, roomModel);
                           },
                         ),
                       );
@@ -197,7 +197,7 @@ class TimerPage extends GetView<TimerPageController> {
     }).toList();
   }
 
-  Widget _rankingCard(int index) {
+  Widget _rankingCard(int index, RoomModel roomModel) {
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: index == 0 ? 50 : 80,
@@ -228,8 +228,12 @@ class TimerPage extends GetView<TimerPageController> {
               ),
             ),
             Text(
-              SecondsUtil.convertToDigitString(
-                  controller.liveRoomStreamList[index].totalLiveSeconds!),
+              // SecondsUtil.convertToDigitString(
+              //     controller.liveRoomStreamList[index].totalLiveSeconds!),
+              SecondsUtil.convertToDigitString(controller.whetherTimerZero(
+                controller.liveRoomStreamList[index],
+                roomModel,
+              )),
               style: TextStyle(
                 color: controller.liveRoomStreamList[index].isTimer!
                     ? CustomColors.mainBlue
@@ -277,7 +281,7 @@ class TimerPage extends GetView<TimerPageController> {
       bottom: 0,
       child: Obx(
         () => AnimatedContainer(
-          duration: Duration(milliseconds: 500),
+          duration: const Duration(milliseconds: 500),
           curve: Curves.easeInOutCubic,
           height: controller.isTimer.value ? Get.height : Get.height - 395,
           width: Get.width,

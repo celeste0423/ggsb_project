@@ -11,7 +11,7 @@ import 'package:ggsb_project/src/models/time_model.dart';
 import 'package:ggsb_project/src/repositories/room_repository.dart';
 import 'package:ggsb_project/src/repositories/room_stream_repository.dart';
 import 'package:ggsb_project/src/repositories/time_repository.dart';
-import 'package:ggsb_project/src/utils/calcTotalLiveSeconds.dart';
+import 'package:ggsb_project/src/utils/calc_total_live_seconds.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
@@ -21,6 +21,8 @@ import 'package:status_bar_control/status_bar_control.dart';
 class TimerPageController extends GetxController
     with GetTickerProviderStateMixin {
   static TimerPageController get to => Get.find();
+
+  DateTime now = DateTime.now();
 
   Rx<bool> isPageLoading = false.obs;
   Rx<bool> isTimer = false.obs;
@@ -136,8 +138,19 @@ class TimerPageController extends GetxController
         .sort((a, b) => b.totalLiveSeconds!.compareTo(a.totalLiveSeconds!));
   }
 
+  int whetherTimerZero(
+    RoomStreamModel liveRoomStreamModel,
+    RoomModel roomModel,
+  ) {
+    if (roomModel.roomType == 'day' &&
+        DateUtil.calculateDateDifference(liveRoomStreamModel.lastTime!, now) >=
+            1) {
+      return 0;
+    }
+    return liveRoomStreamModel.totalLiveSeconds!;
+  }
+
   Future<void> startButton() async {
-    DateTime now = DateTime.now();
     isTimer(true);
     //상단바 색상
     await StatusBarControl.setColor(CustomColors.mainBlack, animated: true);

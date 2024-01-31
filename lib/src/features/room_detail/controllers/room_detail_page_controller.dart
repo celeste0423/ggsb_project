@@ -11,7 +11,7 @@ import 'package:ggsb_project/src/models/room_stream_model.dart';
 import 'package:ggsb_project/src/repositories/room_repository.dart';
 import 'package:ggsb_project/src/repositories/room_stream_repository.dart';
 import 'package:ggsb_project/src/repositories/user_repository.dart';
-import 'package:ggsb_project/src/utils/calcTotalLiveSeconds.dart';
+import 'package:ggsb_project/src/utils/calc_total_live_seconds.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 
 class RoomDetailPageController extends GetxController {

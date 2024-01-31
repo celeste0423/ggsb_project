@@ -1,5 +1,6 @@
 import 'package:ggsb_project/src/models/room_stream_model.dart';
-import 'package:ggsb_project/src/utils/seconds_util.dart';
+
+import 'seconds_util.dart';
 
 class CalcTotalLiveSeconds {
   static RoomStreamModel calcTotalLiveSecInRoomStream(
