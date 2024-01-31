@@ -52,6 +52,7 @@ dependencies:
   cron: ^0.6.0
   flutter_launcher_icons: ^0.13.1
   firebase_analytics: ^10.8.0
+  in_app_review: ^2.0.8
 
 dev_dependencies:
   flutter_test:

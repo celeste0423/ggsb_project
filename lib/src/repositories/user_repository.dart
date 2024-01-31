@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart' as facebook;
+import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:google_sign_in/google_sign_in.dart' as google;
@@ -172,4 +173,46 @@ class UserRepository {
       openAlertDialog(title: '유저 정보가 없습니다.');
     }
   }
+
+
+  static Future signOut() async {
+    try {
+      if (AuthController.to.user.value.loginType == 'google') {
+        //이전 로그인 기록 지우기
+        //todo: 해보니까 이전 로그인 기록 지워지지 않은것 같은데 그럼 왜 await googleSignIn.signOut();가 필요한거지?일단 앱 돌아가는데 아무 문제 없으니 스킵.
+        try {
+    final google.GoogleSignIn googleSignIn = google.GoogleSignIn();
+          await googleSignIn.signOut();
+
+        } catch (e) {
+          openAlertDialog(title: e.toString());
+        }
+      }
+      // if (AuthController.to.user.value.loginType == 'facebook') {
+      //   //이전 로그인 기록 지우기
+      //   try {
+      //     await facebook.signOut();
+      //
+      //   } catch (e) {
+      //     openAlertDialog(title: e.toString());
+      //   }
+      // }
+      if (AuthController.to.user.value.loginType == 'apple') {
+        try {
+          //apple 은 굳이 unlink 할 필요 없을듯?
+        } catch (e) {
+          openAlertDialog(title: e.toString());
+        }
+      }
+      await FirebaseAuth.instance.signOut();
+      print('await FirebaseAuth.instance.signOut();');
+      // AuthController.to.clearAuthController();
+      print(
+          "로그아웃 성공! AuthController.to.user.value.email = ${AuthController.to.user.value.email}");
+    } catch (e) {
+      print('로그아웃 실패${e.toString()}');
+    }
+
+  }
+
 }

@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/constants/service_urls.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
+import 'package:ggsb_project/src/repositories/user_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingPageController extends GetxController {
@@ -18,8 +20,18 @@ class SettingPageController extends GetxController {
     );
   }
 
+  Future signOut() async {
+    return await UserRepository.signOut();
+  }
 
-
+  // Future<void> logoutFromFacebook() async {
+  //   try {
+  //     await FacebookAuth.i.logOut();
+  //     print('Logged out from Facebook');
+  //   } catch (e) {
+  //     print('Error logging out from Facebook: $e');
+  //   }
+  // }
 
 
 
