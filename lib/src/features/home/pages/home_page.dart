@@ -12,7 +12,7 @@ class HomePage extends GetView<HomePageController> {
   PreferredSizeWidget _appBar() {
     return AppBar(
       centerTitle: false,
-      systemOverlayStyle: SystemUiOverlayStyle(
+      systemOverlayStyle: const SystemUiOverlayStyle(
         systemNavigationBarColor: CustomColors.mainBlack,
         systemNavigationBarIconBrightness: Brightness.light,
       ),
@@ -27,7 +27,7 @@ class HomePage extends GetView<HomePageController> {
     );
   }
 
-  Widget _charactorBox() {
+  Widget _characterBox() {
     return Container(
       width: 300,
       height: 300,
@@ -59,11 +59,11 @@ class HomePage extends GetView<HomePageController> {
               ),
             ),
           ),
-          SizedBox(width: 20),
+          const SizedBox(width: 20),
           Expanded(
             child: MainButton(
               buttonText: '방 생성',
-              textStyle: TextStyle(
+              textStyle: const TextStyle(
                 color: CustomColors.lightGreyText,
               ),
               backgroundColor: CustomColors.lightGreyBackground,
@@ -85,14 +85,14 @@ class HomePage extends GetView<HomePageController> {
     return Expanded(
       child: Container(
         width: Get.width,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: CustomColors.mainBlack,
           borderRadius: BorderRadius.only(topLeft: Radius.circular(50)),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               '오늘 누적 공부시간',
               style: TextStyle(
                 color: CustomColors.greyText,
@@ -104,7 +104,7 @@ class HomePage extends GetView<HomePageController> {
               () => Text(
                 // '${controller.totalHours}:${controller.totalMinutes}:${controller.totalSeconds}',
                 controller.totalTime.value,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 45,
                   fontWeight: FontWeight.w800,
@@ -113,13 +113,13 @@ class HomePage extends GetView<HomePageController> {
             ),
             Text(
               controller.today.value,
-              style: TextStyle(
+              style: const TextStyle(
                 color: CustomColors.greyText,
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(height: 85),
+            const SizedBox(height: 85),
           ],
         ),
       ),
@@ -134,7 +134,7 @@ class HomePage extends GetView<HomePageController> {
       appBar: _appBar(),
       body: Column(
         children: [
-          _charactorBox(),
+          _characterBox(),
           _buttonsRow(),
           _bottomTab(),
         ],
