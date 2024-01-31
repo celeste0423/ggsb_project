@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/constants/service_urls.dart';
-import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/repositories/user_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -20,10 +17,6 @@ class SettingPageController extends GetxController {
     );
   }
 
-  Future signOut() async {
-    return await UserRepository.signOut();
-  }
-
   // Future<void> logoutFromFacebook() async {
   //   try {
   //     await FacebookAuth.i.logOut();
@@ -32,10 +25,6 @@ class SettingPageController extends GetxController {
   //     print('Error logging out from Facebook: $e');
   //   }
   // }
-
-
-
-
 
   // void settingButton2() {
   //
@@ -61,17 +50,26 @@ class SettingPageController extends GetxController {
   //
   // }
 
+  Future<void> serviceTermsButton() async {
+    Uri uri = Uri.parse(ServiceUrls.serviceTermsNotionUrl);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      openAlertDialog(title: '오류 발생');
+    }
+  }
 
-   Future<void> serviceTermsButton() async {
-
-       Uri uri = Uri.parse(ServiceUrls.serviceTermsNotionUrl);
-       if (await canLaunchUrl(uri)) {
-         await launchUrl(uri);
-       } else {
-         openAlertDialog(title: '오류 발생');
-       }
-   }
-
-
-
+  void signOutButton() {
+    openAlertDialog(
+      title: '로그아웃 하시겠습니까?',
+      btnText: '로그아웃',
+      secondButtonText: '취소',
+      mainfunction: () async {
+        await UserRepository.signOut();
+        //todo: get.back 이거 왜 2개 있는거고 애초에 갯백이 필요한가? root에 있는 streambuilder있는데... screeen stack을 없애려고 하는건가
+        Get.back();
+        Get.back();
+      },
+    );
+  }
 }
