@@ -9,7 +9,7 @@ class ServiceUrls {
   static String serviceTermsNotionUrl =
       'https://grove-cinema-63d.notion.site/8cea7f4559f34aa691a1198f0faf8d3b?pvs=4';
   //카카오톡 채팅
-  static String kakaotalkChatUrl =
-      ''
+  // static String kakaotalkChatUrl =
+  //     ''
 
 }

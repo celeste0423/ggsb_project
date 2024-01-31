@@ -232,7 +232,7 @@ class MyPage extends GetView<MyPageController> {
 
 
   _onKakaoChannelPressed() async {
-    const kakaoChannelUrl = 'https://pf.kakao.com/_xjxndSG';
+    const kakaoChannelUrl = 'http://pf.kakao.com/_xjxndSG/chat';
     if (await canLaunch(kakaoChannelUrl)) {
       await launch(kakaoChannelUrl);
     } else {
