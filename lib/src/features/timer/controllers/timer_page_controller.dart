@@ -145,7 +145,7 @@ class TimerPageController extends GetxController
     isTimer(true);
     //상단바 색상
     await StatusBarControl.setColor(CustomColors.mainBlack, animated: true);
-    await StatusBarControl.setStyle(StatusBarStyle.LIGHT_CONTENT);
+    // await StatusBarControl.setStyle(StatusBarStyle.LIGHT_CONTENT);
 
     //개인 timeModel 설정
     AuthController().updateTimeModel(AuthController.to.user.value.uid!);
@@ -184,7 +184,7 @@ class TimerPageController extends GetxController
     isTimer(false);
     //상단바 색상
     await StatusBarControl.setColor(Colors.white, animated: true);
-    await StatusBarControl.setStyle(StatusBarStyle.DARK_CONTENT);
+    // await StatusBarControl.setStyle(StatusBarStyle.DARK_CONTENT);
 
     //개인 timeModel 업로드
     TimeModel timeModel = AuthController.to.timeModel.value;

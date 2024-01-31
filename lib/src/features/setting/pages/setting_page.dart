@@ -2,18 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:ggsb_project/src/constants/service_urls.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/setting/controllers/setting_page_controller.dart';
-import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
-import 'package:ggsb_project/src/widgets/text_regular.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 import 'package:in_app_review/in_app_review.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 final InAppReview inAppReview = InAppReview.instance;
 
@@ -41,14 +36,14 @@ class SettingPage extends GetView<SettingPageController> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(height: 20),
-            _titlebox('고객지원'),
+            _title('고객지원'),
             SizedBox(height: 4),
             _button('리뷰 남기기', () async {
               if (await inAppReview.isAvailable()) {
                 inAppReview.requestReview();
               }
             }, true, true),
-            _linebox(),
+            _divider(),
             Row(
               children: [
                 Expanded(
@@ -73,49 +68,42 @@ class SettingPage extends GetView<SettingPageController> {
                 ),
               ],
             ),
-            _linebox(),
+            _divider(),
             _button('이용약관', () async {
               await controller.serviceTermsButton();
             }, true, true),
             SizedBox(height: 34),
-            _titlebox('계정'),
+            _title('계정'),
             SizedBox(height: 20),
-            _linebox(),
+            _divider(),
             _button('연결된 계정', () {
               Get.dialog(_settingDialog());
             }, true, true),
-            _linebox(),
+            _divider(),
             _button('로그아웃', () {
-              openAlertDialog(
-                title: '로그아웃 하시겠습니까?',
-                btnText: '로그아웃',
-                secondButtonText: '취소',
-                mainfunction: () async {
-                  await controller.signOut();
-                  //todo: get.back 이거 왜 2개 있는거고 애초에 갯백이 필요한가? root에 있는 streambuilder있는데... screeen stack을 없애려고 하는건가
-                  Get.back();
-                  Get.back();
-                },
-              );
+              controller.signOutButton();
             }, false, false),
-            _linebox(),
+            _divider(),
           ],
         ),
         SizedBox(height: 32),
-        _quitBox(),
+        _userDeleteButton(),
       ],
     );
   }
 
-  Widget _quitBox() {
+  Widget _userDeleteButton() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
         height: 47,
-        decoration: BoxDecoration(
-            color: CustomColors.subRed,
-            borderRadius: BorderRadius.all(Radius.circular(15))),
-        child: Center(
+        decoration: const BoxDecoration(
+          color: CustomColors.subRed,
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
+          ),
+        ),
+        child: const Center(
           child: Text(
             '탈퇴하기',
             style: TextStyle(
@@ -126,7 +114,6 @@ class SettingPage extends GetView<SettingPageController> {
     );
   }
 
-// VoidCallback onTap,
   Widget _button(
     String text,
     VoidCallback onPressed,
@@ -171,7 +158,7 @@ class SettingPage extends GetView<SettingPageController> {
     );
   }
 
-  Widget _linebox() {
+  Widget _divider() {
     return Center(
       child: Container(
         width: 314,
@@ -183,13 +170,13 @@ class SettingPage extends GetView<SettingPageController> {
     );
   }
 
-  Widget _titlebox(String text) {
+  Widget _title(String text) {
     return Row(
       children: [
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         Text(
           text,
-          style: TextStyle(
+          style: const TextStyle(
               color: CustomColors.blackText,
               fontSize: 16,
               fontWeight: FontWeight.w800),
@@ -252,37 +239,6 @@ class SettingPage extends GetView<SettingPageController> {
     );
   }
 
-// Widget _settingDialog() {
-//   return Dialog(
-//     child: Container(
-//       height: 100,
-//       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-//       decoration: BoxDecoration(
-//         color: CustomColors.whiteBackground,
-//         borderRadius: BorderRadius.circular(20),
-//       ),
-//       child: Row(
-//         children: [
-//           Image.asset(
-//             'assets/icons/google.png',
-//             height: 30,
-//           ),
-//           SizedBox(width: 10),
-//           Text(
-//             // '${AuthController.currentUser.email}',
-//             '${AuthController.to.user.value.email}',
-//             style: TextStyle(
-//               color: CustomColors.blackText,
-//               fontSize: 16,
-//               fontWeight: FontWeight.bold,
-//             ),
-//           ),
-//         ],
-//       ),
-//     ),
-//   );
-// }
-
   @override
   Widget build(BuildContext context) {
     Get.put(SettingPageController());
@@ -291,11 +247,7 @@ class SettingPage extends GetView<SettingPageController> {
         appBar: _appBar(),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              _buttons(),
-            ],
-          ),
+          child: _buttons(),
         ),
       ),
     );
