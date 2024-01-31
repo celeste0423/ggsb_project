@@ -11,8 +11,8 @@ import 'package:ggsb_project/src/models/room_stream_model.dart';
 import 'package:ggsb_project/src/repositories/room_repository.dart';
 import 'package:ggsb_project/src/repositories/room_stream_repository.dart';
 import 'package:ggsb_project/src/repositories/user_repository.dart';
-import 'package:ggsb_project/src/utils/calc_total_live_seconds.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
+import 'package:ggsb_project/src/utils/live_seconds_util.dart';
 
 class RoomDetailPageController extends GetxController {
   static RoomDetailPageController get to => Get.find();
@@ -58,8 +58,8 @@ class RoomDetailPageController extends GetxController {
     liveRoomStreamList = List.from(roomStreamList);
     // liveRoomStreamList에 대한 totalLiveSeconds 계산
     for (int i = 0; i < liveRoomStreamList.length; i++) {
-      liveRoomStreamList[i] = CalcTotalLiveSeconds.calcTotalLiveSecInRoomStream(
-          liveRoomStreamList[i]);
+      liveRoomStreamList[i] =
+          LiveSecondsUtil.calcTotalLiveSecInRoomStream(liveRoomStreamList[i]);
     }
     // totalLiveSeconds를 기준으로 리스트를 큰 순서대로 정렬
     liveRoomStreamList

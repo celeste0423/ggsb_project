@@ -6,6 +6,7 @@ import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart'
 import 'package:ggsb_project/src/features/auth/widgets/full_size_loading_indicator.dart';
 import 'package:ggsb_project/src/features/room_detail/controllers/room_detail_page_controller.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
+import 'package:ggsb_project/src/utils/live_seconds_util.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
@@ -186,7 +187,12 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                   ),
                   Text(
                     SecondsUtil.convertToDigitString(
-                      controller.liveRoomStreamList[index].totalLiveSeconds!,
+                      //날짜 지났을 때는 시간 0으로 출력
+                      LiveSecondsUtil().whetherTimerZeroInInt(
+                        controller.liveRoomStreamList[index],
+                        controller.roomModel,
+                        DateTime.now(),
+                      ),
                     ),
                     style: TextStyle(
                       color: controller.liveRoomStreamList[index].isTimer!

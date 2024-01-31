@@ -6,6 +6,7 @@ import 'package:ggsb_project/src/features/timer/controllers/timer_page_controlle
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
+import 'package:ggsb_project/src/utils/live_seconds_util.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
 
@@ -230,10 +231,13 @@ class TimerPage extends GetView<TimerPageController> {
             Text(
               // SecondsUtil.convertToDigitString(
               //     controller.liveRoomStreamList[index].totalLiveSeconds!),
-              SecondsUtil.convertToDigitString(controller.whetherTimerZero(
-                controller.liveRoomStreamList[index],
-                roomModel,
-              )),
+              SecondsUtil.convertToDigitString(
+                LiveSecondsUtil().whetherTimerZeroInInt(
+                  controller.liveRoomStreamList[index],
+                  roomModel,
+                  DateTime.now(),
+                ),
+              ),
               style: TextStyle(
                 color: controller.liveRoomStreamList[index].isTimer!
                     ? CustomColors.mainBlue
