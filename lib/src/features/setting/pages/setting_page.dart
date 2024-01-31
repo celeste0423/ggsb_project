@@ -87,16 +87,19 @@ class SettingPage extends GetView<SettingPageController> {
           ],
         ),
         SizedBox(height: 32),
-        _userDeleteButton(),
+        _deleteUserButton(),
       ],
     );
   }
 
-  Widget _userDeleteButton() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+  Widget _deleteUserButton() {
+    return CupertinoButton(
+      onPressed: () {
+        controller.deleteUserButton();
+      },
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
-        height: 47,
+        height: 50,
         decoration: const BoxDecoration(
           color: CustomColors.subRed,
           borderRadius: BorderRadius.all(
@@ -107,7 +110,10 @@ class SettingPage extends GetView<SettingPageController> {
           child: Text(
             '탈퇴하기',
             style: TextStyle(
-                color: Colors.white, fontSize: 14, fontWeight: FontWeight.w800),
+              color: Colors.white,
+              fontSize: 14,
+              fontWeight: FontWeight.w800,
+            ),
           ),
         ),
       ),
@@ -242,13 +248,11 @@ class SettingPage extends GetView<SettingPageController> {
   @override
   Widget build(BuildContext context) {
     Get.put(SettingPageController());
-    return SafeArea(
-      child: Scaffold(
-        appBar: _appBar(),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: _buttons(),
-        ),
+    return Scaffold(
+      appBar: _appBar(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: _buttons(),
       ),
     );
   }

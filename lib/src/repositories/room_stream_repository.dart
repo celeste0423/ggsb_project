@@ -62,15 +62,13 @@ class RoomStreamRepository {
     }
   }
 
-  Future<void> deleteRoomStream(
-    RoomStreamModel roomStreamModel,
-  ) async {
+  Future<void> deleteRoomStream(String roomId, String uid) async {
     try {
       await FirebaseFirestore.instance
           .collection('rooms')
-          .doc(roomStreamModel.roomId)
+          .doc(roomId)
           .collection('roomStream')
-          .doc(roomStreamModel.uid)
+          .doc(uid)
           .delete();
     } catch (e) {
       openAlertDialog(

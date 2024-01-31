@@ -108,4 +108,12 @@ class AuthController extends GetxController {
     print('uid야 ${user.value.uid}');
     print('total time이야 ${timeModel.value.totalSeconds}');
   }
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+    user();
+    timeModel();
+  }
 }

@@ -44,7 +44,8 @@ class RoomDetailPageController extends GetxController {
     //유저 정보에서 방리스트 삭제
     UserRepository.removeRoomId(roomStreamModel.uid!, roomStreamModel.roomId!);
     //roomStream 삭제
-    RoomStreamRepository().deleteRoomStream(roomStreamModel);
+    RoomStreamRepository()
+        .deleteRoomStream(roomStreamModel.roomId!, roomStreamModel.uid!);
     //roomModel에서 uid 삭제
     RoomRepository().removeUid(roomStreamModel.roomId!, roomStreamModel.uid!);
   }
@@ -113,6 +114,7 @@ class RoomDetailPageController extends GetxController {
     }
     //roomModel 삭제
     RoomRepository().deleteRoomModel(roomModel);
+    //방 리스트 새로고침
     RoomListPageController().checkIsRoomList();
     Get.back();
   }
