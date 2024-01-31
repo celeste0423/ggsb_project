@@ -19,7 +19,7 @@ ThemeData baseTheme(BuildContext context) {
         statusBarIconBrightness: Brightness.dark,
         statusBarColor: Colors.transparent,
         systemStatusBarContrastEnforced: true,
-        systemNavigationBarColor: Colors.transparent,
+        systemNavigationBarColor: Colors.white,
         systemNavigationBarDividerColor: Colors.transparent,
         systemNavigationBarIconBrightness: Brightness.dark,
       ),

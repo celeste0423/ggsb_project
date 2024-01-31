@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/home/controllers/home_page_controller.dart';
@@ -11,6 +12,10 @@ class HomePage extends GetView<HomePageController> {
   PreferredSizeWidget _appBar() {
     return AppBar(
       centerTitle: false,
+      systemOverlayStyle: SystemUiOverlayStyle(
+        systemNavigationBarColor: CustomColors.mainBlack,
+        systemNavigationBarIconBrightness: Brightness.light,
+      ),
       title: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: SvgPicture.asset(

@@ -1,5 +1,6 @@
 import 'package:animate_icons/animate_icons.dart' as animate_icon;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/widgets/full_size_loading_indicator.dart';
 import 'package:ggsb_project/src/features/timer/controllers/timer_page_controller.dart';
@@ -16,9 +17,10 @@ class TimerPage extends GetView<TimerPageController> {
   PreferredSizeWidget _appBar() {
     return AppBar(
       backgroundColor: Colors.transparent,
-      // systemOverlayStyle: SystemUiOverlayStyle(
-      //   statusBarIconBrightness: Brightness.dark,
-      // ),
+      systemOverlayStyle: SystemUiOverlayStyle(
+        systemNavigationBarColor: CustomColors.mainBlack,
+        systemNavigationBarIconBrightness: Brightness.light,
+      ),
       leadingWidth: 75,
       title: Text(
         controller.today.value,
@@ -43,20 +45,21 @@ class TimerPage extends GetView<TimerPageController> {
   }
 
   Widget _content() {
-    return SizedBox(
-      width: Get.width,
-      height: Get.height,
-      child: Column(
-        children: [
-          SizedBox(height: 75 + MediaQuery.of(Get.context!).padding.top),
-          _map(),
-          _time(),
-          _playButton(),
-          const SizedBox(height: 20),
-          _roomTabView(),
-          _tabIndicator(),
-          const SizedBox(height: 20),
-        ],
+    return SafeArea(
+      child: SizedBox(
+        width: Get.width,
+        height: Get.height,
+        child: Column(
+          children: [
+            _map(),
+            _time(),
+            _playButton(),
+            const SizedBox(height: 20),
+            _roomTabView(),
+            _tabIndicator(),
+            const SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }
