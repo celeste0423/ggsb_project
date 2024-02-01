@@ -60,10 +60,8 @@ class DateUtil {
   // }
   int calculateDateDifference(DateTime startDate, DateTime endDate) {
     // 시작일이 오늘 새벽 4시 이전이고 종료일이 오늘 새벽 4시 이후인 경우
-    if (startDate.isBefore(
-            DateTime(startDate.year, startDate.month, startDate.day, 4)) &&
-        endDate
-            .isAfter(DateTime(endDate.year, endDate.month, endDate.day, 4))) {
+    if (startDate.isBefore(standardRefreshTime(startDate)) &&
+        endDate.isAfter(standardRefreshTime(endDate))) {
       // 시작일을 하루 전으로 설정
       startDate = startDate.subtract(Duration(days: 1));
     }
