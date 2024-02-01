@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
@@ -8,6 +10,8 @@ import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:ggsb_project/src/repositories/room_repository.dart';
 import 'package:ggsb_project/src/repositories/room_stream_repository.dart';
 import 'package:ggsb_project/src/repositories/user_repository.dart';
+import 'package:html/parser.dart' as parser;
+import 'package:http/http.dart' as http;
 
 class RoomListPageController extends GetxController {
   static RoomListPageController get to => Get.find();
@@ -15,12 +19,15 @@ class RoomListPageController extends GetxController {
   Rx<bool> isRoomListLoading = false.obs;
   Rx<bool> isNoRoomList = false.obs;
 
+  Rx<String> saying = ''.obs;
+
   TextEditingController joinRoomIdController = TextEditingController();
 
   @override
   void onInit() {
     super.onInit();
     checkIsRoomList();
+    getSaying();
   }
 
   void checkIsRoomList() async {
@@ -38,6 +45,26 @@ class RoomListPageController extends GetxController {
         .getRoomList(AuthController.to.user.value.roomIdList!);
     print('방 개수 ${roomList.length}');
     return roomList;
+  }
+
+  Future<String> getSaying() async {
+    String apiUrl = 'http://munit.co.kr/lucky/today_proverb.php';
+    http.Response response = await http.get(Uri.parse(apiUrl));
+
+    if (response.statusCode == 200) {
+      final responseByte =
+          utf8.decode(response.bodyBytes, allowMalformed: true);
+      final document = parser.parse(responseByte);
+      final element = document.getElementsByTagName('p')[0].text;
+      // print('body ${responseByte}');
+      print('명언 ${element}');
+      saying(element.toString());
+    } else {
+      throw openAlertDialog(
+          title: '명언 로드에 실패했습니다.',
+          content: '에러코드: ${response.statusCode.toString()}');
+    }
+    return '';
   }
 
   Future<void> joinRoomButton() async {

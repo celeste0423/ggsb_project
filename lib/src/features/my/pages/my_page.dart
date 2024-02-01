@@ -28,7 +28,7 @@ class MyPage extends GetView<MyPageController> {
         Expanded(
           child: Text(
             '${AuthController.to.user.value.nickname}님 \n안녕하세요 :)',
-            style: TextStyle(
+            style: const TextStyle(
               color: CustomColors.blackText,
               fontSize: 24,
             ),
@@ -37,7 +37,7 @@ class MyPage extends GetView<MyPageController> {
         Container(
           width: 100,
           height: 100,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(35)),
             color: CustomColors.lightGreyBackground,
           ),
@@ -162,13 +162,13 @@ class MyPage extends GetView<MyPageController> {
           '기록 분석',
           () {},
         ),
-        SizedBox(height: 40),
+        const SizedBox(height: 40),
         Container(
           color: CustomColors.lightGreyBackground,
           width: 100,
           height: 1,
         ),
-        SizedBox(height: 40),
+        const SizedBox(height: 40),
         _button(
           Image.asset(
             'assets/icons/my_settings.png',
@@ -177,10 +177,10 @@ class MyPage extends GetView<MyPageController> {
           ),
           '설정',
           () {
-            Get.to(SettingPage());
+            Get.to(const SettingPage());
           },
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         _button(
           Image.asset(
             'assets/icons/my_report.png',
@@ -188,7 +188,7 @@ class MyPage extends GetView<MyPageController> {
             height: 30,
           ),
           '문의하기',
-          _onKakaoChannelPressed,
+          controller.onKakaoChannelPressed,
         ),
       ],
     );
@@ -199,9 +199,9 @@ class MyPage extends GetView<MyPageController> {
       padding: EdgeInsets.zero,
       onPressed: onTap,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
           color: CustomColors.whiteBackground,
           boxShadow: [
             BoxShadow(
@@ -216,10 +216,10 @@ class MyPage extends GetView<MyPageController> {
         child: Row(
           children: [
             icon,
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Text(
               text,
-              style: TextStyle(
+              style: const TextStyle(
                 color: CustomColors.blackText,
                 fontSize: 13,
               ),
@@ -229,17 +229,6 @@ class MyPage extends GetView<MyPageController> {
       ),
     );
   }
-
-
-  _onKakaoChannelPressed() async {
-    const kakaoChannelUrl = 'http://pf.kakao.com/_xjxndSG/chat';
-    if (await canLaunch(kakaoChannelUrl)) {
-      await launch(kakaoChannelUrl);
-    } else {
-      throw '카카오톡 채널을 열 수 없습니다: $kakaoChannelUrl';
-    }
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -255,7 +244,7 @@ class MyPage extends GetView<MyPageController> {
                   _profile(),
                   _graphBox(),
                   _buttons(),
-                  SizedBox(height: 95),
+                  const SizedBox(height: 95),
                   //height원래 95였으나 에러로 85로 임시로 바꿈
                 ],
               ),

@@ -36,11 +36,29 @@ class RoomListPage extends GetView<RoomListPageController> {
   Widget _sayingBox() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-      child: Container(
-        height: 60,
-        decoration: BoxDecoration(
-          color: CustomColors.lightGreyBackground,
-          borderRadius: BorderRadius.circular(20),
+      child: GestureDetector(
+        onTap: () {
+          controller.getSaying();
+        },
+        child: Container(
+          height: 80,
+          width: double.infinity,
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          decoration: BoxDecoration(
+            color: CustomColors.lightGreyBackground,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Center(
+            child: Obx(
+              () => Text(
+                controller.saying.value,
+                style: TextStyle(
+                  color: CustomColors.blackText,
+                  fontSize: 12,
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );

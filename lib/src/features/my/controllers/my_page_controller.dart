@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:ggsb_project/src/constants/service_urls.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/models/time_model.dart';
 import 'package:ggsb_project/src/repositories/time_repository.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MyPageController extends GetxController {
   static MyPageController get to => Get.find();
@@ -33,6 +35,15 @@ class MyPageController extends GetxController {
       totalSeconds += timeModel.totalSeconds!;
     }
     totalSecondsDigit = SecondsUtil.convertToDigitString(totalSeconds);
+  }
+
+  void onKakaoChannelPressed() async {
+    Uri uri = Uri.parse(ServiceUrls.kakaoChatUrl);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      throw '카카오톡 채널을 열 수 없습니다.';
+    }
   }
 
   @override
