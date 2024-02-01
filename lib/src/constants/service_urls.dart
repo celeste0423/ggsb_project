@@ -13,8 +13,11 @@ class ServiceUrls {
 
   //카카오톡 채팅
   static String kakaoChatUrl = 'http://pf.kakao.com/_xjxndSG/chat';
-  //     ''
+
   //학교 api (.env secret key 뒤에 필요)
   static String schoolApiRequestUrl =
       'http://www.career.go.kr/cnet/openapi/getOpenApi.json?apiKey=';
+
+  //명언 주소
+  static String sayingUrl = 'http://munit.co.kr/lucky/today_proverb.php';
 }
