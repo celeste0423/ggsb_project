@@ -8,7 +8,6 @@ import 'package:ggsb_project/src/models/time_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class MyPage extends GetView<MyPageController> {
   const MyPage({super.key});
@@ -26,12 +25,30 @@ class MyPage extends GetView<MyPageController> {
     return Row(
       children: [
         Expanded(
-          child: Text(
-            '${AuthController.to.user.value.nickname}님 \n안녕하세요 :)',
-            style: const TextStyle(
-              color: CustomColors.blackText,
-              fontSize: 24,
-            ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                '${AuthController.to.user.value.nickname}님 \n안녕하세요 :)',
+                style: const TextStyle(
+                  color: CustomColors.blackText,
+                  fontSize: 24,
+                ),
+              ),
+              CupertinoButton(
+                onPressed: () {
+                  Get.dialog(_profileEditDialog());
+                },
+                padding: const EdgeInsets.symmetric(
+                  vertical: 5,
+                  horizontal: 10,
+                ),
+                child: Image.asset(
+                  'assets/icons/edit.png',
+                  width: 20,
+                ),
+              )
+            ],
           ),
         ),
         Container(
@@ -43,6 +60,27 @@ class MyPage extends GetView<MyPageController> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _profileEditDialog() {
+    return Dialog(
+      backgroundColor: Colors.white,
+      insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        child: Column(
+          children: [
+            Text(
+              '프로필 수정',
+              style: TextStyle(
+                color: CustomColors.mainBlack,
+                fontSize: 24,
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 
