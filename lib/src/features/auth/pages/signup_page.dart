@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -68,12 +69,12 @@ class SignupPage extends GetView<SignupPageController> {
           ),
         ),
         child: SingleChildScrollView(
-          child: Container(
+          child: SizedBox(
             height: Get.height - 280,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(),
+                const SizedBox(),
                 Container(
                   width: 200,
                   height: 200,
@@ -88,15 +89,10 @@ class SignupPage extends GetView<SignupPageController> {
                   hintText: '닉네임(2~5자)',
                   maxLength: 5,
                   textInputAction: TextInputAction.next,
-                  onSubmitted: (_) => FocusScope.of(Get.context!).nextFocus(),
+                  onSubmitted: (_) => FocusScope.of(Get.context!).unfocus(),
                   autoFocus: true,
                 ),
-                TextFieldBox(
-                    textEditingController: controller.schoolController,
-                    backgroundColor: CustomColors.lightGreyBackground,
-                    hintText: '학교',
-                    textInputAction: TextInputAction.next,
-                    onSubmitted: (_) => FocusScope.of(Get.context!).unfocus()),
+                _schoolSelectButton(),
                 Obx(() {
                   return Row(
                     children: [
@@ -112,9 +108,9 @@ class SignupPage extends GetView<SignupPageController> {
                                   ? CustomColors.mainBlack
                                   : CustomColors.lightGreyBackground,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
+                                  const BorderRadius.all(Radius.circular(20)),
                             ),
-                            duration: Duration(milliseconds: 300),
+                            duration: const Duration(milliseconds: 300),
                             child: Center(
                               child: Text(
                                 '남',
@@ -129,7 +125,7 @@ class SignupPage extends GetView<SignupPageController> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 20),
+                      const SizedBox(width: 20),
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
@@ -142,9 +138,9 @@ class SignupPage extends GetView<SignupPageController> {
                                   ? CustomColors.lightGreyBackground
                                   : CustomColors.mainBlack,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
+                                  const BorderRadius.all(Radius.circular(20)),
                             ),
-                            duration: Duration(milliseconds: 300),
+                            duration: const Duration(milliseconds: 300),
                             child: Center(
                               child: Text(
                                 '여',
@@ -167,7 +163,7 @@ class SignupPage extends GetView<SignupPageController> {
                   onTap: () {
                     controller.signUpButton();
                   },
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -177,6 +173,181 @@ class SignupPage extends GetView<SignupPageController> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _schoolSelectButton() {
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      onPressed: () {
+        Get.dialog(_schoolSelectDialog());
+      },
+      child: Container(
+        padding: const EdgeInsets.only(left: 30),
+        height: 55,
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          color: CustomColors.lightGreyBackground,
+          borderRadius: BorderRadius.all(
+            Radius.circular(20),
+          ),
+        ),
+        child: Obx(
+          () => Row(
+            children: [
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    controller.schoolName.value,
+                    style: TextStyle(
+                        color: controller.schoolName.value ==
+                                controller.nullSchoolName
+                            ? CustomColors.lightGreyText
+                            : CustomColors.blackText),
+                  ),
+                ),
+              ),
+              Visibility(
+                visible:
+                    controller.schoolName.value != controller.nullSchoolName,
+                child: CupertinoButton(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  onPressed: () {
+                    controller.schoolName(controller.nullSchoolName);
+                  },
+                  child: SvgPicture.asset(
+                    'assets/icons/cancel.svg',
+                    color: CustomColors.greyBackground,
+                    width: 15,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _schoolSelectDialog() {
+    return Dialog(
+      backgroundColor: CustomColors.lightGreyBackground,
+      insetPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: TextFieldBox(
+                    textEditingController: controller.schoolSearchController,
+                    backgroundColor: CustomColors.lightGreyBackground,
+                    hintText: '학교를 검색하세요',
+                    textInputAction: TextInputAction.search,
+                    onSubmitted: (_) {
+                      controller.schoolSearchButton();
+                    },
+                  ),
+                ),
+                CupertinoButton(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  onPressed: () {
+                    controller.schoolSearchButton();
+                  },
+                  child: Container(
+                    height: 55,
+                    width: 55,
+                    decoration: BoxDecoration(
+                      color: CustomColors.mainBlue,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: const Icon(
+                      Icons.search,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  _schoolTypeSelector('elem_list', '초등학교'),
+                  _schoolTypeSelector('midd_list', '중학교'),
+                  _schoolTypeSelector('high_list', '고등학교'),
+                  _schoolTypeSelector('univ_list', '대학교'),
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
+            Obx(
+              () => ListView.builder(
+                shrinkWrap: true,
+                itemCount: controller.schoolNameList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return CupertinoButton(
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    onPressed: () {
+                      controller.schoolName(controller.schoolNameList[index]);
+                      Get.back();
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      height: 50,
+                      padding: const EdgeInsets.only(left: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          controller.schoolNameList[index],
+                          style: const TextStyle(
+                            color: CustomColors.mainBlack,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _schoolTypeSelector(String value, String text) {
+    return SizedBox(
+      width: 100,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          GetBuilder<SignupPageController>(
+            builder: (_) => Radio(
+              value: value,
+              groupValue: controller.selectedSchoolType,
+              onChanged: (value) {
+                controller.selectedSchoolType = value as String;
+                controller.update();
+              },
+            ),
+          ),
+          Text(
+            text,
+            style: TextStyle(
+              color: CustomColors.blackText,
+              fontSize: 12,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -197,9 +368,9 @@ class SignupPage extends GetView<SignupPageController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _logoCaption(),
-                SizedBox(height: 45),
+                const SizedBox(height: 45),
                 _announcementText(),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 _inputTab(),
               ],
             ),
@@ -207,7 +378,7 @@ class SignupPage extends GetView<SignupPageController> {
                 ? FullSizeLoadingIndicator(
                     backgroundColor: Colors.black.withOpacity(0.5),
                   )
-                : SizedBox()),
+                : const SizedBox()),
           ],
         ),
       ),

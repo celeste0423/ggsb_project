@@ -2,6 +2,7 @@ import 'package:cron/cron.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/binding/init_binding.dart';
@@ -27,6 +28,8 @@ void main() async {
   });
   //날짜 언어 세팅
   initializeDateFormatting('ko-KR');
+  //.env init
+  await dotenv.load(fileName: ".env");
   //새벽 4시에 초기화
   Cron().schedule(Schedule.parse('01 04 * * *'), () async {
     print("새벽 4시입니다.");

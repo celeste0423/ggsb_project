@@ -44,3 +44,4 @@ app.*.map.json
 
 # Secret Key
 /android/key.properties
+*.env

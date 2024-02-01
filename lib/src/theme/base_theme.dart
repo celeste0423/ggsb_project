@@ -35,5 +35,9 @@ ThemeData baseTheme(BuildContext context) {
     ),
     //dialog
     dialogBackgroundColor: Colors.white,
+    //radio
+    radioTheme: RadioThemeData(
+      fillColor: MaterialStateProperty.all<Color>(CustomColors.mainBlue),
+    ),
   );
 }
