@@ -191,6 +191,7 @@ class SettingPage extends GetView<SettingPageController> {
     );
   }
 
+
   Widget _settingDialog() {
     String loginType = AuthController.to.user.value.loginType ?? '';
     Widget icon;
@@ -221,29 +222,49 @@ class SettingPage extends GetView<SettingPageController> {
 
     return Dialog(
       child: Container(
-        height: 100,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         decoration: BoxDecoration(
-          color: CustomColors.whiteBackground,
           borderRadius: BorderRadius.circular(20),
+          color: CustomColors.whiteBackground,
         ),
-        child: Row(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            icon,
-            SizedBox(width: 20),
-            Text(
-              AuthController.to.user.value.email ?? '',
-              style: TextStyle(
-                color: CustomColors.blackText,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () {
+                    Get.back(); // 팝업 닫기
+                  },
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Row(
+                children: [
+                  icon,
+                  SizedBox(width: 20),
+                  Center(
+                    child: Text(
+                      AuthController.to.user.value.email ?? '',
+                      style: TextStyle(
+                        color: CustomColors.blackText,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
+          ], // Column의 children 리스트 마감
         ),
       ),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
