@@ -34,7 +34,8 @@ class AuthController extends GetxController {
       DateUtil.getDayOfWeek(DateTime.now()),
     );
     if (timeData != null) {
-      if (DateUtil.calculateDateDifference(timeData.lastTime!, DateTime.now()) >
+      if (DateUtil()
+              .calculateDateDifference(timeData.lastTime!, DateTime.now()) >
           4) {
         timeData = timeData.copyWith(
           totalSeconds: 0,

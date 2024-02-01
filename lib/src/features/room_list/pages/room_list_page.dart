@@ -161,19 +161,31 @@ class RoomListPage extends GetView<RoomListPageController> {
                   fontSize: 16,
                 ),
               ),
-              Row(
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    '${roomModel.uidList!.length}/6명',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '${roomModel.uidList!.length}/6명',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        roomModel.creatorName!,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(width: 10),
                   Text(
-                    roomModel.creatorName!,
+                    roomModel.roomType == 'day' ? '일 단위' : '기간 없음',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 12,

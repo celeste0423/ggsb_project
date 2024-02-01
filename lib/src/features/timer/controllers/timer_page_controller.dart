@@ -188,7 +188,7 @@ class TimerPageController extends GetxController
 
     //개인 timeModel 업로드
     TimeModel timeModel = AuthController.to.timeModel.value;
-    if (DateUtil.calculateDateDifference(timeModel.startTime!, now) >= 1) {
+    if (DateUtil().calculateDateDifference(timeModel.startTime!, now) >= 1) {
       //시간 측정중 하루가 넘어감
       datePassedWhileIsTimer(now);
     } else {

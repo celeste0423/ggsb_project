@@ -58,17 +58,26 @@ class DateUtil {
   //   // 일 수로 변환하여 반환
   //   return difference.inDays;
   // }
-  static int calculateDateDifference(DateTime startDate, DateTime endDate) {
-    // startDate가 오늘 새벽 4시 전이고 endDate가 오늘 새벽 4시 후라면
-    // startDate를 하루 전으로 설정하여 계산
-    if (startDate.hour < 4 && endDate.hour >= 4) {
+  int calculateDateDifference(DateTime startDate, DateTime endDate) {
+    // 시작일이 오늘 새벽 4시 이전이고 종료일이 오늘 새벽 4시 이후인 경우
+    if (startDate.isBefore(
+            DateTime(startDate.year, startDate.month, startDate.day, 4)) &&
+        endDate
+            .isAfter(DateTime(endDate.year, endDate.month, endDate.day, 4))) {
+      // 시작일을 하루 전으로 설정
       startDate = startDate.subtract(Duration(days: 1));
     }
-
     // 날짜 차이 계산
-    Duration difference = endDate.difference(startDate);
+    int difference = daysBetween(startDate, endDate);
+    print('차이 ${difference}');
     // 일 수로 변환하여 반환
-    return difference.inDays;
+    return difference;
+  }
+
+  int daysBetween(DateTime from, DateTime to) {
+    from = DateTime(from.year, from.month, from.day);
+    to = DateTime(to.year, to.month, to.day);
+    return (to.difference(from).inHours / 24).round();
   }
 
   String getDayTo(int day) {

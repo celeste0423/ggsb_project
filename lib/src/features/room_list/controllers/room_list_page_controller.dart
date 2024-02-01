@@ -57,8 +57,7 @@ class RoomListPageController extends GetxController {
           utf8.decode(response.bodyBytes, allowMalformed: true);
       final document = parser.parse(responseByte);
       final element = document.getElementsByTagName('p')[0].text;
-      // print('body ${responseByte}');
-      print('명언 ${element}');
+      // print('명언 ${element}');
       saying(element.toString());
     } else {
       throw openAlertDialog(
