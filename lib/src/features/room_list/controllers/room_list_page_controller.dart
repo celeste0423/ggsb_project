@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:ggsb_project/src/constants/service_urls.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
@@ -47,8 +48,8 @@ class RoomListPageController extends GetxController {
     return roomList;
   }
 
-  Future<String> getSaying() async {
-    String apiUrl = 'http://munit.co.kr/lucky/today_proverb.php';
+  Future<void> getSaying() async {
+    String apiUrl = ServiceUrls.sayingUrl;
     http.Response response = await http.get(Uri.parse(apiUrl));
 
     if (response.statusCode == 200) {
@@ -64,7 +65,6 @@ class RoomListPageController extends GetxController {
           title: '명언 로드에 실패했습니다.',
           content: '에러코드: ${response.statusCode.toString()}');
     }
-    return '';
   }
 
   Future<void> joinRoomButton() async {
