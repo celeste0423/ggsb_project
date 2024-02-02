@@ -95,13 +95,13 @@ class RoomAddPage extends GetView<RoomAddPageController> {
             Expanded(
               child: GestureDetector(
                 onTap: () {
-                  controller.roomType('week');
+                  controller.roomType('cumulation');
                 },
                 child: Obx(
                   () => AnimatedContainer(
                     height: 55,
                     decoration: BoxDecoration(
-                      color: controller.roomType.value == 'week'
+                      color: controller.roomType.value == 'cumulation'
                           ? CustomColors.mainBlack
                           : CustomColors.lightGreyBackground,
                       borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -109,9 +109,9 @@ class RoomAddPage extends GetView<RoomAddPageController> {
                     duration: Duration(milliseconds: 100),
                     child: Center(
                       child: Text(
-                        '매주',
+                        '누적',
                         style: TextStyle(
-                          color: controller.roomType.value == 'week'
+                          color: controller.roomType.value == 'cumulation'
                               ? Colors.white
                               : CustomColors.lightGreyText,
                           fontSize: 16,
@@ -158,7 +158,7 @@ class RoomAddPage extends GetView<RoomAddPageController> {
   //               child: Text('매일'),
   //             ),
   //             PopupMenuItem(
-  //               value: 'week',
+  //               value: 'cumulation',
   //               child: Text('매주'),
   //             ),
   //           ];
