@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/home/controllers/home_page_controller.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/widgets/main_button.dart';
+import 'package:rive/rive.dart';
 
 class HomePage extends GetView<HomePageController> {
   const HomePage({super.key});
@@ -29,13 +30,17 @@ class HomePage extends GetView<HomePageController> {
 
   Widget _characterBox() {
     return Container(
-      width: 300,
-      height: 300,
-      decoration: BoxDecoration(
-        color: CustomColors.lightGreyBackground,
-        borderRadius: BorderRadius.circular(150),
-      ),
-    );
+        width: 300,
+        height: 300,
+        decoration: BoxDecoration(
+          color: CustomColors.lightGreyBackground,
+          borderRadius: BorderRadius.circular(150),
+        ),
+        child: RiveAnimation.asset(
+          'assets/icons/character.riv',
+          stateMachines: ["idleState"],
+          onInit: (_) {},
+        ));
   }
 
   Widget _buttonsRow() {

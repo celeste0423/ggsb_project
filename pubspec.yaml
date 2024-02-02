@@ -56,6 +56,7 @@ dependencies:
   flutter_local_notifications: ^16.3.2
   flutter_dotenv: ^5.1.0
   html: ^0.15.4
+  rive: ^0.12.4
 
 dev_dependencies:
   flutter_test:
@@ -83,6 +84,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/riv/
     - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
