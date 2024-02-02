@@ -13,26 +13,16 @@ class SignupPageController extends GetxController {
   Rx<String> uid = ''.obs;
   Rx<String> email = ''.obs;
 
-  Rx<bool> isSchoolLoading = true.obs;
   Rx<bool> isSignupLoading = false.obs;
-
-
-  Rx<bool> isSchoolEntered = false.obs;
-  void onTextChanged(String value) {
-    isSchoolEntered.value = value.isNotEmpty;
-  }
-  // late TextEditingController schoolNameText = TextEditingController(); // 학교 검색 텍스트 컨트롤러
-  // late String schoolNameText = ''; // 학교 검색 텍스트
-  // late List<String> schoolNameList; // 검색 결과 학교 리스트
-
 
   TextEditingController nicknameController = TextEditingController();
 
+  Rx<bool> isSchoolLoading = false.obs;
   String nullSchoolName = '학교를 검색하세요(선택)';
   late Rx<String> schoolName = nullSchoolName.obs;
   TextEditingController schoolSearchController = TextEditingController();
   String selectedSchoolType = 'elem_list';
-  RxList<dynamic> schoolNameList = [].obs;
+  late RxList<dynamic> schoolNameList = [nullSchoolName].obs;
 
   Rx<bool> isMale = true.obs;
 
@@ -56,9 +46,9 @@ class SignupPageController extends GetxController {
       for (var item in content) {
         String schoolInfo = '${item['schoolName']} (${item['region']})';
         schoolInfos.add(schoolInfo);
-      // List<String> schoolNames = [];
-      // for (var item in content) {
-      //   schoolNames.add(item['schoolName']);
+        // List<String> schoolNames = [];
+        // for (var item in content) {
+        //   schoolNames.add(item['schoolName']);
       }
       return schoolInfos;
     } else {
@@ -70,9 +60,11 @@ class SignupPageController extends GetxController {
   }
 
   void schoolSearchButton() async {
+    isSchoolLoading(true);
     schoolNameList(
         await searchSchools(schoolSearchController.text, selectedSchoolType));
     print(schoolNameList.value);
+    isSchoolLoading(false);
   }
 
   Future<void> signUpButton() async {
@@ -80,9 +72,6 @@ class SignupPageController extends GetxController {
     if (nicknameController.text == '') {
       isSignupLoading(false);
       openAlertDialog(title: '닉네임을 입력해주세요');
-    } else if (schoolSearchController.text == '') {
-      isSignupLoading(false);
-      openAlertDialog(title: '학교를 입력해주세요');
     } else {
       UserModel userData = UserModel(
         uid: uid.value,

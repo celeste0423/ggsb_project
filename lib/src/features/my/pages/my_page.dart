@@ -160,9 +160,11 @@ class MyPage extends GetView<MyPageController> {
         children: [
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 5),
-            height: (100 * timeModel.totalSeconds! / controller.bestSeconds) < 3
+            height: controller.bestSeconds == 0
                 ? 3
-                : (100 * timeModel.totalSeconds! / controller.bestSeconds),
+                : (100 * timeModel.totalSeconds! / controller.bestSeconds) < 3
+                    ? 3
+                    : (100 * timeModel.totalSeconds! / controller.bestSeconds),
             width: 30,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
