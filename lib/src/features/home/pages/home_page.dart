@@ -37,8 +37,8 @@ class HomePage extends GetView<HomePageController> {
         borderRadius: BorderRadius.circular(150),
       ),
       child: RiveAnimation.asset(
-        'assets/icons/character.riv',
-        stateMachines: ["idleState"],
+        'assets/riv/character.riv',
+        stateMachines: ["State Machine 1"],
         onInit: (_) {
           controller.update();
         },
