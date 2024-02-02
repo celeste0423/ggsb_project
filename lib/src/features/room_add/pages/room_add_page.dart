@@ -51,14 +51,14 @@ class RoomAddPage extends GetView<RoomAddPageController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           '어떤 주기로 경쟁할까요?',
           style: TextStyle(
             fontWeight: FontWeight.w700,
             fontSize: 16,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Row(
           children: [
             Expanded(
@@ -73,9 +73,9 @@ class RoomAddPage extends GetView<RoomAddPageController> {
                       color: controller.roomType.value == 'day'
                           ? CustomColors.mainBlack
                           : CustomColors.lightGreyBackground,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      borderRadius: const BorderRadius.all(Radius.circular(20)),
                     ),
-                    duration: Duration(milliseconds: 100),
+                    duration: const Duration(milliseconds: 100),
                     child: Center(
                       child: Text(
                         '매일',
@@ -91,7 +91,7 @@ class RoomAddPage extends GetView<RoomAddPageController> {
                 ),
               ),
             ),
-            SizedBox(width: 20),
+            const SizedBox(width: 20),
             Expanded(
               child: GestureDetector(
                 onTap: () {
@@ -104,9 +104,9 @@ class RoomAddPage extends GetView<RoomAddPageController> {
                       color: controller.roomType.value == 'cumulation'
                           ? CustomColors.mainBlack
                           : CustomColors.lightGreyBackground,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      borderRadius: const BorderRadius.all(Radius.circular(20)),
                     ),
-                    duration: Duration(milliseconds: 100),
+                    duration: const Duration(milliseconds: 100),
                     child: Center(
                       child: Text(
                         '누적',
@@ -198,14 +198,14 @@ class RoomAddPage extends GetView<RoomAddPageController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           '함께 경쟁할 친구를 초대해 보세요',
           style: TextStyle(
             fontWeight: FontWeight.w700,
             fontSize: 16,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         CupertinoButton(
           padding: EdgeInsets.zero,
           onPressed: () {
@@ -213,9 +213,9 @@ class RoomAddPage extends GetView<RoomAddPageController> {
           },
           child: Container(
             padding: const EdgeInsets.only(left: 30, right: 20),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: CustomColors.lightGreyBackground,
-              borderRadius: const BorderRadius.all(
+              borderRadius: BorderRadius.all(
                 Radius.circular(20),
               ),
             ),
@@ -226,13 +226,13 @@ class RoomAddPage extends GetView<RoomAddPageController> {
                 Obx(
                   () => Text(
                     controller.roomId.value,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: CustomColors.lightGreyText,
                       fontSize: 16,
                     ),
                   ),
                 ),
-                Icon(
+                const Icon(
                   Icons.copy,
                   size: 20,
                   color: CustomColors.greyBackground,
@@ -333,7 +333,7 @@ class RoomAddPage extends GetView<RoomAddPageController> {
         borderRadius: BorderRadius.circular(45),
       ),
       child: isSelected
-          ? Icon(
+          ? const Icon(
               Icons.check,
               color: Colors.white,
               size: 20,
@@ -372,13 +372,13 @@ class RoomAddPage extends GetView<RoomAddPageController> {
                 children: [
                   _title(),
                   _roomNameTextField(),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   _cycleSelectButton(),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   _inviteCodeButton(),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   _colorSelector(),
-                  SizedBox(height: 90),
+                  const SizedBox(height: 90),
                 ],
               ),
             ),
