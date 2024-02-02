@@ -231,6 +231,8 @@ class SignupPage extends GetView<SignupPageController> {
     );
   }
 
+
+
   Widget _schoolSelectDialog() {
     return Dialog(
       backgroundColor: CustomColors.lightGreyBackground,
@@ -284,45 +286,61 @@ class SignupPage extends GetView<SignupPageController> {
               ),
             ),
             SizedBox(height: 20),
-            Obx(
-              () => ListView.builder(
-                shrinkWrap: true,
-                itemCount: controller.schoolNameList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return CupertinoButton(
-                    padding: const EdgeInsets.symmetric(vertical: 5),
-                    onPressed: () {
-                      controller.schoolName(controller.schoolNameList[index]);
-                      Get.back();
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      height: 50,
-                      padding: const EdgeInsets.only(left: 20),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          controller.schoolNameList[index],
-                          style: const TextStyle(
-                            color: CustomColors.mainBlack,
-                            fontSize: 15,
+            Expanded(
+              child: Obx(() {
+                if (controller.isSchoolEntered.isFalse && !controller.isSchoolLoading.value) {
+                  return Center(child: Text('학교를 검색하세요'));
+                }
+                // else if (controller.isSchoolLoading.value) {
+                //   return Center(child: CircularProgressIndicator());
+                // }
+                else if (!controller.isSchoolEntered.isTrue && !controller.isSchoolLoading.value) {
+                  // 검색 결과가 없는 경우
+                  return Center(child: Text('검색 결과가 없습니다'));
+                } else {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: controller.schoolNameList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return CupertinoButton(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        onPressed: () {
+                          controller.schoolName(controller.schoolNameList[index]);
+                          Get.back();
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          height: 50,
+                          padding: const EdgeInsets.only(left: 20),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              controller.schoolNameList[index],
+                              style: const TextStyle(
+                                color: CustomColors.mainBlack,
+                                fontSize: 15,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   );
-                },
-              ),
+                }
+              }),
             ),
           ],
         ),
       ),
     );
   }
+
+
+
 
   Widget _schoolTypeSelector(String value, String text) {
     return SizedBox(

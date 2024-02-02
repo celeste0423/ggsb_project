@@ -13,7 +13,18 @@ class SignupPageController extends GetxController {
   Rx<String> uid = ''.obs;
   Rx<String> email = ''.obs;
 
+  Rx<bool> isSchoolLoading = true.obs;
   Rx<bool> isSignupLoading = false.obs;
+
+
+  Rx<bool> isSchoolEntered = false.obs;
+  void onTextChanged(String value) {
+    isSchoolEntered.value = value.isNotEmpty;
+  }
+  // late TextEditingController schoolNameText = TextEditingController(); // 학교 검색 텍스트 컨트롤러
+  // late String schoolNameText = ''; // 학교 검색 텍스트
+  // late List<String> schoolNameList; // 검색 결과 학교 리스트
+
 
   TextEditingController nicknameController = TextEditingController();
 
@@ -40,11 +51,16 @@ class SignupPageController extends GetxController {
       final Map<String, dynamic> data = json.decode(response.body);
       final List<dynamic> content = data['dataSearch']['content'];
       // schoolName 필드 값만 추출하여 List<String>에 추가
-      List<String> schoolNames = [];
+
+      List<String> schoolInfos = [];
       for (var item in content) {
-        schoolNames.add(item['schoolName']);
+        String schoolInfo = '${item['schoolName']} (${item['region']})';
+        schoolInfos.add(schoolInfo);
+      // List<String> schoolNames = [];
+      // for (var item in content) {
+      //   schoolNames.add(item['schoolName']);
       }
-      return schoolNames;
+      return schoolInfos;
     } else {
       // HTTP 요청이 실패한 경우 에러 처리
       throw openAlertDialog(
