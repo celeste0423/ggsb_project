@@ -39,8 +39,10 @@ class HomePage extends GetView<HomePageController> {
         child: RiveAnimation.asset(
           'assets/icons/character.riv',
           stateMachines: ["idleState"],
-          onInit: (_) {},
-        ));
+          onInit: (_) {
+            controller.update();
+          },
+        ),);
   }
 
   Widget _buttonsRow() {
