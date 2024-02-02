@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/my/controllers/my_page_controller.dart';
 import 'package:ggsb_project/src/features/setting/pages/setting_page.dart';
+import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/time_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
@@ -64,11 +65,11 @@ class MyPage extends GetView<MyPageController> {
   }
 
   Widget _profileEditDialog() {
-    return Dialog(
+    return const Dialog(
       backgroundColor: Colors.white,
-      insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      insetPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: Column(
           children: [
             Text(
@@ -129,10 +130,10 @@ class MyPage extends GetView<MyPageController> {
           ),
           const SizedBox(height: 20),
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Text(
-                '주간 공부시간',
+                '지난 7일간 공부시간',
                 style: TextStyle(
                   color: CustomColors.greyText,
                   fontSize: 13,
@@ -200,7 +201,9 @@ class MyPage extends GetView<MyPageController> {
             height: 30,
           ),
           '기록 분석',
-          () {},
+          () {
+            openAlertDialog(title: '추후 구현 예정입니다.');
+          },
         ),
         const SizedBox(height: 40),
         Container(
