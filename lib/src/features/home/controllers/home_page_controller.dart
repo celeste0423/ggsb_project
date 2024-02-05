@@ -4,9 +4,12 @@ import 'package:ggsb_project/src/features/room_add/pages/room_add_page.dart';
 import 'package:ggsb_project/src/features/timer/pages/timer_page.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
 import 'package:intl/intl.dart';
+import 'package:rive/rive.dart';
 
 class HomePageController extends GetxController {
   static HomePageController get to => Get.find();
+
+  SMINumber? characterColor;
 
   Rx<String> totalTime = '00:00:00'.obs;
   // Rx<String> totalHours = '00'.obs;
@@ -26,6 +29,21 @@ class HomePageController extends GetxController {
     // countUpHours();
     // countUpMinutes();
     // countUpSeconds();
+  }
+
+  void onRiveInit(Artboard artboard) {
+    final riveController =
+        StateMachineController.fromArtboard(artboard, 'character');
+    artboard.addController(riveController!);
+    characterColor = riveController.findInput<double>('color') as SMINumber;
+  }
+
+  void tabCharacter() {
+    if (characterColor!.value == 0) {
+      characterColor!.value = 1;
+    } else {
+      characterColor!.value = 0;
+    }
   }
 
   //시간 올라가는 애니메이션

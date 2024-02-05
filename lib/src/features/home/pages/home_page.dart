@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -30,22 +31,24 @@ class HomePage extends GetView<HomePageController> {
 
   Widget _characterBox() {
     return Container(
-        width: 300,
-        height: 300,
-        decoration: BoxDecoration(
-          color: CustomColors.lightGreyBackground,
-          borderRadius: BorderRadius.circular(150),
+      width: 300,
+      height: 300,
+      decoration: BoxDecoration(
+        color: CustomColors.lightGreyBackground,
+        borderRadius: BorderRadius.circular(150),
+      ),
+      child: CupertinoButton(
+        padding: EdgeInsets.zero,
+        onPressed: () {
+          controller.tabCharacter();
+        },
+        child: RiveAnimation.asset(
+          'assets/riv/character.riv',
+          stateMachines: ["character"],
+          onInit: controller.onRiveInit,
         ),
-        child: Padding(
-          padding: const EdgeInsets .only(left: 15.0),
-          child: RiveAnimation.asset(
-            'assets/riv/character1.riv',
-            stateMachines: ["State Machine 1"],
-            onInit: (_) {
-              controller.update();
-            },
-          ),
-        ),);
+      ),
+    );
   }
 
   Widget _buttonsRow() {
