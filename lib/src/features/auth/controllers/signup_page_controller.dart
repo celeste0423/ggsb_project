@@ -75,6 +75,7 @@ class SignupPageController extends GetxController {
     } else {
       UserModel userData = UserModel(
         uid: uid.value,
+        deviceToken: await AuthController().getDeviceToken(),
         nickname: nicknameController.text,
         loginType: AuthController.loginType,
         email: email.value,
@@ -82,6 +83,7 @@ class SignupPageController extends GetxController {
         school: schoolName.value == nullSchoolName ? null : schoolName.value,
         isTimer: false,
         totalSeconds: 0,
+        cash: 0,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );

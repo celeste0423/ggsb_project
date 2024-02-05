@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/binding/init_binding.dart';
 import 'package:ggsb_project/src/models/time_model.dart';
@@ -16,9 +17,14 @@ class AuthController extends GetxController {
   Rx<TimeModel> timeModel = TimeModel().obs;
 
   Future<UserModel?> loginUser(String uid) async {
-    var userData = await UserRepository.getUserData(uid);
+    UserModel? userData = await UserRepository.getUserData(uid);
     if (userData != null) {
-      // print('유저 데이터 ${userData.toJson()}');
+      //매번 업데이트 되는 userData
+      //deviceToken 업로드
+      String? token = await getDeviceToken();
+      userData.copyWith(deviceToken: token);
+
+      //authcontroller user 업데이트
       user(userData);
 
       //타임모델 업데이트
@@ -45,10 +51,6 @@ class AuthController extends GetxController {
     }
   }
 
-  // void updateOfflineTimeModel(TimeModel newTimeModel) {
-  //   timeModel(newTimeModel);
-  // }
-
   Future<UserModel?> updateAuthController(String uid) async {
     // print('로그인 중');
     var userData = await UserRepository.getUserData(uid);
@@ -58,6 +60,11 @@ class AuthController extends GetxController {
       InitBinding.additionalBinding();
     }
     return userData;
+  }
+
+  Future<String?> getDeviceToken() async {
+    String? token = await FirebaseMessaging.instance.getToken();
+    return token;
   }
 
   // 애플 로그인

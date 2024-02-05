@@ -1,5 +1,6 @@
 class UserModel {
   final String? uid;
+  final String? deviceToken;
   final String? nickname;
   final String? loginType;
   final String? email;
@@ -7,12 +8,14 @@ class UserModel {
   final String? school;
   final bool? isTimer;
   final int? totalSeconds;
+  final int? cash;
   final List<String>? roomIdList;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
   UserModel({
     this.uid,
+    this.deviceToken,
     this.nickname,
     this.loginType,
     this.email,
@@ -20,6 +23,7 @@ class UserModel {
     this.school,
     this.isTimer,
     this.totalSeconds,
+    this.cash,
     this.roomIdList,
     this.createdAt,
     this.updatedAt,
@@ -28,6 +32,8 @@ class UserModel {
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       uid: json['uid'] == null ? null : json['uid'] as String,
+      deviceToken:
+          json['deviceToken'] == null ? null : json['deviceToken'] as String,
       nickname: json['nickname'] == null ? null : json['nickname'] as String,
       loginType: json['loginType'] == null ? null : json['loginType'] as String,
       email: json['email'] == null ? null : json['email'] as String,
@@ -36,6 +42,7 @@ class UserModel {
       isTimer: json['isTimer'] == null ? null : json['isTimer'] as bool,
       totalSeconds:
           json['totalSeconds'] == null ? null : json['totalSeconds'] as int,
+      cash: json['cash'] == null ? null : json['cash'] as int,
       roomIdList: json['roomIdList'] == null
           ? null
           : List<String>.from(json['roomIdList']),
@@ -47,6 +54,7 @@ class UserModel {
   Map<String, dynamic> toJson() {
     return {
       'uid': uid,
+      'deviceToken': deviceToken,
       'nickname': nickname,
       'loginType': loginType,
       'email': email,
@@ -54,6 +62,7 @@ class UserModel {
       'school': school,
       'isTimer': isTimer,
       'totalSeconds': totalSeconds,
+      'cash': cash,
       'roomIdList': roomIdList,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
@@ -62,6 +71,7 @@ class UserModel {
 
   UserModel copyWith({
     String? uid,
+    String? deviceToken,
     String? nickname,
     String? loginType,
     String? email,
@@ -69,19 +79,22 @@ class UserModel {
     String? school,
     bool? isTimer,
     int? totalSeconds,
+    int? cash,
     List<String>? roomIdList,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
     return UserModel(
       uid: uid ?? this.uid,
+      deviceToken: deviceToken ?? this.deviceToken,
       nickname: nickname ?? this.nickname,
       loginType: loginType ?? this.loginType,
       email: email ?? this.email,
       gender: gender ?? this.gender,
       isTimer: isTimer ?? this.isTimer,
-      totalSeconds: totalSeconds ?? this.totalSeconds,
       school: school ?? this.school,
+      totalSeconds: totalSeconds ?? this.totalSeconds,
+      cash: cash ?? this.cash,
       roomIdList: roomIdList ?? this.roomIdList,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.createdAt,

@@ -57,6 +57,7 @@ dependencies:
   flutter_dotenv: ^5.1.0
   html: ^0.15.4
   rive: ^0.12.4
+  firebase_messaging: ^14.7.14
 
 dev_dependencies:
   flutter_test:
