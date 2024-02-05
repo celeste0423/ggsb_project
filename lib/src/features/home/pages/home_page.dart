@@ -30,20 +30,22 @@ class HomePage extends GetView<HomePageController> {
 
   Widget _characterBox() {
     return Container(
-      width: 300,
-      height: 300,
-      decoration: BoxDecoration(
-        color: CustomColors.lightGreyBackground,
-        borderRadius: BorderRadius.circular(150),
-      ),
-      child: RiveAnimation.asset(
-        'assets/riv/character.riv',
-        stateMachines: ["State Machine 1"],
-        onInit: (_) {
-          controller.update();
-        },
-      ),
-    );
+        width: 300,
+        height: 300,
+        decoration: BoxDecoration(
+          color: CustomColors.lightGreyBackground,
+          borderRadius: BorderRadius.circular(150),
+        ),
+        child: Padding(
+          padding: const EdgeInsets .only(left: 15.0),
+          child: RiveAnimation.asset(
+            'assets/riv/character1.riv',
+            stateMachines: ["State Machine 1"],
+            onInit: (_) {
+              controller.update();
+            },
+          ),
+        ),);
   }
 
   Widget _buttonsRow() {
