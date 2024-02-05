@@ -11,7 +11,8 @@ class AppleLoginButton extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         await AuthController.to.signInWithApple();
-        // print('apple login 성공: nickname = ${AuthController.to.user.value.nickname}');
+        print(
+            'apple login 성공: nickname = ${AuthController.to.user.value.nickname}');
         //로그인 타입 설정
         AuthController.loginType = 'apple';
       },
@@ -22,7 +23,9 @@ class AppleLoginButton extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
-              border: Border.all(color: Colors.black.withOpacity(0.2),),
+              border: Border.all(
+                color: Colors.black.withOpacity(0.2),
+              ),
             ),
             child: const Center(
               child: Text(

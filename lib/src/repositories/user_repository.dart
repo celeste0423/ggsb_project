@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart' as facebook;
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
-import 'package:uuid/uuid.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart' as facebook;
 import 'package:google_sign_in/google_sign_in.dart' as google;
 import 'package:sign_in_with_apple/sign_in_with_apple.dart' as apple;
+import 'package:uuid/uuid.dart';
 
 class UserRepository {
   static Future<UserCredential> appleFlutterWebAuth() async {
@@ -46,9 +46,9 @@ class UserRepository {
         apple.AppleIDAuthorizationScopes.fullName,
       ],
       webAuthenticationOptions: apple.WebAuthenticationOptions(
-        clientId: 'com.baekho.ggsbProject',
+        clientId: 'ggsbProject.baekho.com',
         redirectUri: Uri.parse(
-          'https://fluff-steadfast-pulsar.glitch.me/callbacks/apple/sign_in',
+          'https://fluff-steadfast-pulsar.glitch.me/callbacks/sign_in_with_apple',
         ),
       ),
     );

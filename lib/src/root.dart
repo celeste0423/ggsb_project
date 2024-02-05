@@ -5,9 +5,9 @@ import 'package:ggsb_project/src/app.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/auth/pages/signup_page.dart';
 import 'package:ggsb_project/src/features/auth/pages/welcome_page.dart';
-import 'package:ggsb_project/src/features/auth/widgets/full_size_loading_indicator.dart';
 import 'package:ggsb_project/src/features/timer/pages/timer_page.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
+import 'package:ggsb_project/src/widgets/full_size_loading_indicator.dart';
 
 class Root extends GetView<AuthController> {
   const Root({Key? key}) : super(key: key);

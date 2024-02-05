@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/binding/init_binding.dart';
 import 'package:ggsb_project/src/models/time_model.dart';
@@ -72,6 +71,7 @@ class AuthController extends GetxController {
   // 애플 로그인
   Future<UserCredential> signInWithApple() async {
     bool isAvailable = await SignInWithApple.isAvailable();
+    print('애플 로그인 isAvailable: ${isAvailable}');
 
     if (isAvailable) {
       return await UserRepository.iosSignInWithApple();
