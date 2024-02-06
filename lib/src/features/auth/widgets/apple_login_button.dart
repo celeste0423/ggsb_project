@@ -14,7 +14,7 @@ class AppleLoginButton extends StatelessWidget {
         print(
             'apple login 성공: nickname = ${AuthController.to.user.value.nickname}');
         //로그인 타입 설정
-        AuthController.loginType = 'apple';
+        // AuthController.loginType = 'apple';
       },
       child: Stack(
         children: [

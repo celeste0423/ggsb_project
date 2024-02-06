@@ -12,7 +12,7 @@ class AuthController extends GetxController {
   static AuthController get to => Get.find();
 
   Rx<UserModel> user = UserModel().obs;
-  static String? loginType;
+  // static String? loginType;
 
   // Rx<TimeModel> timeModel = TimeModel().obs;
   StudyTimeModel studyTime = StudyTimeModel();

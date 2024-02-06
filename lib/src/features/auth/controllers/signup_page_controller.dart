@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,7 @@ import 'package:http/http.dart' as http;
 class SignupPageController extends GetxController {
   Rx<String> uid = ''.obs;
   Rx<String> email = ''.obs;
+  String loginType = '';
 
   Rx<bool> isSignupLoading = false.obs;
 
@@ -59,6 +61,38 @@ class SignupPageController extends GetxController {
     }
   }
 
+  void checkLoginType() {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      List<UserInfo> providerData = user.providerData;
+
+      for (UserInfo userInfo in providerData) {
+        String providerId = userInfo.providerId;
+        switch (providerId) {
+          case 'google.com':
+            print('구글로 로그인했습니다.');
+            loginType = 'google';
+            break;
+          case 'apple.com':
+            print('애플로 로그인했습니다.');
+            loginType = 'apple';
+            break;
+          case 'facebook.com':
+            print('페이스북으로 로그인했습니다.');
+            loginType = 'facebook';
+            break;
+          // 필요한 경우 다른 프로바이더도 추가할 수 있습니다.
+          default:
+            print('다른 방법으로 로그인했습니다.');
+            loginType = 'guest';
+        }
+      }
+    } else {
+      print('로그인한 사용자가 없습니다.');
+    }
+  }
+
   void schoolSearchButton() async {
     isSchoolLoading(true);
     schoolNameList(
@@ -69,6 +103,7 @@ class SignupPageController extends GetxController {
 
   Future<void> signUpButton() async {
     isSignupLoading(true);
+    checkLoginType();
     if (nicknameController.text == '') {
       isSignupLoading(false);
       openAlertDialog(title: '닉네임을 입력해주세요');
@@ -77,7 +112,7 @@ class SignupPageController extends GetxController {
         uid: uid.value,
         deviceToken: await AuthController().getDeviceToken(),
         nickname: nicknameController.text,
-        loginType: AuthController.loginType,
+        loginType: loginType,
         email: email.value,
         gender: isMale.value ? 'male' : 'female',
         school: schoolName.value == nullSchoolName ? null : schoolName.value,

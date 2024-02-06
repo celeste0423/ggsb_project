@@ -18,7 +18,7 @@ class GoogleLoginButton extends StatelessWidget {
           openAlertDialog(title: '로그인 실패');
         } else {
           print('(gog but) ${AuthController.to.user.value.nickname}');
-          AuthController.loginType = 'google';
+          // AuthController.loginType = 'google';
         }
         Get.back();
       },

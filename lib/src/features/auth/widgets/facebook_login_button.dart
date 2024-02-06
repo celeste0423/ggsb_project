@@ -18,7 +18,7 @@ class FacebookLoginButton extends StatelessWidget {
           openAlertDialog(title: '로그인 실패');
         } else {
           print('(fac but) ${AuthController.to.user.value.nickname}');
-          AuthController.loginType = 'facebook';
+          // AuthController.loginType = 'facebook';
         }
         Get.back();
       },
@@ -29,7 +29,9 @@ class FacebookLoginButton extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
-              border: Border.all(color: Colors.black.withOpacity(0.2),),
+              border: Border.all(
+                color: Colors.black.withOpacity(0.2),
+              ),
             ),
             child: const Center(
               child: Text(

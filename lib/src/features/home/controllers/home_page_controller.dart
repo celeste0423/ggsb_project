@@ -27,7 +27,7 @@ class HomePageController extends GetxController {
     //   ),
     // );
     totalTime(SecondsUtil.convertToDigitString(
-        AuthController.to.studyTime.totalSeconds!));
+        AuthController.to.studyTime.totalSeconds ?? 0));
     // countUpHours();
     // countUpMinutes();
     // countUpSeconds();
