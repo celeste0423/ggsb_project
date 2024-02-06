@@ -28,11 +28,11 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
         ),
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, -3),
-            blurRadius: 20,
+            offset: Offset(0, -10),
+            blurRadius: 10,
             color: _tabController.index == 0
                 ? Colors.transparent
-                : Colors.black.withOpacity(0.15),
+                : Colors.black.withOpacity(0.1),
           ),
         ],
         color:

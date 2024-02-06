@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/constants/service_urls.dart';
 import 'package:ggsb_project/src/features/auth/controllers/welcome_page_controller.dart';
+import 'package:ggsb_project/src/features/auth/widgets/apple_login_button.dart';
 import 'package:ggsb_project/src/features/auth/widgets/facebook_login_button.dart';
 import 'package:ggsb_project/src/features/auth/widgets/google_login_button.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
@@ -33,14 +34,14 @@ class WelcomePage extends GetView<WelcomePageController> {
             width: 120,
             height: 120,
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           SvgPicture.asset(
             'assets/images/caption.svg',
             width: 175,
             height: 45,
           ),
-          SizedBox(height: 10),
-          Text(
+          const SizedBox(height: 10),
+          const Text(
             '공부로 대결하는\n한판 진검승부',
             textAlign: TextAlign.left,
             style: TextStyle(
@@ -64,17 +65,19 @@ class WelcomePage extends GetView<WelcomePageController> {
         ),
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(height: 40),
-            GoogleLoginButton(),
-            SizedBox(height: 10),
-            FacebookLoginButton(),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
+            const GoogleLoginButton(),
+            const SizedBox(height: 10),
+            const FacebookLoginButton(),
+            const SizedBox(height: 10),
+            AppleLoginButton(),
+            const SizedBox(height: 40),
             _infoText(),
-            SizedBox(height: 10)
+            const SizedBox(height: 10)
           ],
         ),
       ),
@@ -86,14 +89,14 @@ class WelcomePage extends GetView<WelcomePageController> {
       children: [
         RichText(
           text: TextSpan(
-            style: TextStyle(
+            style: const TextStyle(
               color: CustomColors.greyText,
               fontSize: 15,
             ),
             children: [
               TextSpan(
                 text: '이용약관 ',
-                style: TextStyle(
+                style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.blue,
                     fontSize: 15),
@@ -107,10 +110,10 @@ class WelcomePage extends GetView<WelcomePageController> {
                     }
                   },
               ),
-              TextSpan(text: '및 '),
+              const TextSpan(text: '및 '),
               TextSpan(
                 text: '공지사항',
-                style: TextStyle(
+                style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.blue,
                     fontSize: 15),
@@ -124,11 +127,11 @@ class WelcomePage extends GetView<WelcomePageController> {
                     }
                   },
               ),
-              TextSpan(text: '을 클릭하여 확인하세요'),
+              const TextSpan(text: '을 클릭하여 확인하세요'),
             ],
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 5,
         ),
         FutureBuilder<String>(
@@ -136,23 +139,23 @@ class WelcomePage extends GetView<WelcomePageController> {
           builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
             if (snapshot.connectionState == ConnectionState.none ||
                 snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             } else if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasData) {
                 final version = snapshot.data!;
                 return Text(
                   'v $version',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: CustomColors.darkGreyText,
                     fontSize: 10,
                   ),
                 );
               } else {
                 // Future가 데이터를 가져오지 못한 경우에 대한 처리를 할 수 있습니다.
-                return Text('오류 : 버전정보를 가져올 수 없습니다.');
+                return const Text('오류 : 버전정보를 가져올 수 없습니다.');
               }
             } else {
-              return Text('Unknown error');
+              return const Text('Unknown error');
             }
           },
         ),

@@ -58,6 +58,7 @@ dependencies:
   html: ^0.15.4
   rive: ^0.12.4
   firebase_messaging: ^14.7.14
+  flutter_web_auth: ^0.5.0
 
 dev_dependencies:
   flutter_test:

@@ -7,6 +7,7 @@ import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:ggsb_project/src/repositories/time_repository.dart';
 import 'package:ggsb_project/src/repositories/user_repository.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthController extends GetxController {
   static AuthController get to => Get.find();
@@ -63,20 +64,21 @@ class AuthController extends GetxController {
   }
 
   Future<String?> getDeviceToken() async {
-    String? token = await FirebaseMessaging.instance.getToken();
+    // String? token = await FirebaseMessaging.instance.getToken();
+    String? token = null;
     return token;
   }
 
   // 애플 로그인
-  // Future<UserCredential> signInWithApple() async {
-  //   bool isAvailable = await SignInWithApple.isAvailable();
-  //
-  //   if (isAvailable) {
-  //     return await UserRepository.iosSignInWithApple();
-  //   } else {
-  //     return await UserRepository.appleFlutterWebAuth();
-  //   }
-  // }
+  Future<UserCredential> signInWithApple() async {
+    bool isAvailable = await SignInWithApple.isAvailable();
+
+    if (isAvailable) {
+      return await UserRepository.iosSignInWithApple();
+    } else {
+      return await UserRepository.appleFlutterWebAuth();
+    }
+  }
 
   //구글 로그인
   Future<UserCredential> signInWithGoogle() async {

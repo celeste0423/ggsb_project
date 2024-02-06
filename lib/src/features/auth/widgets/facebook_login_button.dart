@@ -29,9 +29,9 @@ class FacebookLoginButton extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
-              border: Border.all(color: Colors.black.withOpacity(0.2)),
+              border: Border.all(color: Colors.black.withOpacity(0.2),),
             ),
-            child: Center(
+            child: const Center(
               child: Text(
                 'Facebook으로 로그인',
                 style: TextStyle(
