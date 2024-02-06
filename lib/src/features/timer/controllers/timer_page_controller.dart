@@ -11,7 +11,7 @@ import 'package:ggsb_project/src/models/study_time_model.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:ggsb_project/src/repositories/room_repository.dart';
 import 'package:ggsb_project/src/repositories/room_stream_repository.dart';
-import 'package:ggsb_project/src/repositories/study_c/repositories/time_repository.dart';
+import 'package:ggsb_project/src/repositories/study_time_repository.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
 import 'package:ggsb_project/src/utils/live_seconds_util.dart';
