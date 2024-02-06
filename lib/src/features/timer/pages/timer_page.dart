@@ -179,7 +179,7 @@ class TimerPage extends GetView<TimerPageController> {
                   child: GetBuilder<TimerPageController>(
                     id: 'roomListTimer',
                     builder: (controller) {
-                      controller.arrangeSnapshot(snapshot);
+                      controller.arrangeSnapshot(snapshot, roomModel);
                       return SingleChildScrollView(
                         child: ListView.builder(
                           shrinkWrap: true,

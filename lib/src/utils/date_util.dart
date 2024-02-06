@@ -20,7 +20,7 @@ class DateUtil {
     return DateTime(date.year, date.month, date.day, 4);
   }
 
-  static String getDayOfWeek(DateTime date) {
+  static String getDayOfWeekBeforeStandartRefreshTime(DateTime date) {
     // 새벽 4시를 나타내는 DateTime 객체 생성
     DateTime fourAM = standardRefreshTime(date);
 
@@ -51,6 +51,19 @@ class DateUtil {
       ];
       return daysOfWeek[date.weekday - 1];
     }
+  }
+
+  static String getDayOfWeek(DateTime date) {
+    List<String> daysOfWeek = [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday'
+    ];
+    return daysOfWeek[date.weekday - 1];
   }
 
   // static int calculateDateDifference(DateTime startDate, DateTime endDate) {

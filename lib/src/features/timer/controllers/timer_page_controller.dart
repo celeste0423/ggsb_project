@@ -129,7 +129,8 @@ class TimerPageController extends GetxController
     return RoomStreamRepository().roomStreamListStream(roomId);
   }
 
-  void arrangeSnapshot(AsyncSnapshot<List<RoomStreamModel>> snapshot) {
+  void arrangeSnapshot(
+      AsyncSnapshot<List<RoomStreamModel>> snapshot, RoomModel roomModel) {
     roomStreamList = snapshot.data!;
     liveRoomStreamList = List.from(roomStreamList);
     // liveRoomStreamList에 대한 totalLiveSeconds 계산
@@ -140,6 +141,15 @@ class TimerPageController extends GetxController
     // totalLiveSeconds를 기준으로 리스트를 큰 순서대로 정렬
     liveRoomStreamList
         .sort((a, b) => b.totalLiveSeconds!.compareTo(a.totalLiveSeconds!));
+    // totalLiveSeconds가 0인 liveRoomStream을 찾아내서 맨 뒤로 이동시킴
+    for (int i = 0; i < liveRoomStreamList.length; i++) {
+      if (LiveSecondsUtil().whetherTimerZeroInInt(
+              liveRoomStreamList[i], roomModel, DateTime.now()) ==
+          0) {
+        liveRoomStreamList.add(liveRoomStreamList.removeAt(i));
+        // i--; // 리스트의 크기가 줄어들었으므로 다시 현재 인덱스로 돌아가서 확인해야 함
+      }
+    }
   }
 
   Future _updateStudyTimeModelAtStart(DateTime now) async {

@@ -183,7 +183,9 @@ class MyPage extends GetView<MyPageController> {
           ),
           const SizedBox(height: 5),
           Text(
-            studyTimeModel.date!.substring(5, 10),
+            DateUtil.getDayOfWeek(
+                    DateUtil().stringToDateTime(studyTimeModel.date!))
+                .substring(0, 3),
             style: TextStyle(
               color: DateUtil().dateTimeToString(DateTime.now()) ==
                       studyTimeModel.date

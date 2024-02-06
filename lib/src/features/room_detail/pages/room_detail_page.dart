@@ -147,8 +147,11 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
     double percent =
         controller.liveRoomStreamList[index].totalLiveSeconds != null
             ? controller.roomBestSeconds != 0
-                ? ((controller.liveRoomStreamList[index].totalLiveSeconds!)
-                        .toDouble() /
+                ? (LiveSecondsUtil().whetherTimerZeroInInt(
+                      controller.liveRoomStreamList[index],
+                      controller.roomModel,
+                      DateTime.now(),
+                    ) /
                     (controller.roomBestSeconds).toDouble())
                 : 0
             : 0;
