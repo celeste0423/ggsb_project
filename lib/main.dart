@@ -33,7 +33,7 @@ void main() async {
   //새벽 4시에 초기화
   Cron().schedule(Schedule.parse('01 04 * * *'), () async {
     print("새벽 4시입니다.");
-    if (!AuthController.to.timeModel.value.isTimer!) {
+    if (!AuthController.to.user.value.isTimer!) {
       AuthController().loginUser(AuthController.to.user.value.uid!);
     }
   });

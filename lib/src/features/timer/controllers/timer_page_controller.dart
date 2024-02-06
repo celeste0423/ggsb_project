@@ -8,12 +8,10 @@ import 'package:ggsb_project/src/features/home/controllers/home_page_controller.
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
 import 'package:ggsb_project/src/models/study_time_model.dart';
-import 'package:ggsb_project/src/models/time_model.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:ggsb_project/src/repositories/room_repository.dart';
 import 'package:ggsb_project/src/repositories/room_stream_repository.dart';
-import 'package:ggsb_project/src/repositories/study_time_repository.dart';
-import 'package:ggsb_project/src/repositories/time_repository.dart';
+import 'package:ggsb_project/src/repositories/study_c/repositories/time_repository.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
 import 'package:ggsb_project/src/utils/live_seconds_util.dart';
@@ -170,13 +168,13 @@ class TimerPageController extends GetxController
     await _updateStudyTimeModelAtStart(now);
 
     //개인 timeModel 설정
-    AuthController().updateTimeModel(AuthController.to.user.value.uid!);
-    TimeModel updatedTimeModel = AuthController.to.timeModel.value.copyWith(
-      isTimer: true,
-      startTime: now,
-    );
-    TimeRepository().updateTimeModel(updatedTimeModel);
-    AuthController.to.timeModel(updatedTimeModel);
+    // AuthController().updateTimeModel(AuthController.to.user.value.uid!);
+    // TimeModel updatedTimeModel = AuthController.to.timeModel.value.copyWith(
+    //   isTimer: true,
+    //   startTime: now,
+    // );
+    // TimeRepository().updateTimeModel(updatedTimeModel);
+    // AuthController.to.timeModel(updatedTimeModel);
     //방별 roomStream 설정
     roomList.forEach((RoomModel roomModel) async {
       RoomStreamModel roomStreamModel =
@@ -190,7 +188,7 @@ class TimerPageController extends GetxController
       );
       if (roomModel.roomType == 'day') {
         updatedRoomStreamModel = updatedRoomStreamModel.copyWith(
-          totalSeconds: updatedTimeModel.totalSeconds,
+          totalSeconds: AuthController.to.studyTime.totalSeconds,
         );
       }
       await RoomStreamRepository().updateRoomStream(updatedRoomStreamModel);

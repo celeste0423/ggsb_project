@@ -2,10 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/binding/init_binding.dart';
 import 'package:ggsb_project/src/models/study_time_model.dart';
-import 'package:ggsb_project/src/models/time_model.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
-import 'package:ggsb_project/src/repositories/study_time_repository.dart';
-import 'package:ggsb_project/src/repositories/time_repository.dart';
+import 'package:ggsb_project/src/repositories/study_tories/time_repository.dart';
 import 'package:ggsb_project/src/repositories/user_repository.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -16,7 +14,7 @@ class AuthController extends GetxController {
   Rx<UserModel> user = UserModel().obs;
   static String? loginType;
 
-  Rx<TimeModel> timeModel = TimeModel().obs;
+  // Rx<TimeModel> timeModel = TimeModel().obs;
   StudyTimeModel studyTime = StudyTimeModel();
 
   Future<UserModel?> loginUser(String uid) async {
@@ -30,9 +28,6 @@ class AuthController extends GetxController {
       //authcontroller user 업데이트
       user(userData);
 
-      //타임모델 업데이트
-      await updateTimeModel(uid);
-
       //스터디타임모델 업데이트
       await updateStudyTimeModel(uid);
 
@@ -41,22 +36,22 @@ class AuthController extends GetxController {
     return userData;
   }
 
-  Future<void> updateTimeModel(String uid) async {
-    var timeData = await TimeRepository().getTimeModel(
-      uid,
-      DateUtil.getDayOfWeek(DateTime.now()),
-    );
-    if (timeData != null) {
-      if (DateUtil()
-              .calculateDateDifference(timeData.lastTime!, DateTime.now()) >
-          4) {
-        timeData = timeData.copyWith(
-          totalSeconds: 0,
-        );
-      }
-      timeModel(timeData);
-    }
-  }
+  // Future<void> updateTimeModel(String uid) async {
+  //   var timeData = await TimeRepository().getTimeModel(
+  //     uid,
+  //     DateUtil.getDayOfWeek(DateTime.now()),
+  //   );
+  //   if (timeData != null) {
+  //     if (DateUtil()
+  //             .calculateDateDifference(timeData.lastTime!, DateTime.now()) >
+  //         4) {
+  //       timeData = timeData.copyWith(
+  //         totalSeconds: 0,
+  //       );
+  //     }
+  //     timeModel(timeData);
+  //   }
+  // }
 
   Future<void> updateStudyTimeModel(String uid) async {
     print('스터디타임모델 업데이트');
@@ -131,30 +126,8 @@ class AuthController extends GetxController {
   //회원가입
   Future<void> signUp(UserModel userData) async {
     await UserRepository.signup(userData);
-    //timeModel 업로드
-    List<String> days = [
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-      'Sunday'
-    ];
-    for (String day in days) {
-      TimeModel timeModel = TimeModel(
-        uid: userData.uid,
-        day: day,
-        totalSeconds: 0,
-        isTimer: false,
-        startTime: DateTime.now(),
-        lastTime: DateTime.now(),
-      );
-      await TimeRepository().uploadTimeModel(timeModel);
-    }
     await loginUser(userData.uid!);
     print('uid야 ${user.value.uid}');
-    print('total time이야 ${timeModel.value.totalSeconds}');
   }
 
   @override
@@ -162,6 +135,6 @@ class AuthController extends GetxController {
     // TODO: implement onClose
     super.onClose();
     user();
-    timeModel();
+    // studyTime == null;
   }
 }
