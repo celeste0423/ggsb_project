@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:ggsb_project/src/binding/init_binding.dart';
 import 'package:ggsb_project/src/models/study_time_model.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
-import 'package:ggsb_project/src/repositories/study_tories/time_repository.dart';
+import 'package:ggsb_project/src/repositories/study_time_repository.dart';
 import 'package:ggsb_project/src/repositories/user_repository.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
