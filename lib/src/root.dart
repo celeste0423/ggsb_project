@@ -27,8 +27,7 @@ class Root extends GetView<AuthController> {
                   return Obx(() {
                     if (controller.user.value.uid != null) {
                       //받은 컨트롤러의 유저 데이터가 이미 있을경우 앱으로, 아니면 회원가입창으로
-                      if (controller.timeModel.value.isTimer == null ||
-                          !controller.timeModel.value.isTimer!) {
+                      if (!controller.user.value.isTimer!) {
                         return App();
                       } else {
                         print('시간 측정중이었음');

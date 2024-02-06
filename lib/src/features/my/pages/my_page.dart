@@ -5,7 +5,7 @@ import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart'
 import 'package:ggsb_project/src/features/my/controllers/my_page_controller.dart';
 import 'package:ggsb_project/src/features/setting/pages/setting_page.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
-import 'package:ggsb_project/src/models/time_model.dart';
+import 'package:ggsb_project/src/models/study_time_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
@@ -121,7 +121,7 @@ class MyPage extends GetView<MyPageController> {
                   controller.arrangeTimeModels(snapshot);
                   return Row(
                     children: List.generate(7, (index) {
-                      return _dateBar(controller.timeModelList[index]);
+                      return _dateBar(controller.studyTimeModelList[index]);
                     }),
                   );
                 }
@@ -154,7 +154,8 @@ class MyPage extends GetView<MyPageController> {
     );
   }
 
-  Widget _dateBar(TimeModel timeModel) {
+  Widget _dateBar(StudyTimeModel studyTimeModel) {
+    print('데이트바 ${studyTimeModel.date} / ${studyTimeModel.totalSeconds}');
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -163,22 +164,29 @@ class MyPage extends GetView<MyPageController> {
             margin: const EdgeInsets.symmetric(horizontal: 5),
             height: controller.bestSeconds == 0
                 ? 3
-                : (100 * timeModel.totalSeconds! / controller.bestSeconds) < 3
+                : (100 *
+                            studyTimeModel.totalSeconds! /
+                            controller.bestSeconds) <
+                        3
                     ? 3
-                    : (100 * timeModel.totalSeconds! / controller.bestSeconds),
+                    : (100 *
+                        studyTimeModel.totalSeconds! /
+                        controller.bestSeconds),
             width: 30,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: DateUtil.getDayOfWeek(DateTime.now()) == timeModel.day!
+              color: DateUtil().dateTimeToString(DateTime.now()) ==
+                      studyTimeModel.date
                   ? CustomColors.mainBlue
                   : CustomColors.subPaleBlue,
             ),
           ),
           const SizedBox(height: 5),
           Text(
-            timeModel.day![0],
+            studyTimeModel.date!.substring(5, 10),
             style: TextStyle(
-              color: DateUtil.getDayOfWeek(DateTime.now()) == timeModel.day!
+              color: DateUtil().dateTimeToString(DateTime.now()) ==
+                      studyTimeModel.date
                   ? CustomColors.mainBlue
                   : CustomColors.lightGreyText,
               fontSize: 12,

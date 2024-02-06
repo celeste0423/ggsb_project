@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/constants/service_urls.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
-import 'package:ggsb_project/src/models/time_model.dart';
-import 'package:ggsb_project/src/repositories/time_repository.dart';
+import 'package:ggsb_project/src/models/study_time_model.dart';
+import 'package:ggsb_project/src/repositories/study_time_repository.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -11,7 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 class MyPageController extends GetxController {
   static MyPageController get to => Get.find();
 
-  List<TimeModel> timeModelList = [];
+  List<StudyTimeModel> studyTimeModelList = [];
   int bestSeconds = 0;
   int totalSeconds = 0;
   String totalSecondsDigit = '';
@@ -22,17 +22,20 @@ class MyPageController extends GetxController {
     super.onInit();
   }
 
-  Stream<List<TimeModel>> timeModelStream() {
-    return TimeRepository().timeListStream(AuthController.to.user.value.uid!);
+  Stream<List<StudyTimeModel>> timeModelStream() {
+    print('스트림 받아옴');
+    return StudyTimeRepository()
+        .studyTimeListStream(AuthController.to.user.value.uid!, DateTime.now());
   }
 
-  void arrangeTimeModels(AsyncSnapshot<List<TimeModel>> snapshot) {
-    timeModelList = DateUtil().sortByDay(snapshot.data!);
-    for (TimeModel timeModel in timeModelList) {
-      if (timeModel.totalSeconds! > bestSeconds) {
-        bestSeconds = timeModel.totalSeconds!;
+  void arrangeTimeModels(AsyncSnapshot<List<StudyTimeModel>> snapshot) {
+    studyTimeModelList = DateUtil().sortByDateString(snapshot.data!);
+    for (StudyTimeModel studyTimeModel in studyTimeModelList) {
+      print('정리중 ${studyTimeModel.date} / ${studyTimeModel.totalSeconds}');
+      if (studyTimeModel.totalSeconds! > bestSeconds) {
+        bestSeconds = studyTimeModel.totalSeconds!;
       }
-      totalSeconds += timeModel.totalSeconds!;
+      totalSeconds += studyTimeModel.totalSeconds!;
     }
     totalSecondsDigit = SecondsUtil.convertToDigitString(totalSeconds);
   }

@@ -1,4 +1,5 @@
-import 'package:ggsb_project/src/models/time_model.dart';
+import 'package:ggsb_project/src/models/study_time_model.dart';
+import 'package:intl/intl.dart';
 
 class DateUtil {
   // static String getDayOfWeek(DateTime date) {
@@ -67,7 +68,7 @@ class DateUtil {
     }
     // 날짜 차이 계산
     int difference = daysBetween(startDate, endDate);
-    print('차이 ${difference}');
+    // print('차이 ${difference}');
     // 일 수로 변환하여 반환
     return difference;
   }
@@ -120,13 +121,47 @@ class DateUtil {
     }
   }
 
-  List<TimeModel> sortByDay(List<TimeModel> timeModelList) {
-    timeModelList.sort((a, b) {
-      int dayA = getDayOfWeekIndex(a.day!);
-      int dayB = getDayOfWeekIndex(b.day!);
-      //반환값이 양수인 경우 a와 b의 위치를 바꿈(더 크니까)
-      return dayA - dayB;
+  // List<TimeModel> sortByDay(List<TimeModel> timeModelList) {
+  //   timeModelList.sort((a, b) {
+  //     int dayA = getDayOfWeekIndex(a.day!);
+  //     int dayB = getDayOfWeekIndex(b.day!);
+  //     //반환값이 양수인 경우 a와 b의 위치를 바꿈(더 크니까)
+  //     return dayA - dayB;
+  //   });
+  //   return timeModelList;
+  // }
+
+  List<StudyTimeModel> sortByDateString(
+      List<StudyTimeModel> studyTimeModelList) {
+    studyTimeModelList.sort((a, b) {
+      // 날짜 문자열을 DateTime 객체로 변환
+      DateTime dateA = stringToDateTime(a.date!);
+      DateTime dateB = stringToDateTime(b.date!);
+      // DateTime을 비교하여 최신 순서로 정렬
+      return dateA.compareTo(dateB);
     });
-    return timeModelList;
+    for (StudyTimeModel studyTimeModel in studyTimeModelList) {
+      print('스터디모델 순서정렬 ${studyTimeModel.date}');
+    }
+    return studyTimeModelList;
+  }
+
+  String dateTimeToString(DateTime dateTime) {
+    // dateTime이 standardRefreshTime 이전인지 확인
+    if (dateTime.isBefore(standardRefreshTime(dateTime))) {
+      // 이전이면 전날로 설정
+      dateTime = dateTime.subtract(Duration(days: 1));
+    }
+
+    // 날짜를 문자열로 변환하여 반환
+    String year = dateTime.year.toString();
+    String month = dateTime.month.toString().padLeft(2, '0');
+    String day = dateTime.day.toString().padLeft(2, '0');
+    return '$year-$month-$day';
+  }
+
+  DateTime stringToDateTime(String dateString) {
+    DateFormat format = DateFormat('yyyy-MM-dd');
+    return format.parse(dateString);
   }
 }

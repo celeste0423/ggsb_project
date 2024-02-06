@@ -21,11 +21,13 @@ class HomePageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    totalTime(
-      SecondsUtil.convertToDigitString(
-        AuthController.to.timeModel.value.totalSeconds ?? 0,
-      ),
-    );
+    // totalTime(
+    //   SecondsUtil.convertToDigitString(
+    //     AuthController.to.timeModel.value.totalSeconds ?? 0,
+    //   ),
+    // );
+    totalTime(SecondsUtil.convertToDigitString(
+        AuthController.to.studyTime.totalSeconds!));
     // countUpHours();
     // countUpMinutes();
     // countUpSeconds();
