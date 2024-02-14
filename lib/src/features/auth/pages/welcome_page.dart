@@ -75,6 +75,8 @@ class WelcomePage extends GetView<WelcomePageController> {
             const FacebookLoginButton(),
             const SizedBox(height: 10),
             AppleLoginButton(),
+            const SizedBox(height: 10),
+            _customLoginButton(),
             const SizedBox(height: 40),
             _infoText(),
             const SizedBox(height: 10)
@@ -92,7 +94,7 @@ class WelcomePage extends GetView<WelcomePageController> {
       child: Text(
         '게스트로 로그인',
         style: TextStyle(
-          fontSize: 15,
+          fontSize: 12,
           color: CustomColors.greyText,
         ),
       ),
@@ -102,7 +104,7 @@ class WelcomePage extends GetView<WelcomePageController> {
   Widget _registerDialog() {
     return Dialog(
       child: Container(
-        height: 260,
+        height: 300,
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 10,
