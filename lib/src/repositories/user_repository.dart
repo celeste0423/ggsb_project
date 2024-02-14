@@ -132,14 +132,16 @@ class UserRepository {
     }
   }
 
+  //게스트 로그인
   Future signUpWithEmailAndPassword(String email, String password) async {
     try {
+      print('게스트 회원가입 시작, ${email} ${password}');
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-
+      print('크레덴셜 받아옴');
       if (userCredential.user != null) {
         // 로그인 성공 시 처리
       } else {
@@ -152,6 +154,7 @@ class UserRepository {
         if (e.code == 'user-not-found') {
           // 등록된 사용자 없음 -> 회원가입으로 처리
           try {
+            print('게스트 회원가입');
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
               email: email,
               password: password,
@@ -159,7 +162,7 @@ class UserRepository {
             // 회원가입 성공 시 처리
           } catch (e) {
             // 회원가입 실패 시 처리
-            //print('Error during sign up: $e');
+            print('Error during sign up: $e');
           }
         } else {
           // 다른 에러 처리

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
+import 'package:ggsb_project/src/app.dart';
 import 'package:ggsb_project/src/constants/service_urls.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
@@ -11,6 +12,8 @@ import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:http/http.dart' as http;
 
 class SignupPageController extends GetxController {
+  bool? isProfileEditing = Get.arguments;
+
   Rx<String> uid = ''.obs;
   Rx<String> email = ''.obs;
   String loginType = '';
@@ -27,6 +30,23 @@ class SignupPageController extends GetxController {
   late RxList<dynamic> schoolNameList = [nullSchoolName].obs;
 
   Rx<bool> isMale = true.obs;
+
+  @override
+  void onInit() async {
+    super.onInit();
+
+    await checkIsProfileLoading();
+  }
+
+  Future<void> checkIsProfileLoading() async {
+    if (isProfileEditing != null) {
+      nicknameController.text = AuthController.to.user.value.nickname!;
+      schoolName.value = AuthController.to.user.value.school!;
+      if (AuthController.to.user.value.gender == 'female') {
+        isMale(false);
+      }
+    }
+  }
 
   Future<List<String>> searchSchools(
     String searchQuery,
@@ -124,6 +144,24 @@ class SignupPageController extends GetxController {
       );
       await AuthController.to.signUp(userData);
       isSignupLoading(false);
+    }
+  }
+
+  Future<void> profileEditButton() async {
+    isSignupLoading(true);
+    checkLoginType();
+    if (nicknameController.text == '') {
+      isSignupLoading(false);
+      openAlertDialog(title: '닉네임을 입력해주세요');
+    } else {
+      UserModel userData = AuthController.to.user.value.copyWith(
+        nickname: nicknameController.text,
+        school: schoolName.value == nullSchoolName ? null : schoolName.value,
+        gender: isMale.value ? 'male' : 'female',
+        updatedAt: DateTime.now(),
+      );
+      await AuthController.to.updateUserModel(userData);
+      Get.off(() => App());
     }
   }
 }

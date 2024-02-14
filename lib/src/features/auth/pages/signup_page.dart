@@ -7,6 +7,7 @@ import 'package:ggsb_project/src/features/auth/controllers/signup_page_controlle
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/widgets/full_size_loading_indicator.dart';
 import 'package:ggsb_project/src/widgets/main_button.dart';
+import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
 import 'package:ggsb_project/src/widgets/text_field_box.dart';
 
 class SignupPage extends GetView<SignupPageController> {
@@ -19,29 +20,45 @@ class SignupPage extends GetView<SignupPageController> {
     required this.email,
   }) : super(key: key);
 
+  PreferredSizeWidget _appBar() {
+    return AppBar(
+      backgroundColor: Colors.transparent,
+      leadingWidth: controller.isProfileEditing == null ? 140 : 75,
+      leading: controller.isProfileEditing == null
+          ? _logoCaption()
+          : SvgIconButton(
+              assetPath: 'assets/icons/back.svg',
+              iconColor: Colors.white,
+              onTap: Get.back,
+            ),
+    );
+  }
+
   Widget _logoCaption() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      child: SvgPicture.asset('assets/images/caption_logo.svg'),
+      child: SvgPicture.asset(
+        'assets/images/caption_logo.svg',
+      ),
     );
   }
 
   Widget _announcementText() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '당신에 대해 알려주세요!',
-            style: TextStyle(
+            controller.isProfileEditing == null ? '당신에 대해 알려주세요!' : '프로필 수정',
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 30,
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 10),
-          Text(
+          const SizedBox(height: 10),
+          const Text(
             '해당 정보로 다양한 랭킹 배틀에 참여할 수 있습니다.',
             style: TextStyle(
               color: Colors.white,
@@ -90,7 +107,7 @@ class SignupPage extends GetView<SignupPageController> {
                   maxLength: 5,
                   textInputAction: TextInputAction.next,
                   onSubmitted: (_) => FocusScope.of(Get.context!).unfocus(),
-                  autoFocus: true,
+                  autoFocus: controller.isProfileEditing == null ? true : false,
                 ),
                 _schoolSelectButton(),
                 Obx(() {
@@ -158,17 +175,29 @@ class SignupPage extends GetView<SignupPageController> {
                     ],
                   );
                 }),
-                MainButton(
-                  buttonText: '승부 시작 !',
-                  onTap: () {
-                    controller.signUpButton();
-                  },
-                  textStyle: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
+                controller.isProfileEditing == null
+                    ? MainButton(
+                        buttonText: '승부 시작 !',
+                        onTap: () {
+                          controller.signUpButton();
+                        },
+                        textStyle: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      )
+                    : MainButton(
+                        buttonText: '수정 완료',
+                        onTap: () {
+                          controller.profileEditButton();
+                        },
+                        textStyle: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
               ],
             ),
           ),
@@ -326,7 +355,7 @@ class SignupPage extends GetView<SignupPageController> {
                               ? SizedBox(
                                   height: Get.height - 250,
                                   child: const Center(
-                                    child: Text('학교를 검색하세요'),
+                                    child: Text('학교를 선택하세요'),
                                   ),
                                 )
                               : CupertinoButton(
@@ -428,14 +457,13 @@ class SignupPage extends GetView<SignupPageController> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: CustomColors.mainBlue,
+      appBar: _appBar(),
       body: Stack(
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: MediaQuery.of(Get.context!).padding.top),
-              _logoCaption(),
-              const SizedBox(height: 45),
               _announcementText(),
               const SizedBox(height: 30),
               _inputTab(),
