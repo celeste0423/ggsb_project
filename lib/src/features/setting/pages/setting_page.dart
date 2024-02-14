@@ -35,9 +35,9 @@ class SettingPage extends GetView<SettingPageController> {
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _title('고객지원'),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             _button('리뷰 남기기', () async {
               if (await inAppReview.isAvailable()) {
                 inAppReview.requestReview();
@@ -58,10 +58,11 @@ class SettingPage extends GetView<SettingPageController> {
                         final version = snapshot.data!.version;
                         return Text(
                           'v $version',
-                          style: TextStyle(color: CustomColors.lightGreyText),
+                          style: const TextStyle(
+                              color: CustomColors.lightGreyText),
                         );
                       } else {
-                        return SizedBox();
+                        return const SizedBox();
                       }
                     },
                   ),
@@ -72,9 +73,9 @@ class SettingPage extends GetView<SettingPageController> {
             _button('이용약관', () async {
               await controller.serviceTermsButton();
             }, true, true),
-            SizedBox(height: 34),
+            const SizedBox(height: 34),
             _title('계정'),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _divider(),
             _button('연결된 계정', () {
               Get.dialog(_settingDialog());
@@ -86,7 +87,7 @@ class SettingPage extends GetView<SettingPageController> {
             _divider(),
           ],
         ),
-        SizedBox(height: 32),
+        const SizedBox(height: 32),
         _deleteUserButton(),
       ],
     );
@@ -132,7 +133,7 @@ class SettingPage extends GetView<SettingPageController> {
     if (hasIcon) {
       iconWidget = SvgPicture.asset('assets/icons/back_right.svg');
     } else {
-      iconWidget = SizedBox();
+      iconWidget = const SizedBox();
     }
 
     return CupertinoButton(
@@ -169,7 +170,7 @@ class SettingPage extends GetView<SettingPageController> {
       child: Container(
         width: 314,
         height: 1,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: CustomColors.lightGreyBackground,
         ),
       ),
@@ -190,7 +191,6 @@ class SettingPage extends GetView<SettingPageController> {
       ],
     );
   }
-
 
   Widget _settingDialog() {
     String loginType = AuthController.to.user.value.loginType ?? '';
@@ -216,7 +216,7 @@ class SettingPage extends GetView<SettingPageController> {
         );
         break;
       default:
-        icon = SizedBox(); // 기본값은 빈 위젯
+        icon = const SizedBox(); // 기본값은 빈 위젯
         break;
     }
 
@@ -233,7 +233,7 @@ class SettingPage extends GetView<SettingPageController> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
-                  icon: Icon(Icons.close),
+                  icon: const Icon(Icons.close),
                   onPressed: () {
                     Get.back(); // 팝업 닫기
                   },
@@ -245,11 +245,11 @@ class SettingPage extends GetView<SettingPageController> {
               child: Row(
                 children: [
                   icon,
-                  SizedBox(width: 20),
+                  const SizedBox(width: 20),
                   Center(
                     child: Text(
                       AuthController.to.user.value.email ?? '',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: CustomColors.blackText,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -264,7 +264,6 @@ class SettingPage extends GetView<SettingPageController> {
       ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {

@@ -17,7 +17,7 @@ class RoomListPage extends GetView<RoomListPageController> {
   PreferredSizeWidget _appBar() {
     return AppBar(
       centerTitle: false,
-      systemOverlayStyle: SystemUiOverlayStyle(
+      systemOverlayStyle: const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
       ),
       title: TitleText(text: '방 목록'),
@@ -43,7 +43,7 @@ class RoomListPage extends GetView<RoomListPageController> {
         child: Container(
           height: 80,
           width: double.infinity,
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           decoration: BoxDecoration(
             color: CustomColors.lightGreyBackground,
             borderRadius: BorderRadius.circular(20),
@@ -52,9 +52,9 @@ class RoomListPage extends GetView<RoomListPageController> {
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Obx(
-                    () => Text(
+                () => Text(
                   controller.saying.value,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: CustomColors.blackText,
                     fontSize: 12,
                   ),
@@ -117,12 +117,12 @@ class RoomListPage extends GetView<RoomListPageController> {
                           ),
                         );
                       } else if (snapshot.hasError) {
-                        return Text('에러 발생');
+                        return const Text('에러 발생');
                       } else {
                         List<RoomModel> roomList = snapshot.data!;
                         return GridView.builder(
                           gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             crossAxisSpacing: 30,
                             mainAxisSpacing: 30,
@@ -151,8 +151,8 @@ class RoomListPage extends GetView<RoomListPageController> {
                           'assets/icons/add.svg',
                           color: CustomColors.greyBackground,
                         ),
-                        SizedBox(height: 20),
-                        Text(
+                        const SizedBox(height: 20),
+                        const Text(
                           '화면을 터치해 방에 가입해 보세요',
                           style: TextStyle(
                             color: CustomColors.greyText,
@@ -174,7 +174,7 @@ class RoomListPage extends GetView<RoomListPageController> {
     return CupertinoButton(
       padding: EdgeInsets.zero,
       onPressed: () {
-        Get.to(() => RoomDetailPage(), arguments: roomModel);
+        Get.to(() => const RoomDetailPage(), arguments: roomModel);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -186,10 +186,10 @@ class RoomListPage extends GetView<RoomListPageController> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Text(
                 roomModel.roomName!,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
@@ -203,15 +203,15 @@ class RoomListPage extends GetView<RoomListPageController> {
                     children: [
                       Text(
                         '${roomModel.uidList!.length}/6명',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 12,
                         ),
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Text(
                         roomModel.creatorName!,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 12,
                         ),
@@ -220,7 +220,7 @@ class RoomListPage extends GetView<RoomListPageController> {
                   ),
                   Text(
                     roomModel.roomType == 'day' ? '일 단위' : '기간 없음',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 12,
                     ),
@@ -249,14 +249,14 @@ class RoomListPage extends GetView<RoomListPageController> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               SvgPicture.asset(
                 'assets/icons/add.svg',
                 width: 25,
                 color: CustomColors.greyBackground,
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 '방에 참가하기',
                 style: TextStyle(
                   color: CustomColors.lightGreyText,
@@ -282,7 +282,7 @@ class RoomListPage extends GetView<RoomListPageController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               '방에 참가하기',
               style: TextStyle(
                 color: CustomColors.blackText,
@@ -290,13 +290,13 @@ class RoomListPage extends GetView<RoomListPageController> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextFieldBox(
               textEditingController: controller.joinRoomIdController,
               hintText: '초대코드를 입력해주세요',
               backgroundColor: CustomColors.lightGreyBackground,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               children: [
                 Expanded(
@@ -309,7 +309,7 @@ class RoomListPage extends GetView<RoomListPageController> {
                     height: 45,
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Expanded(
                   child: MainButton(
                     buttonText: '참가',
@@ -337,7 +337,7 @@ class RoomListPage extends GetView<RoomListPageController> {
           children: [
             _sayingBox(),
             Expanded(child: _roomList()),
-            SizedBox(height: 75),
+            const SizedBox(height: 75),
           ],
         ),
       ),
