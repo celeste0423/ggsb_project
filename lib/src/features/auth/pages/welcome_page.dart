@@ -91,7 +91,7 @@ class WelcomePage extends GetView<WelcomePageController> {
       onTap: () {
         Get.dialog(_registerDialog());
       },
-      child: Text(
+      child: const Text(
         '게스트로 로그인',
         style: TextStyle(
           fontSize: 12,
@@ -117,23 +117,23 @@ class WelcomePage extends GetView<WelcomePageController> {
           children: [
             TextField(
               controller: controller.guestEmailController,
-              decoration: InputDecoration(labelText: '이메일'),
+              decoration: const InputDecoration(labelText: '이메일'),
             ),
             TextField(
               controller: controller.guestPasswordController,
-              decoration: InputDecoration(labelText: '비밀번호'),
+              decoration: const InputDecoration(labelText: '비밀번호'),
               obscureText: true,
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
                 controller.guestLogin();
               },
-              child: Text('회원가입 또는 로그인'),
+              child: const Text('회원가입 또는 로그인'),
             ),
-            SizedBox(height: 10),
-            Text(
-              '(주의) 이메일과 비밀번호를 분실하신 경우에는 계정을 새로 만드셔야 합니다.',
+            const SizedBox(height: 10),
+            const Text(
+              '(주의) 이메일과 비밀번호를 분실하신 경우에는 계정을 새로 만드셔야 합니다.\n비밀번호는 6자리 이상이어야합니다.',
               style: TextStyle(
                 color: CustomColors.greyText,
                 fontSize: 12,
@@ -230,6 +230,7 @@ class WelcomePage extends GetView<WelcomePageController> {
     Get.put(WelcomePageController());
     return Scaffold(
       backgroundColor: CustomColors.mainBlue,
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Column(

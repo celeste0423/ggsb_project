@@ -11,6 +11,8 @@ import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:http/http.dart' as http;
 
 class SignupPageController extends GetxController {
+  bool? isProfileEditing = Get.arguments;
+
   Rx<String> uid = ''.obs;
   Rx<String> email = ''.obs;
   String loginType = '';

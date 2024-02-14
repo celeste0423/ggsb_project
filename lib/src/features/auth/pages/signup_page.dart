@@ -158,17 +158,27 @@ class SignupPage extends GetView<SignupPageController> {
                     ],
                   );
                 }),
-                MainButton(
-                  buttonText: '승부 시작 !',
-                  onTap: () {
-                    controller.signUpButton();
-                  },
-                  textStyle: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
+                controller.isProfileEditing == null
+                    ? MainButton(
+                        buttonText: '승부 시작 !',
+                        onTap: () {
+                          controller.signUpButton();
+                        },
+                        textStyle: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      )
+                    : MainButton(
+                        buttonText: '수정 완료',
+                        onTap: () {},
+                        textStyle: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
               ],
             ),
           ),

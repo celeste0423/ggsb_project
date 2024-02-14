@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
+import 'package:ggsb_project/src/features/auth/pages/signup_page.dart';
 import 'package:ggsb_project/src/features/my/controllers/my_page_controller.dart';
 import 'package:ggsb_project/src/features/setting/pages/setting_page.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
@@ -38,7 +39,14 @@ class MyPage extends GetView<MyPageController> {
               ),
               CupertinoButton(
                 onPressed: () {
-                  Get.dialog(_profileEditDialog());
+                  // Get.dialog(_profileEditDialog());
+                  Get.to(
+                    () => SignupPage(
+                      uid: AuthController.to.user.value.uid!,
+                      email: AuthController.to.user.value.email!,
+                    ),
+                    arguments: true,
+                  );
                 },
                 padding: const EdgeInsets.symmetric(
                   vertical: 5,
@@ -64,26 +72,26 @@ class MyPage extends GetView<MyPageController> {
     );
   }
 
-  Widget _profileEditDialog() {
-    return const Dialog(
-      backgroundColor: Colors.white,
-      insetPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        child: Column(
-          children: [
-            Text(
-              '프로필 수정',
-              style: TextStyle(
-                color: CustomColors.mainBlack,
-                fontSize: 24,
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
+  // Widget _profileEditDialog() {
+  //   return const Dialog(
+  //     backgroundColor: Colors.white,
+  //     insetPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+  //     child: Padding(
+  //       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+  //       child: Column(
+  //         children: [
+  //           Text(
+  //             '프로필 수정',
+  //             style: TextStyle(
+  //               color: CustomColors.mainBlack,
+  //               fontSize: 24,
+  //             ),
+  //           )
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _graphBox() {
     return Padding(
