@@ -84,6 +84,65 @@ class WelcomePage extends GetView<WelcomePageController> {
     );
   }
 
+  Widget _customLoginButton() {
+    return GestureDetector(
+      onTap: () {
+        Get.dialog(_registerDialog());
+      },
+      child: Text(
+        '게스트로 로그인',
+        style: TextStyle(
+          fontSize: 15,
+          color: CustomColors.greyText,
+        ),
+      ),
+    );
+  }
+
+  Widget _registerDialog() {
+    return Dialog(
+      child: Container(
+        height: 260,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 10,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(25),
+        ),
+        child: Column(
+          children: [
+            TextField(
+              controller: controller.guestEmailController,
+              decoration: InputDecoration(labelText: '이메일'),
+            ),
+            TextField(
+              controller: controller.guestPasswordController,
+              decoration: InputDecoration(labelText: '비밀번호'),
+              obscureText: true,
+            ),
+            SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: () {
+                controller.guestLogin();
+              },
+              child: Text('회원가입 또는 로그인'),
+            ),
+            SizedBox(height: 10),
+            Text(
+              '(주의) 이메일과 비밀번호를 분실하신 경우에는 계정을 새로 만드셔야 합니다.',
+              style: TextStyle(
+                color: CustomColors.greyText,
+                fontSize: 12,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _infoText() {
     return Column(
       children: [

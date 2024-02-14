@@ -3,13 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 
 ThemeData baseTheme(BuildContext context) {
-  final ThemeData base = ThemeData(fontFamily: 'nanum');
-  return base.copyWith(
+  final ThemeData base = ThemeData(
+    fontFamily: 'nanum',
+    primarySwatch: CustomColors.mainBlueMaterial,
     brightness: Brightness.light,
     //배경 색
     scaffoldBackgroundColor: CustomColors.whiteBackground,
     //appbar
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       backgroundColor: Colors.white,
       elevation: 0,
       surfaceTintColor: Colors.transparent,
@@ -30,14 +31,18 @@ ThemeData baseTheme(BuildContext context) {
           bodyColor: CustomColors.mainBlack,
           displayColor: CustomColors.mainBlack,
         ),
-    popupMenuTheme: PopupMenuThemeData(
+    popupMenuTheme: const PopupMenuThemeData(
       surfaceTintColor: CustomColors.whiteBackground, // 원하는 배경 색으로 변경
     ),
     //dialog
-    dialogBackgroundColor: Colors.white,
+    dialogTheme: const DialogTheme(
+      backgroundColor: Colors.white,
+      surfaceTintColor: Colors.white,
+    ),
     //radio
     radioTheme: RadioThemeData(
       fillColor: MaterialStateProperty.all<Color>(CustomColors.mainBlue),
     ),
   );
+  return base;
 }

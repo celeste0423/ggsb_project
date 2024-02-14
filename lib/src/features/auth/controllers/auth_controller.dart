@@ -123,6 +123,11 @@ class AuthController extends GetxController {
     return await UserRepository.signInWithFacebook();
   }
 
+  //게스트 로그인
+  Future signInWithGuest(String email, String password) async {
+    await UserRepository().signUpWithEmailAndPassword(email, password);
+  }
+
   //회원가입
   Future<void> signUp(UserModel userData) async {
     await UserRepository.signup(userData);

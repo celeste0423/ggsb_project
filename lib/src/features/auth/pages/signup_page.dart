@@ -236,108 +236,147 @@ class SignupPage extends GetView<SignupPageController> {
       backgroundColor: CustomColors.lightGreyBackground,
       insetPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        child: Column(
+        padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+        child: Stack(
           children: [
-            Row(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: TextFieldBox(
-                    textEditingController: controller.schoolSearchController,
-                    backgroundColor: CustomColors.lightGreyBackground,
-                    hintText: '학교를 검색하세요',
-                    textInputAction: TextInputAction.search,
-                    onSubmitted: (_) {
-                      controller.schoolSearchButton();
-                    },
+                const SizedBox(height: 30),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  child: Text(
+                    '학교 이름을 검색해주세요',
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: CustomColors.blackText,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                 ),
-                CupertinoButton(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  onPressed: () {
-                    controller.schoolSearchButton();
-                  },
-                  child: Container(
-                    height: 55,
-                    width: 55,
-                    decoration: BoxDecoration(
-                      color: CustomColors.mainBlue,
-                      borderRadius: BorderRadius.circular(20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    _schoolTypeSelector('elem_list', '초등학교'),
+                    _schoolTypeSelector('midd_list', '중학교'),
+                    _schoolTypeSelector('high_list', '고등학교'),
+                    _schoolTypeSelector('univ_list', '대학교'),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: controller.schoolSearchController,
+                        cursorColor: Colors.black.withOpacity(0.5),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: CustomColors.blackText,
+                        ),
+                        decoration: const InputDecoration(
+                          hintText: '검색어를 입력하세요',
+                          hintStyle: TextStyle(
+                            fontSize: 16,
+                            color: CustomColors.lightGreyText,
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: CustomColors.mainBlue,
+                              width: 2,
+                            ),
+                          ),
+                        ),
+                        onSubmitted: (_) {
+                          controller.schoolSearchButton();
+                        },
+                        textInputAction: TextInputAction.search,
+                      ),
                     ),
-                    child: const Icon(
-                      Icons.search,
-                      color: Colors.white,
+                    CupertinoButton(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      onPressed: () {
+                        controller.schoolSearchButton();
+                      },
+                      child: const Icon(
+                        Icons.search,
+                        color: CustomColors.blackText,
+                      ),
                     ),
-                  ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Expanded(
+                  child: Obx(() {
+                    if (controller.isSchoolLoading.value) {
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: CustomColors.mainBlue,
+                        ),
+                      );
+                    } else if (controller.schoolNameList.isEmpty) {
+                      return const Center(child: Text('검색 결과가 없습니다'));
+                    } else {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: controller.schoolNameList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return controller.schoolNameList[index] ==
+                                  controller.nullSchoolName
+                              ? SizedBox(
+                                  height: Get.height - 250,
+                                  child: const Center(
+                                    child: Text('학교를 검색하세요'),
+                                  ),
+                                )
+                              : CupertinoButton(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 5),
+                                  onPressed: () {
+                                    controller.schoolName(
+                                        controller.schoolNameList[index]);
+                                    Get.back();
+                                  },
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 50,
+                                    padding: const EdgeInsets.only(left: 20),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        controller.schoolNameList[index],
+                                        style: const TextStyle(
+                                          color: CustomColors.mainBlack,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                        },
+                      );
+                    }
+                  }),
                 ),
               ],
             ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  _schoolTypeSelector('elem_list', '초등학교'),
-                  _schoolTypeSelector('midd_list', '중학교'),
-                  _schoolTypeSelector('high_list', '고등학교'),
-                  _schoolTypeSelector('univ_list', '대학교'),
-                ],
+            Positioned(
+              right: 0,
+              top: 0,
+              child: CupertinoButton(
+                padding: EdgeInsets.zero,
+                onPressed: () {
+                  Get.back();
+                },
+                child: const Icon(
+                  Icons.close,
+                  color: CustomColors.greyBackground,
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            Expanded(
-              child: Obx(() {
-                if (controller.isSchoolLoading.value) {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: CustomColors.mainBlue,
-                    ),
-                  );
-                } else if (controller.schoolNameList.isEmpty) {
-                  return const Center(child: Text('검색 결과가 없습니다'));
-                } else {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: controller.schoolNameList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return controller.schoolNameList[index] ==
-                              controller.nullSchoolName
-                          ? SizedBox(
-                              height: Get.height - 250,
-                              child: const Center(
-                                child: Text('학교를 검색하세요'),
-                              ),
-                            )
-                          : CupertinoButton(
-                              padding: const EdgeInsets.symmetric(vertical: 5),
-                              onPressed: () {
-                                controller.schoolName(
-                                    controller.schoolNameList[index]);
-                                Get.back();
-                              },
-                              child: Container(
-                                width: double.infinity,
-                                height: 50,
-                                padding: const EdgeInsets.only(left: 20),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    controller.schoolNameList[index],
-                                    style: const TextStyle(
-                                      color: CustomColors.mainBlack,
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            );
-                    },
-                  );
-                }
-              }),
             ),
           ],
         ),
@@ -346,29 +385,36 @@ class SignupPage extends GetView<SignupPageController> {
   }
 
   Widget _schoolTypeSelector(String value, String text) {
-    return SizedBox(
-      width: 100,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          GetBuilder<SignupPageController>(
-            builder: (_) => Radio(
-              value: value,
-              groupValue: controller.selectedSchoolType,
-              onChanged: (value) {
-                controller.selectedSchoolType = value as String;
-                controller.update();
-              },
+    return GetBuilder<SignupPageController>(
+      id: 'schoolType',
+      builder: (_) => CupertinoButton(
+        padding: const EdgeInsets.symmetric(horizontal: 5),
+        onPressed: () {
+          controller.selectedSchoolType = value;
+          controller.update(['schoolType']);
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(15),
+            border: Border.all(
+              color: controller.selectedSchoolType == value
+                  ? CustomColors.mainBlue
+                  : CustomColors.greyBackground,
+              width: 1,
             ),
           ),
-          Text(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          child: Text(
             text,
-            style: const TextStyle(
-              color: CustomColors.blackText,
+            style: TextStyle(
+              color: controller.selectedSchoolType == value
+                  ? CustomColors.mainBlue
+                  : CustomColors.greyBackground,
               fontSize: 12,
             ),
           ),
-        ],
+        ),
       ),
     );
   }
