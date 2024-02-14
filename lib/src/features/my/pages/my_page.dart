@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/my/controllers/my_page_controller.dart';
+import 'package:ggsb_project/src/features/my/data_analyze/page/data_analyze_page.dart';
 import 'package:ggsb_project/src/features/setting/pages/setting_page.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/study_time_model.dart';
@@ -212,7 +213,8 @@ class MyPage extends GetView<MyPageController> {
           ),
           '기록 분석',
           () {
-            openAlertDialog(title: '추후 구현 예정입니다.');
+            Get.to(const DataAnalyzePage());
+            // openAlertDialog(title: '추후 구현 예정입니다.');
           },
         ),
         const SizedBox(height: 40),
