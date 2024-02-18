@@ -66,9 +66,9 @@ class SettingPageController extends GetxController {
       secondButtonText: '취소',
       mainfunction: () async {
         //만든방 전부 삭제(room, roomStream) , 들어가 있는 방에서 uid 삭제(room, roomStream)
-        List<RoomModel> userMadeRoomList = await RoomRepository()
+        List<RoomModel> userRoomList = await RoomRepository()
             .getRoomList(AuthController.to.user.value.roomIdList!);
-        for (RoomModel roomModel in userMadeRoomList) {
+        for (RoomModel roomModel in userRoomList) {
           await deleteRoom(roomModel);
         }
         //user데이터 삭제(user, time)

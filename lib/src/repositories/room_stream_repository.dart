@@ -19,10 +19,10 @@ class RoomStreamRepository {
       }
     } catch (e) {
       openAlertDialog(
-        title: '방 정보를 가져오는 중에 오류가 발생했습니다.',
+        title: '룸스트림 정보를 가져오는 중에 오류가 발생했습니다.',
         content: e.toString(),
       );
-      return Future.error('방 정보를 가져오는 중에 오류가 발생했습니다.');
+      return Future.error('룸스트림 정보를 가져오는 중에 오류가 발생했습니다.');
     }
   }
 

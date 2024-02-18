@@ -8,7 +8,11 @@ import 'package:ggsb_project/src/app.dart';
 import 'package:ggsb_project/src/constants/service_urls.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
+import 'package:ggsb_project/src/models/room_model.dart';
+import 'package:ggsb_project/src/models/room_stream_model.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
+import 'package:ggsb_project/src/repositories/room_repository.dart';
+import 'package:ggsb_project/src/repositories/room_stream_repository.dart';
 import 'package:http/http.dart' as http;
 
 class SignupPageController extends GetxController {
@@ -154,6 +158,7 @@ class SignupPageController extends GetxController {
       isSignupLoading(false);
       openAlertDialog(title: '닉네임을 입력해주세요');
     } else {
+      //유저모델 업데이트
       UserModel userData = AuthController.to.user.value.copyWith(
         nickname: nicknameController.text,
         school: schoolName.value == nullSchoolName ? null : schoolName.value,
@@ -161,6 +166,28 @@ class SignupPageController extends GetxController {
         updatedAt: DateTime.now(),
       );
       await AuthController.to.updateUserModel(userData);
+      //방모델들 업데이트
+      List<RoomModel> userRoomList = await RoomRepository()
+          .getRoomList(AuthController.to.user.value.roomIdList!);
+      for (RoomModel roomModel in userRoomList) {
+        if (roomModel.creatorUid! == AuthController.to.user.value.uid) {
+          //내가 만든 방의 룸모델 업데이트
+          RoomModel updatedRoomModel = roomModel.copyWith(
+            creatorName: nicknameController.text,
+          );
+          RoomRepository().updateRoomModel(updatedRoomModel);
+        }
+        //룸스트림 업데이트
+        RoomStreamModel roomStreamModel =
+            await RoomStreamRepository().getRoomStream(
+          roomModel.roomId!,
+          AuthController.to.user.value.uid!,
+        );
+        RoomStreamModel updatedRoomStreamModel = roomStreamModel.copyWith(
+          nickname: nicknameController.text,
+        );
+        RoomStreamRepository().updateRoomStream(updatedRoomStreamModel);
+      }
       Get.off(() => App());
     }
   }

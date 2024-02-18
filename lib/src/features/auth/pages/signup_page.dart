@@ -103,8 +103,8 @@ class SignupPage extends GetView<SignupPageController> {
                 TextFieldBox(
                   textEditingController: controller.nicknameController,
                   backgroundColor: CustomColors.lightGreyBackground,
-                  hintText: '닉네임(2~5자)',
-                  maxLength: 5,
+                  hintText: '닉네임(2~8자)',
+                  maxLength: 8,
                   textInputAction: TextInputAction.next,
                   onSubmitted: (_) => FocusScope.of(Get.context!).unfocus(),
                   autoFocus: controller.isProfileEditing == null ? true : false,
