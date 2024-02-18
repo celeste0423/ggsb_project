@@ -17,6 +17,7 @@ import 'package:ggsb_project/src/utils/date_util.dart';
 import 'package:ggsb_project/src/utils/live_seconds_util.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:status_bar_control/status_bar_control.dart';
 
 class TimerPageController extends GetxController
@@ -38,6 +39,7 @@ class TimerPageController extends GetxController
   Rx<bool> noRooms = false.obs;
   late List<RoomModel> roomList;
   late TabController roomTabController;
+  late SharedPreferences prefs;
   List<RoomStreamModel> roomStreamList = [];
   List<RoomStreamModel> liveRoomStreamList = [];
 
@@ -68,9 +70,7 @@ class TimerPageController extends GetxController
     _secondsTimer = Timer.periodic(Duration(seconds: 1), (timer) {
       everySecondFunction();
     });
-    roomTabController.addListener(() {
-      update(['tabIndicator']);
-    });
+    await _initRoomTabController();
   }
 
   Future<void> getRoomList() async {
@@ -81,6 +81,7 @@ class TimerPageController extends GetxController
       roomList = await RoomRepository()
           .getRoomList(AuthController.to.user.value.roomIdList!);
     }
+    //기본 탭 세팅
     roomTabController = TabController(
       initialIndex: 0,
       length: noRooms.value ? 0 : roomList!.length,
@@ -125,6 +126,19 @@ class TimerPageController extends GetxController
     update(['roomListTimer']);
   }
 
+  Future<void> _initRoomTabController() async {
+    prefs = await SharedPreferences.getInstance();
+    // 이전에 저장된 탭 인덱스가 있는지 확인
+    int? lastIndex = prefs.getInt('roomTabIndex');
+    if (lastIndex != null) {
+      roomTabController.index = lastIndex;
+    }
+    roomTabController.addListener(() {
+      update(['tabIndicator']);
+      prefs.setInt('roomTabIndex', roomTabController.index);
+    });
+  }
+
   Stream<List<RoomStreamModel>> roomListStream(String roomId) {
     return RoomStreamRepository().roomStreamListStream(roomId);
   }
@@ -140,8 +154,8 @@ class TimerPageController extends GetxController
     for (int i = 0; i < liveRoomStreamList.length; i++) {
       liveRoomStreamList[i] = LiveSecondsUtil.calcTotalLiveSecInRoomStream(
           liveRoomStreamList[i], now);
-      print(
-          '각 ${liveRoomStreamList[i].nickname}별 시간 ${liveRoomStreamList[i].totalLiveSeconds}');
+      // print(
+      //     '각 ${liveRoomStreamList[i].nickname}별 시간 ${liveRoomStreamList[i].totalLiveSeconds}');
     }
     // totalLiveSeconds를 기준으로 리스트를 큰 순서대로 정렬
     liveRoomStreamList

@@ -241,7 +241,7 @@ class TimerPage extends GetView<TimerPageController> {
             ),
             style: TextStyle(
               color: controller.liveRoomStreamList[index].isTimer!
-                  ? CustomColors.mainBlue
+                  ? CustomColors.nameToRoomColor(roomModel.color!)
                   : Colors.white,
               fontWeight: FontWeight.w600,
               fontSize: index == 0 ? 20 : 16,
