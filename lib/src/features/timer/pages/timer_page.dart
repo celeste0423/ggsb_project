@@ -2,6 +2,7 @@ import 'package:animate_icons/animate_icons.dart' as animate_icon;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/timer/controllers/timer_page_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
@@ -17,7 +18,7 @@ class TimerPage extends GetView<TimerPageController> {
   PreferredSizeWidget _appBar() {
     return AppBar(
       backgroundColor: Colors.transparent,
-      systemOverlayStyle: SystemUiOverlayStyle(
+      systemOverlayStyle: const SystemUiOverlayStyle(
         systemNavigationBarColor: CustomColors.mainBlack,
         systemNavigationBarIconBrightness: Brightness.light,
       ),
@@ -83,8 +84,9 @@ class TimerPage extends GetView<TimerPageController> {
         () => Text(
           controller.totalLiveTime.value,
           style: TextStyle(
-            color:
-                controller.isTimer.value ? CustomColors.mainBlue : Colors.white,
+            color: controller.isTimer.value
+                ? controller.playButtonColor.value
+                : Colors.white,
             fontSize: 35,
             fontWeight: FontWeight.w800,
           ),
@@ -103,7 +105,7 @@ class TimerPage extends GetView<TimerPageController> {
           borderRadius: BorderRadius.circular(30),
           color: controller.isTimer.value
               ? CustomColors.greyBackground
-              : CustomColors.mainBlue,
+              : controller.playButtonColor.value,
         ),
         child: animate_icon.AnimateIcons(
           duration: const Duration(milliseconds: 200),
@@ -202,10 +204,21 @@ class TimerPage extends GetView<TimerPageController> {
   }
 
   Widget _rankingCard(int index, RoomModel roomModel) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: index == 0 ? 50 : 80,
-        vertical: 10,
+    return Container(
+      margin: EdgeInsets.symmetric(
+        horizontal: index == 0 ? 30 : 60,
+        vertical: 5,
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(15)),
+        border: Border.all(
+          color: controller.liveRoomStreamList[index].uid ==
+                  AuthController.to.user.value.uid
+              ? CustomColors.nameToRoomColor(roomModel.color!)
+              : Colors.transparent,
+          width: 1,
+        ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

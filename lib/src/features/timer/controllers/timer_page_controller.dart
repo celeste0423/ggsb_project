@@ -33,6 +33,7 @@ class TimerPageController extends GetxController
       DateFormat('M/d E', 'ko_KR').format(DateTime.now()).obs;
 
   AnimateIconController animateIconController = AnimateIconController();
+  Rx<Color> playButtonColor = CustomColors.mainBlue.obs;
 
   Rx<String> totalLiveTime = '00:00:00'.obs;
 
@@ -135,6 +136,8 @@ class TimerPageController extends GetxController
     }
     roomTabController.addListener(() {
       update(['tabIndicator']);
+      playButtonColor(CustomColors.nameToRoomColor(
+          roomList[roomTabController.index].color!));
       prefs.setInt('roomTabIndex', roomTabController.index);
     });
   }
