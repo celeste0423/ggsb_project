@@ -8,6 +8,7 @@ import 'package:ggsb_project/src/app.dart';
 import 'package:ggsb_project/src/constants/service_urls.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
+import 'package:ggsb_project/src/models/character_model.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
@@ -132,6 +133,12 @@ class SignupPageController extends GetxController {
       isSignupLoading(false);
       openAlertDialog(title: '닉네임을 입력해주세요');
     } else {
+      CharacterModel baseCharacterData = CharacterModel(
+        fightState: 0,
+        sleepyState: 0,
+        bodyColor: 0,
+        hat: 0,
+      );
       UserModel userData = UserModel(
         uid: uid.value,
         deviceToken: await AuthController().getDeviceToken(),
@@ -143,6 +150,7 @@ class SignupPageController extends GetxController {
         isTimer: false,
         totalSeconds: 0,
         cash: 0,
+        characterData: baseCharacterData,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );

@@ -1,3 +1,5 @@
+import 'package:ggsb_project/src/models/character_model.dart';
+
 class UserModel {
   final String? uid;
   final String? deviceToken;
@@ -10,6 +12,7 @@ class UserModel {
   final int? totalSeconds;
   final int? cash;
   final List<String>? roomIdList;
+  final CharacterModel? characterData;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
@@ -25,6 +28,7 @@ class UserModel {
     this.totalSeconds,
     this.cash,
     this.roomIdList,
+    this.characterData,
     this.createdAt,
     this.updatedAt,
   });
@@ -46,6 +50,9 @@ class UserModel {
       roomIdList: json['roomIdList'] == null
           ? null
           : List<String>.from(json['roomIdList']),
+      characterData: json['characterData'] == null
+          ? null
+          : CharacterModel.fromJson(json['characterData']),
       createdAt: json['createdAt'] == null ? null : json["createdAt"].toDate(),
       updatedAt: json['updatedAt'] == null ? null : json["updatedAt"].toDate(),
     );
@@ -64,6 +71,7 @@ class UserModel {
       'totalSeconds': totalSeconds,
       'cash': cash,
       'roomIdList': roomIdList,
+      'characterData': characterData == null ? null : characterData!.toJson(),
       'createdAt': createdAt,
       'updatedAt': updatedAt,
     };
@@ -81,6 +89,7 @@ class UserModel {
     int? totalSeconds,
     int? cash,
     List<String>? roomIdList,
+    CharacterModel? characterData,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -96,6 +105,7 @@ class UserModel {
       totalSeconds: totalSeconds ?? this.totalSeconds,
       cash: cash ?? this.cash,
       roomIdList: roomIdList ?? this.roomIdList,
+      characterData: characterData ?? this.characterData,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.createdAt,
     );

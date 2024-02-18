@@ -1,3 +1,5 @@
+import 'package:ggsb_project/src/models/character_model.dart';
+
 class RoomStreamModel {
   final String? uid;
   final String? roomId;
@@ -7,6 +9,7 @@ class RoomStreamModel {
   final bool? isTimer;
   final DateTime? startTime;
   final DateTime? lastTime;
+  final CharacterModel? characterData;
 
   RoomStreamModel({
     this.uid,
@@ -17,6 +20,7 @@ class RoomStreamModel {
     this.isTimer,
     this.startTime,
     this.lastTime,
+    this.characterData,
   });
 
   factory RoomStreamModel.fromJson(Map<String, dynamic> json) {
@@ -32,6 +36,9 @@ class RoomStreamModel {
       isTimer: json['isTimer'] == null ? null : json['isTimer'] as bool,
       startTime: json['startTime'] == null ? null : json["startTime"].toDate(),
       lastTime: json['lastTime'] == null ? null : json["lastTime"].toDate(),
+      characterData: json['characterData'] == null
+          ? null
+          : CharacterModel.fromJson(json['characterData']),
     );
   }
 
@@ -45,6 +52,7 @@ class RoomStreamModel {
       'isTimer': isTimer,
       'startTime': startTime,
       'lastTime': lastTime,
+      'characterData': characterData == null ? null : characterData!.toJson(),
     };
   }
 
@@ -57,6 +65,7 @@ class RoomStreamModel {
     bool? isTimer,
     DateTime? startTime,
     DateTime? lastTime,
+    CharacterModel? characterData,
   }) {
     return RoomStreamModel(
       uid: uid ?? this.uid,
@@ -67,6 +76,7 @@ class RoomStreamModel {
       isTimer: isTimer ?? this.isTimer,
       startTime: startTime ?? this.startTime,
       lastTime: lastTime ?? this.lastTime,
+      characterData: characterData ?? this.characterData,
     );
   }
 }

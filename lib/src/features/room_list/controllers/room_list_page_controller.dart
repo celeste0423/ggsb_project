@@ -99,6 +99,7 @@ class RoomListPageController extends GetxController {
           isTimer: false,
           startTime: DateTime.now(),
           lastTime: null,
+          characterData: AuthController.to.user.value.characterData,
         );
         RoomStreamRepository().uploadRoomStream(newRoomStreamModel);
         //유저 정보 업데이트
