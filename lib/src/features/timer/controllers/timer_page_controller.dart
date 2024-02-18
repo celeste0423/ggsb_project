@@ -40,6 +40,7 @@ class TimerPageController extends GetxController
   Rx<bool> noRooms = false.obs;
   late List<RoomModel> roomList;
   late TabController roomTabController;
+  int activeIndex = 0;
   late SharedPreferences prefs;
   List<RoomStreamModel> roomStreamList = [];
   List<RoomStreamModel> liveRoomStreamList = [];
@@ -103,8 +104,8 @@ class TimerPageController extends GetxController
   void calcTotalLiveSec() {
     late int liveTotalSeconds;
     StudyTimeModel studyTimeModel = AuthController.to.studyTime;
-    print(
-        '이전 전체 시간 ${studyTimeModel.totalSeconds}, ${AuthController.to.user.value.isTimer}');
+    // print(
+    //     '이전 전체 시간 ${studyTimeModel.totalSeconds}, ${AuthController.to.user.value.isTimer}');
     if (AuthController.to.user.value.isTimer == false) {
       liveTotalSeconds = studyTimeModel.totalSeconds!;
     } else {
@@ -114,7 +115,7 @@ class TimerPageController extends GetxController
         DateTime.now(),
       );
       liveTotalSeconds = studyTimeModel.totalSeconds! + calcSec;
-      print('현재 전체 시간 ${liveTotalSeconds}');
+      // print('현재 전체 시간 ${liveTotalSeconds}');
     }
     totalLiveTime(SecondsUtil.convertToDigitString(liveTotalSeconds));
   }
@@ -128,18 +129,24 @@ class TimerPageController extends GetxController
   }
 
   Future<void> _initRoomTabController() async {
+    roomTabController.animation!.addListener(() {
+      final int temp = roomTabController.animation!.value.round();
+      if (activeIndex != temp) {
+        activeIndex = temp;
+        update(['tabIndicator']);
+        playButtonColor(
+            CustomColors.nameToRoomColor(roomList[activeIndex].color!));
+        prefs.setInt('roomTabIndex', activeIndex);
+        roomTabController.index = activeIndex;
+        // print(activeIndex);
+      }
+    });
     prefs = await SharedPreferences.getInstance();
     // 이전에 저장된 탭 인덱스가 있는지 확인
     int? lastIndex = prefs.getInt('roomTabIndex');
     if (lastIndex != null) {
       roomTabController.index = lastIndex;
     }
-    roomTabController.addListener(() {
-      update(['tabIndicator']);
-      playButtonColor(CustomColors.nameToRoomColor(
-          roomList[roomTabController.index].color!));
-      prefs.setInt('roomTabIndex', roomTabController.index);
-    });
   }
 
   Stream<List<RoomStreamModel>> roomListStream(String roomId) {
