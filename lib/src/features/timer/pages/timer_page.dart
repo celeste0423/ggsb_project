@@ -10,6 +10,7 @@ import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/live_seconds_util.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
 import 'package:ggsb_project/src/widgets/full_size_loading_indicator.dart';
+import 'package:ggsb_project/src/widgets/loading_indicator.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
 
 class TimerPage extends GetView<TimerPageController> {
@@ -81,14 +82,18 @@ class TimerPage extends GetView<TimerPageController> {
     return Padding(
       padding: const EdgeInsets.only(top: 40),
       child: Obx(
-        () => Text(
-          controller.totalLiveTime.value,
+        () => AnimatedDefaultTextStyle(
+          duration: const Duration(milliseconds: 500),
           style: TextStyle(
             color: controller.isTimer.value
                 ? controller.playButtonColor.value
                 : Colors.white,
             fontSize: 35,
             fontWeight: FontWeight.w800,
+            fontFamily: 'nanum',
+          ),
+          child: Text(
+            controller.totalLiveTime.value,
           ),
         ),
       ),
@@ -139,10 +144,8 @@ class TimerPage extends GetView<TimerPageController> {
                 ),
               )
             : controller.isPageLoading.value
-                ? const Center(
-                    child: CircularProgressIndicator(
-                      color: CustomColors.mainBlue,
-                    ),
+                ? Center(
+                    child: loadingIndicator(),
                   )
                 : TabBarView(
                     controller: controller.roomTabController,
@@ -158,10 +161,8 @@ class TimerPage extends GetView<TimerPageController> {
         stream: controller.roomListStream(roomModel.roomId!),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: CustomColors.mainBlue,
-              ),
+            return Center(
+              child: loadingIndicator(),
             );
           } else if (snapshot.hasError) {
             return const Text('불러오는 중 에러가 발생했습니다.');

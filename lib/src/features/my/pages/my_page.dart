@@ -9,6 +9,7 @@ import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/study_time_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
+import 'package:ggsb_project/src/widgets/loading_indicator.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
 
 class MyPage extends GetView<MyPageController> {
@@ -117,10 +118,8 @@ class MyPage extends GetView<MyPageController> {
               stream: controller.timeModelStream(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: CustomColors.mainBlue,
-                    ),
+                  return Center(
+                    child: loadingIndicator(),
                   );
                 } else if (snapshot.hasError) {
                   return const Text('불러오는 중 에러가 발생했습니다.');

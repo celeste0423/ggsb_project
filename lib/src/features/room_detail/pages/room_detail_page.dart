@@ -8,6 +8,7 @@ import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/live_seconds_util.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
 import 'package:ggsb_project/src/widgets/full_size_loading_indicator.dart';
+import 'package:ggsb_project/src/widgets/loading_indicator.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
 
@@ -94,10 +95,8 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
               stream: controller.roomUserListStream(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: CustomColors.mainBlue,
-                    ),
+                  return Center(
+                    child: loadingIndicator(),
                   );
                 } else if (snapshot.hasError) {
                   return const Text('불러오는 중 에러가 발생했습니다.');

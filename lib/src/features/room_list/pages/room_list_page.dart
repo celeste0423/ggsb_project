@@ -7,6 +7,7 @@ import 'package:ggsb_project/src/features/room_detail/pages/room_detail_page.dar
 import 'package:ggsb_project/src/features/room_list/controllers/room_list_page_controller.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
+import 'package:ggsb_project/src/widgets/loading_indicator.dart';
 import 'package:ggsb_project/src/widgets/main_button.dart';
 import 'package:ggsb_project/src/widgets/text_field_box.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
@@ -111,10 +112,8 @@ class RoomListPage extends GetView<RoomListPageController> {
                       AsyncSnapshot<List<RoomModel>> snapshot,
                     ) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            color: CustomColors.mainBlue,
-                          ),
+                        return Center(
+                          child: loadingIndicator(),
                         );
                       } else if (snapshot.hasError) {
                         return const Text('에러 발생');
@@ -161,11 +160,7 @@ class RoomListPage extends GetView<RoomListPageController> {
                       ],
                     ),
                   )
-            : const Center(
-                child: CircularProgressIndicator(
-                  color: CustomColors.mainBlue,
-                ),
-              ),
+            : Center(child: loadingIndicator()),
       ),
     );
   }

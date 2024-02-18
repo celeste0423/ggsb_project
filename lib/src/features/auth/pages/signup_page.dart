@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/signup_page_controller.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/widgets/full_size_loading_indicator.dart';
+import 'package:ggsb_project/src/widgets/loading_indicator.dart';
 import 'package:ggsb_project/src/widgets/main_button.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
 import 'package:ggsb_project/src/widgets/text_field_box.dart';
@@ -338,11 +339,7 @@ class SignupPage extends GetView<SignupPageController> {
                 Expanded(
                   child: Obx(() {
                     if (controller.isSchoolLoading.value) {
-                      return const Center(
-                        child: CircularProgressIndicator(
-                          color: CustomColors.mainBlue,
-                        ),
-                      );
+                      return Center(child: loadingIndicator());
                     } else if (controller.schoolNameList.isEmpty) {
                       return const Center(child: Text('검색 결과가 없습니다'));
                     } else {

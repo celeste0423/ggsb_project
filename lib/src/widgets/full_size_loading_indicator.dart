@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ggsb_project/src/utils/custom_color.dart';
+import 'package:ggsb_project/src/widgets/loading_indicator.dart';
 
 class FullSizeLoadingIndicator extends StatelessWidget {
   final Color? backgroundColor;
@@ -10,9 +10,7 @@ class FullSizeLoadingIndicator extends StatelessWidget {
     return Container(
       color: backgroundColor ?? Colors.white,
       child: Center(
-        child: CircularProgressIndicator(
-          color: CustomColors.mainBlue,
-        ),
+        child: loadingIndicator(),
       ),
     );
     ;

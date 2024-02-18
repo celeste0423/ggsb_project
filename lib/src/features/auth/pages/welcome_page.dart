@@ -10,6 +10,7 @@ import 'package:ggsb_project/src/features/auth/widgets/facebook_login_button.dar
 import 'package:ggsb_project/src/features/auth/widgets/google_login_button.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
+import 'package:ggsb_project/src/widgets/loading_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class WelcomePage extends GetView<WelcomePageController> {
@@ -200,7 +201,7 @@ class WelcomePage extends GetView<WelcomePageController> {
           builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
             if (snapshot.connectionState == ConnectionState.none ||
                 snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
+              return loadingIndicator();
             } else if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasData) {
                 final version = snapshot.data!;
