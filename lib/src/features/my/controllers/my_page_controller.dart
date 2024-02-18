@@ -31,7 +31,7 @@ class MyPageController extends GetxController {
   void arrangeTimeModels(AsyncSnapshot<List<StudyTimeModel>> snapshot) {
     studyTimeModelList = DateUtil().sortByDateString(snapshot.data!);
     for (StudyTimeModel studyTimeModel in studyTimeModelList) {
-      print('정리중 ${studyTimeModel.date} / ${studyTimeModel.totalSeconds}');
+      // print('정리중 ${studyTimeModel.date} / ${studyTimeModel.totalSeconds}');
       if (studyTimeModel.totalSeconds! > bestSeconds) {
         bestSeconds = studyTimeModel.totalSeconds!;
       }

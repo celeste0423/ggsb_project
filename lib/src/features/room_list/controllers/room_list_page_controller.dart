@@ -41,11 +41,15 @@ class RoomListPageController extends GetxController {
   }
 
   Future<List<RoomModel>> getRoomList() async {
-    //유저 정보 업데이트
-    List<RoomModel> roomList = await RoomRepository()
-        .getRoomList(AuthController.to.user.value.roomIdList!);
-    print('방 개수 ${roomList.length}');
-    return roomList;
+    if (AuthController.to.user.value.roomIdList == null) {
+      isNoRoomList(true);
+      return [];
+    } else {
+      List<RoomModel> roomList = await RoomRepository()
+          .getRoomList(AuthController.to.user.value.roomIdList!);
+      // print('방 개수 ${roomList.length}');
+      return roomList;
+    }
   }
 
   Future<void> getSaying() async {

@@ -163,7 +163,7 @@ class MyPage extends GetView<MyPageController> {
   }
 
   Widget _dateBar(StudyTimeModel studyTimeModel) {
-    print('데이트바 ${studyTimeModel.date} / ${studyTimeModel.totalSeconds}');
+    // print('데이트바 ${studyTimeModel.date} / ${studyTimeModel.totalSeconds}');
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,

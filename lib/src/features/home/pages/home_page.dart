@@ -15,6 +15,8 @@ class HomePage extends GetView<HomePageController> {
     return AppBar(
       centerTitle: false,
       systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.dark,
+        statusBarColor: Colors.transparent,
         systemNavigationBarColor: CustomColors.mainBlack,
         systemNavigationBarIconBrightness: Brightness.light,
       ),
