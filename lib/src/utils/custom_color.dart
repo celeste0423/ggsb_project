@@ -44,15 +44,15 @@ class CustomColors {
   //방 색
   static const Color redRoom = Color(0xFFF58181);
   static const Color orangeRoom = Color(0xFFFFB46E);
-  static const Color yellowRoom = Color(0xFFFBE38F);
-  static const Color lightGreenRoom = Color(0xFFA5D480);
+  static const Color yellowRoom = Color(0xFFEED787);
+  static const Color lightGreenRoom = Color(0xFF93D25F);
   static const Color greenRoom = Color(0xFF749857);
   static const Color darkGreenRoom = Color(0xFF468B59);
   static const Color blueRoom = Color(0xFF5FA3D4);
   static const Color darkBlueRoom = Color(0xFF5F6BD4);
   static const Color purpleRoom = Color(0xFF9F63EB);
   static const Color brownRoom = Color(0xFF815B46);
-  static const Color greyRoom = Color(0xFFB9B9B9);
+  static const Color greyRoom = Color(0xFF5E5E5E);
   static const Color blackRoom = Color(0xFF212121);
 
   static String roomColorToName(Color color) {
