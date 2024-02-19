@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/home/controllers/home_page_controller.dart';
+import 'package:ggsb_project/src/features/shop/page/shop_page.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/widgets/main_button.dart';
 import 'package:rive/rive.dart';
@@ -11,7 +12,8 @@ import 'package:rive/rive.dart';
 class HomePage extends GetView<HomePageController> {
   const HomePage({super.key});
 
-  PreferredSizeWidget _appBar() {
+
+  PreferredSizeWidget _appBar(BuildContext context) {
     return AppBar(
       centerTitle: false,
       systemOverlayStyle: const SystemUiOverlayStyle(
@@ -20,16 +22,46 @@ class HomePage extends GetView<HomePageController> {
         systemNavigationBarColor: CustomColors.mainBlack,
         systemNavigationBarIconBrightness: Brightness.light,
       ),
-      title: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        child: SvgPicture.asset(
-          'assets/images/caption_logo.svg',
-          height: 25,
-          color: CustomColors.mainBlack,
-        ),
+      title: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            child: SvgPicture.asset(
+              'assets/images/caption_logo.svg',
+              height: 25,
+              color: CustomColors.mainBlack,
+            ),
+          ),
+          Spacer(),
+          SvgPicture.asset(
+            'assets/icons/shop.svg',
+            height: 30,
+            color: CustomColors.mainBlack,
+          ),
+        ],
       ),
     );
   }
+
+  // PreferredSizeWidget _appBar() {
+  //   return AppBar(
+  //     centerTitle: false,
+  //     systemOverlayStyle: const SystemUiOverlayStyle(
+  //       statusBarIconBrightness: Brightness.dark,
+  //       statusBarColor: Colors.transparent,
+  //       systemNavigationBarColor: CustomColors.mainBlack,
+  //       systemNavigationBarIconBrightness: Brightness.light,
+  //     ),
+  //     title: Padding(
+  //       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+  //       child: SvgPicture.asset(
+  //         'assets/images/caption_logo.svg',
+  //         height: 25,
+  //         color: CustomColors.mainBlack,
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _characterBox() {
     return Container(
@@ -146,7 +178,7 @@ class HomePage extends GetView<HomePageController> {
     Get.put(HomePageController());
     return Scaffold(
       extendBody: true,
-      appBar: _appBar(),
+      appBar: _appBar(context),
       body: Column(
         children: [
           _characterBox(),
