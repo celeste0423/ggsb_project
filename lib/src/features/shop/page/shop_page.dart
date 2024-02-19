@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ggsb_project/src/features/ranking/controllers/ranking_page_controller.dart';
+import 'package:ggsb_project/src/features/shop/controller/shop_page_controller.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
 
-class RankingPage extends GetView<ShopPageController> {
-  const RankingPage({super.key});
+class ShopPage extends GetView<ShopPageController> {
+  const ShopPage({super.key});
 
   PreferredSizeWidget _appBar() {
     return AppBar(

@@ -22,68 +22,81 @@ class DataAnalyzePage extends GetView<DataAnalyzePageController> {
     );
   }
 
-  Widget _calendar() {
-    return Obx(
-      () => TableCalendar(
-        focusedDay: controller.focusedDay.value,
-        firstDay: DateTime(2024, 1, 1),
-        lastDay: DateTime(2030, 12, 31),
-        locale: 'ko-KR',
-        daysOfWeekHeight: 30,
-        selectedDayPredicate: (day) {
-          return isSameDay(controller.selectedDay.value, day);
-        },
-        onDaySelected: (selectedDateTime, focusedDay) {
-          if (!isSameDay(selectedDateTime, controller.selectedDay.value)) {
-            controller.onDaySelected(selectedDateTime);
-            controller.focusedDay(focusedDay);
-          }
-        },
-        eventLoader: (day) {
-          if (day.day % 2 == 0) {
-            return ['hi'];
-          }
-          return [];
-        },
-        headerStyle: const HeaderStyle(
-          formatButtonVisible: false,
-          titleCentered: true,
-        ),
-        calendarStyle: CalendarStyle(
-          defaultTextStyle: const TextStyle(
-            color: CustomColors.greyText,
-          ),
-          weekendTextStyle: const TextStyle(color: Colors.redAccent),
-          outsideDaysVisible: false,
-          todayTextStyle: const TextStyle(
-            fontWeight: FontWeight.bold,
-            color: CustomColors.blackText,
-          ),
-          todayDecoration: BoxDecoration(
-            color: Colors.transparent,
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: CustomColors.mainBlue,
-              width: 1,
-            ),
-          ),
-          selectedDecoration: const BoxDecoration(
-            color: CustomColors.mainBlue,
-            shape: BoxShape.circle,
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     Get.put(DataAnalyzePageController());
     return Scaffold(
       appBar: _appBar(),
       body: Center(
-        child: _calendar(), // Calendar 위젯을 출력합니다.
+        child: Container(
+          color: Colors.white,
+          child: Text('추후 구현 예정입니다'),
+        ),
       ),
     );
   }
 }
+  // Widget _calendar() {
+  //   return Obx(
+  //     () => TableCalendar(
+  //       focusedDay: controller.focusedDay.value,
+  //       firstDay: DateTime(2024, 1, 1),
+  //       lastDay: DateTime(2030, 12, 31),
+  //       locale: 'ko-KR',
+  //       daysOfWeekHeight: 30,
+  //       selectedDayPredicate: (day) {
+  //         return isSameDay(controller.selectedDay.value, day);
+  //       },
+  //       onDaySelected: (selectedDateTime, focusedDay) {
+  //         if (!isSameDay(selectedDateTime, controller.selectedDay.value)) {
+  //           controller.onDaySelected(selectedDateTime);
+  //           controller.focusedDay(focusedDay);
+  //         }
+  //       },
+  //       eventLoader: (day) {
+  //         if (day.day % 2 == 0) {
+  //           return ['hi'];
+  //         }
+  //         return [];
+  //       },
+  //       headerStyle: const HeaderStyle(
+  //         formatButtonVisible: false,
+  //         titleCentered: true,
+  //       ),
+  //       calendarStyle: CalendarStyle(
+  //         defaultTextStyle: const TextStyle(
+  //           color: CustomColors.greyText,
+  //         ),
+  //         weekendTextStyle: const TextStyle(color: Colors.redAccent),
+  //         outsideDaysVisible: false,
+  //         todayTextStyle: const TextStyle(
+  //           fontWeight: FontWeight.bold,
+  //           color: CustomColors.blackText,
+  //         ),
+  //         todayDecoration: BoxDecoration(
+  //           color: Colors.transparent,
+  //           shape: BoxShape.circle,
+  //           border: Border.all(
+  //             color: CustomColors.mainBlue,
+  //             width: 1,
+  //           ),
+  //         ),
+  //         selectedDecoration: const BoxDecoration(
+  //           color: CustomColors.mainBlue,
+  //           shape: BoxShape.circle,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+  //
+  // @override
+  // Widget build(BuildContext context) {
+  //   Get.put(DataAnalyzePageController());
+  //   return Scaffold(
+  //     appBar: _appBar(),
+  //     body: Center(
+  //       child: _calendar(), // Calendar 위젯을 출력합니다.
+  //     ),
+  //   );
+  // }
