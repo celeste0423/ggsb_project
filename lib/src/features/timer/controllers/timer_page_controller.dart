@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:animate_icons/animate_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/home/controllers/home_page_controller.dart';
@@ -26,6 +27,9 @@ class TimerPageController extends GetxController
 
   Rx<bool> isPageLoading = false.obs;
   Rx<bool> isTimer = false.obs;
+
+  late final AppLifecycleListener _appLifecycleListener;
+  late final bool overlayPermissionStatus;
 
   late Timer _secondsTimer;
 
@@ -73,6 +77,13 @@ class TimerPageController extends GetxController
       everySecondFunction();
     });
     await _initRoomTabController();
+    overlayPermissionStatus = await FlutterOverlayWindow.isPermissionGranted();
+    if (!overlayPermissionStatus) {
+      await FlutterOverlayWindow.requestPermission();
+    }
+    _appLifecycleListener = AppLifecycleListener(
+      onStateChange: _onLifecycleChanged,
+    );
   }
 
   Future<void> getRoomList() async {
@@ -149,6 +160,28 @@ class TimerPageController extends GetxController
     }
   }
 
+  void _onLifecycleChanged(AppLifecycleState state) async {
+    if (isTimer.value) {
+      switch (state) {
+        case AppLifecycleState.inactive: //ios용
+        case AppLifecycleState.detached:
+        case AppLifecycleState.hidden:
+        case AppLifecycleState.paused:
+          {
+            print('앱 종료됨');
+            await FlutterOverlayWindow.showOverlay();
+          }
+        case AppLifecycleState.resumed:
+          {
+            print('앱 다시 들어옴');
+            await FlutterOverlayWindow.closeOverlay();
+          }
+      }
+    }
+  }
+
+  //init
+
   Stream<List<RoomStreamModel>> roomListStream(String roomId) {
     return RoomStreamRepository().roomStreamListStream(roomId);
   }
@@ -186,6 +219,8 @@ class TimerPageController extends GetxController
     StudyTimeRepository().updateStudyTimeModel(updatedStudyTimeModel);
     AuthController.to.studyTime = updatedStudyTimeModel;
   }
+
+  //button
 
   Future<void> startButton() async {
     DateTime now = DateTime.now();
@@ -372,5 +407,6 @@ class TimerPageController extends GetxController
   void onClose() {
     super.onClose();
     _secondsTimer.cancel();
+    _appLifecycleListener.dispose();
   }
 }

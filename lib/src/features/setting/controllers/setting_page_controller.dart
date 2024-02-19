@@ -7,6 +7,7 @@ import 'package:ggsb_project/src/repositories/room_repository.dart';
 import 'package:ggsb_project/src/repositories/room_stream_repository.dart';
 import 'package:ggsb_project/src/repositories/user_repository.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
+import 'package:restart_app/restart_app.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingPageController extends GetxController {
@@ -47,11 +48,12 @@ class SettingPageController extends GetxController {
       secondButtonText: '취소',
       mainfunction: () async {
         await UserRepository.signOut();
-        Get.delete<AuthController>(force: true);
+        Restart.restartApp();
+        // Get.delete<AuthController>(force: true);
         // //todo: get.back 이거 왜 2개 있는거고 애초에 갯백이 필요한가? root에 있는 streambuilder있는데... screeen stack을 없애려고 하는건가
-        Get.back();
-        Get.back();
-        Get.put(AuthController(), permanent: true);
+        // Get.back();
+        // Get.back();
+        // Get.put(AuthController(), permanent: true);
         // exit(0);
       },
     );
@@ -76,8 +78,9 @@ class SettingPageController extends GetxController {
         //sns 로그 아웃
         await UserRepository.signOut();
         //앱 종료
-        Get.back();
-        Get.back();
+        Restart.restartApp();
+        // Get.back();
+        // Get.back();
         // exit(0);
       },
     );

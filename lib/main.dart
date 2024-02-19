@@ -7,6 +7,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/binding/init_binding.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
+import 'package:ggsb_project/src/features/overlay/pages/overlay_page.dart';
 import 'package:ggsb_project/src/root.dart';
 import 'package:ggsb_project/src/theme/base_theme.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -62,8 +63,20 @@ Future<void> _initNotificationSetting() async {
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 }
 
+//overlay 진입점
+@pragma('vm:entry-point')
+void overlayMain() {
+  runApp(
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: OverlayPage(),
+    ),
+  );
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
