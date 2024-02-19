@@ -9,33 +9,36 @@ import 'package:ggsb_project/src/binding/init_binding.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/root.dart';
 import 'package:ggsb_project/src/theme/base_theme.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import 'firebase_options.dart';
 
 void main() async {
-  //파이어베이스 설정
   WidgetsFlutterBinding.ensureInitialized();
+  //파이어베이스 설정
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   //알림 설정
   await _initNotificationSetting();
-  //화면 회전 불가
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((_) {
-    runApp(const MyApp());
-  });
   //날짜 언어 세팅
   initializeDateFormatting('ko-KR');
   //.env init
   await dotenv.load(fileName: ".env");
+  //광고 init
+  MobileAds.instance.initialize();
   //새벽 4시에 초기화
   Cron().schedule(Schedule.parse('01 04 * * *'), () async {
     print("새벽 4시입니다.");
     if (!AuthController.to.user.value.isTimer!) {
       AuthController().loginUser(AuthController.to.user.value.uid!);
     }
+  });
+  //화면 회전 불가
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(const MyApp());
   });
 }
 
