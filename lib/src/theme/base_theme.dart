@@ -10,13 +10,15 @@ ThemeData baseTheme(BuildContext context) {
     //배경 색
     scaffoldBackgroundColor: CustomColors.whiteBackground,
     //appbar
-    appBarTheme: const AppBarTheme(
+    appBarTheme: AppBarTheme(
       backgroundColor: Colors.white,
       elevation: 0,
       surfaceTintColor: Colors.transparent,
       centerTitle: true,
       toolbarHeight: 75,
-      systemOverlayStyle: SystemUiOverlayStyle.dark,
+      systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(
+        statusBarColor: Colors.transparent,
+      ),
       // systemOverlayStyle: SystemUiOverlayStyle(
       //   statusBarIconBrightness: Brightness.dark,
       //   statusBarColor: Colors.transparent,

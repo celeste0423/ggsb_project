@@ -13,8 +13,8 @@ import 'package:ggsb_project/src/repositories/user_repository.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:uuid/uuid.dart';
 
-class RoomAddPageController extends GetxController {
-  static RoomAddPageController get to => Get.find();
+class RoomCreatePageController extends GetxController {
+  static RoomCreatePageController get to => Get.find();
   Uuid uuid = Uuid();
 
   TextEditingController roomNameController = TextEditingController();

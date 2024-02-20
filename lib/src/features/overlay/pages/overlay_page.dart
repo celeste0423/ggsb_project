@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
@@ -18,18 +17,21 @@ class OverlayPage extends StatelessWidget {
           children: [
             const Text(
               '시간 측정중에는\n앱을 종료하실 수 없습니다.',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 color: CustomColors.blackText,
                 fontSize: 20,
               ),
             ),
-            const SizedBox(height: 20),
-            MainButton(
-              buttonText: '앱으로 돌아가기',
-              onTap: () async {
-                Restart.restartApp();
-                await FlutterOverlayWindow.closeOverlay();
-              },
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+              child: MainButton(
+                buttonText: '앱으로 돌아가기',
+                onTap: () async {
+                  Restart.restartApp();
+                  await FlutterOverlayWindow.closeOverlay();
+                },
+              ),
             ),
           ],
         ),

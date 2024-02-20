@@ -1,13 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/home/controllers/home_page_controller.dart';
 import 'package:ggsb_project/src/features/store/page/store_page.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/widgets/main_button.dart';
-import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
 import 'package:rive/rive.dart';
 
 class HomePage extends GetView<HomePageController> {
@@ -16,7 +14,7 @@ class HomePage extends GetView<HomePageController> {
   PreferredSizeWidget _appBar() {
     return AppBar(
       centerTitle: false,
-      systemOverlayStyle: SystemUiOverlayStyle.dark,
+      // systemOverlayStyle: SystemUiOverlayStyle.dark,
       // systemOverlayStyle: const SystemUiOverlayStyle(
       //   statusBarIconBrightness: Brightness.dark,
       //   statusBarColor: Colors.transparent,
@@ -33,7 +31,7 @@ class HomePage extends GetView<HomePageController> {
               color: CustomColors.mainBlack,
             ),
           ),
-          Spacer(),
+          const Spacer(),
           IconButton(
             icon: Image.asset(
               'assets/icons/store.png',

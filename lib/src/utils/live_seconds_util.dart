@@ -12,7 +12,8 @@ class LiveSecondsUtil {
     late int liveTotalSeconds;
 
     if (DateUtil().calculateDateDifference(roomStreamModel.startTime!, now) ==
-        0) {
+            0 ||
+        roomStreamModel.isTimer!) {
       //마지막 공부 시작 시간이 오늘
       if (roomStreamModel.isTimer == false) {
         liveTotalSeconds = roomStreamModel.totalSeconds!;

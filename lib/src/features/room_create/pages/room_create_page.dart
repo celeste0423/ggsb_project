@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ggsb_project/src/features/room_add/controllers/room_add_page_controller.dart';
+import 'package:ggsb_project/src/features/room_create/controllers/room_create_page_controller.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/widgets/full_size_loading_indicator.dart';
 import 'package:ggsb_project/src/widgets/main_button.dart';
@@ -9,8 +9,8 @@ import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
 import 'package:ggsb_project/src/widgets/text_field_box.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
 
-class RoomAddPage extends GetView<RoomAddPageController> {
-  const RoomAddPage({super.key});
+class RoomCreatePage extends GetView<RoomCreatePageController> {
+  const RoomCreatePage({super.key});
 
   PreferredSizeWidget _appBar() {
     return AppBar(
@@ -267,8 +267,8 @@ class RoomAddPage extends GetView<RoomAddPageController> {
           height: 125,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            child: GetBuilder<RoomAddPageController>(
-              builder: (RoomAddPageController controller) {
+            child: GetBuilder<RoomCreatePageController>(
+              builder: (RoomCreatePageController controller) {
                 return Column(
                   children: [
                     Row(
@@ -358,7 +358,7 @@ class RoomAddPage extends GetView<RoomAddPageController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(RoomAddPageController());
+    Get.put(RoomCreatePageController());
     return Stack(
       children: [
         Scaffold(
