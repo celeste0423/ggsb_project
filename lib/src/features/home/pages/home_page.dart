@@ -4,16 +4,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/home/controllers/home_page_controller.dart';
-import 'package:ggsb_project/src/features/shop/page/shop_page.dart';
+import 'package:ggsb_project/src/features/store/page/store_page.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/widgets/main_button.dart';
+import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
 import 'package:rive/rive.dart';
 
 class HomePage extends GetView<HomePageController> {
   const HomePage({super.key});
 
-
-  PreferredSizeWidget _appBar(BuildContext context) {
+  PreferredSizeWidget _appBar() {
     return AppBar(
       centerTitle: false,
       systemOverlayStyle: SystemUiOverlayStyle.dark,
@@ -34,35 +34,20 @@ class HomePage extends GetView<HomePageController> {
             ),
           ),
           Spacer(),
-          SvgPicture.asset(
-            'assets/icons/shop.svg',
-            height: 30,
-            color: CustomColors.mainBlack,
+          IconButton(
+            icon: Image.asset(
+              'assets/icons/store.png',
+              color: CustomColors.mainBlack,
+              height: 25,
+            ),
+            onPressed: () {
+              Get.to(() => const StorePage());
+            },
           ),
         ],
       ),
     );
   }
-
-  // PreferredSizeWidget _appBar() {
-  //   return AppBar(
-  //     centerTitle: false,
-  //     systemOverlayStyle: const SystemUiOverlayStyle(
-  //       statusBarIconBrightness: Brightness.dark,
-  //       statusBarColor: Colors.transparent,
-  //       systemNavigationBarColor: CustomColors.mainBlack,
-  //       systemNavigationBarIconBrightness: Brightness.light,
-  //     ),
-  //     title: Padding(
-  //       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-  //       child: SvgPicture.asset(
-  //         'assets/images/caption_logo.svg',
-  //         height: 25,
-  //         color: CustomColors.mainBlack,
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget _characterBox() {
     return Container(
@@ -179,7 +164,7 @@ class HomePage extends GetView<HomePageController> {
     Get.put(HomePageController());
     return Scaffold(
       extendBody: true,
-      appBar: _appBar(context),
+      appBar: _appBar(),
       body: Column(
         children: [
           _characterBox(),
