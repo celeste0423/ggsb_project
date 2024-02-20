@@ -13,7 +13,7 @@ class MyModel: ObservableObject {
     @Published var selectionToEncourage: FamilyActivitySelection
     
     init() {
-        selectionToDiscourage = FamilyActivitySelection()
+        selectionToDiscourage = FamilyActivitySelection(includeEntireCategory: true)
         selectionToEncourage = FamilyActivitySelection()
     }
     

@@ -16,7 +16,7 @@ class RoomAddPage extends GetView<RoomAddPageController> {
     return AppBar(
       leadingWidth: 75,
       title: TitleText(text: '새 공부방'),
-      leading: SvgIconButton(
+      leading: ImageIconButton(
         assetPath: 'assets/icons/back.svg',
         onTap: () {
           Get.back();

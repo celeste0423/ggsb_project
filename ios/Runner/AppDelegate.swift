@@ -55,13 +55,32 @@ var globalMethodCall = ""
                   print("Error requestAuthorization: ", error)
               }
           }
+          
+//          func discourageAllApps() {
+//                  // FamilyControls의 ShieldSettings를 사용하여 모든 앱을 discourage
+//                  let shieldSettings = ShieldSettings(restrictions: .allApps)
+//                  
+//                  // FamilyControls를 통해 설정된 제한을 적용
+//                  do {
+//                      try shieldSettings.apply()
+//                      print("All apps except mine are discouraged.")
+//                  } catch {
+//                      print("Failed to apply restrictions:", error.localizedDescription)
+//                  }
+//              }
+          
           switch call.method {
+//          case "allAppsDiscourage":
+//              globalMethodCall = "allAppsDiscourage"
+//              discourageAllApps()
+//              print("allAppsDiscourage")
+//              result(nil)
+//              
           case "selectAppsToDiscourage":
               globalMethodCall = "selectAppsToDiscourage"
               let vc = UIHostingController(rootView: ContentView()
                   .environmentObject(model)
                   .environmentObject(store))
-
               controller.present(vc, animated: false, completion: nil)
 
               print("selectAppsToDiscourage")

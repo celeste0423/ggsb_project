@@ -41,7 +41,7 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
       ),
       leading: Align(
         alignment: Alignment.centerRight,
-        child: SvgIconButton(
+        child: ImageIconButton(
           assetPath: 'assets/icons/back.svg',
           iconColor: Colors.white,
           onTap: () {
@@ -253,7 +253,7 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                     AuthController.to.user.value.uid &&
                 controller.liveRoomStreamList[index].uid !=
                     AuthController.to.user.value.uid,
-            child: SvgIconButton(
+            child: ImageIconButton(
               assetPath: 'assets/icons/cancel.svg',
               onTap: () {
                 controller

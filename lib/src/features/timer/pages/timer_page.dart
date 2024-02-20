@@ -35,11 +35,11 @@ class TimerPage extends GetView<TimerPageController> {
       leading: Obx(
         () => Visibility(
           visible: !controller.isTimer.value,
-          child: SvgIconButton(
+          child: ImageIconButton(
             assetPath: 'assets/icons/back.svg',
             onTap: () {
-              // Get.back();
-              MethodChannel('flutter_screentime').invokeMethod('selectAppsToDiscourage');
+              Get.back();
+              // MethodChannel('flutter_screentime').invokeMethod('selectAppsToDiscourage');
             },
           ),
         ),

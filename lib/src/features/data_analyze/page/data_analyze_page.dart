@@ -12,7 +12,7 @@ class DataAnalyzePage extends GetView<DataAnalyzePageController> {
   PreferredSizeWidget _appBar() {
     return AppBar(
       centerTitle: true,
-      leading: SvgIconButton(
+      leading: ImageIconButton(
         assetPath: 'assets/icons/back.svg',
         onTap: Get.back,
       ),
