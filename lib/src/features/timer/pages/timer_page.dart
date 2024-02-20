@@ -38,8 +38,8 @@ class TimerPage extends GetView<TimerPageController> {
           child: SvgIconButton(
             assetPath: 'assets/icons/back.svg',
             onTap: () {
-              // Get.back();
-              MethodChannel('flutter_screentime').invokeMethod('selectAppsToDiscourage');
+              Get.back();
+              // MethodChannel('flutter_screentime').invokeMethod('selectAppsToDiscourage');
             },
           ),
         ),

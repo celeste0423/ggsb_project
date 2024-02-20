@@ -33,12 +33,12 @@ struct ContentView: View {
             VStack {
                 contentView()
             }
-            .navigationBarTitle("Select Apps", displayMode: .inline)
+            .navigationBarTitle("제한되는 앱", displayMode: .inline)
             .navigationBarItems(
-                leading: Button("Cancel") {
+                leading: Button("취소") {
                     presentationMode.wrappedValue.dismiss()
                 },
-                trailing: Button("Done") {
+                trailing: Button("확인") {
                     switch globalMethodCall {
                     case "selectAppsToDiscourage":
                         model.setShieldRestrictions()
