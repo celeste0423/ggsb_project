@@ -2,20 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 
-class SvgIconButton extends StatelessWidget {
+class ImageIconButton extends StatelessWidget {
   String assetPath;
   VoidCallback onTap;
   Color? iconColor;
-  double? width;
   double? height;
+  bool? isPng;
 
-  SvgIconButton({
+  ImageIconButton({
     Key? key,
     required this.assetPath,
     required this.onTap,
     this.iconColor,
-    this.width,
     this.height,
+    this.isPng,
   }) : super(key: key);
 
   @override
@@ -23,10 +23,17 @@ class SvgIconButton extends StatelessWidget {
     return CupertinoButton(
       padding: EdgeInsets.zero,
       onPressed: onTap,
-      child: SvgPicture.asset(
-        assetPath,
-        color: iconColor ?? CustomColors.greyBackground,
-      ),
+      child: isPng != null
+          ? Image.asset(
+              assetPath,
+              height: height,
+              color: iconColor ?? CustomColors.greyBackground,
+            )
+          : SvgPicture.asset(
+              assetPath,
+              height: height,
+              color: iconColor ?? CustomColors.greyBackground,
+            ),
     );
   }
 }

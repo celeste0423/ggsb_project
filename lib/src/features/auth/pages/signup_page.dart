@@ -27,7 +27,7 @@ class SignupPage extends GetView<SignupPageController> {
       leadingWidth: controller.isProfileEditing == null ? 140 : 75,
       leading: controller.isProfileEditing == null
           ? _logoCaption()
-          : SvgIconButton(
+          : ImageIconButton(
               assetPath: 'assets/icons/back.svg',
               iconColor: Colors.white,
               onTap: Get.back,

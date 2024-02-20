@@ -18,7 +18,7 @@ class SettingPage extends GetView<SettingPageController> {
   PreferredSizeWidget _appBar() {
     return AppBar(
       centerTitle: true,
-      leading: SvgIconButton(
+      leading: ImageIconButton(
         assetPath: 'assets/icons/back.svg',
         onTap: Get.back,
       ),

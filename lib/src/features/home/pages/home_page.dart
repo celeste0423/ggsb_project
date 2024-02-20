@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/home/controllers/home_page_controller.dart';
-import 'package:ggsb_project/src/features/store/page/store_page.dart';
+import 'package:ggsb_project/src/features/store/pages/store_page.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/widgets/main_button.dart';
 import 'package:rive/rive.dart';
