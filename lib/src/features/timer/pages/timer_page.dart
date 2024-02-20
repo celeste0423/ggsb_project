@@ -38,7 +38,8 @@ class TimerPage extends GetView<TimerPageController> {
           child: SvgIconButton(
             assetPath: 'assets/icons/back.svg',
             onTap: () {
-              Get.back();
+              // Get.back();
+              MethodChannel('flutter_screentime').invokeMethod('selectAppsToDiscourage');
             },
           ),
         ),
@@ -184,13 +185,13 @@ class TimerPage extends GetView<TimerPageController> {
                     builder: (controller) {
                       controller.arrangeSnapshot(snapshot, roomModel);
                       return SingleChildScrollView(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          padding: EdgeInsets.zero,
-                          itemCount: controller.roomStreamList.length,
-                          itemBuilder: (context, index) {
-                            return _rankingCard(index, roomModel);
-                          },
+                        child: Column(
+                          children: List.generate(
+                            controller.roomStreamList.length,
+                            (index) {
+                              return _rankingCard(index, roomModel);
+                            },
+                          ),
                         ),
                       );
                     },
@@ -233,7 +234,7 @@ class TimerPage extends GetView<TimerPageController> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 5),
             child: Text(
               controller.liveRoomStreamList[index].nickname!,
               style: TextStyle(

@@ -16,12 +16,13 @@ class HomePage extends GetView<HomePageController> {
   PreferredSizeWidget _appBar(BuildContext context) {
     return AppBar(
       centerTitle: false,
-      systemOverlayStyle: const SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness.dark,
-        statusBarColor: Colors.transparent,
-        systemNavigationBarColor: CustomColors.mainBlack,
-        systemNavigationBarIconBrightness: Brightness.light,
-      ),
+      systemOverlayStyle: SystemUiOverlayStyle.dark,
+      // systemOverlayStyle: const SystemUiOverlayStyle(
+      //   statusBarIconBrightness: Brightness.dark,
+      //   statusBarColor: Colors.transparent,
+      //   systemNavigationBarColor: CustomColors.mainBlack,
+      //   systemNavigationBarIconBrightness: Brightness.light,
+      // ),
       title: Row(
         children: [
           Padding(

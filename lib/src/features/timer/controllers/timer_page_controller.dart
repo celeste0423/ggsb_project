@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:animate_icons/animate_icons.dart';
 import 'package:flutter/material.dart';
@@ -77,13 +78,7 @@ class TimerPageController extends GetxController
       everySecondFunction();
     });
     await _initRoomTabController();
-    overlayPermissionStatus = await FlutterOverlayWindow.isPermissionGranted();
-    if (!overlayPermissionStatus) {
-      await FlutterOverlayWindow.requestPermission();
-    }
-    _appLifecycleListener = AppLifecycleListener(
-      onStateChange: _onLifecycleChanged,
-    );
+    await _initOverlay();
   }
 
   Future<void> getRoomList() async {
@@ -160,6 +155,18 @@ class TimerPageController extends GetxController
     }
   }
 
+  Future<void> _initOverlay()async{
+    if(Platform.isAndroid){
+      overlayPermissionStatus = await FlutterOverlayWindow.isPermissionGranted();
+      if (!overlayPermissionStatus) {
+        await FlutterOverlayWindow.requestPermission();
+      }
+      _appLifecycleListener = AppLifecycleListener(
+        onStateChange: _onLifecycleChanged,
+      );
+    }
+  }
+
   void _onLifecycleChanged(AppLifecycleState state) async {
     if (isTimer.value) {
       switch (state) {
@@ -168,12 +175,12 @@ class TimerPageController extends GetxController
         case AppLifecycleState.hidden:
         case AppLifecycleState.paused:
           {
-            print('앱 종료됨');
+            // print('앱 종료됨');
             await FlutterOverlayWindow.showOverlay();
           }
         case AppLifecycleState.resumed:
           {
-            print('앱 다시 들어옴');
+            // print('앱 다시 들어옴');
             await FlutterOverlayWindow.closeOverlay();
           }
       }

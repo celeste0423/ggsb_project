@@ -16,14 +16,15 @@ ThemeData baseTheme(BuildContext context) {
       surfaceTintColor: Colors.transparent,
       centerTitle: true,
       toolbarHeight: 75,
-      systemOverlayStyle: SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness.dark,
-        statusBarColor: Colors.transparent,
-        systemStatusBarContrastEnforced: true,
-        systemNavigationBarColor: Colors.white,
-        systemNavigationBarDividerColor: Colors.transparent,
-        systemNavigationBarIconBrightness: Brightness.dark,
-      ),
+      systemOverlayStyle: SystemUiOverlayStyle.dark,
+      // systemOverlayStyle: SystemUiOverlayStyle(
+      //   statusBarIconBrightness: Brightness.dark,
+      //   statusBarColor: Colors.transparent,
+      //   systemStatusBarContrastEnforced: true,
+      //   systemNavigationBarColor: Colors.white,
+      //   systemNavigationBarDividerColor: Colors.transparent,
+      //   systemNavigationBarIconBrightness: Brightness.dark,
+      // ),
     ),
     //textStyle
     textTheme: Theme.of(context).textTheme.apply(
