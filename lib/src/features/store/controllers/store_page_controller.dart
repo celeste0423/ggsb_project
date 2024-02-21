@@ -19,13 +19,11 @@ class StorePageController extends GetxController
           'android': 'ca-app-pub-3940256099942544/6300978111',
         };
 
-
   @override
   void onInit() async {
     super.onInit();
-    categoryTabController= TabController(length: 2 , vsync: this);
+    categoryTabController = TabController(length: 3, vsync: this);
   }
-
 
   @override
   void onClose() {

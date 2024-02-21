@@ -91,34 +91,70 @@ class StorePage extends GetView<StorePageController> {
   }
 
   Widget _characterBox() {
+    return Expanded(
+      child: Container(),
+    );
+  }
+
+  Widget _itemsTab() {
     return Container(
-      height: 350,
-      width: double.infinity,
       decoration: BoxDecoration(
-        color: CustomColors.blackText,
+        color: CustomColors.whiteBackground,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+        boxShadow: [
+          BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              offset: Offset(0, -2),
+              blurRadius: 5),
+        ],
+      ),
+      child: Column(
+        children: [
+          TabBar(
+            controller: controller.categoryTabController,
+            tabs: [
+              Tab(
+                icon: Icon(
+                  Icons.coffee,
+                  color: controller.categoryTabController.index == 0
+                      ? CustomColors.greyBackground
+                      : CustomColors.lightGreyBackground,
+                ),
+              ),
+              Tab(
+                icon: Icon(
+                  Icons.coffee,
+                  color: Colors.black,
+                ),
+              ),
+              Tab(
+                icon: Icon(
+                  Icons.coffee,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+          Expanded(
+            child: TabBarView(
+              controller: controller.categoryTabController,
+              children: [
+                Container(height: 100, color: Colors.green),
+                Container(height: 100, color: Colors.red),
+                Container(height: 100, color: Colors.red),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _itemsTap() {
-    return Column(
-      children: [
-        TabBar(
-          controller: controller.categoryTabController,
-          tabs: [
-            Tab(icon: Icon(Icons.coffee, color: Colors.black)),
-            Tab(icon: Icon(Icons.local_pizza, color: Colors.black)),
-          ],
-        ),
-        // TabBarView(
-        //   controller: controller.categoryTabController,
-        //   children: [
-        //     Container(color: Colors.green),
-        //     Container(color: Colors.red),
-        //   ],
-        // ),
-      ],
-    );
+  Widget _itemCard() {
+    return Container();
   }
 
   @override
@@ -131,7 +167,7 @@ class StorePage extends GetView<StorePageController> {
           children: [
             _adBox(),
             _characterBox(),
-            _itemsTap(),
+            Expanded(child: _itemsTab()),
           ],
         ));
   }
