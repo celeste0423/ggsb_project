@@ -52,7 +52,7 @@ class SettingPageController extends GetxController {
         // //todo: get.back 이거 왜 2개 있는거고 애초에 갯백이 필요한가? root에 있는 streambuilder있는데... screeen stack을 없애려고 하는건가
         Get.back();
         Get.back();
-        Restart.restartApp();
+        // Restart.restartApp();
         // Get.put(AuthController(), permanent: true);
         // exit(0);
       },
