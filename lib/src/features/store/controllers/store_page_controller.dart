@@ -1,10 +1,13 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 
 class StorePageController extends GetxController
     with GetTickerProviderStateMixin {
   static StorePageController get to => Get.find();
+
+  late TabController categoryTabController;
 
   Map<String, String> unitId = kReleaseMode
       ? {
@@ -16,10 +19,13 @@ class StorePageController extends GetxController
           'android': 'ca-app-pub-3940256099942544/6300978111',
         };
 
+
   @override
   void onInit() async {
     super.onInit();
+    categoryTabController= TabController(length: 2 , vsync: this);
   }
+
 
   @override
   void onClose() {

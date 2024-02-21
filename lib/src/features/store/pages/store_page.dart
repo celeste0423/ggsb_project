@@ -94,13 +94,29 @@ class StorePage extends GetView<StorePageController> {
     return Container(
       height: 350,
       width: double.infinity,
+      decoration: BoxDecoration(
+        color: CustomColors.blackText,
+      ),
     );
   }
 
-  Widget _itemsTap(){
+  Widget _itemsTap() {
     return Column(
       children: [
-
+        TabBar(
+          controller: controller.categoryTabController,
+          tabs: [
+            Tab(icon: Icon(Icons.coffee, color: Colors.black)),
+            Tab(icon: Icon(Icons.local_pizza, color: Colors.black)),
+          ],
+        ),
+        // TabBarView(
+        //   controller: controller.categoryTabController,
+        //   children: [
+        //     Container(color: Colors.green),
+        //     Container(color: Colors.red),
+        //   ],
+        // ),
       ],
     );
   }
@@ -109,13 +125,13 @@ class StorePage extends GetView<StorePageController> {
   Widget build(BuildContext context) {
     Get.put(StorePageController());
     return Scaffold(
-      backgroundColor: CustomColors.greyBackground,
+        backgroundColor: CustomColors.lightGreyBackground,
         appBar: _appBar(),
         body: Column(
           children: [
             _adBox(),
             _characterBox(),
-            _itemsTap()
+            _itemsTap(),
           ],
         ));
   }
