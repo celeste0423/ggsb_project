@@ -153,7 +153,12 @@ class StorePage extends GetView<StorePageController> {
     );
   }
 
-  Widget _itemCard() {
+  Widget _itemCard(
+    bool isSelected,
+    bool isUnlocked,
+    String assetPath,
+    int price,
+  ) {
     return Container();
   }
 
