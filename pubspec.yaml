@@ -94,6 +94,7 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/riv/
+    - assets/items/hat/
     - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see

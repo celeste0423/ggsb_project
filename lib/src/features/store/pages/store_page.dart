@@ -28,7 +28,7 @@ class StorePage extends GetView<StorePageController> {
           assetPath: 'assets/icons/check.svg',
           iconColor: CustomColors.greyBackground,
           height: 17,
-          onTap: (){},
+          onTap: () {},
         ),
       ],
     );
@@ -55,19 +55,25 @@ class StorePage extends GetView<StorePageController> {
                   fontSize: 14,
                 ),
               ),
-              Container(
-                width: 100,
-                height: 40,
-                decoration: BoxDecoration(
-                    color: CustomColors.mainBlue,
-                    borderRadius: BorderRadius.circular(10)),
-                child: const Center(
-                  child: Text(
-                    '(5/10)',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w800,
+              CupertinoButton(
+                padding: EdgeInsets.zero,
+                onPressed: () {
+                  controller.adButton();
+                },
+                child: Container(
+                  width: 100,
+                  height: 40,
+                  decoration: BoxDecoration(
+                      color: CustomColors.mainBlue,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: const Center(
+                    child: Text(
+                      '(5/10)',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                   ),
                 ),
@@ -165,14 +171,13 @@ class StorePage extends GetView<StorePageController> {
                 (categoryIndex) => GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
-                    crossAxisSpacing: 5,
-                    mainAxisSpacing: 5,
+                    // crossAxisSpacing: 5,
+                    // mainAxisSpacing: 5,
                   ),
                   itemBuilder: (context, itemIndex) {
                     return _itemCard(
                       categoryIndex,
                       itemIndex,
-                      false,
                       false,
                       controller.itemList[categoryIndex][itemIndex][0],
                       controller.itemList[categoryIndex][itemIndex][1],
@@ -188,48 +193,59 @@ class StorePage extends GetView<StorePageController> {
     );
   }
 
-
   Widget _itemCard(
-      int categoryIndex,
-      int itemIndex,
-      bool isSelected,
-      bool isUnlocked,
-      String assetPath,
-      int price,
-      ) {
+    int categoryIndex,
+    int itemIndex,
+    bool isUnlocked,
+    String assetPath,
+    int price,
+  ) {
     return CupertinoButton(
       padding: EdgeInsets.zero,
       onPressed: () {
         controller.itemButton(categoryIndex.toDouble(), itemIndex.toDouble());
       },
-      child: Container(
-        decoration: BoxDecoration(
-          color: CustomColors.whiteBackground,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: isUnlocked ? Colors.transparent : CustomColors.greyBackground,
-            width: 2,
+      child: Obx(
+        () => Container(
+          width: double.infinity,
+          height: double.infinity,
+          margin: const EdgeInsets.all(5),
+          decoration: BoxDecoration(
+            color: CustomColors.whiteBackground,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: controller.selectedIndex[categoryIndex].value == itemIndex
+                  ? CustomColors.mainBlue
+                  : Colors.transparent,
+              width: 2,
+            ),
           ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // 아이템 이미지 또는 아이콘
-            Image.asset(
-              'assets/icons/hat.png',
-              width: 50,
-              height: 50,
-            ),
-            SizedBox(height: 8),
-            // 아이템 가격 표시
-            Text(
-              '$price',
-              style: TextStyle(
-                color: CustomColors.blackText,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
+          child: assetPath == 'base'
+              ? const Icon(
+                  Icons.block,
+                  color: CustomColors.greyBackground,
+                  size: 80,
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // 아이템 이미지 또는 아이콘
+                    Image.asset(
+                      assetPath,
+                      width: 80,
+                      height: 80,
+                    ),
+                    const SizedBox(height: 8),
+                    // 아이템 가격 표시
+                    Text(
+                      '$price',
+                      style: const TextStyle(
+                        color: CustomColors.blackText,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
         ),
       ),
     );
