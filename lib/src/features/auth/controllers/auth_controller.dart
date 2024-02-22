@@ -55,19 +55,20 @@ class AuthController extends GetxController {
 
   Future<void> updateStudyTimeModel(String uid) async {
     print('스터디타임모델 업데이트');
+    DateTime now = DateTime.now();
     StudyTimeModel? studyTimeData =
         await StudyTimeRepository().getStudyTimeModel(
       uid,
-      DateUtil().dateTimeToString(DateTime.now()),
+      DateUtil().dateTimeToString(now),
     );
     if (studyTimeData == null) {
       print('스터디타임모델 없음 아직');
       //만약 없으면 새로 만들기
       StudyTimeModel newStudyTimeModel = StudyTimeModel(
         uid: user.value.uid,
-        date: DateUtil().dateTimeToString(DateTime.now()),
+        date: DateUtil().dateTimeToString(now),
         totalSeconds: 0,
-        startTime: null,
+        startTime: DateUtil.standardRefreshTime(now), //다음날 들어온 사람 때문에
         lastTime: null,
       );
       StudyTimeRepository().uploadStudyTimeModel(newStudyTimeModel);

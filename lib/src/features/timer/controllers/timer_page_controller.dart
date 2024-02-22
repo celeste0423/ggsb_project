@@ -155,9 +155,10 @@ class TimerPageController extends GetxController
     }
   }
 
-  Future<void> _initOverlay()async{
-    if(Platform.isAndroid){
-      overlayPermissionStatus = await FlutterOverlayWindow.isPermissionGranted();
+  Future<void> _initOverlay() async {
+    if (Platform.isAndroid) {
+      overlayPermissionStatus =
+          await FlutterOverlayWindow.isPermissionGranted();
       if (!overlayPermissionStatus) {
         await FlutterOverlayWindow.requestPermission();
       }

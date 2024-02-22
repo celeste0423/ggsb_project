@@ -1,9 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/store/controllers/store_page_controller.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
+import 'package:rive/rive.dart';
 
 class StorePage extends GetView<StorePageController> {
   const StorePage({Key? key});
@@ -34,11 +37,11 @@ class StorePage extends GetView<StorePageController> {
   Widget _adBox() {
     return Container(
       color: CustomColors.whiteBackground,
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Column(
         children: [
           _divider(),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -92,7 +95,11 @@ class StorePage extends GetView<StorePageController> {
 
   Widget _characterBox() {
     return Expanded(
-      child: Container(),
+      child: RiveAnimation.asset(
+        'assets/riv/character.riv',
+        stateMachines: ["character"],
+        onInit: controller.onRiveInit,
+      ),
     );
   }
 
@@ -100,52 +107,80 @@ class StorePage extends GetView<StorePageController> {
     return Container(
       decoration: BoxDecoration(
         color: CustomColors.whiteBackground,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(20),
           topRight: Radius.circular(20),
         ),
         boxShadow: [
           BoxShadow(
               color: Colors.black.withOpacity(0.1),
-              offset: Offset(0, -2),
+              offset: const Offset(0, -2),
               blurRadius: 5),
         ],
       ),
       child: Column(
         children: [
-          TabBar(
-            controller: controller.categoryTabController,
-            tabs: [
-              Tab(
-                icon: Icon(
-                  Icons.coffee,
-                  color: controller.categoryTabController.index == 0
-                      ? CustomColors.greyBackground
-                      : CustomColors.lightGreyBackground,
+          GetBuilder<StorePageController>(
+            id: 'tabBar',
+            builder: (_) => TabBar(
+              controller: controller.categoryTabController,
+              indicatorColor: CustomColors.mainBlue,
+              tabs: [
+                Tab(
+                  child: Image.asset(
+                    'assets/icons/hat.png',
+                    colorBlendMode: BlendMode.srcIn,
+                    color: controller.categoryTabController.index == 0
+                        ? CustomColors.mainBlack
+                        : CustomColors.greyBackground,
+                    height: 27,
+                  ),
                 ),
-              ),
-              Tab(
-                icon: Icon(
-                  Icons.coffee,
-                  color: Colors.black,
+                Tab(
+                  child: SvgPicture.asset(
+                    'assets/icons/sheild.svg',
+                    color: controller.categoryTabController.index == 1
+                        ? CustomColors.mainBlack.withOpacity(0.7)
+                        : CustomColors.greyBackground,
+                    height: 25,
+                  ),
                 ),
-              ),
-              Tab(
-                icon: Icon(
-                  Icons.coffee,
-                  color: Colors.black,
+                Tab(
+                  child: SvgPicture.asset(
+                    'assets/icons/color.svg',
+                    color: controller.categoryTabController.index == 2
+                        ? CustomColors.mainBlack.withOpacity(0.7)
+                        : CustomColors.greyBackground,
+                    height: 23,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           Expanded(
             child: TabBarView(
               controller: controller.categoryTabController,
-              children: [
-                Container(height: 100, color: Colors.green),
-                Container(height: 100, color: Colors.red),
-                Container(height: 100, color: Colors.red),
-              ],
+              children: List.generate(
+                3,
+                (categoryIndex) => GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 5,
+                    mainAxisSpacing: 5,
+                  ),
+                  itemBuilder: (context, itemIndex) {
+                    return _itemCard(
+                      categoryIndex,
+                      itemIndex,
+                      false,
+                      false,
+                      controller.itemList[categoryIndex][itemIndex][0],
+                      controller.itemList[categoryIndex][itemIndex][1],
+                    );
+                  },
+                  itemCount: controller.itemList[categoryIndex].length,
+                ),
+              ),
             ),
           ),
         ],
@@ -154,12 +189,21 @@ class StorePage extends GetView<StorePageController> {
   }
 
   Widget _itemCard(
+    int categoryIndex,
+    int itemIndex,
     bool isSelected,
     bool isUnlocked,
     String assetPath,
     int price,
   ) {
-    return Container();
+    return CupertinoButton(
+      onPressed: () {
+        controller.itemButton(categoryIndex.toDouble(), itemIndex.toDouble());
+      },
+      child: Container(
+        color: Colors.red,
+      ),
+    );
   }
 
   @override
