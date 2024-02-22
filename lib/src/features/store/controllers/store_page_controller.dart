@@ -12,13 +12,13 @@ class StorePageController extends GetxController
 
   Map<String, String> unitId = kReleaseMode
       ? {
-          'ios': dotenv.env['IOS_AD_UNIT_ID'] ?? '',
-          'android': dotenv.env['ANDROID_AD_UNIT_ID'] ?? '',
-        }
+    'ios': dotenv.env['IOS_AD_UNIT_ID'] ?? '',
+    'android': dotenv.env['ANDROID_AD_UNIT_ID'] ?? '',
+  }
       : {
-          'ios': 'ca-app-pub-3940256099942544/2934735716',
-          'android': 'ca-app-pub-3940256099942544/6300978111',
-        };
+    'ios': 'ca-app-pub-3940256099942544/2934735716',
+    'android': 'ca-app-pub-3940256099942544/6300978111',
+  };
 
   SMINumber? characterHat;
   SMINumber? characterColor;
@@ -75,7 +75,7 @@ class StorePageController extends GetxController
 
   void onRiveInit(Artboard artboard) {
     final riveController =
-        StateMachineController.fromArtboard(artboard, 'character');
+    StateMachineController.fromArtboard(artboard, 'character');
     artboard.addController(riveController!);
     characterColor = riveController.findInput<double>('color') as SMINumber;
     characterHat = riveController.findInput<double>('hat') as SMINumber;

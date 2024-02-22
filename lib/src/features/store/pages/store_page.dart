@@ -28,7 +28,7 @@ class StorePage extends GetView<StorePageController> {
           assetPath: 'assets/icons/check.svg',
           iconColor: CustomColors.greyBackground,
           height: 17,
-          onTap: Get.back,
+          onTap: (){},
         ),
       ],
     );
@@ -188,20 +188,49 @@ class StorePage extends GetView<StorePageController> {
     );
   }
 
+
   Widget _itemCard(
-    int categoryIndex,
-    int itemIndex,
-    bool isSelected,
-    bool isUnlocked,
-    String assetPath,
-    int price,
-  ) {
+      int categoryIndex,
+      int itemIndex,
+      bool isSelected,
+      bool isUnlocked,
+      String assetPath,
+      int price,
+      ) {
     return CupertinoButton(
+      padding: EdgeInsets.zero,
       onPressed: () {
         controller.itemButton(categoryIndex.toDouble(), itemIndex.toDouble());
       },
       child: Container(
-        color: Colors.red,
+        decoration: BoxDecoration(
+          color: CustomColors.whiteBackground,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: isUnlocked ? Colors.transparent : CustomColors.greyBackground,
+            width: 2,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // 아이템 이미지 또는 아이콘
+            Image.asset(
+              'assets/icons/hat.png',
+              width: 50,
+              height: 50,
+            ),
+            SizedBox(height: 8),
+            // 아이템 가격 표시
+            Text(
+              '$price',
+              style: TextStyle(
+                color: CustomColors.blackText,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
