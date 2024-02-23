@@ -266,7 +266,7 @@ class StorePage extends GetView<StorePageController> {
 
   Widget _colorCard(
     int itemIndex,
-    String assetPath,
+    Color color,
     int price,
     bool isUnlocked,
   ) {
@@ -294,12 +294,12 @@ class StorePage extends GetView<StorePageController> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: 80,
-                height: 80,
-                padding: EdgeInsets.all(5),
+                width: 50,
+                height: 50,
+                margin: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: controller.itemList[2][itemIndex][0],
-                  borderRadius: BorderRadius.circular(40),
+                  color: color,
+                  borderRadius: BorderRadius.circular(20),
                 ),
               ),
               Text(

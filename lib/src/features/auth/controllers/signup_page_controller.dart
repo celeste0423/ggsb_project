@@ -137,7 +137,11 @@ class SignupPageController extends GetxController {
         fightState: 0,
         sleepyState: 0,
         bodyColor: 0,
+        purchasedBodyColor: [],
+        shield: 0,
+        purchasedShield: [],
         hat: 0,
+        purchasedHat: [],
       );
       UserModel userData = UserModel(
         uid: uid.value,

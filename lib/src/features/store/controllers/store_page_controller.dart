@@ -60,10 +60,6 @@ class StorePageController extends GetxController
         0,
         true,
       ],
-      [
-        'assets/icons/hat.png',
-        10,
-      ]
     ],
     //색 종류
     [
@@ -75,38 +71,56 @@ class StorePageController extends GetxController
       [
         CustomColors.pinkCharacter,
         10,
+        AuthController.to.user.value.characterData!.purchasedBodyColor!
+            .contains('pink'),
       ],
       [
         CustomColors.greenCharacter,
         10,
+        AuthController.to.user.value.characterData!.purchasedBodyColor!
+            .contains('green'),
       ],
       [
         CustomColors.lightBlueCharacter,
         10,
+        AuthController.to.user.value.characterData!.purchasedBodyColor!
+            .contains('lightBlue'),
       ],
       [
         CustomColors.redCharacter,
         10,
+        AuthController.to.user.value.characterData!.purchasedBodyColor!
+            .contains('red'),
       ],
       [
         CustomColors.yellowCharacter,
         10,
+        AuthController.to.user.value.characterData!.purchasedBodyColor!
+            .contains('yellow'),
       ],
       [
         CustomColors.orangeCharacter,
         10,
+        AuthController.to.user.value.characterData!.purchasedBodyColor!
+            .contains('orange'),
       ],
       [
         CustomColors.purpleCharacter,
         10,
+        AuthController.to.user.value.characterData!.purchasedBodyColor!
+            .contains('purple'),
       ],
       [
         CustomColors.greyCharacter,
         10,
+        AuthController.to.user.value.characterData!.purchasedBodyColor!
+            .contains('grey'),
       ],
       [
         CustomColors.blackCharacter,
         10,
+        AuthController.to.user.value.characterData!.purchasedBodyColor!
+            .contains('black'),
       ],
     ],
   ];
