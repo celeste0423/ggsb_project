@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
+import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:rive/rive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -67,40 +68,44 @@ class StorePageController extends GetxController
     //색 종류
     [
       [
-        'base',
+        CustomColors.baseCharacter,
         0,
         true,
       ],
       [
-        'assets/icons/hat.png',
+        CustomColors.pinkCharacter,
         10,
       ],
       [
-        'assets/icons/hat.png',
+        CustomColors.greenCharacter,
         10,
       ],
       [
-        'assets/icons/hat.png',
+        CustomColors.lightBlueCharacter,
         10,
       ],
       [
-        'assets/icons/hat.png',
+        CustomColors.redCharacter,
         10,
       ],
       [
-        'assets/icons/hat.png',
+        CustomColors.yellowCharacter,
         10,
       ],
       [
-        'assets/icons/hat.png',
+        CustomColors.orangeCharacter,
         10,
       ],
       [
-        'assets/icons/hat.png',
+        CustomColors.purpleCharacter,
         10,
       ],
       [
-        'assets/icons/hat.png',
+        CustomColors.greyCharacter,
+        10,
+      ],
+      [
+        CustomColors.blackCharacter,
         10,
       ],
     ],

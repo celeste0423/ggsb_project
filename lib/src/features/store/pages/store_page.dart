@@ -242,12 +242,14 @@ class StorePage extends GetView<StorePageController> {
               : Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      assetPath,
-                      width: 80,
-                      height: 80,
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Image.asset(
+                        assetPath,
+                        width: 80,
+                        height: 80,
+                      ),
                     ),
-                    const SizedBox(height: 8),
                     Text(
                       '$price',
                       style: const TextStyle(
@@ -291,17 +293,15 @@ class StorePage extends GetView<StorePageController> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // 아이템 이미지 또는 아이콘
               Container(
                 width: 80,
                 height: 80,
+                padding: EdgeInsets.all(5),
                 decoration: BoxDecoration(
                   color: controller.itemList[2][itemIndex][0],
                   borderRadius: BorderRadius.circular(40),
                 ),
               ),
-              const SizedBox(height: 8),
-              // 아이템 가격 표시
               Text(
                 '$price',
                 style: const TextStyle(
