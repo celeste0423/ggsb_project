@@ -6,6 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
+import 'package:ggsb_project/src/models/character_model.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -252,37 +253,38 @@ class StorePageController extends GetxController
       }
     } else {
       openAlertDialog(
-          title: '상품을 구매하시겠습니까?',
-          content: '총 ${itemList[categoryIndex][itemIndex][1]}코인이 소모됩니다.',
-          mainfunction: () {
-            isPageLoading(true);
-            updateCash(-itemList[categoryIndex][itemIndex][1]);
-            switch (categoryIndex) {
-              case 0:
-                {
-                  // CharacterModel characterData =
-                  //     AuthController.to.user.value.characterData!;
-                  // String itemId = itemList[categoryIndex][itemIndex][3];
-                  // CharacterModel updatedCharacterModel = characterData.copyWith(
-                  //   purchasedHat: characterData.purchasedHat!.add(itemId),
-                  // );
-                  characterHat!.value = itemIndex.toDouble();
-                }
-              case 1:
-                {
-                  characterHat!.value = itemIndex.toDouble();
-                }
-              case 2:
-                {
-                  characterColor!.value = itemIndex.toDouble();
-                }
-            }
-            isPageLoading(false);
-          },
-          secondButtonText: '취소',
-          secondfunction: () {
-            Get.back();
-          });
+        title: '상품을 구매하시겠습니까?',
+        content: '총 ${itemList[categoryIndex][itemIndex][1]}코인이 소모됩니다.',
+        mainfunction: () {
+          isPageLoading(true);
+          updateCash(-itemList[categoryIndex][itemIndex][1]);
+          switch (categoryIndex) {
+            case 0:
+              {
+                CharacterModel characterData =
+                    AuthController.to.user.value.characterData!;
+                String itemId = itemList[categoryIndex][itemIndex][3];
+                CharacterModel updatedCharacterModel = characterData.copyWith(
+                  purchasedHat: characterData.purchasedHat!..add(itemId),
+                );
+                characterHat!.value = itemIndex.toDouble();
+              }
+            case 1:
+              {
+                characterHat!.value = itemIndex.toDouble();
+              }
+            case 2:
+              {
+                characterColor!.value = itemIndex.toDouble();
+              }
+          }
+          isPageLoading(false);
+        },
+        secondButtonText: '취소',
+        // secondfunction: () {
+        //   Get.back();
+        // },
+      );
     }
   }
 
