@@ -141,7 +141,7 @@ class SignupPageController extends GetxController {
       );
       UserModel userData = UserModel(
         uid: uid.value,
-        deviceToken: await AuthController().getDeviceToken(),
+        deviceToken: await AuthController.to.getDeviceToken(),
         nickname: nicknameController.text,
         loginType: loginType,
         email: email.value,

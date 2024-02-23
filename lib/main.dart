@@ -33,7 +33,7 @@ void main() async {
   Cron().schedule(Schedule.parse('01 04 * * *'), () async {
     print("새벽 4시입니다.");
     if (!AuthController.to.user.value.isTimer!) {
-      AuthController().loginUser(AuthController.to.user.value.uid!);
+      AuthController.to.loginUser(AuthController.to.user.value.uid!);
     }
   });
   //화면 회전 불가

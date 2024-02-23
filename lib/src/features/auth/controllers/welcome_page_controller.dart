@@ -8,7 +8,7 @@ class WelcomePageController extends GetxController {
   TextEditingController guestPasswordController = TextEditingController();
 
   Future<void> guestLogin() async {
-    await AuthController().signInWithGuest(
+    await AuthController.to.signInWithGuest(
       guestEmailController.text,
       guestPasswordController.text,
     );

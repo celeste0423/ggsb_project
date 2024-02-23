@@ -45,9 +45,12 @@ class StorePage extends GetView<StorePageController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                '25c',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+              Obx(
+                () => Text(
+                  controller.cash.value.toString(),
+                  style: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.w600),
+                ),
               ),
               const Text(
                 '광고로 코인 충전하기 +5',
@@ -60,19 +63,22 @@ class StorePage extends GetView<StorePageController> {
                 onPressed: () {
                   controller.adButton();
                 },
-                child: Container(
-                  width: 100,
-                  height: 40,
-                  decoration: BoxDecoration(
-                      color: CustomColors.mainBlue,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: const Center(
-                    child: Text(
-                      '(5/10)',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w800,
+                child: Obx(
+                  () => Container(
+                    width: 100,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        color: controller.rewardedAdCount.value == 0
+                            ? CustomColors.greyBackground
+                            : CustomColors.mainBlue,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Center(
+                      child: Text(
+                        '(${controller.rewardedAdCount.value}/10)',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                        ),
                       ),
                     ),
                   ),

@@ -218,7 +218,7 @@ class TimerPageController extends GetxController
     UserModel updatedUserModel = AuthController.to.user.value.copyWith(
       isTimer: true,
     );
-    AuthController().updateUserModel(updatedUserModel);
+    AuthController.to.updateUserModel(updatedUserModel);
     AuthController.to.user(updatedUserModel);
     //model update
     StudyTimeModel updatedStudyTimeModel = AuthController.to.studyTime.copyWith(
@@ -273,7 +273,7 @@ class TimerPageController extends GetxController
     UserModel updatedUserModel = AuthController.to.user.value.copyWith(
       isTimer: false,
     );
-    AuthController().updateUserModel(updatedUserModel);
+    AuthController.to.updateUserModel(updatedUserModel);
     AuthController.to.user(updatedUserModel);
     //studyTime update
     StudyTimeModel studyTimeModel = AuthController.to.studyTime;

@@ -91,7 +91,6 @@ class AuthController extends GetxController {
   }
 
   Future<void> updateUserModel(UserModel userModel) async {
-    print('유저모델 업데이트 ${userModel.isTimer}');
     user(userModel);
     await UserRepository().updateUserModel(userModel);
   }
