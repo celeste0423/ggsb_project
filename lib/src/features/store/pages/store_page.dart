@@ -181,13 +181,20 @@ class StorePage extends GetView<StorePageController> {
                     // mainAxisSpacing: 5,
                   ),
                   itemBuilder: (context, itemIndex) {
-                    return _itemCard(
-                      categoryIndex,
-                      itemIndex,
-                      false,
-                      controller.itemList[categoryIndex][itemIndex][0],
-                      controller.itemList[categoryIndex][itemIndex][1],
-                    );
+                    return categoryIndex != 2
+                        ? _itemCard(
+                            categoryIndex,
+                            itemIndex,
+                            controller.itemList[categoryIndex][itemIndex][0],
+                            controller.itemList[categoryIndex][itemIndex][1],
+                            controller.itemList[categoryIndex][itemIndex][2],
+                          )
+                        : _colorCard(
+                            itemIndex,
+                            controller.itemList[categoryIndex][itemIndex][0],
+                            controller.itemList[categoryIndex][itemIndex][1],
+                            controller.itemList[categoryIndex][itemIndex][2],
+                          );
                   },
                   itemCount: controller.itemList[categoryIndex].length,
                 ),
@@ -202,9 +209,9 @@ class StorePage extends GetView<StorePageController> {
   Widget _itemCard(
     int categoryIndex,
     int itemIndex,
-    bool isUnlocked,
     String assetPath,
     int price,
+    bool isUnlocked,
   ) {
     return CupertinoButton(
       padding: EdgeInsets.zero,
@@ -235,14 +242,12 @@ class StorePage extends GetView<StorePageController> {
               : Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // 아이템 이미지 또는 아이콘
                     Image.asset(
                       assetPath,
                       width: 80,
                       height: 80,
                     ),
                     const SizedBox(height: 8),
-                    // 아이템 가격 표시
                     Text(
                       '$price',
                       style: const TextStyle(
@@ -252,6 +257,60 @@ class StorePage extends GetView<StorePageController> {
                     ),
                   ],
                 ),
+        ),
+      ),
+    );
+  }
+
+  Widget _colorCard(
+    int itemIndex,
+    String assetPath,
+    int price,
+    bool isUnlocked,
+  ) {
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      onPressed: () {
+        controller.itemButton(2, itemIndex.toDouble());
+      },
+      child: Obx(
+        () => Container(
+          width: double.infinity,
+          height: double.infinity,
+          margin: const EdgeInsets.all(5),
+          decoration: BoxDecoration(
+            color: CustomColors.whiteBackground,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: controller.selectedIndex[2].value == itemIndex
+                  ? CustomColors.mainBlue
+                  : Colors.transparent,
+              width: 2,
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // 아이템 이미지 또는 아이콘
+              Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                  color: controller.itemList[2][itemIndex][0],
+                  borderRadius: BorderRadius.circular(40),
+                ),
+              ),
+              const SizedBox(height: 8),
+              // 아이템 가격 표시
+              Text(
+                '$price',
+                style: const TextStyle(
+                  color: CustomColors.blackText,
+                  fontSize: 14,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

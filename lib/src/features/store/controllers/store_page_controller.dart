@@ -38,17 +38,18 @@ class StorePageController extends GetxController
   List<List<List<dynamic>>> itemList = [
     [
       //모자 종류
-      [
-        'base',
-        0,
-      ],
+      ['base', 0, true],
       [
         'assets/items/hat/eraser.png',
         10,
+        AuthController.to.user.value.characterData!.purchasedHat!
+            .contains('eraser'),
       ],
       [
         'assets/items/hat/pencil.png',
         10,
+        AuthController.to.user.value.characterData!.purchasedHat!
+            .contains('pencil'),
       ]
     ],
     //방패 종류
@@ -56,6 +57,7 @@ class StorePageController extends GetxController
       [
         'base',
         0,
+        true,
       ],
       [
         'assets/icons/hat.png',
@@ -67,6 +69,7 @@ class StorePageController extends GetxController
       [
         'base',
         0,
+        true,
       ],
       [
         'assets/icons/hat.png',
