@@ -108,7 +108,7 @@ class StorePage extends GetView<StorePageController> {
   Widget _characterBox() {
     return Expanded(
       child: RiveAnimation.asset(
-        'assets/riv/character.riv',
+        'assets/riv/character3.riv',
         stateMachines: ["character"],
         onInit: controller.onRiveInit,
       ),

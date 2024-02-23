@@ -41,6 +41,18 @@ class CustomColors {
   static const Color greyBackground = Color(0xFFBBBBBB);
   // static const Color blueBackground = Color(0xFF5FA3D4);
 
+  //캐릭터 색
+  static const Color baseCharacter = Color(0xFF696CBB);
+  static const Color pinkCharacter = Color(0xFFB369BB);
+  static const Color greenCharacter = Color(0xFF70B973);
+  static const Color lightBlueCharacter = Color(0xFF69BCBB);
+  static const Color redCharacter = Color(0xFFD06C6C);
+  static const Color yellowCharacter = Color(0xFFDAB258);
+  static const Color orangeCharacter = Color(0xFFDA9658);
+  static const Color purpleCharacter = Color(0xFF696CBB);
+  static const Color greyCharacter = Color(0xFFC5C5C5);
+  static const Color blackCharacter = Color(0xFF232323);
+
   //방 색
   static const Color redRoom = Color(0xFFF58181);
   static const Color orangeRoom = Color(0xFFFFB46E);
