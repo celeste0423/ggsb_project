@@ -13,6 +13,5 @@ class FullSizeLoadingIndicator extends StatelessWidget {
         child: loadingIndicator(),
       ),
     );
-    ;
   }
 }

@@ -58,6 +58,8 @@ class StorePage extends GetView<StorePageController> {
                   fontSize: 14,
                 ),
               ),
+
+
               CupertinoButton(
                 padding: EdgeInsets.zero,
                 onPressed: () {
@@ -108,7 +110,7 @@ class StorePage extends GetView<StorePageController> {
   Widget _characterBox() {
     return Expanded(
       child: RiveAnimation.asset(
-        'assets/riv/character3.riv',
+        'assets/riv/character.riv',
         stateMachines: ["character"],
         onInit: controller.onRiveInit,
       ),

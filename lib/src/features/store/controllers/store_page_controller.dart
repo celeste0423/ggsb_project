@@ -200,6 +200,7 @@ class StorePageController extends GetxController
     characterHat = riveController.findInput<double>('hat') as SMINumber;
   }
 
+
   void adButton() {
     if (rewardedAdCount.value != 0) {
       loadRewardedAd();

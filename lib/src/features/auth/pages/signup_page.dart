@@ -284,14 +284,16 @@ class SignupPage extends GetView<SignupPageController> {
                     ),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    _schoolTypeSelector('elem_list', '초등학교'),
-                    _schoolTypeSelector('midd_list', '중학교'),
-                    _schoolTypeSelector('high_list', '고등학교'),
-                    _schoolTypeSelector('univ_list', '대학교'),
-                  ],
+                FittedBox(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      _schoolTypeSelector('elem_list', '초등학교'),
+                      _schoolTypeSelector('midd_list', '중학교'),
+                      _schoolTypeSelector('high_list', '고등학교'),
+                      _schoolTypeSelector('univ_list', '대학교'),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 10),
                 Row(
