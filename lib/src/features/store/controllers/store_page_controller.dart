@@ -37,6 +37,7 @@ class StorePageController extends GetxController
 
   List<List<List<dynamic>>> itemList = [
     [
+      //모자 종류
       [
         'base',
         0,
@@ -50,6 +51,7 @@ class StorePageController extends GetxController
         10,
       ]
     ],
+    //방패 종류
     [
       [
         'base',
@@ -60,6 +62,7 @@ class StorePageController extends GetxController
         10,
       ]
     ],
+    //색 종류
     [
       [
         'base',
@@ -68,13 +71,46 @@ class StorePageController extends GetxController
       [
         'assets/icons/hat.png',
         10,
-      ]
+      ],
+      [
+        'assets/icons/hat.png',
+        10,
+      ],
+      [
+        'assets/icons/hat.png',
+        10,
+      ],
+      [
+        'assets/icons/hat.png',
+        10,
+      ],
+      [
+        'assets/icons/hat.png',
+        10,
+      ],
+      [
+        'assets/icons/hat.png',
+        10,
+      ],
+      [
+        'assets/icons/hat.png',
+        10,
+      ],
+      [
+        'assets/icons/hat.png',
+        10,
+      ],
     ],
   ];
   List<Rx<int>> selectedIndex = [
     0.obs,
     0.obs,
     0.obs,
+  ];
+  List<List<String>> purchasedItem = [
+    AuthController.to.user.value.characterData!.purchasedHat!,
+    AuthController.to.user.value.characterData!.purchasedShield!,
+    AuthController.to.user.value.characterData!.purchasedBodyColor!,
   ];
 
   @override

@@ -1,11 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/binding/init_binding.dart';
+import 'package:ggsb_project/src/features/store/controllers/store_page_controller.dart';
 import 'package:ggsb_project/src/models/study_time_model.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:ggsb_project/src/repositories/study_time_repository.dart';
 import 'package:ggsb_project/src/repositories/user_repository.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthController extends GetxController {
@@ -28,8 +30,8 @@ class AuthController extends GetxController {
       //authcontroller user 업데이트
       user(userData);
 
-      //스터디타임모델 업데이트
-      await updateStudyTimeModel(uid);
+      //스터디타임모델, adCount 업데이트
+      await updateStudyTimeModelAdCount(uid);
 
       InitBinding.additionalBinding();
     }
@@ -53,7 +55,7 @@ class AuthController extends GetxController {
   //   }
   // }
 
-  Future<void> updateStudyTimeModel(String uid) async {
+  Future<void> updateStudyTimeModelAdCount(String uid) async {
     print('스터디타임모델 업데이트');
     DateTime now = DateTime.now();
     StudyTimeModel? studyTimeData =
@@ -73,6 +75,9 @@ class AuthController extends GetxController {
       );
       StudyTimeRepository().uploadStudyTimeModel(newStudyTimeModel);
       studyTime = newStudyTimeModel;
+      //광고 보기 횟수 초기화
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setInt('rewardedAdCount', StorePageController.totalAdCount);
     } else {
       //있으면 기존 모델 업데이트
       studyTime = studyTimeData;
