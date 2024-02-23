@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/store/controllers/store_page_controller.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
+import 'package:ggsb_project/src/widgets/full_size_loading_indicator.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
 import 'package:rive/rive.dart';
@@ -58,8 +59,6 @@ class StorePage extends GetView<StorePageController> {
                   fontSize: 14,
                 ),
               ),
-
-
               CupertinoButton(
                 padding: EdgeInsets.zero,
                 onPressed: () {
@@ -218,7 +217,7 @@ class StorePage extends GetView<StorePageController> {
     return CupertinoButton(
       padding: EdgeInsets.zero,
       onPressed: () {
-        controller.itemButton(categoryIndex.toDouble(), itemIndex.toDouble());
+        controller.itemButton(categoryIndex, itemIndex);
       },
       child: Obx(
         () => Container(
@@ -275,7 +274,7 @@ class StorePage extends GetView<StorePageController> {
     return CupertinoButton(
       padding: EdgeInsets.zero,
       onPressed: () {
-        controller.itemButton(2, itemIndex.toDouble());
+        controller.itemButton(2, itemIndex);
       },
       child: Obx(
         () => Container(
@@ -298,7 +297,7 @@ class StorePage extends GetView<StorePageController> {
               Container(
                 width: 50,
                 height: 50,
-                margin: EdgeInsets.all(10),
+                margin: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: color,
                   borderRadius: BorderRadius.circular(20),
@@ -321,15 +320,28 @@ class StorePage extends GetView<StorePageController> {
   @override
   Widget build(BuildContext context) {
     Get.put(StorePageController());
-    return Scaffold(
-        backgroundColor: CustomColors.lightGreyBackground,
-        appBar: _appBar(),
-        body: Column(
-          children: [
-            _adBox(),
-            _characterBox(),
-            Expanded(child: _itemsTab()),
-          ],
-        ));
+    return Stack(
+      children: [
+        Scaffold(
+          backgroundColor: CustomColors.lightGreyBackground,
+          appBar: _appBar(),
+          body: Column(
+            children: [
+              _adBox(),
+              _characterBox(),
+              Expanded(child: _itemsTab()),
+            ],
+          ),
+        ),
+        Obx(
+          () => Visibility(
+            visible: controller.isPageLoading.value,
+            child: FullSizeLoadingIndicator(
+              backgroundColor: Colors.black.withOpacity(0.5),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

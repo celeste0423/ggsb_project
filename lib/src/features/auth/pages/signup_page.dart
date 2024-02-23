@@ -468,11 +468,21 @@ class SignupPage extends GetView<SignupPageController> {
               _inputTab(),
             ],
           ),
-          Obx(() => controller.isSignupLoading.value
-              ? FullSizeLoadingIndicator(
-                  backgroundColor: Colors.black.withOpacity(0.5),
-                )
-              : const SizedBox()),
+          Obx(
+            () => Visibility(
+              visible: controller.isSignupLoading.value,
+              child: FullSizeLoadingIndicator(
+                backgroundColor: Colors.black.withOpacity(0.5),
+              ),
+            ),
+          ),
+          // Obx(
+          //   () => controller.isSignupLoading.value
+          //       ? FullSizeLoadingIndicator(
+          //           backgroundColor: Colors.black.withOpacity(0.5),
+          //         )
+          //       : const SizedBox(),
+          // ),
         ],
       ),
     );
