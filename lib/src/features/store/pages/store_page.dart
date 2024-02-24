@@ -46,12 +46,22 @@ class StorePage extends GetView<StorePageController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Obx(
-                () => Text(
-                  controller.cash.value.toString(),
-                  style: const TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.w600),
-                ),
+              Row(
+                children: [
+                  Image.asset(
+                    'assets/icons/gold_coin.png',
+                    width: 20,
+                    height: 20,
+                  ),
+                  SizedBox(width: 3),
+                  Obx(
+                    () => Text(
+                      controller.cash.value.toString(),
+                      style: const TextStyle(
+                          fontSize: 13, fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ],
               ),
               const Text(
                 '광고로 코인 충전하기 +5',
@@ -240,25 +250,40 @@ class StorePage extends GetView<StorePageController> {
                   color: CustomColors.greyBackground,
                   size: 80,
                 )
-              : Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: Image.asset(
-                        assetPath,
-                        width: 80,
-                        height: 80,
+              : FittedBox(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Image.asset(
+                          assetPath,
+                          width: 80,
+                          height: 80,
+                        ),
                       ),
-                    ),
-                    Text(
-                      '$price',
-                      style: const TextStyle(
-                        color: CustomColors.blackText,
-                        fontSize: 14,
+                      Row(
+                        children: [
+                          Image.asset(
+                            'assets/icons/gold_coin.png',
+                            width: 20,
+                            height: 20,
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 5),
+                            child: Text(
+                              '$price',
+                              style: const TextStyle(
+                                color: CustomColors.blackText,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
         ),
       ),
@@ -319,8 +344,11 @@ class StorePage extends GetView<StorePageController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(StorePageController());
-    return Stack(
+    return GetBuilder<StorePageController>(
+      init: StorePageController(), // 컨트롤러 초기화
+      builder: (controller) => Stack(
+    // Get.put(StorePageController());
+    // return Stack(
       children: [
         Scaffold(
           backgroundColor: CustomColors.lightGreyBackground,
@@ -342,6 +370,7 @@ class StorePage extends GetView<StorePageController> {
           ),
         ),
       ],
+    ),
     );
   }
 }
