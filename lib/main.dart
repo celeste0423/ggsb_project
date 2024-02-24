@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:ggsb_project/analytics_config.dart';
 import 'package:ggsb_project/src/binding/init_binding.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/overlay/pages/overlay_page.dart';
@@ -17,6 +18,8 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  //Amplitude 설정
+  Analytics_config().init();
   //파이어베이스 설정
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
