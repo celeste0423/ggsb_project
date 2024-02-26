@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -34,7 +32,9 @@ class StorePage extends GetView<StorePageController> {
             assetPath: 'assets/icons/check.svg',
             iconColor: CustomColors.greyBackground,
             height: 17,
-            onTap: () {},
+            onTap: () {
+              controller.completeButton();
+            },
           ),
         ),
       ],
@@ -104,20 +104,6 @@ class StorePage extends GetView<StorePageController> {
       ),
     );
   }
-
-  // Widget _divider() {
-  //   return Center(
-  //     child: Padding(
-  //       padding: const EdgeInsets.symmetric(horizontal: 10),
-  //       child: Container(
-  //         height: 1,
-  //         decoration: const BoxDecoration(
-  //           color: CustomColors.blackText,
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget _characterBox() {
     return Expanded(
@@ -220,18 +206,12 @@ class StorePage extends GetView<StorePageController> {
                     // mainAxisSpacing: 5,
                   ),
                   itemBuilder: (context, itemIndex) {
-                    return categoryIndex != 2
-                        ? _itemCard(
-                            categoryIndex,
-                            itemIndex,
-                            controller.itemList[categoryIndex][itemIndex][1],
-                            controller.itemList[categoryIndex][itemIndex][2],
-                          )
-                        : _colorCard(
-                            itemIndex,
-                            controller.itemList[categoryIndex][itemIndex][1],
-                            controller.itemList[categoryIndex][itemIndex][2],
-                          );
+                    return _itemCard(
+                      categoryIndex,
+                      itemIndex,
+                      controller.itemList[categoryIndex][itemIndex][1],
+                      controller.itemList[categoryIndex][itemIndex][2],
+                    );
                   },
                   itemCount: controller.itemList[categoryIndex].length,
                 ),
@@ -246,7 +226,7 @@ class StorePage extends GetView<StorePageController> {
   Widget _itemCard(
     int categoryIndex,
     int itemIndex,
-    String assetPath,
+    var assetPath,
     int price,
   ) {
     return CupertinoButton(
@@ -280,14 +260,24 @@ class StorePage extends GetView<StorePageController> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Image.asset(
-                          assetPath,
-                          width: 80,
-                          height: 80,
-                        ),
-                      ),
+                      categoryIndex != 2
+                          ? Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: Image.asset(
+                                assetPath,
+                                width: 80,
+                                height: 80,
+                              ),
+                            )
+                          : Container(
+                              width: 50,
+                              height: 50,
+                              margin: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: assetPath,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
                       Visibility(
                         visible: !controller
                             .isItemUnlockedList[categoryIndex][itemIndex].value,
@@ -315,74 +305,6 @@ class StorePage extends GetView<StorePageController> {
                     ],
                   ),
                 ),
-        ),
-      ),
-    );
-  }
-
-  Widget _colorCard(
-    int itemIndex,
-    Color color,
-    int price,
-  ) {
-    return CupertinoButton(
-      padding: EdgeInsets.zero,
-      onPressed: () {
-        controller.itemButton(2, itemIndex);
-      },
-      child: Obx(
-        () => Container(
-          width: double.infinity,
-          height: double.infinity,
-          margin: const EdgeInsets.all(10),
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: CustomColors.whiteBackground,
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(
-              color: controller.selectedIndex[2].value == itemIndex
-                  ? CustomColors.mainBlue
-                  : Colors.transparent,
-              width: 2,
-            ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: 50,
-                height: 50,
-                margin: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: color,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-              Visibility(
-                visible: !controller.isItemUnlockedList[2][itemIndex].value,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/icons/gold_coin.png',
-                      width: 20,
-                      height: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: Text(
-                        '$price',
-                        style: const TextStyle(
-                          color: CustomColors.blackText,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );

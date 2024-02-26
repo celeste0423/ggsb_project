@@ -49,11 +49,19 @@ class SignupPageController extends GetxController {
 
   void onRiveInit(Artboard artboard) {
     final riveController =
-    StateMachineController.fromArtboard(artboard, 'character');
+        StateMachineController.fromArtboard(artboard, 'character');
     // riveController!.isActive = false;
     artboard.addController(riveController!);
     characterColor = riveController.findInput<double>('color') as SMINumber;
     characterHat = riveController.findInput<double>('hat') as SMINumber;
+    _riveCharacterInit();
+  }
+
+  void _riveCharacterInit() {
+    UserModel userModel = AuthController.to.user.value;
+    CharacterModel characterModel = userModel.characterData!;
+    characterHat!.value = characterModel.hat!.toDouble();
+    characterColor!.value = characterModel.bodyColor!.toDouble();
   }
 
   Future<void> checkIsProfileLoading() async {

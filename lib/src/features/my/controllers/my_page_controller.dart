@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/constants/service_urls.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
+import 'package:ggsb_project/src/models/character_model.dart';
 import 'package:ggsb_project/src/models/study_time_model.dart';
+import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:ggsb_project/src/repositories/study_time_repository.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
@@ -33,6 +35,14 @@ class MyPageController extends GetxController {
     artboard.addController(riveController!);
     characterColor = riveController.findInput<double>('color') as SMINumber;
     characterHat = riveController.findInput<double>('hat') as SMINumber;
+    _riveCharacterInit();
+  }
+
+  void _riveCharacterInit() {
+    UserModel userModel = AuthController.to.user.value;
+    CharacterModel characterModel = userModel.characterData!;
+    characterHat!.value = characterModel.hat!.toDouble();
+    characterColor!.value = characterModel.bodyColor!.toDouble();
   }
 
   Stream<List<StudyTimeModel>> timeModelStream() {

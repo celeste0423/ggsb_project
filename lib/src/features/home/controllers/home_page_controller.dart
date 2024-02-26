@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/room_create/pages/room_create_page.dart';
 import 'package:ggsb_project/src/features/timer/pages/timer_page.dart';
+import 'package:ggsb_project/src/models/character_model.dart';
+import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
 import 'package:intl/intl.dart';
 import 'package:rive/rive.dart';
@@ -9,6 +11,7 @@ import 'package:rive/rive.dart';
 class HomePageController extends GetxController {
   static HomePageController get to => Get.find();
 
+  SMINumber? characterHat;
   SMINumber? characterColor;
 
   Rx<String> totalTime = '00:00:00'.obs;
@@ -38,6 +41,15 @@ class HomePageController extends GetxController {
         StateMachineController.fromArtboard(artboard, 'character');
     artboard.addController(riveController!);
     characterColor = riveController.findInput<double>('color') as SMINumber;
+    characterHat = riveController.findInput<double>('hat') as SMINumber;
+    _riveCharacterInit();
+  }
+
+  void _riveCharacterInit() {
+    UserModel userModel = AuthController.to.user.value;
+    CharacterModel characterModel = userModel.characterData!;
+    characterHat!.value = characterModel.hat!.toDouble();
+    characterColor!.value = characterModel.bodyColor!.toDouble();
   }
 
   void tabCharacter() {

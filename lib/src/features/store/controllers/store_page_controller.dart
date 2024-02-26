@@ -140,9 +140,11 @@ class StorePageController extends GetxController
   @override
   void onInit() async {
     super.onInit();
+    isPageLoading(true);
     _rewardedAdInit();
     _categoryTabControllerInit();
     _getIsItemUnlockedList();
+    isPageLoading(false);
   }
 
   void _rewardedAdInit() async {
@@ -165,10 +167,10 @@ class StorePageController extends GetxController
           itemIndex < itemList[categoryIndex].length;
           itemIndex++) {
         String itemId = itemList[categoryIndex][itemIndex][0];
-        bool isUnlocked = AuthController
-            .to.user.value.characterData!.purchasedItem!
-            .contains(itemId);
-        print(isUnlocked);
+        bool isUnlocked = itemList[categoryIndex][itemIndex][0] == 'base'
+            ? true
+            : AuthController.to.user.value.characterData!.purchasedItem!
+                .contains(itemId);
         isItemUnlockedList[categoryIndex][itemIndex](isUnlocked);
       }
     }
@@ -218,11 +220,67 @@ class StorePageController extends GetxController
   }
 
   void onRiveInit(Artboard artboard) {
+    isPageLoading(true);
     final riveController =
         StateMachineController.fromArtboard(artboard, 'character');
     artboard.addController(riveController!);
     characterColor = riveController.findInput<double>('color') as SMINumber;
     characterHat = riveController.findInput<double>('hat') as SMINumber;
+    _riveCharacterInit();
+    isPageLoading(false);
+  }
+
+  void _riveCharacterInit() {
+    UserModel userModel = AuthController.to.user.value;
+    CharacterModel characterModel = userModel.characterData!;
+    _selectIndex(0, characterModel.hat!);
+    _selectIndex(1, characterModel.shield!);
+    _selectIndex(2, characterModel.bodyColor!);
+  }
+
+  void _selectIndex(int categoryIndex, int itemIndex) {
+    selectedIndex[categoryIndex](itemIndex);
+    if (itemList[categoryIndex][itemIndex][1] != 'base' &&
+        !isItemUnlockedList[categoryIndex][itemIndex].value) {
+      isPurchaseButton(true);
+    } else {
+      isPurchaseButton(false);
+    }
+    switch (categoryIndex) {
+      case 0:
+        {
+          characterHat!.value = itemIndex.toDouble();
+        }
+      case 1:
+        {
+          //Todo: 방패 추가
+        }
+      case 2:
+        {
+          characterColor!.value = itemIndex.toDouble();
+        }
+    }
+  }
+
+  void completeButton() {
+    UserModel userModel = AuthController.to.user.value;
+    CharacterModel characterModel = userModel.characterData!;
+    int hatIndex = selectedIndex[0].value;
+    int shieldIndex = selectedIndex[1].value;
+    int bodyColorIndex = selectedIndex[2].value;
+    if (isItemUnlockedList[0][hatIndex].value &&
+        isItemUnlockedList[1][shieldIndex].value &&
+        isItemUnlockedList[2][bodyColorIndex].value) {
+      CharacterModel updatedCharacterModel = characterModel.copyWith(
+        hat: hatIndex,
+        shield: shieldIndex,
+        bodyColor: bodyColorIndex,
+      );
+      AuthController.to.updateCharacterModel(updatedCharacterModel, userModel);
+      Get.back();
+    } else {
+      openAlertDialog(title: '장착 불가', content: '아이템을 구매 후 이용해주세요');
+    }
   }
 
   void adButton() {
@@ -282,28 +340,7 @@ class StorePageController extends GetxController
   }
 
   void itemButton(int categoryIndex, int itemIndex) {
-    selectedIndex[categoryIndex](itemIndex);
-    if (itemList[categoryIndex][itemIndex][1] != 'base') {
-      if (!isItemUnlockedList[categoryIndex][itemIndex].value) {
-        isPurchaseButton(true);
-      } else {
-        isPurchaseButton(false);
-      }
-    }
-    switch (categoryIndex) {
-      case 0:
-        {
-          characterHat!.value = itemIndex.toDouble();
-        }
-      case 1:
-        {
-          characterHat!.value = itemIndex.toDouble();
-        }
-      case 2:
-        {
-          characterColor!.value = itemIndex.toDouble();
-        }
-    }
+    _selectIndex(categoryIndex, itemIndex);
   }
 
   @override
