@@ -27,6 +27,7 @@ class StorePageController extends GetxController
           'android': dotenv.env['ANDROID_AD_UNIT_ID'] ?? '',
         }
       : {
+          //test ad 재생시 필요한 unit id
           'ios': 'ca-app-pub-3940256099942544/1712485313',
           'android': 'ca-app-pub-3940256099942544/5224354917',
         };
