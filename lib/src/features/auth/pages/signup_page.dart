@@ -10,6 +10,7 @@ import 'package:ggsb_project/src/widgets/loading_indicator.dart';
 import 'package:ggsb_project/src/widgets/main_button.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
 import 'package:ggsb_project/src/widgets/text_field_box.dart';
+import 'package:rive/rive.dart';
 
 class SignupPage extends GetView<SignupPageController> {
   final String uid;
@@ -99,6 +100,24 @@ class SignupPage extends GetView<SignupPageController> {
                   decoration: BoxDecoration(
                     color: CustomColors.lightGreyBackground,
                     borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(100)),
+                    child: OverflowBox(
+                      maxHeight: double.infinity,
+                      maxWidth: double.infinity,
+                      alignment: Alignment.topCenter,
+                      child: Container(
+                        width: 280,
+                        height: 280,
+                        padding: const EdgeInsets.only(left: 6, bottom: 10),
+                        child: RiveAnimation.asset(
+                          'assets/riv/character.riv',
+                          stateMachines: ["character"],
+                          onInit: controller.onRiveInit,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 TextFieldBox(

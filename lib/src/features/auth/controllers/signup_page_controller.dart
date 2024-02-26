@@ -15,6 +15,7 @@ import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:ggsb_project/src/repositories/room_repository.dart';
 import 'package:ggsb_project/src/repositories/room_stream_repository.dart';
 import 'package:http/http.dart' as http;
+import 'package:rive/rive.dart';
 
 class SignupPageController extends GetxController {
   bool? isProfileEditing = Get.arguments;
@@ -22,6 +23,9 @@ class SignupPageController extends GetxController {
   Rx<String> uid = ''.obs;
   Rx<String> email = ''.obs;
   String loginType = '';
+
+  SMINumber? characterHat;
+  SMINumber? characterColor;
 
   Rx<bool> isSignupLoading = false.obs;
 
@@ -41,6 +45,15 @@ class SignupPageController extends GetxController {
     super.onInit();
 
     await checkIsProfileLoading();
+  }
+
+  void onRiveInit(Artboard artboard) {
+    final riveController =
+    StateMachineController.fromArtboard(artboard, 'character');
+    // riveController!.isActive = false;
+    artboard.addController(riveController!);
+    characterColor = riveController.findInput<double>('color') as SMINumber;
+    characterHat = riveController.findInput<double>('hat') as SMINumber;
   }
 
   Future<void> checkIsProfileLoading() async {
