@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
+import 'package:ggsb_project/src/features/home/controllers/home_page_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/character_model.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
@@ -37,6 +38,7 @@ class StorePageController extends GetxController
 
   SMINumber? actionState;
   SMINumber? characterHat;
+  SMINumber? characterShield;
   SMINumber? characterColor;
 
   Rx<bool> isPurchaseButton = false.obs;
@@ -67,8 +69,18 @@ class StorePageController extends GetxController
     [
       [
         'base',
+        'assets/items/hat/pencil.png',
+        10,
+      ],
+      [
         'base',
-        0,
+        'assets/items/hat/pencil.png',
+        10,
+      ],
+      [
+        'base',
+        'assets/items/hat/pencil.png',
+        10,
       ],
     ],
     //색 종류
@@ -231,8 +243,9 @@ class StorePageController extends GetxController
         StateMachineController.fromArtboard(artboard, 'character');
     artboard.addController(riveController!);
     actionState = riveController.findInput<double>('action') as SMINumber;
-    characterColor = riveController.findInput<double>('color') as SMINumber;
     characterHat = riveController.findInput<double>('hat') as SMINumber;
+    characterShield = riveController.findInput<double>('shield') as SMINumber;
+    characterColor = riveController.findInput<double>('color') as SMINumber;
     _riveCharacterInit();
     isPageLoading(false);
   }
@@ -260,7 +273,7 @@ class StorePageController extends GetxController
         }
       case 1:
         {
-          //Todo: 방패 추가
+          characterShield!.value = itemIndex.toDouble();
         }
       case 2:
         {
@@ -284,6 +297,7 @@ class StorePageController extends GetxController
         bodyColor: bodyColorIndex,
       );
       AuthController.to.updateCharacterModel(updatedCharacterModel, userModel);
+      HomePageController.to.riveCharacterInit();
       Get.back();
     } else {
       openAlertDialog(title: '장착 불가', content: '아이템을 구매 후 이용해주세요');

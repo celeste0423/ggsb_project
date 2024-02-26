@@ -78,7 +78,7 @@ class MyPage extends GetView<MyPageController> {
               child: Container(
                 width: 180,
                 height: 180,
-                padding: const EdgeInsets.only(left: 6, bottom: 10),
+                padding: const EdgeInsets.only(right: 2, bottom: 10),
                 child: RiveAnimation.asset(
                   'assets/riv/character.riv',
                   stateMachines: ["character"],

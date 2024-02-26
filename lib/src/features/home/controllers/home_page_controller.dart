@@ -42,10 +42,10 @@ class HomePageController extends GetxController {
     artboard.addController(riveController!);
     characterColor = riveController.findInput<double>('color') as SMINumber;
     characterHat = riveController.findInput<double>('hat') as SMINumber;
-    _riveCharacterInit();
+    riveCharacterInit();
   }
 
-  void _riveCharacterInit() {
+  void riveCharacterInit() {
     UserModel userModel = AuthController.to.user.value;
     CharacterModel characterModel = userModel.characterData!;
     characterHat!.value = characterModel.hat!.toDouble();
