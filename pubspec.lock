@@ -81,6 +81,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
+  circular_motion:
+    dependency: "direct main"
+    description:
+      name: circular_motion
+      sha256: "98b45c3e1b8887179f8a3297a6d71a766f1b57ec78a265418cbe42bba4ac93e7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.6"
   cli_util:
     dependency: transitive
     description:

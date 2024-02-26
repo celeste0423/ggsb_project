@@ -9,6 +9,7 @@ import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/live_seconds_util.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
+import 'package:ggsb_project/src/widgets/character_list.dart';
 import 'package:ggsb_project/src/widgets/full_size_loading_indicator.dart';
 import 'package:ggsb_project/src/widgets/loading_indicator.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
@@ -47,55 +48,42 @@ class TimerPage extends GetView<TimerPageController> {
     );
   }
 
-  Widget _content() {
-    return SafeArea(
-      child: SizedBox(
-        width: Get.width,
-        height: Get.height,
-        child: Column(
-          children: [
-            _map(),
-            _time(),
-            _playButton(),
-            const SizedBox(height: 20),
-            _roomTabView(),
-            _tabIndicator(),
-            const SizedBox(height: 20),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _map() {
     return Container(
-      margin: const EdgeInsets.only(bottom: 30),
-      height: 250,
-      width: 250,
+      margin: const EdgeInsets.only(bottom: 10),
+      height: 300,
+      width: 300,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: CustomColors.lightGreyBackground,
+      ),
+      child: CharacterList(
+        userModelList: [
+          AuthController.to.user.value,
+          AuthController.to.user.value,
+          AuthController.to.user.value,
+          AuthController.to.user.value,
+          AuthController.to.user.value,
+          AuthController.to.user.value,
+        ],
       ),
     );
   }
 
   Widget _time() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 40),
-      child: Obx(
-        () => AnimatedDefaultTextStyle(
-          duration: const Duration(milliseconds: 500),
-          style: TextStyle(
-            color: controller.isTimer.value
-                ? controller.playButtonColor.value
-                : Colors.white,
-            fontSize: 35,
-            fontWeight: FontWeight.w800,
-            fontFamily: 'nanum',
-          ),
-          child: Text(
-            controller.totalLiveTime.value,
-          ),
+    return Obx(
+      () => AnimatedDefaultTextStyle(
+        duration: const Duration(milliseconds: 500),
+        style: TextStyle(
+          color: controller.isTimer.value
+              ? controller.playButtonColor.value
+              : Colors.white,
+          fontSize: 35,
+          fontWeight: FontWeight.w800,
+          fontFamily: 'nanum',
+        ),
+        child: Text(
+          controller.totalLiveTime.value,
         ),
       ),
     );
@@ -302,7 +290,7 @@ class TimerPage extends GetView<TimerPageController> {
         () => AnimatedContainer(
           duration: const Duration(milliseconds: 500),
           curve: Curves.easeInOutCubic,
-          height: controller.isTimer.value ? Get.height : Get.height - 395,
+          height: controller.isTimer.value ? Get.height : Get.height - 445,
           width: Get.width,
           decoration: BoxDecoration(
             color: CustomColors.mainBlack,
@@ -338,7 +326,24 @@ class TimerPage extends GetView<TimerPageController> {
               child: Stack(
                 children: [
                   _background(),
-                  _content(),
+                  SafeArea(
+                    child: SizedBox(
+                      width: Get.width,
+                      height: Get.height,
+                      child: Column(
+                        children: [
+                          _map(),
+                          _playButton(),
+                          const SizedBox(height: 10),
+                          _time(),
+                          const SizedBox(height: 10),
+                          _roomTabView(),
+                          _tabIndicator(),
+                          const SizedBox(height: 10),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

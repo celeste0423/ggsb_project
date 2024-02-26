@@ -65,7 +65,7 @@ class CustomColors {
   static const Color purpleRoom = Color(0xFF9F63EB);
   static const Color brownRoom = Color(0xFF815B46);
   static const Color greyRoom = Color(0xFF5E5E5E);
-  static const Color blackRoom = Color(0xFF212121);
+  static const Color blackRoom = Color(0xFF313131);
 
   static String roomColorToName(Color color) {
     switch (color) {
