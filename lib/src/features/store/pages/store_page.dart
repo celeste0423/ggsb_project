@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -45,7 +47,7 @@ class StorePage extends GetView<StorePageController> {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Column(
         children: [
-          _divider(),
+          // _divider(),
           const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -69,12 +71,6 @@ class StorePage extends GetView<StorePageController> {
                   ),
                 ],
               ),
-              const Text(
-                '광고로 코인 충전하기 +5',
-                style: TextStyle(
-                  fontSize: 14,
-                ),
-              ),
               CupertinoButton(
                 padding: EdgeInsets.zero,
                 onPressed: () {
@@ -82,19 +78,20 @@ class StorePage extends GetView<StorePageController> {
                 },
                 child: Obx(
                   () => Container(
-                    width: 100,
-                    height: 40,
+                    width: 150,
+                    height: 30,
                     decoration: BoxDecoration(
                         color: controller.rewardedAdCount.value == 0
                             ? CustomColors.greyBackground
                             : CustomColors.mainBlue,
-                        borderRadius: BorderRadius.circular(10)),
+                        borderRadius: BorderRadius.circular(15)),
                     child: Center(
                       child: Text(
-                        '(${controller.rewardedAdCount.value}/10)',
+                        '(광고로 코인 충전${controller.rewardedAdCount.value}/10)',
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 14,
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -108,19 +105,19 @@ class StorePage extends GetView<StorePageController> {
     );
   }
 
-  Widget _divider() {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Container(
-          height: 1,
-          decoration: const BoxDecoration(
-            color: CustomColors.blackText,
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget _divider() {
+  //   return Center(
+  //     child: Padding(
+  //       padding: const EdgeInsets.symmetric(horizontal: 10),
+  //       child: Container(
+  //         height: 1,
+  //         decoration: const BoxDecoration(
+  //           color: CustomColors.blackText,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _characterBox() {
     return Expanded(
