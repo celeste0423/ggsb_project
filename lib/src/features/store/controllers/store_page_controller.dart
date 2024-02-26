@@ -274,6 +274,7 @@ class StorePageController extends GetxController
               }
           }
           isPageLoading(false);
+          Get.back();
         },
         secondButtonText: '취소',
       );

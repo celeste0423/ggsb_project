@@ -6,10 +6,14 @@ import 'package:ggsb_project/src/models/study_time_model.dart';
 import 'package:ggsb_project/src/repositories/study_time_repository.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
+import 'package:rive/rive.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MyPageController extends GetxController {
   static MyPageController get to => Get.find();
+
+  SMINumber? characterHat;
+  SMINumber? characterColor;
 
   List<StudyTimeModel> studyTimeModelList = [];
   int bestSeconds = 0;
@@ -20,6 +24,15 @@ class MyPageController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+  }
+
+  void onRiveInit(Artboard artboard) {
+    final riveController =
+        StateMachineController.fromArtboard(artboard, 'character');
+    // riveController!.isActive = false;
+    artboard.addController(riveController!);
+    characterColor = riveController.findInput<double>('color') as SMINumber;
+    characterHat = riveController.findInput<double>('hat') as SMINumber;
   }
 
   Stream<List<StudyTimeModel>> timeModelStream() {

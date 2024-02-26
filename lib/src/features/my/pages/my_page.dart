@@ -11,6 +11,7 @@ import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
 import 'package:ggsb_project/src/widgets/loading_indicator.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
+import 'package:rive/rive.dart';
 
 class MyPage extends GetView<MyPageController> {
   const MyPage({super.key});
@@ -68,31 +69,28 @@ class MyPage extends GetView<MyPageController> {
             borderRadius: BorderRadius.all(Radius.circular(35)),
             color: CustomColors.lightGreyBackground,
           ),
+          child: ClipRRect(
+            borderRadius: const BorderRadius.all(Radius.circular(35)),
+            child: OverflowBox(
+              maxHeight: double.infinity,
+              maxWidth: double.infinity,
+              alignment: Alignment.topCenter,
+              child: Container(
+                width: 180,
+                height: 180,
+                padding: const EdgeInsets.only(left: 6, bottom: 10),
+                child: RiveAnimation.asset(
+                  'assets/riv/character.riv',
+                  stateMachines: ["character"],
+                  onInit: controller.onRiveInit,
+                ),
+              ),
+            ),
+          ),
         ),
       ],
     );
   }
-
-  // Widget _profileEditDialog() {
-  //   return const Dialog(
-  //     backgroundColor: Colors.white,
-  //     insetPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-  //     child: Padding(
-  //       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-  //       child: Column(
-  //         children: [
-  //           Text(
-  //             '프로필 수정',
-  //             style: TextStyle(
-  //               color: CustomColors.mainBlack,
-  //               fontSize: 24,
-  //             ),
-  //           )
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget _graphBox() {
     return Padding(

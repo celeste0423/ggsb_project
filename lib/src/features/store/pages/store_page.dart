@@ -26,11 +26,14 @@ class StorePage extends GetView<StorePageController> {
         text: '상점',
       ),
       actions: [
-        ImageIconButton(
-          assetPath: 'assets/icons/check.svg',
-          iconColor: CustomColors.greyBackground,
-          height: 17,
-          onTap: () {},
+        Padding(
+          padding: const EdgeInsets.only(right: 20),
+          child: ImageIconButton(
+            assetPath: 'assets/icons/check.svg',
+            iconColor: CustomColors.greyBackground,
+            height: 17,
+            onTap: () {},
+          ),
         ),
       ],
     );
@@ -54,12 +57,14 @@ class StorePage extends GetView<StorePageController> {
                     width: 20,
                     height: 20,
                   ),
-                  SizedBox(width: 3),
+                  const SizedBox(width: 3),
                   Obx(
                     () => Text(
                       controller.cash.value.toString(),
                       style: const TextStyle(
-                          fontSize: 13, fontWeight: FontWeight.w600),
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ],

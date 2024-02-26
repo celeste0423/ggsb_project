@@ -21,29 +21,27 @@ class HomePage extends GetView<HomePageController> {
       //   systemNavigationBarColor: CustomColors.mainBlack,
       //   systemNavigationBarIconBrightness: Brightness.light,
       // ),
-      title: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            child: SvgPicture.asset(
-              'assets/images/caption_logo.svg',
-              height: 25,
-              color: CustomColors.mainBlack,
-            ),
-          ),
-          const Spacer(),
-          IconButton(
-            icon: Image.asset(
-              'assets/icons/store.png',
-              color: CustomColors.mainBlack,
-              height: 25,
-            ),
-            onPressed: () {
-              Get.to(() => const StorePage());
-            },
-          ),
-        ],
+      title: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        child: SvgPicture.asset(
+          'assets/images/caption_logo.svg',
+          height: 25,
+          color: CustomColors.mainBlack,
+        ),
       ),
+      actions: [
+        CupertinoButton(
+          padding: EdgeInsets.only(right: 20),
+          onPressed: () {
+            Get.to(() => const StorePage());
+          },
+          child: Image.asset(
+            'assets/icons/store.png',
+            color: CustomColors.mainBlack,
+            height: 25,
+          ),
+        ),
+      ],
     );
   }
 
