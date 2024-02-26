@@ -195,7 +195,7 @@ class UserRepository {
           .doc(userModel.uid)
           .update(userModel.toJson());
     } catch (e) {
-      openAlertDialog(title: '오류 발생', content: e.toString());
+      openAlertDialog(title: '유저 모델 업데이트 중 오류 발생', content: e.toString());
     }
   }
 

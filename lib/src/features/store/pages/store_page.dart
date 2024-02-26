@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/store/controllers/store_page_controller.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/widgets/full_size_loading_indicator.dart';
+import 'package:ggsb_project/src/widgets/main_button.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
 import 'package:rive/rive.dart';
@@ -118,10 +119,35 @@ class StorePage extends GetView<StorePageController> {
 
   Widget _characterBox() {
     return Expanded(
-      child: RiveAnimation.asset(
-        'assets/riv/character.riv',
-        stateMachines: ["character"],
-        onInit: controller.onRiveInit,
+      child: Stack(
+        children: [
+          RiveAnimation.asset(
+            'assets/riv/character.riv',
+            stateMachines: ["character"],
+            onInit: controller.onRiveInit,
+          ),
+          Obx(
+            () => Visibility(
+              visible: controller.isPurchaseButton.value,
+              child: Positioned(
+                bottom: 0,
+                right: 0,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  child: MainButton(
+                    buttonText: '구매',
+                    width: 100,
+                    height: 45,
+                    onTap: () {
+                      controller.purchaseButton();
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -196,13 +222,11 @@ class StorePage extends GetView<StorePageController> {
                         ? _itemCard(
                             categoryIndex,
                             itemIndex,
-                            controller.itemList[categoryIndex][itemIndex][0],
                             controller.itemList[categoryIndex][itemIndex][1],
                             controller.itemList[categoryIndex][itemIndex][2],
                           )
                         : _colorCard(
                             itemIndex,
-                            controller.itemList[categoryIndex][itemIndex][0],
                             controller.itemList[categoryIndex][itemIndex][1],
                             controller.itemList[categoryIndex][itemIndex][2],
                           );
@@ -222,7 +246,6 @@ class StorePage extends GetView<StorePageController> {
     int itemIndex,
     String assetPath,
     int price,
-    bool isUnlocked,
   ) {
     return CupertinoButton(
       padding: EdgeInsets.zero,
@@ -233,7 +256,8 @@ class StorePage extends GetView<StorePageController> {
         () => Container(
           width: double.infinity,
           height: double.infinity,
-          margin: const EdgeInsets.all(5),
+          margin: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: CustomColors.whiteBackground,
             borderRadius: BorderRadius.circular(10),
@@ -262,25 +286,29 @@ class StorePage extends GetView<StorePageController> {
                           height: 80,
                         ),
                       ),
-                      Row(
-                        children: [
-                          Image.asset(
-                            'assets/icons/gold_coin.png',
-                            width: 20,
-                            height: 20,
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 5),
-                            child: Text(
-                              '$price',
-                              style: const TextStyle(
-                                color: CustomColors.blackText,
-                                fontSize: 14,
+                      Visibility(
+                        visible: !controller
+                            .isItemUnlockedList[categoryIndex][itemIndex].value,
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              'assets/icons/gold_coin.png',
+                              width: 20,
+                              height: 20,
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: Text(
+                                '$price',
+                                style: const TextStyle(
+                                  color: CustomColors.blackText,
+                                  fontSize: 14,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -294,7 +322,6 @@ class StorePage extends GetView<StorePageController> {
     int itemIndex,
     Color color,
     int price,
-    bool isUnlocked,
   ) {
     return CupertinoButton(
       padding: EdgeInsets.zero,
@@ -305,7 +332,8 @@ class StorePage extends GetView<StorePageController> {
         () => Container(
           width: double.infinity,
           height: double.infinity,
-          margin: const EdgeInsets.all(5),
+          margin: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: CustomColors.whiteBackground,
             borderRadius: BorderRadius.circular(10),
@@ -328,11 +356,27 @@ class StorePage extends GetView<StorePageController> {
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
-              Text(
-                '$price',
-                style: const TextStyle(
-                  color: CustomColors.blackText,
-                  fontSize: 14,
+              Visibility(
+                visible: !controller.isItemUnlockedList[2][itemIndex].value,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/icons/gold_coin.png',
+                      width: 20,
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: Text(
+                        '$price',
+                        style: const TextStyle(
+                          color: CustomColors.blackText,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -344,11 +388,8 @@ class StorePage extends GetView<StorePageController> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<StorePageController>(
-      init: StorePageController(), // 컨트롤러 초기화
-      builder: (controller) => Stack(
-    // Get.put(StorePageController());
-    // return Stack(
+    Get.put(StorePageController());
+    return Stack(
       children: [
         Scaffold(
           backgroundColor: CustomColors.lightGreyBackground,
@@ -370,7 +411,6 @@ class StorePage extends GetView<StorePageController> {
           ),
         ),
       ],
-    ),
     );
   }
 }

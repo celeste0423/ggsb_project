@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/binding/init_binding.dart';
 import 'package:ggsb_project/src/features/store/controllers/store_page_controller.dart';
+import 'package:ggsb_project/src/models/character_model.dart';
 import 'package:ggsb_project/src/models/study_time_model.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:ggsb_project/src/repositories/study_time_repository.dart';
@@ -98,6 +99,15 @@ class AuthController extends GetxController {
   Future<void> updateUserModel(UserModel userModel) async {
     user(userModel);
     await UserRepository().updateUserModel(userModel);
+  }
+
+  Future<void> updateCharacterModel(
+      CharacterModel characterModel, UserModel userModel) async {
+    UserModel updatedUserModel = userModel.copyWith(
+      characterData: characterModel,
+    );
+    user(updatedUserModel);
+    await UserRepository().updateUserModel(updatedUserModel);
   }
 
   Future<String?> getDeviceToken() async {

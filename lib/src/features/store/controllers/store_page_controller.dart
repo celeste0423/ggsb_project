@@ -38,124 +38,103 @@ class StorePageController extends GetxController
   SMINumber? characterHat;
   SMINumber? characterColor;
 
+  Rx<bool> isPurchaseButton = false.obs;
+
   late TabController categoryTabController;
 
   List<List<List<dynamic>>> itemList = [
-    //path , price , isUnlocked , id
+    //id, path , price , isUnlocked
     [
       //모자 종류
       [
         'base',
-        0,
-        true,
         'base',
+        0,
       ],
       [
+        'eraserHat',
         'assets/items/hat/eraser.png',
-        10,
-        AuthController.to.user.value.characterData!.purchasedHat!
-            .contains('eraser'),
-        'eraser',
+        12,
       ],
       [
+        'pencilHat',
         'assets/items/hat/pencil.png',
         10,
-        AuthController.to.user.value.characterData!.purchasedHat!
-            .contains('pencil'),
-        'pencil',
       ]
     ],
     //방패 종류
     [
       [
         'base',
-        0,
-        true,
         'base',
+        0,
       ],
     ],
     //색 종류
     [
       [
+        'base',
         CustomColors.baseCharacter,
         0,
-        true,
-        'base',
       ],
       [
+        'pinkColor',
         CustomColors.pinkCharacter,
         10,
-        AuthController.to.user.value.characterData!.purchasedBodyColor!
-            .contains('pink'),
-        'pink',
       ],
       [
+        'greenColor',
         CustomColors.greenCharacter,
         10,
-        AuthController.to.user.value.characterData!.purchasedBodyColor!
-            .contains('green'),
-        'green',
       ],
       [
+        'lightblueColor',
         CustomColors.lightBlueCharacter,
         10,
-        AuthController.to.user.value.characterData!.purchasedBodyColor!
-            .contains('lightBlue'),
-        'lightblue',
       ],
       [
+        'redColor',
         CustomColors.redCharacter,
         10,
-        AuthController.to.user.value.characterData!.purchasedBodyColor!
-            .contains('red'),
-        'red',
       ],
       [
+        'yellowColor',
         CustomColors.yellowCharacter,
         10,
-        AuthController.to.user.value.characterData!.purchasedBodyColor!
-            .contains('yellow'),
-        'yellow',
       ],
       [
+        'orangeColor',
         CustomColors.orangeCharacter,
         10,
-        AuthController.to.user.value.characterData!.purchasedBodyColor!
-            .contains('orange'),
-        'orange',
       ],
       [
+        'purpleColor',
         CustomColors.purpleCharacter,
         10,
-        AuthController.to.user.value.characterData!.purchasedBodyColor!
-            .contains('purple'),
-        'purple'
       ],
       [
+        'greyColor',
         CustomColors.greyCharacter,
         10,
-        AuthController.to.user.value.characterData!.purchasedBodyColor!
-            .contains('grey'),
-        'grey',
       ],
       [
+        'blackColor',
         CustomColors.blackCharacter,
         10,
-        AuthController.to.user.value.characterData!.purchasedBodyColor!
-            .contains('black'),
-        'black',
       ],
     ],
   ];
+  late List<List<RxBool>> isItemUnlockedList = List<List<RxBool>>.generate(
+    itemList.length,
+    (categoryIndex) => List<RxBool>.generate(
+      itemList[categoryIndex].length,
+      (itemIndex) => false.obs,
+    ),
+  );
   List<Rx<int>> selectedIndex = [
     0.obs,
     0.obs,
     0.obs,
-  ];
-  List<List<String>> purchasedItem = [
-    AuthController.to.user.value.characterData!.purchasedHat!,
-    AuthController.to.user.value.characterData!.purchasedShield!,
-    AuthController.to.user.value.characterData!.purchasedBodyColor!,
   ];
 
   @override
@@ -163,6 +142,7 @@ class StorePageController extends GetxController
     super.onInit();
     _rewardedAdInit();
     _categoryTabControllerInit();
+    _getIsItemUnlockedList();
   }
 
   void _rewardedAdInit() async {
@@ -175,6 +155,23 @@ class StorePageController extends GetxController
     categoryTabController.addListener(() {
       update(['tabBar']);
     });
+  }
+
+  void _getIsItemUnlockedList() {
+    for (int categoryIndex = 0;
+        categoryIndex < itemList.length;
+        categoryIndex++) {
+      for (int itemIndex = 0;
+          itemIndex < itemList[categoryIndex].length;
+          itemIndex++) {
+        String itemId = itemList[categoryIndex][itemIndex][0];
+        bool isUnlocked = AuthController
+            .to.user.value.characterData!.purchasedItem!
+            .contains(itemId);
+        print(isUnlocked);
+        isItemUnlockedList[categoryIndex][itemIndex](isUnlocked);
+      }
+    }
   }
 
   //on init
@@ -195,6 +192,7 @@ class StorePageController extends GetxController
           ad.show(onUserEarnedReward: (ad, reward) {
             onGetReward(reward);
           });
+          isPageLoading(false);
         },
         onAdFailedToLoad: (err) {
           print('Failed to load a rewarded ad: ${err.message}');
@@ -229,45 +227,41 @@ class StorePageController extends GetxController
 
   void adButton() {
     if (rewardedAdCount.value != 0) {
+      isPageLoading(true);
       loadRewardedAd();
     } else {
       openAlertDialog(title: '광고 제한', content: '오늘 광고 시청 횟수를 초과했습니다.');
     }
   }
 
-  void itemButton(int categoryIndex, int itemIndex) {
-    selectedIndex[categoryIndex](itemIndex);
-    if (itemList[categoryIndex][itemIndex][2]) {
-      switch (categoryIndex) {
-        case 0:
-          {
-            characterHat!.value = itemIndex.toDouble();
-          }
-        case 1:
-          {
-            characterHat!.value = itemIndex.toDouble();
-          }
-        case 2:
-          {
-            characterColor!.value = itemIndex.toDouble();
-          }
-      }
+  void purchaseButton() {
+    int categoryIndex = categoryTabController.index;
+    int itemIndex = selectedIndex[categoryIndex].value;
+    List<dynamic> selectedItem = itemList[categoryIndex][itemIndex];
+    if (cash.value < selectedItem[2]) {
+      openAlertDialog(title: '코인이 부족합니다.');
     } else {
       openAlertDialog(
         title: '상품을 구매하시겠습니까?',
-        content: '총 ${itemList[categoryIndex][itemIndex][1]}코인이 소모됩니다.',
+        content: '총 ${selectedItem[2]}코인이 소모됩니다.',
         mainfunction: () {
           isPageLoading(true);
-          updateCash(-itemList[categoryIndex][itemIndex][1]);
+          updateCash(-selectedItem[2]);
+          CharacterModel characterData =
+              AuthController.to.user.value.characterData!;
+          String itemId = selectedItem[0];
+          //구매 정보 업데이트
+          CharacterModel updatedCharacterModel = characterData.copyWith(
+            purchasedItem: characterData.purchasedItem!..add(itemId),
+          );
+          AuthController.to.updateCharacterModel(
+            updatedCharacterModel,
+            AuthController.to.user.value,
+          );
+          _getIsItemUnlockedList();
           switch (categoryIndex) {
             case 0:
               {
-                CharacterModel characterData =
-                    AuthController.to.user.value.characterData!;
-                String itemId = itemList[categoryIndex][itemIndex][3];
-                CharacterModel updatedCharacterModel = characterData.copyWith(
-                  purchasedHat: characterData.purchasedHat!..add(itemId),
-                );
                 characterHat!.value = itemIndex.toDouble();
               }
             case 1:
@@ -282,10 +276,32 @@ class StorePageController extends GetxController
           isPageLoading(false);
         },
         secondButtonText: '취소',
-        // secondfunction: () {
-        //   Get.back();
-        // },
       );
+    }
+  }
+
+  void itemButton(int categoryIndex, int itemIndex) {
+    selectedIndex[categoryIndex](itemIndex);
+    if (itemList[categoryIndex][itemIndex][1] != 'base') {
+      if (!isItemUnlockedList[categoryIndex][itemIndex].value) {
+        isPurchaseButton(true);
+      } else {
+        isPurchaseButton(false);
+      }
+    }
+    switch (categoryIndex) {
+      case 0:
+        {
+          characterHat!.value = itemIndex.toDouble();
+        }
+      case 1:
+        {
+          characterHat!.value = itemIndex.toDouble();
+        }
+      case 2:
+        {
+          characterColor!.value = itemIndex.toDouble();
+        }
     }
   }
 
