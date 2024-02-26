@@ -9,6 +9,7 @@ import 'package:ggsb_project/src/widgets/main_button.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
 import 'package:rive/rive.dart';
+import 'package:speech_balloon/speech_balloon.dart';
 
 class StorePage extends GetView<StorePageController> {
   const StorePage({Key? key});
@@ -46,59 +47,74 @@ class StorePage extends GetView<StorePageController> {
       color: CustomColors.whiteBackground,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          // _divider(),
-          const SizedBox(height: 10),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Row(
-                children: [
-                  Image.asset(
-                    'assets/icons/gold_coin.png',
-                    width: 20,
-                    height: 20,
-                  ),
-                  const SizedBox(width: 3),
-                  Obx(
-                    () => Text(
-                      controller.cash.value.toString(),
-                      style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ],
+              Image.asset(
+                'assets/icons/gold_coin.png',
+                width: 20,
+                height: 20,
               ),
-              CupertinoButton(
-                padding: EdgeInsets.zero,
-                onPressed: () {
-                  controller.adButton();
-                },
-                child: Obx(
-                  () => Container(
-                    width: 150,
-                    height: 30,
-                    decoration: BoxDecoration(
-                        color: controller.rewardedAdCount.value == 0
-                            ? CustomColors.greyBackground
-                            : CustomColors.mainBlue,
-                        borderRadius: BorderRadius.circular(15)),
-                    child: Center(
-                      child: Text(
-                        '(광고로 코인 충전${controller.rewardedAdCount.value}/10)',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 11,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+              const SizedBox(width: 3),
+              Obx(
+                () => Text(
+                  controller.cash.value.toString(),
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
             ],
+          ),
+          CupertinoButton(
+            padding: EdgeInsets.zero,
+            onPressed: () {
+              controller.adButton();
+            },
+            child: Obx(
+              () => SpeechBalloon(
+                width: 150,
+                height: 30,
+                borderRadius: 6,
+                nipLocation: NipLocation.topRight,
+                color: controller.rewardedAdCount.value == 0
+                    ? CustomColors.greyBackground
+                    : CustomColors.mainBlue,
+                child: Center(
+                  child: Text(
+                    '(광고로 코인 충전${controller.rewardedAdCount.value}/10)',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+            // Container(
+            //   width: 150,
+            //   height: 30,
+            //   decoration: BoxDecoration(
+            //       color: controller.rewardedAdCount.value == 0
+            //           ? CustomColors.greyBackground
+            //           : CustomColors.mainBlue,
+            //       borderRadius: BorderRadius.circular(15)),
+            //   child: Center(
+            //     child: Text(
+            //       '(광고로 코인 충전${controller.rewardedAdCount.value}/10)',
+            //       style: const TextStyle(
+            //         color: Colors.white,
+            //         fontSize: 11,
+            //         fontWeight: FontWeight.bold,
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ),
         ],
       ),
