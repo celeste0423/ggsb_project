@@ -56,7 +56,7 @@ class HomePage extends GetView<HomePageController> {
       child: CupertinoButton(
         padding: EdgeInsets.zero,
         onPressed: () {
-          controller.tabCharacter();
+          Get.to(() => const StorePage());
         },
         child: RiveAnimation.asset(
           'assets/riv/character.riv',

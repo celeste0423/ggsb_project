@@ -35,6 +35,7 @@ class StorePageController extends GetxController
   static int totalAdCount = 10;
   Rx<int> rewardedAdCount = 0.obs;
 
+  SMINumber? actionState;
   SMINumber? characterHat;
   SMINumber? characterColor;
 
@@ -155,6 +156,11 @@ class StorePageController extends GetxController
   void _categoryTabControllerInit() {
     categoryTabController = TabController(length: 3, vsync: this);
     categoryTabController.addListener(() {
+      if (categoryTabController.index == 1) {
+        actionState!.value = 1.toDouble();
+      } else {
+        actionState!.value = 0.toDouble();
+      }
       update(['tabBar']);
     });
   }
@@ -224,6 +230,7 @@ class StorePageController extends GetxController
     final riveController =
         StateMachineController.fromArtboard(artboard, 'character');
     artboard.addController(riveController!);
+    actionState = riveController.findInput<double>('action') as SMINumber;
     characterColor = riveController.findInput<double>('color') as SMINumber;
     characterHat = riveController.findInput<double>('hat') as SMINumber;
     _riveCharacterInit();

@@ -52,14 +52,6 @@ class HomePageController extends GetxController {
     characterColor!.value = characterModel.bodyColor!.toDouble();
   }
 
-  void tabCharacter() {
-    if (characterColor!.value == 0) {
-      characterColor!.value = 1;
-    } else {
-      characterColor!.value = 0;
-    }
-  }
-
   //시간 올라가는 애니메이션
   // Future<void> countUpHours() async {
   //   int i = 0;
