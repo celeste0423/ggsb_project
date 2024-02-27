@@ -82,6 +82,11 @@ class StorePageController extends GetxController
         'assets/items/hat/pencil.png',
         10,
       ],
+      [
+        'base',
+        'assets/icons/shield4.svg',
+        10,
+      ],
     ],
     //색 종류
     [

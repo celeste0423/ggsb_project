@@ -49,76 +49,72 @@ class StorePage extends GetView<StorePageController> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              CupertinoButton(
-                padding: EdgeInsets.zero,
-                onPressed: () {
-                  controller.adButton();
-                },
-                child: Obx(
-                      () => Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: ChatBubble(
-                          clipper: ChatBubbleClipper4(type: BubbleType.sendBubble),
-                          alignment: Alignment.centerRight,
-                          backGroundColor: controller.rewardedAdCount.value == 0
-                              ? CustomColors.greyBackground
-                              : CustomColors.mainBlue,
-                          child: Text(
-                            '(광고로 코인 충전${controller.rewardedAdCount.value}/10)',
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+
+          CupertinoButton(
+            padding: EdgeInsets.zero,
+            onPressed: () {
+              controller.adButton();
+            },
+            child: Obx(
+                  () => Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: ChatBubble(
+                      clipper: ChatBubbleClipper4(type: BubbleType.sendBubble),
+                      alignment: Alignment.centerRight,
+                      backGroundColor: controller.rewardedAdCount.value == 0
+                          ? CustomColors.greyBackground
+                          : CustomColors.mainBlue,
+                      child: Text(
+                        '광고로 코인 충전 (${controller.rewardedAdCount.value}/10)',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 11,
                         ),
                       ),
-                ),
-              ),
-              Stack(
-                alignment: Alignment.centerLeft,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 3, bottom: 3),
-                    child: Image.asset(
-                      'assets/icons/gold_coin.png',
-                      width: 20,
-                      height: 20,
                     ),
                   ),
-                  Positioned(
-                    left: 10,
-                    top: 10,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(90),
-                        color: CustomColors.mainBlue,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: Image.asset('assets/icons/plus.png'),
-                      ),
-                      width: 12,
-                      height: 12,
-                    )
-                  ),
-                ],
-              ),
-              const SizedBox(width: 5),
-              Obx(
-                () => Text(
-                  controller.cash.value.toString(),
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                  ),
+            ),
+          ),
+
+          Stack(
+            alignment: Alignment.centerLeft,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 3, bottom: 3),
+                child: Image.asset(
+                  'assets/icons/gold_coin.png',
+                  width: 20,
+                  height: 20,
                 ),
               ),
+              Positioned(
+                left: 10,
+                top: 10,
+                child: Container(
+                  width: 12,
+                  height: 12,
+                  padding: const EdgeInsets.all(2.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(90),
+                    color: CustomColors.mainBlue,
+                  ),
+                  child: Image.asset('assets/icons/plus.png'),
+                )
+              ),
             ],
+          ),
+
+          const SizedBox(width: 5),
+
+          Obx(
+            () => Text(
+              controller.cash.value.toString(),
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ),
         ],
       ),
@@ -203,10 +199,10 @@ class StorePage extends GetView<StorePageController> {
                   ),
                 ),
                 Tab(
-                  child: SvgPicture.asset(
-                    'assets/icons/color.svg',
+                  child: Image.asset(
+                    'assets/icons/color.png',
                     color: controller.categoryTabController.index == 2
-                        ? CustomColors.mainBlack.withOpacity(0.7)
+                        ? null
                         : CustomColors.greyBackground,
                     height: 23,
                   ),
@@ -336,7 +332,6 @@ class StorePage extends GetView<StorePageController> {
     return Stack(
       children: [
         Scaffold(
-          backgroundColor: CustomColors.lightGreyBackground,
           appBar: _appBar(),
           body: Column(
             children: [
