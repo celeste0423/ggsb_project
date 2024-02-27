@@ -7,6 +7,7 @@ import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/home/controllers/home_page_controller.dart';
+import 'package:ggsb_project/src/models/character_model.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
 import 'package:ggsb_project/src/models/study_time_model.dart';
@@ -240,14 +241,6 @@ class TimerPageController extends GetxController
     //개인 StudyTimeModel 설정
     await _updateStudyTimeModelAtStart(now);
 
-    //개인 timeModel 설정
-    // AuthController().updateTimeModel(AuthController.to.user.value.uid!);
-    // TimeModel updatedTimeModel = AuthController.to.timeModel.value.copyWith(
-    //   isTimer: true,
-    //   startTime: now,
-    // );
-    // TimeRepository().updateTimeModel(updatedTimeModel);
-    // AuthController.to.timeModel(updatedTimeModel);
     //방별 roomStream 설정
     roomList.forEach((RoomModel roomModel) async {
       RoomStreamModel roomStreamModel =
@@ -255,9 +248,14 @@ class TimerPageController extends GetxController
         roomModel.roomId!,
         AuthController.to.user.value.uid!,
       );
+      CharacterModel updatedCharacterModel =
+          roomStreamModel.characterData!.copyWith(
+        actionState: 1,
+      );
       RoomStreamModel updatedRoomStreamModel = roomStreamModel.copyWith(
         isTimer: true,
         startTime: now,
+        characterData: updatedCharacterModel,
       );
       if (roomModel.roomType == 'day') {
         updatedRoomStreamModel = updatedRoomStreamModel.copyWith(
@@ -310,25 +308,6 @@ class TimerPageController extends GetxController
     //개인 studyTimeModel 업로드
     await _updateStudyTimeModelAtEnd(now, totalSec);
 
-    //개인 timeModel 업로드
-    // TimeModel timeModel = AuthController.to.timeModel.value;
-    // if (DateUtil().calculateDateDifference(timeModel.startTime!, now) >= 1) {
-    //   //시간 측정중 하루가 넘어감
-    //   datePassedWhileIsTimer(now);
-    // } else {
-    //   // diffSec = SecondsUtil.calculateDifferenceInSeconds(
-    //   //   AuthController.to.timeModel.value.startTime!,
-    //   //   now,
-    //   // );
-    //   // totalSec = AuthController.to.timeModel.value.totalSeconds! + diffSec;
-    //   TimeModel updatedTimeModel = AuthController.to.timeModel.value.copyWith(
-    //     isTimer: false,
-    //     lastTime: now,
-    //     totalSeconds: totalSec,
-    //   );
-    //   TimeRepository().updateTimeModel(updatedTimeModel);
-    //   AuthController.to.timeModel(updatedTimeModel);}
-
     HomePageController.to.totalTime(totalLiveTime.value);
 
     //방별 roomStream 설정
@@ -343,10 +322,15 @@ class TimerPageController extends GetxController
       } else {
         totalSecRoomStream = roomStreamModel.totalSeconds! + diffSec;
       }
+      CharacterModel updatedCharacterModel =
+          roomStreamModel.characterData!.copyWith(
+        actionState: 0,
+      );
       RoomStreamModel updatedRoomStreamModel = roomStreamModel.copyWith(
         isTimer: false,
         lastTime: now,
         totalSeconds: totalSecRoomStream,
+        characterData: updatedCharacterModel,
       );
       await RoomStreamRepository().updateRoomStream(updatedRoomStreamModel);
     });

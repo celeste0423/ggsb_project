@@ -4,27 +4,37 @@ import 'package:ggsb_project/src/models/character_model.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
 import 'package:rive/rive.dart';
 
-class CharacterList extends StatelessWidget {
-  List<RoomStreamModel> roomStreamList;
+class CharacterList extends StatefulWidget {
+  final List<RoomStreamModel> roomStreamList;
 
   CharacterList({
     Key? key,
     required this.roomStreamList,
   }) : super(key: key);
 
-  late List<List<SMINumber?>> stateMachineList =
-      List<List<SMINumber?>>.generate(
-    roomStreamList.length,
-    (roomStreamIndex) => List<SMINumber?>.generate(
-      4,
-      (stateMachineIndex) => null,
-    ),
-  );
+  @override
+  State<CharacterList> createState() => _CharacterListState();
+}
 
-  late List<StateMachineController?> riveControllers = List.generate(
-    roomStreamList.length,
-    (index) => null,
-  );
+class _CharacterListState extends State<CharacterList> {
+  late List<List<SMINumber?>> stateMachineList;
+  late List<StateMachineController?> riveControllers;
+
+  @override
+  void initState() {
+    super.initState();
+    stateMachineList = List<List<SMINumber?>>.generate(
+      widget.roomStreamList.length,
+      (roomStreamIndex) => List<SMINumber?>.generate(
+        4,
+        (stateMachineIndex) => null,
+      ),
+    );
+    riveControllers = List.generate(
+      widget.roomStreamList.length,
+      (index) => null,
+    );
+  }
 
   Widget _characterCard(int index) {
     return Container(
@@ -68,22 +78,27 @@ class CharacterList extends StatelessWidget {
   }
 
   void riveCharacterInit(int controllerIndex) {
-    CharacterModel characterModel =
-        roomStreamList[controllerIndex].characterData!;
-    stateMachineList[controllerIndex][0]!.value =
-        characterModel.actionState!.toDouble();
-    stateMachineList[controllerIndex][1]!.value =
-        characterModel.hat!.toDouble();
-    stateMachineList[controllerIndex][2]!.value =
-        characterModel.shield!.toDouble();
-    stateMachineList[controllerIndex][3]!.value =
-        characterModel.bodyColor!.toDouble();
+    if (stateMachineList[controllerIndex][0] != null) {
+      CharacterModel characterModel =
+          widget.roomStreamList[controllerIndex].characterData!;
+      stateMachineList[controllerIndex][0]!.value =
+          characterModel.actionState!.toDouble();
+      stateMachineList[controllerIndex][1]!.value =
+          characterModel.hat!.toDouble();
+      stateMachineList[controllerIndex][2]!.value =
+          characterModel.shield!.toDouble();
+      stateMachineList[controllerIndex][3]!.value =
+          characterModel.bodyColor!.toDouble();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    for (int index = 0; index < widget.roomStreamList.length; index++) {
+      riveCharacterInit(index);
+    }
     return CircularMotion.builder(
-      itemCount: roomStreamList.length,
+      itemCount: widget.roomStreamList.length,
       builder: (context, index) {
         return _characterCard(index);
       },
