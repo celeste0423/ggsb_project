@@ -69,6 +69,7 @@ dependencies:
   amplitude_flutter: ^3.16.2
   circular_motion: ^0.0.6
   speech_balloon: ^0.0.4
+  flutter_chat_bubble: ^2.0.2
 
 
 dev_dependencies:

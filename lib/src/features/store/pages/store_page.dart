@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/store/controllers/store_page_controller.dart';
@@ -9,18 +10,22 @@ import 'package:ggsb_project/src/widgets/main_button.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
 import 'package:rive/rive.dart';
-import 'package:speech_balloon/speech_balloon.dart';
 
 class StorePage extends GetView<StorePageController> {
   const StorePage({Key? key});
 
   PreferredSizeWidget _appBar() {
     return AppBar(
-      leading: ImageIconButton(
-        assetPath: 'assets/icons/back.svg',
-        onTap: () {
-          Get.back();
-        },
+      backgroundColor: Colors.red,
+      leading: Row(
+        children: [
+          ImageIconButton(
+            assetPath: 'assets/icons/back.svg',
+            onTap: () {
+              Get.back();
+            },
+          ),
+        ],
       ),
       centerTitle: true,
       title: TitleText(
@@ -44,7 +49,7 @@ class StorePage extends GetView<StorePageController> {
 
   Widget _adBox() {
     return Container(
-      color: CustomColors.whiteBackground,
+      color: CustomColors.blueRoom,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -52,12 +57,36 @@ class StorePage extends GetView<StorePageController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Image.asset(
-                'assets/icons/gold_coin.png',
-                width: 20,
-                height: 20,
+              Stack(
+                alignment: Alignment.centerLeft,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: Image.asset(
+                      'assets/icons/gold_coin.png',
+                      width: 20,
+                      height: 20,
+                    ),
+                  ),
+                  Positioned(
+                    left: 13,
+                    top: 13,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(90),
+                        color: CustomColors.mainBlue,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Image.asset('assets/icons/plus.png'),
+                      ),
+                      width: 12,
+                      height: 12,
+                    )
+                  ),
+                ],
               ),
-              const SizedBox(width: 3),
+              const SizedBox(width: 5),
               Obx(
                 () => Text(
                   controller.cash.value.toString(),
@@ -75,17 +104,17 @@ class StorePage extends GetView<StorePageController> {
               controller.adButton();
             },
             child: Obx(
-              () => SpeechBalloon(
-                width: 150,
-                height: 30,
-                borderRadius: 6,
-                nipLocation: NipLocation.topRight,
-                color: controller.rewardedAdCount.value == 0
-                    ? CustomColors.greyBackground
-                    : CustomColors.mainBlue,
-                child: Center(
+              () => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: ChatBubble(
+                  clipper: ChatBubbleClipper10(type: BubbleType.sendBubble),
+                  alignment: Alignment.centerRight,
+                  backGroundColor: controller.rewardedAdCount.value == 0
+                      ? CustomColors.greyBackground
+                      : CustomColors.mainBlue,
                   child: Text(
                     '(광고로 코인 충전${controller.rewardedAdCount.value}/10)',
+                    textAlign: TextAlign.center,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 11,
@@ -95,26 +124,6 @@ class StorePage extends GetView<StorePageController> {
                 ),
               ),
             ),
-
-            // Container(
-            //   width: 150,
-            //   height: 30,
-            //   decoration: BoxDecoration(
-            //       color: controller.rewardedAdCount.value == 0
-            //           ? CustomColors.greyBackground
-            //           : CustomColors.mainBlue,
-            //       borderRadius: BorderRadius.circular(15)),
-            //   child: Center(
-            //     child: Text(
-            //       '(광고로 코인 충전${controller.rewardedAdCount.value}/10)',
-            //       style: const TextStyle(
-            //         color: Colors.white,
-            //         fontSize: 11,
-            //         fontWeight: FontWeight.bold,
-            //       ),
-            //     ),
-            //   ),
-            // ),
           ),
         ],
       ),
