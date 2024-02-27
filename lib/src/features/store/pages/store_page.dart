@@ -16,16 +16,11 @@ class StorePage extends GetView<StorePageController> {
 
   PreferredSizeWidget _appBar() {
     return AppBar(
-      backgroundColor: Colors.red,
-      leading: Row(
-        children: [
-          ImageIconButton(
-            assetPath: 'assets/icons/back.svg',
-            onTap: () {
-              Get.back();
-            },
-          ),
-        ],
+      leading: ImageIconButton(
+        assetPath: 'assets/icons/back.svg',
+        onTap: () {
+          Get.back();
+        },
       ),
       centerTitle: true,
       title: TitleText(
@@ -49,9 +44,10 @@ class StorePage extends GetView<StorePageController> {
 
   Widget _adBox() {
     return Container(
-      color: CustomColors.blueRoom,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      color: CustomColors.whiteBackground,
+      padding: const EdgeInsets.symmetric(horizontal: 20,),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Row(
@@ -61,7 +57,7 @@ class StorePage extends GetView<StorePageController> {
                 alignment: Alignment.centerLeft,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(3.0),
+                    padding: const EdgeInsets.only(right: 2, bottom: 2),
                     child: Image.asset(
                       'assets/icons/gold_coin.png',
                       width: 20,
