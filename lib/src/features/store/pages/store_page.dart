@@ -46,18 +46,44 @@ class StorePage extends GetView<StorePageController> {
     return Container(
       color: CustomColors.whiteBackground,
       padding: const EdgeInsets.symmetric(horizontal: 20,),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.end,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              CupertinoButton(
+                padding: EdgeInsets.zero,
+                onPressed: () {
+                  controller.adButton();
+                },
+                child: Obx(
+                      () => Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: ChatBubble(
+                      clipper: ChatBubbleClipper4(type: BubbleType.sendBubble),
+                      alignment: Alignment.centerRight,
+                      backGroundColor: controller.rewardedAdCount.value == 0
+                          ? CustomColors.greyBackground
+                          : CustomColors.mainBlue,
+                      child: Text(
+                        '(광고로 코인 충전${controller.rewardedAdCount.value}/10)',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               Stack(
                 alignment: Alignment.centerLeft,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(right: 2, bottom: 2),
+                    padding: const EdgeInsets.only(right: 5, bottom: 5),
                     child: Image.asset(
                       'assets/icons/gold_coin.png',
                       width: 20,
@@ -93,33 +119,6 @@ class StorePage extends GetView<StorePageController> {
                 ),
               ),
             ],
-          ),
-          CupertinoButton(
-            padding: EdgeInsets.zero,
-            onPressed: () {
-              controller.adButton();
-            },
-            child: Obx(
-              () => Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: ChatBubble(
-                  clipper: ChatBubbleClipper10(type: BubbleType.sendBubble),
-                  alignment: Alignment.centerRight,
-                  backGroundColor: controller.rewardedAdCount.value == 0
-                      ? CustomColors.greyBackground
-                      : CustomColors.mainBlue,
-                  child: Text(
-                    '(광고로 코인 충전${controller.rewardedAdCount.value}/10)',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 11,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ),
           ),
         ],
       ),
