@@ -33,24 +33,23 @@ class CharacterList extends StatelessWidget {
       child: RiveAnimation.asset(
         'assets/riv/character.riv',
         stateMachines: ["character"],
-        onInit: (artboard) => onRiveInit(artboard, index), // index를 전달합니다.
+        onInit: (artboard) => onRiveInit(artboard, index),
       ),
     );
   }
 
   void onRiveInit(Artboard artboard, int index) {
-    final riveController =
+    riveControllers[index] =
         StateMachineController.fromArtboard(artboard, 'character');
-    artboard.addController(riveController!);
-    riveControllers[index] = riveController; // index에 맞는 컨트롤러를 저장합니다.
+    artboard.addController(riveControllers[index]!);
     for (int stateMachineIndex = 0;
-        stateMachineIndex < stateMachineList[index].length;
+        stateMachineIndex < 4;
         stateMachineIndex++) {
-      stateMachineList[index][stateMachineIndex] = riveController
+      stateMachineList[index][stateMachineIndex] = riveControllers[index]!
               .findInput<double>(_getInputNameByIndex(stateMachineIndex))
           as SMINumber;
-      riveCharacterInit(stateMachineIndex);
     }
+    riveCharacterInit(index);
   }
 
   String _getInputNameByIndex(int index) {

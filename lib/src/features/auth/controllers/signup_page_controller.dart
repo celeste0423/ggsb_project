@@ -59,7 +59,14 @@ class SignupPageController extends GetxController {
 
   void _riveCharacterInit() {
     UserModel userModel = AuthController.to.user.value;
-    CharacterModel characterModel = userModel.characterData!;
+    CharacterModel characterModel = userModel.characterData ??
+        CharacterModel(
+          actionState: 0,
+          hat: 0,
+          shield: 0,
+          bodyColor: 0,
+          purchasedItem: [],
+        );
     characterHat!.value = characterModel.hat!.toDouble();
     characterColor!.value = characterModel.bodyColor!.toDouble();
   }
