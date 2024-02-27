@@ -3,8 +3,12 @@ import 'package:get/get.dart';
 import 'package:ggsb_project/src/binding/init_binding.dart';
 import 'package:ggsb_project/src/features/store/controllers/store_page_controller.dart';
 import 'package:ggsb_project/src/models/character_model.dart';
+import 'package:ggsb_project/src/models/room_model.dart';
+import 'package:ggsb_project/src/models/room_stream_model.dart';
 import 'package:ggsb_project/src/models/study_time_model.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
+import 'package:ggsb_project/src/repositories/room_repository.dart';
+import 'package:ggsb_project/src/repositories/room_stream_repository.dart';
 import 'package:ggsb_project/src/repositories/study_time_repository.dart';
 import 'package:ggsb_project/src/repositories/user_repository.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
@@ -15,6 +19,7 @@ class AuthController extends GetxController {
   static AuthController get to => Get.find();
 
   Rx<UserModel> user = UserModel().obs;
+
   // static String? loginType;
 
   // Rx<TimeModel> timeModel = TimeModel().obs;
@@ -71,7 +76,8 @@ class AuthController extends GetxController {
         uid: user.value.uid,
         date: DateUtil().dateTimeToString(now),
         totalSeconds: 0,
-        startTime: DateUtil.standardRefreshTime(now), //다음날 들어온 사람 때문에
+        startTime: DateUtil.standardRefreshTime(now),
+        //다음날 들어온 사람 때문에
         lastTime: null,
       );
       StudyTimeRepository().uploadStudyTimeModel(newStudyTimeModel);
@@ -102,12 +108,29 @@ class AuthController extends GetxController {
   }
 
   Future<void> updateCharacterModel(
-      CharacterModel characterModel, UserModel userModel) async {
+    CharacterModel characterModel,
+    UserModel userModel,
+  ) async {
     UserModel updatedUserModel = userModel.copyWith(
       characterData: characterModel,
     );
     user(updatedUserModel);
     await UserRepository().updateUserModel(updatedUserModel);
+    //방모델들 업데이트
+    List<RoomModel> userRoomList = await RoomRepository()
+        .getRoomList(AuthController.to.user.value.roomIdList!);
+    for (RoomModel roomModel in userRoomList) {
+      //룸스트림 업데이트
+      RoomStreamModel roomStreamModel =
+          await RoomStreamRepository().getRoomStream(
+        roomModel.roomId!,
+        AuthController.to.user.value.uid!,
+      );
+      RoomStreamModel updatedRoomStreamModel = roomStreamModel.copyWith(
+        characterData: characterModel,
+      );
+      RoomStreamRepository().updateRoomStream(updatedRoomStreamModel);
+    }
   }
 
   Future<String?> getDeviceToken() async {

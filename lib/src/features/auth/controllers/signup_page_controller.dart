@@ -155,8 +155,7 @@ class SignupPageController extends GetxController {
       openAlertDialog(title: '닉네임을 입력해주세요');
     } else {
       CharacterModel baseCharacterData = CharacterModel(
-        fightState: 0,
-        sleepyState: 0,
+        actionState: 0,
         bodyColor: 0,
         shield: 0,
         hat: 0,

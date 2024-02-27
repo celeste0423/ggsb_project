@@ -53,21 +53,62 @@ class TimerPage extends GetView<TimerPageController> {
       margin: const EdgeInsets.only(bottom: 10),
       height: 300,
       width: 300,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: CustomColors.lightGreyBackground,
-      ),
-      child: CharacterList(
-        userModelList: [
-          AuthController.to.user.value,
-          AuthController.to.user.value,
-          AuthController.to.user.value,
-          AuthController.to.user.value,
-          AuthController.to.user.value,
-          AuthController.to.user.value,
-        ],
+      child: Obx(
+        () {
+          return controller.noRooms.value
+              ? const Center(
+                  child: Text(
+                    '공검승부',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )
+              : controller.isPageLoading.value
+                  ? Center(
+                      child: loadingIndicator(),
+                    )
+                  : TabBarView(
+                      controller: controller.roomTabController,
+                      children: _mapList(),
+                    );
+        },
       ),
     );
+  }
+
+  List<Widget> _mapList() {
+    return controller.roomList.map((RoomModel roomModel) {
+      return StreamBuilder(
+        stream: controller.roomListStream(roomModel.roomId!),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: loadingIndicator(),
+            );
+          } else if (snapshot.hasError) {
+            return const Text('불러오는 중 에러가 발생했습니다.');
+          } else {
+            return GetBuilder<TimerPageController>(
+              id: 'roomListTimer',
+              builder: (controller) {
+                controller.arrangeSnapshot(snapshot, roomModel);
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  height: 300,
+                  width: 300,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: CustomColors.lightGreyBackground,
+                  ),
+                  child: CharacterList(
+                    roomStreamList: controller.roomStreamList,
+                  ),
+                );
+              },
+            );
+          }
+        },
+      );
+    }).toList();
   }
 
   Widget _time() {
@@ -124,23 +165,25 @@ class TimerPage extends GetView<TimerPageController> {
 
   Widget _roomTabView() {
     return Expanded(
-      child: Obx(() {
-        return controller.noRooms.value
-            ? const Center(
-                child: Text(
-                  '방을 만들거나 방에 가입해보세요',
-                  style: TextStyle(color: Colors.white),
-                ),
-              )
-            : controller.isPageLoading.value
-                ? Center(
-                    child: loadingIndicator(),
-                  )
-                : TabBarView(
-                    controller: controller.roomTabController,
-                    children: _roomList(),
-                  );
-      }),
+      child: Obx(
+        () {
+          return controller.noRooms.value
+              ? const Center(
+                  child: Text(
+                    '방을 만들거나 방에 가입해보세요',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )
+              : controller.isPageLoading.value
+                  ? Center(
+                      child: loadingIndicator(),
+                    )
+                  : TabBarView(
+                      controller: controller.roomTabController,
+                      children: _roomList(),
+                    );
+        },
+      ),
     );
   }
 

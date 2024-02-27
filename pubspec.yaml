@@ -68,6 +68,7 @@ dependencies:
   restart_app: ^1.2.1
   amplitude_flutter: ^3.16.2
   circular_motion: ^0.0.6
+  speech_balloon: ^0.0.4
 
 
 dev_dependencies:
