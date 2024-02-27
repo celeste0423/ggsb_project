@@ -59,31 +59,31 @@ class StorePage extends GetView<StorePageController> {
                 },
                 child: Obx(
                       () => Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: ChatBubble(
-                      clipper: ChatBubbleClipper4(type: BubbleType.sendBubble),
-                      alignment: Alignment.centerRight,
-                      backGroundColor: controller.rewardedAdCount.value == 0
-                          ? CustomColors.greyBackground
-                          : CustomColors.mainBlue,
-                      child: Text(
-                        '(광고로 코인 충전${controller.rewardedAdCount.value}/10)',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 11,
-                          fontWeight: FontWeight.bold,
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: ChatBubble(
+                          clipper: ChatBubbleClipper4(type: BubbleType.sendBubble),
+                          alignment: Alignment.centerRight,
+                          backGroundColor: controller.rewardedAdCount.value == 0
+                              ? CustomColors.greyBackground
+                              : CustomColors.mainBlue,
+                          child: Text(
+                            '(광고로 코인 충전${controller.rewardedAdCount.value}/10)',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
                 ),
               ),
               Stack(
                 alignment: Alignment.centerLeft,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(right: 5, bottom: 5),
+                    padding: const EdgeInsets.only(right: 3, bottom: 3),
                     child: Image.asset(
                       'assets/icons/gold_coin.png',
                       width: 20,
@@ -91,8 +91,8 @@ class StorePage extends GetView<StorePageController> {
                     ),
                   ),
                   Positioned(
-                    left: 13,
-                    top: 13,
+                    left: 10,
+                    top: 10,
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(90),
