@@ -87,23 +87,17 @@ class TimerPage extends GetView<TimerPageController> {
           } else if (snapshot.hasError) {
             return const Text('불러오는 중 에러가 발생했습니다.');
           } else {
-            return GetBuilder<TimerPageController>(
-              id: 'roomListTimer',
-              builder: (controller) {
-                controller.arrangeSnapshot(snapshot, roomModel);
-                return Container(
-                  margin: const EdgeInsets.only(bottom: 10),
-                  height: 300,
-                  width: 300,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: CustomColors.lightGreyBackground,
-                  ),
-                  child: CharacterList(
-                    roomStreamList: controller.roomStreamList,
-                  ),
-                );
-              },
+            return Container(
+              margin: const EdgeInsets.only(bottom: 10),
+              height: 300,
+              width: 300,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: CustomColors.lightGreyBackground,
+              ),
+              child: CharacterList(
+                roomStreamList: controller.roomStreamList,
+              ),
             );
           }
         },

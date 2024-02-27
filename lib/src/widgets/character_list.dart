@@ -2,6 +2,7 @@ import 'package:circular_motion/circular_motion.dart';
 import 'package:flutter/material.dart';
 import 'package:ggsb_project/src/models/character_model.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
+import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:rive/rive.dart';
 
 class CharacterList extends StatefulWidget {
@@ -37,13 +38,26 @@ class _CharacterListState extends State<CharacterList> {
   }
 
   Widget _characterCard(int index) {
-    return Container(
-      width: 110,
-      height: 110,
-      child: RiveAnimation.asset(
-        'assets/riv/character.riv',
-        stateMachines: ["character"],
-        onInit: (artboard) => onRiveInit(artboard, index),
+    int length = widget.roomStreamList.length;
+    return SizedBox(
+      width: 110 + length * 20,
+      height: 110 + length * 20,
+      child: Column(
+        children: [
+          Expanded(
+            child: RiveAnimation.asset(
+              'assets/riv/character.riv',
+              stateMachines: ["character"],
+              onInit: (artboard) => onRiveInit(artboard, index),
+            ),
+          ),
+          Text(
+            widget.roomStreamList[index]!.nickname!,
+            style: TextStyle(
+              color: CustomColors.blackText,
+            ),
+          )
+        ],
       ),
     );
   }

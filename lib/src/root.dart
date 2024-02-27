@@ -30,7 +30,7 @@ class Root extends GetView<AuthController> {
                       if (!controller.user.value.isTimer!) {
                         return App();
                       } else {
-                        print('시간 측정중이었음');
+                        // print('시간 측정중이었음');
                         return TimerPage();
                       }
                     } else {

@@ -136,23 +136,27 @@ class TimerPageController extends GetxController
   }
 
   Future<void> _initRoomTabController() async {
-    roomTabController.animation!.addListener(() {
-      final int temp = roomTabController.animation!.value.round();
-      if (activeIndex != temp) {
-        activeIndex = temp;
-        update(['tabIndicator']);
-        playButtonColor(
-            CustomColors.nameToRoomColor(roomList[activeIndex].color!));
-        prefs.setInt('roomTabIndex', activeIndex);
-        roomTabController.index = activeIndex;
-        // print(activeIndex);
+    if (roomTabController.length <= 1) {
+      playButtonColor(CustomColors.nameToRoomColor(roomList[0].color!));
+    } else {
+      roomTabController.animation!.addListener(() {
+        final int temp = roomTabController.animation!.value.round();
+        if (activeIndex != temp) {
+          activeIndex = temp;
+          update(['tabIndicator']);
+          playButtonColor(
+              CustomColors.nameToRoomColor(roomList[activeIndex].color!));
+          prefs.setInt('roomTabIndex', activeIndex);
+          roomTabController.index = activeIndex;
+          // print(activeIndex);
+        }
+      });
+      prefs = await SharedPreferences.getInstance();
+      // 이전에 저장된 탭 인덱스가 있는지 확인
+      int? lastIndex = prefs.getInt('roomTabIndex');
+      if (lastIndex != null) {
+        roomTabController.index = lastIndex;
       }
-    });
-    prefs = await SharedPreferences.getInstance();
-    // 이전에 저장된 탭 인덱스가 있는지 확인
-    int? lastIndex = prefs.getInt('roomTabIndex');
-    if (lastIndex != null) {
-      roomTabController.index = lastIndex;
     }
   }
 
