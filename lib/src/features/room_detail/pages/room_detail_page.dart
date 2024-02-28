@@ -7,6 +7,7 @@ import 'package:ggsb_project/src/features/room_detail/controllers/room_detail_pa
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/live_seconds_util.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
+import 'package:ggsb_project/src/widgets/character_list.dart';
 import 'package:ggsb_project/src/widgets/full_size_loading_indicator.dart';
 import 'package:ggsb_project/src/widgets/loading_indicator.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
@@ -124,6 +125,9 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                                     color: Colors.black.withOpacity(0.1),
                                   ),
                                 ],
+                              ),
+                              child: CharacterList(
+                                roomStreamList: controller.liveRoomStreamList,
                               ),
                             );
                           } else {
@@ -339,6 +343,7 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
       },
       child: Scaffold(
         extendBodyBehindAppBar: true,
+        backgroundColor: CustomColors.lightGreyBackground,
         appBar: _appBar(),
         body: Stack(
           children: [
