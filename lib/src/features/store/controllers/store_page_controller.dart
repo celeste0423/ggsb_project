@@ -84,7 +84,7 @@ class StorePageController extends GetxController
       ],
       [
         'base',
-        'assets/icons/shield4.svg',
+        'assets/icons/shield_c.svg',
         10,
       ],
     ],
