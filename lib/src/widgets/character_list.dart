@@ -111,7 +111,7 @@ class _CharacterListState extends State<CharacterList> {
   }
 
   void riveCharacterInit(int controllerIndex) {
-    if (stateMachineList[controllerIndex][0] != null) {
+    if (stateMachineList[0][0] != null) {
       CharacterModel characterModel =
           widget.roomStreamList[controllerIndex].characterData!;
       stateMachineList[controllerIndex][0]!.value =

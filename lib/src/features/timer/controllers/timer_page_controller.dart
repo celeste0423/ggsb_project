@@ -15,6 +15,7 @@ import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:ggsb_project/src/repositories/room_repository.dart';
 import 'package:ggsb_project/src/repositories/room_stream_repository.dart';
 import 'package:ggsb_project/src/repositories/study_time_repository.dart';
+import 'package:ggsb_project/src/repositories/user_repository.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
 import 'package:ggsb_project/src/utils/live_seconds_util.dart';
@@ -75,7 +76,7 @@ class TimerPageController extends GetxController
     await getRoomList();
     isTimerCheck();
     calcTotalLiveSec();
-    _secondsTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _secondsTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       everySecondFunction();
     });
     await _initRoomTabController();
@@ -93,10 +94,10 @@ class TimerPageController extends GetxController
     //기본 탭 세팅
     roomTabController = TabController(
       initialIndex: 0,
-      length: noRooms.value ? 0 : roomList!.length,
+      length: noRooms.value ? 0 : roomList.length,
       vsync: this,
     );
-    indicatorCount = noRooms.value ? 0 : roomList!.length;
+    indicatorCount = noRooms.value ? 0 : roomList.length;
     update(['tabIndicator']);
     isPageLoading(false);
   }
@@ -209,13 +210,49 @@ class TimerPageController extends GetxController
     // liveRoomStreamList에 대한 totalLiveSeconds 계산
     for (int i = 0; i < liveRoomStreamList.length; i++) {
       liveRoomStreamList[i] = LiveSecondsUtil.calcTotalLiveSecInRoomStream(
-          liveRoomStreamList[i], now);
-      // print(
-      //     '각 ${liveRoomStreamList[i].nickname}별 시간 ${liveRoomStreamList[i].totalLiveSeconds}');
+        liveRoomStreamList[i],
+        now,
+      );
+      //4시간 이상 접속을 안했을 경우 sleepy 실행
+      _checkSleepy(liveRoomStreamList[i]);
     }
     // totalLiveSeconds를 기준으로 리스트를 큰 순서대로 정렬
-    liveRoomStreamList
-        .sort((a, b) => b.totalLiveSeconds!.compareTo(a.totalLiveSeconds!));
+    liveRoomStreamList.sort(
+      (a, b) => b.totalLiveSeconds!.compareTo(a.totalLiveSeconds!),
+    );
+  }
+
+  void _checkSleepy(RoomStreamModel roomStreamModel) async {
+    bool isSleepy = isTimeDifferenceMoreThanFourHours(
+            roomStreamModel.lastTime, DateTime.now()) &&
+        roomStreamModel.characterData!.actionState != 2 &&
+        !roomStreamModel.isTimer!;
+    if (isSleepy) {
+      CharacterModel updatedCharacterModel =
+          roomStreamModel.characterData!.copyWith(actionState: 2);
+      //roomStreamModel 업데이트
+      RoomStreamModel updatedRoomStreamModel = roomStreamModel.copyWith(
+        characterData: updatedCharacterModel,
+      );
+      RoomStreamRepository().updateRoomStream(updatedRoomStreamModel);
+      //userModel 업데이트
+      UserModel? userModel =
+          await UserRepository.getUserData(roomStreamModel.uid!);
+      UserModel updatedUserModel = userModel!.copyWith(
+        characterData: updatedCharacterModel,
+      );
+      UserRepository().updateUserModel(updatedUserModel);
+    }
+  }
+
+  bool isTimeDifferenceMoreThanFourHours(
+      DateTime? firstTime, DateTime secondTime) {
+    // firstTime이 null이면 항상 참을 반환
+    if (firstTime == null) {
+      return true;
+    }
+    Duration difference = firstTime.difference(secondTime);
+    return difference.abs() >= const Duration(hours: 4);
   }
 
   Future _updateStudyTimeModelAtStart(DateTime now) async {
