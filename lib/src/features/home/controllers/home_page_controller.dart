@@ -1,18 +1,26 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/room_create/pages/room_create_page.dart';
+import 'package:ggsb_project/src/features/store/pages/store_page.dart';
 import 'package:ggsb_project/src/features/timer/pages/timer_page.dart';
 import 'package:ggsb_project/src/models/character_model.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:rive/rive.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:social_share/social_share.dart';
 
 class HomePageController extends GetxController {
   static HomePageController get to => Get.find();
 
   SMINumber? characterHat;
   SMINumber? characterColor;
+
+  ScreenshotController screenshotController = ScreenshotController();
 
   Rx<String> totalTime = '00:00:00'.obs;
   // Rx<String> totalHours = '00'.obs;
@@ -105,6 +113,29 @@ class HomePageController extends GetxController {
   //     ),
   //   );
   // }
+
+  Future<String?> screenshot() async {
+    var data = await screenshotController.capture();
+    if (data == null) {
+      print('캡쳐 실패 ㅠㅠ');
+      return null;
+    }
+    final tempDir = await getTemporaryDirectory();
+    final assetPath = '${tempDir.path}/temp.png';
+    File file = await File(assetPath).create();
+    await file.writeAsBytes(data);
+    return file.path;
+  }
+
+  void storePageButton() {
+    Get.to(() => const StorePage());
+  }
+
+  void shareScreen() async {
+    var path = await screenshot();
+    SocialShare.shareInstagramStory(
+        appId: '1095966244764492', imagePath: path!);
+  }
 
   void addRoomButton() {
     Get.to(() => RoomCreatePage(), transition: Transition.rightToLeft);

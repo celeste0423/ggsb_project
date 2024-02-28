@@ -70,6 +70,9 @@ dependencies:
   circular_motion: ^0.0.6
   flutter_chat_bubble: ^2.0.2
   fl_chart: ^0.66.2
+  social_share: ^2.3.1
+  screenshot: ^2.1.0
+  path_provider: ^2.1.2
 
 
 dev_dependencies:

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/home/controllers/home_page_controller.dart';
-import 'package:ggsb_project/src/features/store/pages/store_page.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/widgets/main_button.dart';
 import 'package:rive/rive.dart';
@@ -33,7 +32,7 @@ class HomePage extends GetView<HomePageController> {
         CupertinoButton(
           padding: EdgeInsets.only(right: 20),
           onPressed: () {
-            Get.to(() => const StorePage());
+            controller.storePageButton();
           },
           child: Image.asset(
             'assets/icons/store.png',
@@ -56,7 +55,8 @@ class HomePage extends GetView<HomePageController> {
       child: CupertinoButton(
         padding: EdgeInsets.zero,
         onPressed: () {
-          Get.to(() => const StorePage());
+          // controller.storePageButton();
+          controller.shareScreen();
         },
         child: RiveAnimation.asset(
           'assets/riv/character.riv',
