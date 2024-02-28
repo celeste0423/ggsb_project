@@ -88,15 +88,21 @@ class TimerPage extends GetView<TimerPageController> {
             return const Text('불러오는 중 에러가 발생했습니다.');
           } else {
             return Container(
-              margin: const EdgeInsets.only(bottom: 10),
-              height: 300,
-              width: 300,
+              padding: const EdgeInsets.only(bottom: 10, top: 10),
+              height: 322,
+              width: 322,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(160),
                 color: CustomColors.lightGreyBackground,
               ),
-              child: CharacterList(
-                roomStreamList: controller.roomStreamList,
+              child: GetBuilder<TimerPageController>(
+                id: 'roomListTimer',
+                builder: (controller) {
+                  controller.arrangeSnapshot(snapshot, roomModel);
+                  return CharacterList(
+                    roomStreamList: controller.liveRoomStreamList,
+                  );
+                },
               ),
             );
           }

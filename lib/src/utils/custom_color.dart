@@ -32,7 +32,7 @@ class CustomColors {
   static const Color darkGreyText = Color(0xFF2F2F2F);
   static const Color greyText = Color(0xFF7C7C7C);
   static const Color lightGreyText = Color(0xFFA8A8A8);
-  static const Color whiteText = Color(0xFF7C7C7C);
+  static const Color whiteText = Color(0xFFF6F6F6);
   static const Color redText = Color(0xFFF14B40);
 
   //배경 색
@@ -43,15 +43,42 @@ class CustomColors {
 
   //캐릭터 색
   static const Color baseCharacter = Color(0xFF696CBB);
-  static const Color pinkCharacter = Color(0xFFB369BB);
-  static const Color greenCharacter = Color(0xFF70B973);
-  static const Color lightBlueCharacter = Color(0xFF69BCBB);
-  static const Color redCharacter = Color(0xFFD06C6C);
-  static const Color yellowCharacter = Color(0xFFDAB258);
-  static const Color orangeCharacter = Color(0xFFDA9658);
-  static const Color purpleCharacter = Color(0xFF696CBB);
-  static const Color greyCharacter = Color(0xFFC5C5C5);
+  static const Color pinkCharacter = Color(0xFFE38AB5);
+  static const Color greenCharacter = Color(0xFF75C479);
+  static const Color lightBlueCharacter = Color(0xFF8EBCDC);
+  static const Color redCharacter = Color(0xFFE77B7B);
+  static const Color yellowCharacter = Color(0xFFE1C073);
+  static const Color orangeCharacter = Color(0xFFE5A870);
+  static const Color purpleCharacter = Color(0xFF8F78C9);
+  static const Color greyCharacter = Color(0xFFC7C7C7);
   static const Color blackCharacter = Color(0xFF232323);
+
+  static Color bodyColorToRoomColor(int bodyColor) {
+    switch (bodyColor) {
+      case 0:
+        return baseCharacter;
+      case 1:
+        return pinkCharacter;
+      case 2:
+        return greenCharacter;
+      case 3:
+        return lightBlueCharacter;
+      case 4:
+        return redCharacter;
+      case 5:
+        return yellowCharacter;
+      case 6:
+        return orangeCharacter;
+      case 7:
+        return purpleCharacter;
+      case 8:
+        return greyCharacter;
+      case 9:
+        return blackCharacter;
+      default:
+        return Color(0xFF000000);
+    }
+  }
 
   //방 색
   static const Color redRoom = Color(0xFFF58181);

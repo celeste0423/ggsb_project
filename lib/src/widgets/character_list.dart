@@ -1,4 +1,5 @@
 import 'package:circular_motion/circular_motion.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:ggsb_project/src/models/character_model.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
@@ -8,7 +9,7 @@ import 'package:rive/rive.dart';
 class CharacterList extends StatefulWidget {
   final List<RoomStreamModel> roomStreamList;
 
-  CharacterList({
+  const CharacterList({
     Key? key,
     required this.roomStreamList,
   }) : super(key: key);
@@ -42,21 +43,39 @@ class _CharacterListState extends State<CharacterList> {
     return SizedBox(
       width: 110 + length * 20,
       height: 110 + length * 20,
-      child: Column(
+      child: Stack(
         children: [
-          Expanded(
-            child: RiveAnimation.asset(
-              'assets/riv/character.riv',
-              stateMachines: ["character"],
-              onInit: (artboard) => onRiveInit(artboard, index),
-            ),
+          RiveAnimation.asset(
+            'assets/riv/character.riv',
+            stateMachines: ["character"],
+            onInit: (artboard) => onRiveInit(artboard, index),
           ),
-          Text(
-            widget.roomStreamList[index]!.nickname!,
-            style: TextStyle(
-              color: CustomColors.blackText,
-            ),
-          )
+          // Positioned(
+          //   bottom: 0,
+          //   left: 0,
+          //   child: SizedBox(
+          //     width: 110 + length * 20,
+          //     child: Center(
+          //       child: Container(
+          //         height: 25,
+          //         padding: const EdgeInsets.symmetric(horizontal: 15),
+          //         decoration: BoxDecoration(
+          //           color: CustomColors.bodyColorToRoomColor(
+          //             widget.roomStreamList[index].characterData!.bodyColor!,
+          //           ),
+          //           borderRadius: BorderRadius.circular(10),
+          //         ),
+          //         child: Text(
+          //           widget.roomStreamList[index].nickname!,
+          //           textAlign: TextAlign.center,
+          //           style: const TextStyle(
+          //             color: CustomColors.whiteText,
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
@@ -106,16 +125,50 @@ class _CharacterListState extends State<CharacterList> {
     }
   }
 
+  List<PieChartSectionData> _chartData() {
+    return List.generate(
+      widget.roomStreamList.length,
+      (index) {
+        return PieChartSectionData(
+          radius: 35,
+          color: CustomColors.bodyColorToRoomColor(
+            widget.roomStreamList[index].characterData!.bodyColor!,
+          ),
+          // borderSide: BorderSide(
+          //   color: Colors.white,
+          //   width: 3,
+          // ),
+          title: widget.roomStreamList[index].nickname,
+          value: widget.roomStreamList[index].totalLiveSeconds!.toDouble(),
+          titleStyle: const TextStyle(
+            color: CustomColors.whiteText,
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     for (int index = 0; index < widget.roomStreamList.length; index++) {
       riveCharacterInit(index);
     }
-    return CircularMotion.builder(
-      itemCount: widget.roomStreamList.length,
-      builder: (context, index) {
-        return _characterCard(index);
-      },
+    return Stack(
+      children: [
+        PieChart(
+          PieChartData(
+            centerSpaceRadius: 113,
+            borderData: FlBorderData(show: false),
+            sections: _chartData(),
+          ),
+        ),
+        CircularMotion.builder(
+          itemCount: widget.roomStreamList.length,
+          builder: (context, index) {
+            return _characterCard(index);
+          },
+        ),
+      ],
     );
   }
 }

@@ -224,7 +224,7 @@ class TimerPageController extends GetxController
       isTimer: true,
     );
     AuthController.to.updateUserModel(updatedUserModel);
-    AuthController.to.user(updatedUserModel);
+    // AuthController.to.user(updatedUserModel);
     //model update
     StudyTimeModel updatedStudyTimeModel = AuthController.to.studyTime.copyWith(
       startTime: now,
