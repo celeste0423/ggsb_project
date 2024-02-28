@@ -56,35 +56,40 @@ class StorePageController extends GetxController
       ],
       [
         'eraserHat',
-        'assets/items/hat/eraser.png',
+        'assets/items/hat/eraser_hat.png',
         12,
       ],
       [
         'pencilHat',
-        'assets/items/hat/pencil.png',
+        'assets/items/hat/pencil_hat.png',
         10,
-      ]
+      ],
+      [
+        'highlighterHat',
+        'assets/items/hat/highlighter_hat.png',
+        10,
+      ],
     ],
     //방패 종류
     [
       [
         'base',
-        'assets/items/hat/pencil.png',
+        'assets/items/shield/shield.png',
         10,
       ],
       [
-        'base',
-        'assets/items/hat/pencil.png',
+        'diamondShield',
+        'assets/items/shield/diamond_shield.png',
         10,
       ],
       [
-        'base',
-        'assets/items/hat/pencil.png',
+        'skullShield',
+        'assets/items/shield/skull_shield.png',
         10,
       ],
       [
-        'base',
-        'assets/icons/shield_c.svg',
+        'starShield',
+        'assets/items/shield/star_shield.png',
         10,
       ],
     ],
