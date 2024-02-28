@@ -374,6 +374,14 @@ class TimerPageController extends GetxController
         characterData: updatedCharacterModel,
       );
       await RoomStreamRepository().updateRoomStream(updatedRoomStreamModel);
+      //졸린 상태라면 졸린 상태 멈추기
+      if (AuthController.to.user.value.characterData!.actionState == 2) {
+        AuthController.to.updateCharacterModel(
+          updatedCharacterModel,
+          AuthController.to.user.value,
+        );
+        HomePageController().riveCharacterInit();
+      }
     });
   }
 

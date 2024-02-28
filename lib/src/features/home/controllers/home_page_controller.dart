@@ -17,6 +17,7 @@ import 'package:social_share/social_share.dart';
 class HomePageController extends GetxController {
   static HomePageController get to => Get.find();
 
+  SMINumber? actionState;
   SMINumber? characterHat;
   SMINumber? characterColor;
 
@@ -49,14 +50,16 @@ class HomePageController extends GetxController {
     final riveController =
         StateMachineController.fromArtboard(artboard, 'character');
     artboard.addController(riveController!);
-    characterColor = riveController.findInput<double>('color') as SMINumber;
+    actionState = riveController.findInput<double>('action') as SMINumber;
     characterHat = riveController.findInput<double>('hat') as SMINumber;
+    characterColor = riveController.findInput<double>('color') as SMINumber;
     riveCharacterInit();
   }
 
   void riveCharacterInit() {
     UserModel userModel = AuthController.to.user.value;
     CharacterModel characterModel = userModel.characterData!;
+    actionState!.value = characterModel.actionState!.toDouble();
     characterHat!.value = characterModel.hat!.toDouble();
     characterColor!.value = characterModel.bodyColor!.toDouble();
   }

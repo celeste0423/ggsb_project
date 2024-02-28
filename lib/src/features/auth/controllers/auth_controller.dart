@@ -117,14 +117,14 @@ class AuthController extends GetxController {
     user(updatedUserModel);
     await UserRepository().updateUserModel(updatedUserModel);
     //방모델들 업데이트
-    List<RoomModel> userRoomList = await RoomRepository()
-        .getRoomList(AuthController.to.user.value.roomIdList!);
+    List<RoomModel> userRoomList =
+        await RoomRepository().getRoomList(userModel.roomIdList!);
     for (RoomModel roomModel in userRoomList) {
       //룸스트림 업데이트
       RoomStreamModel roomStreamModel =
           await RoomStreamRepository().getRoomStream(
         roomModel.roomId!,
-        AuthController.to.user.value.uid!,
+        userModel.uid!,
       );
       RoomStreamModel updatedRoomStreamModel = roomStreamModel.copyWith(
         characterData: characterModel,
