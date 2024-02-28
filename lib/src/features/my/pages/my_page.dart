@@ -10,6 +10,7 @@ import 'package:ggsb_project/src/models/study_time_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
 import 'package:ggsb_project/src/widgets/loading_indicator.dart';
+import 'package:ggsb_project/src/widgets/main_button.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
 import 'package:rive/rive.dart';
 
@@ -217,8 +218,9 @@ class MyPage extends GetView<MyPageController> {
           ),
           '기록 분석',
           () {
+            Get.dialog(_ResultRoomDialog());
             // Get.to(() => const DataAnalyzePage());
-            openAlertDialog(title: '추후 구현 예정입니다.');
+            // openAlertDialog(title: '추후 구현 예정입니다.');
           },
         ),
         const SizedBox(height: 40),
@@ -284,6 +286,39 @@ class MyPage extends GetView<MyPageController> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _ResultRoomDialog(){
+    return Dialog(
+      child: Container(
+        height: 150,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        decoration: BoxDecoration(
+          color: CustomColors.whiteBackground,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: Text(
+                  '방에 참가하기',
+                  style: TextStyle(
+                    color: CustomColors.blackText,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              MainButton(buttonText: '결과 확인', onTap: controller.resultCheckButton),
+            ],
+          ),
         ),
       ),
     );
