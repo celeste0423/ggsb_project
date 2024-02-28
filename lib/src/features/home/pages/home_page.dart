@@ -6,6 +6,7 @@ import 'package:ggsb_project/src/features/home/controllers/home_page_controller.
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/widgets/main_button.dart';
 import 'package:rive/rive.dart';
+import 'package:screenshot/screenshot.dart';
 
 class HomePage extends GetView<HomePageController> {
   const HomePage({super.key});
@@ -55,8 +56,8 @@ class HomePage extends GetView<HomePageController> {
       child: CupertinoButton(
         padding: EdgeInsets.zero,
         onPressed: () {
-          // controller.storePageButton();
-          controller.shareScreen();
+          controller.storePageButton();
+          // controller.shareScreen();
         },
         child: RiveAnimation.asset(
           'assets/riv/character.riv',
@@ -158,15 +159,18 @@ class HomePage extends GetView<HomePageController> {
   @override
   Widget build(BuildContext context) {
     Get.put(HomePageController());
-    return Scaffold(
-      extendBody: true,
-      appBar: _appBar(),
-      body: Column(
-        children: [
-          _characterBox(),
-          _buttonsRow(),
-          _bottomTab(),
-        ],
+    return Screenshot(
+      controller: controller.screenshotController,
+      child: Scaffold(
+        extendBody: true,
+        appBar: _appBar(),
+        body: Column(
+          children: [
+            _characterBox(),
+            _buttonsRow(),
+            _bottomTab(),
+          ],
+        ),
       ),
     );
   }

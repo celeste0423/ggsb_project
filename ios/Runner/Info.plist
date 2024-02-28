@@ -23,6 +23,7 @@
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleURLTypes</key>
+    <-- facebook login, google login -->
     <array>
       <dict>
         <key>CFBundleTypeRole</key>
@@ -30,10 +31,28 @@
         <key>CFBundleURLSchemes</key>
         <array>
           <string>com.googleusercontent.apps.523019401155-fl16ai4ju62c52864thgvvieq11k0foj</string>
+          <string>fb1095966244764492</string>
         </array>
       </dict>
       <dict/>
     </array>
+    <key>FacebookAppID</key>
+        <string>1095966244764492</string>
+
+        <key>FacebookClientToken</key>
+        <string>320e3b856e0daeb92aef09cdd515ae08</string>
+
+        <key>FacebookDisplayName</key>
+        <string>공검승부</string>
+
+        <key>LSApplicationQueriesSchemes</key>
+        <array>
+          <string>fbapi</string>
+          <string>fb-messenger-share-api</string>
+          <string>fbauth2</string>
+          <string>fbshareextension</string>
+          <string>instagram</string>
+        </array>
     <key>CFBundleVersion</key>
     <string>$(FLUTTER_BUILD_NUMBER)</string>
     <key>LSRequiresIPhoneOS</key>

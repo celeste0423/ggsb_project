@@ -23,6 +23,7 @@ class HomePageController extends GetxController {
   ScreenshotController screenshotController = ScreenshotController();
 
   Rx<String> totalTime = '00:00:00'.obs;
+
   // Rx<String> totalHours = '00'.obs;
   // Rx<String> totalMinutes = '00'.obs;
   // Rx<String> totalSeconds = '00'.obs;
@@ -115,9 +116,9 @@ class HomePageController extends GetxController {
   // }
 
   Future<String?> screenshot() async {
-    var data = await screenshotController.capture();
+    var data = await screenshotController.capture(
+        delay: const Duration(milliseconds: 10));
     if (data == null) {
-      print('캡쳐 실패 ㅠㅠ');
       return null;
     }
     final tempDir = await getTemporaryDirectory();
@@ -134,7 +135,17 @@ class HomePageController extends GetxController {
   void shareScreen() async {
     var path = await screenshot();
     SocialShare.shareInstagramStory(
-        appId: '1095966244764492', imagePath: path!);
+      appId: '1095966244764492',
+      imagePath: path!,
+      backgroundTopColor: "#ffffff",
+      backgroundBottomColor: "#000000",
+    ).then((value) => print(value));
+    // SocialShare.shareFacebookStory(
+    //   appId: '1095966244764492',
+    //   imagePath: path!,
+    //   backgroundTopColor: "#ffffff",
+    //   backgroundBottomColor: "#000000",
+    // ).then((value) => print(value));
   }
 
   void addRoomButton() {

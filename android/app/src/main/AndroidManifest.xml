@@ -10,6 +10,14 @@
     <!--overlay 권한 설정 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!--overlay 권한 설정 -->
+    <!--facebook share 권한 설정 -->
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE"/>
+    <queries>
+        <package android:name="com.twitter.android" />
+        <package android:name="com.facebook.katana" />
+        <package android:name="com.instagram.android" />
+    </queries>
+    <!--facebook share 권한 설정 -->
 
 
     <application
@@ -36,7 +44,10 @@
         <meta-data
             android:name="com.facebook.sdk.ClientToken"
             android:value="@string/facebook_client_token" />
-
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider[facebook_app_id]"
+            android:exported="false" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
