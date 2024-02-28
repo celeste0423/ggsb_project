@@ -326,6 +326,8 @@ class StorePage extends GetView<StorePageController> {
     );
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     Get.put(StorePageController());
