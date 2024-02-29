@@ -89,9 +89,9 @@ class ResultPage extends GetView<ResultPageController> {
                         (userIndex) {
                           return _timeCard(
                             snapshot.data![userIndex]!.uid!,
-                            // snapshot.data![userIndex]!.nickname!,
-                            SecondsUtil.convertToDigitString(
-                                snapshot.data![userIndex]!.totalSeconds!),
+                            snapshot.data![userIndex]!.nickname!,
+                            // SecondsUtil.convertToDigitString(
+                            //     snapshot.data![userIndex]!.totalSeconds!),
                             SecondsUtil.convertToDigitString(
                                 snapshot.data![userIndex]!.totalSeconds!),
                             userIndex,
