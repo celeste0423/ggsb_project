@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/result/controllers/result_page_controller.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
+import 'package:ggsb_project/src/utils/date_util.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
 import 'package:ggsb_project/src/widgets/full_size_loading_indicator.dart';
 import 'package:ggsb_project/src/widgets/loading_indicator.dart';
@@ -58,7 +59,7 @@ class ResultPage extends GetView<ResultPageController> {
           child: Column(
             children: [
               Text(
-                '${DateFormat('yyyy - MM - dd').format(DateTime.now())}',
+                DateFormat('yyyy - MM - dd').format(DateUtil().getYesterday()),
                 style: const TextStyle(
                   fontSize: 12,
                   color: CustomColors.greyText,
@@ -81,11 +82,14 @@ class ResultPage extends GetView<ResultPageController> {
                   } else if (snapshot.hasError) {
                     return const Text('오류 발생');
                   } else {
+                    controller.firstUidList.add(snapshot.data![0]!.uid!);
                     return Column(
                       children: List.generate(
                         snapshot.data!.length,
                         (userIndex) {
                           return _timeCard(
+                            snapshot.data![userIndex]!.uid!,
+                            // snapshot.data![userIndex]!.nickname!,
                             SecondsUtil.convertToDigitString(
                                 snapshot.data![userIndex]!.totalSeconds!),
                             SecondsUtil.convertToDigitString(
@@ -105,17 +109,20 @@ class ResultPage extends GetView<ResultPageController> {
     });
   }
 
-  Widget _timeCard(String nickname, String time, int index) {
+  Widget _timeCard(String uid, String nickname, String time, int index) {
     return index == 0
         ? SizedBox(
             height: 320,
             child: Column(
               children: [
-                const SizedBox(
+                SizedBox(
                   height: 180,
                   child: RiveAnimation.asset(
                     'assets/riv/character.riv',
                     stateMachines: ["character"],
+                    onInit: (artboard) {
+                      controller.onRiveInit(artboard, uid);
+                    },
                   ),
                 ),
                 Image.asset('assets/icons/trophy.png', width: 20),
@@ -228,7 +235,9 @@ class ResultPage extends GetView<ResultPageController> {
           Expanded(
             flex: 3,
             child: MainButton(
-              onTap: () {},
+              onTap: () {
+                controller.saveImageButton();
+              },
               icon: Image.asset(
                 'assets/icons/download.png',
                 width: 25,

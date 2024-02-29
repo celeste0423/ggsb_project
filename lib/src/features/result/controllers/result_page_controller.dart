@@ -3,12 +3,17 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
+import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
+import 'package:ggsb_project/src/models/character_model.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/models/study_time_model.dart';
+import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:ggsb_project/src/repositories/room_repository.dart';
 import 'package:ggsb_project/src/repositories/study_time_repository.dart';
+import 'package:ggsb_project/src/repositories/user_repository.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:rive/rive.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:social_share/social_share.dart';
 
@@ -20,6 +25,10 @@ class ResultPageController extends GetxController
 
   List<RoomModel> roomModelList = [];
   List<List<StudyTimeModel?>> studyTimeModelList = [];
+  List<String> firstUidList = [];
+
+  SMINumber? characterHat;
+  SMINumber? characterColor;
 
   late TabController roomTabController;
   int indicatorCount = 0;
@@ -33,7 +42,6 @@ class ResultPageController extends GetxController
     roomModelList = await _getRoomList();
     await _initRoomTabController();
     isPageLoading(false);
-    print('끝');
   }
 
   Future<List<RoomModel>> _getRoomList() async {
@@ -57,8 +65,26 @@ class ResultPageController extends GetxController
     roomTabController.addListener(
       () {
         update(['tabIndicator']);
+        _riveCharacterInit(firstUidList[roomTabController.index]);
       },
     );
+  }
+
+  void onRiveInit(Artboard artboard, String uid) async {
+    final riveController =
+        StateMachineController.fromArtboard(artboard, 'character');
+    // riveController!.isActive = false;
+    artboard.addController(riveController!);
+    characterColor = riveController.findInput<double>('color') as SMINumber;
+    characterHat = riveController.findInput<double>('hat') as SMINumber;
+    await _riveCharacterInit(uid);
+  }
+
+  Future<void> _riveCharacterInit(String uid) async {
+    UserModel? userModel = await UserRepository.getUserData(uid);
+    CharacterModel characterModel = userModel!.characterData!;
+    characterHat!.value = characterModel.hat!.toDouble();
+    characterColor!.value = characterModel.bodyColor!.toDouble();
   }
 
   Future<List<StudyTimeModel?>> getStudyTimeList(int index) async {
@@ -101,5 +127,9 @@ class ResultPageController extends GetxController
     //   backgroundTopColor: "#ffffff",
     //   backgroundBottomColor: "#000000",
     // ).then((value) => print(value));
+  }
+
+  void saveImageButton() async {
+    openAlertDialog(title: '추후 지원 예정입니다.');
   }
 }
