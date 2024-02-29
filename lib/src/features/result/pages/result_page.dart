@@ -202,13 +202,15 @@ class ResultPage extends GetView<ResultPageController> {
               body: SafeArea(
                 child: Column(
                   children: [
-                    Screenshot(
-                      controller: controller.screenshotController,
-                      child: Column(
-                        children: [
-                          _title(),
-                          _resultBox(),
-                        ],
+                    Expanded(
+                      child: Screenshot(
+                        controller: controller.screenshotController,
+                        child: Column(
+                          children: [
+                            _title(),
+                            _resultBox(),
+                          ],
+                        ),
                       ),
                     ),
                     _shareButton(),
