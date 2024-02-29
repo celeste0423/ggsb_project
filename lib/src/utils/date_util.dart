@@ -177,4 +177,8 @@ class DateUtil {
     DateFormat format = DateFormat('yyyy-MM-dd');
     return format.parse(dateString);
   }
+
+  DateTime getYesterday() {
+    return DateTime.now().subtract(Duration(days: 1));
+  }
 }

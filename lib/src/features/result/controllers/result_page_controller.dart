@@ -1,44 +1,74 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
+import 'package:ggsb_project/src/models/room_model.dart';
+import 'package:ggsb_project/src/models/study_time_model.dart';
+import 'package:ggsb_project/src/repositories/room_repository.dart';
+import 'package:ggsb_project/src/repositories/study_time_repository.dart';
+import 'package:ggsb_project/src/utils/date_util.dart';
 
-class ResultPageController extends GetxController {
+class ResultPageController extends GetxController
+    with GetTickerProviderStateMixin {
   static ResultPageController get to => Get.find();
+
+  Rx<bool> isPageLoading = false.obs;
+
+  List<RoomModel> roomModelList = [];
+  List<List<StudyTimeModel?>> studyTimeModelList = [];
+
+  late TabController roomTabController;
+
+  @override
+  void onInit() async {
+    super.onInit();
+    isPageLoading(true);
+    roomModelList = await _getRoomList();
+    await _initRoomTabController();
+    isPageLoading(false);
+  }
+
+  Future<List<RoomModel>> _getRoomList() async {
+    if (AuthController.to.user.value.roomIdList == null) {
+      return [];
+    } else {
+      List<RoomModel> roomList = await RoomRepository()
+          .getRoomList(AuthController.to.user.value.roomIdList!);
+      // print('방 개수 ${roomList.length}');
+      return roomList;
+    }
+  }
+
+  Future<void> _initRoomTabController() async {
+    roomTabController = TabController(
+      initialIndex: 0,
+      length: roomModelList.length,
+      vsync: this,
+    );
+    roomTabController.addListener(
+      () async {
+        int index = roomTabController.index;
+        if (studyTimeModelList.length < index + 1) {
+          studyTimeModelList
+            ..add(
+              await _getStudyTimeList(roomModelList[index]),
+            );
+        }
+      },
+    );
+  }
+
+  Future<List<StudyTimeModel?>> _getStudyTimeList(
+    RoomModel roomModel,
+  ) async {
+    List<StudyTimeModel?> modelList = [];
+    for (String uid in roomModel.uidList!) {
+      String yesterday = DateUtil().dateTimeToString(
+        DateUtil().getYesterday(),
+      );
+      StudyTimeModel? studyTimeModel =
+          await StudyTimeRepository().getStudyTimeModel(uid, yesterday);
+      modelList..add(studyTimeModel);
+    }
+    return modelList;
+  }
 }
-
-
-// import 'package:get/get.dart';
-// import 'package:ggsb_project/src/models/study_time_model.dart';
-// import 'package:ggsb_project/src/models/user_model.dart';
-// import 'package:ggsb_project/src/repositories/study_time_repository.dart';
-//
-// class ResultPageController extends GetxController {
-//   final StudyTimeRepository _repository = StudyTimeRepository();
-//   var isLoading = true.obs;
-//   var userStudyTimes = <StudyTimeModel>[].obs;
-//
-//   @override
-//   void onInit() {
-//     super.onInit();
-//     fetchUserStudyTimes();
-//   }
-//
-//   void fetchUserStudyTimes() async {
-//     try {
-//       isLoading.value = true;
-//       final UserModel currentUser = Get.arguments ?? UserModel(); // Get current user
-//       final String uid = currentUser.uid ?? ''; // Get current user's UID
-//       final DateTime yesterday = DateTime.now().subtract(Duration(days: 1));
-//       final String formattedDate = DateFormat('yyyy-MM-dd').format(yesterday);
-//
-//       final studyTimes = await _repository.getStudyTimesForUserOnDate(uid, formattedDate);
-//       if (studyTimes != null) {
-//         userStudyTimes.assignAll(studyTimes);
-//       }
-//     } catch (e) {
-//       print('Error fetching study times: $e');
-//     } finally {
-//       isLoading.value = false;
-//     }
-//   }
-// }
-
-

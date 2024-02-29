@@ -3,27 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/result/controllers/result_page_controller.dart';
+import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
+import 'package:ggsb_project/src/widgets/full_size_loading_indicator.dart';
+import 'package:ggsb_project/src/widgets/main_button.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
 import 'package:intl/intl.dart';
 import 'package:rive/rive.dart';
 
 class ResultPage extends GetView<ResultPageController> {
   const ResultPage({super.key});
-
-  // PreferredSizeWidget _appBar() {
-  //   return AppBar(
-  //     backgroundColor: CustomColors.mainBlue,
-  //     centerTitle: true,
-  //     title: Padding(
-  //       padding: const EdgeInsets.symmetric(vertical: 20.0),
-  //       child: SvgPicture.asset(
-  //         'assets/images/caption_logo.svg',
-  //         // color: CustomColors.whiteBackground,
-  //       ),
-  //     )
-  //   );
-  // }
 
   Widget _title() {
     return Padding(
@@ -44,169 +33,115 @@ class ResultPage extends GetView<ResultPageController> {
   Widget _resultBox() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 36.0),
-      child: Expanded(
-        child: Container(
-          padding: EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25),
-            color: CustomColors.whiteBackground,
-          ),
-          child: Column(
-            children: [
-              Text(
-                '${DateFormat('yyyy - MM - dd').format(DateTime.now())}',
-                style: TextStyle(fontSize: 10),
+      child: TabBarView(
+        controller: controller.roomTabController,
+        children: _resultBoxList(),
+      ),
+    );
+  }
+
+  List<Widget> _resultBoxList() {
+    return controller.roomModelList.map((RoomModel roomModel) {
+      return Container(
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
+          color: CustomColors.whiteBackground,
+        ),
+        child: Column(
+          children: [
+            Text(
+              '${DateFormat('yyyy - MM - dd').format(DateTime.now())}',
+              style: TextStyle(fontSize: 10),
+            ),
+            SizedBox(height: 15),
+            // RiveAnimation.asset(
+            //   'assets/riv/character.riv',
+            //   stateMachines: ["character"],
+            // ),
+            Image.asset('assets/icons/trophy.png', width: 20),
+            Text(
+              '12:36:52',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
+            ),
+            Text(
+              '민재',
+              style: TextStyle(
+                fontSize: 14,
               ),
-              SizedBox(height: 15),
-              // RiveAnimation.asset(
-              //   'assets/riv/character.riv',
-              //   stateMachines: ["character"],
-              // )
-            ],
+            ),
+            Text(
+              '01:52:30',
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
+            Text(
+              '엽엽',
+              style: TextStyle(
+                fontSize: 14,
+              ),
+            ),
+            Text(
+              '00:12:30',
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
+          ],
+        ),
+      );
+      ;
+    }).toList();
+  }
+
+  Widget _shareButton() {
+    return Row(
+      children: [
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: MainButton(
+              onTap: () {},
+              icon: Image.asset('assets/icons/insta_share.png'),
+              buttonText: '공유',
+              backgroundColor: CustomColors.blackRoom,
+              height: 63,
+            ),
           ),
         ),
-      ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: MainButton(
+              onTap: () {},
+              icon: Image.asset('assets/icons/download.png'),
+              buttonText: '이미지 저장',
+              backgroundColor: CustomColors.whiteBackground,
+              height: 63,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
     Get.put(ResultPageController());
-    return Scaffold(
-      backgroundColor: CustomColors.mainBlue,
-      body: Center(
-          child: Column(
-        children: [
-          _title(),
-          _resultBox(),
-        ],
-      )),
-    );
+    return !controller.isPageLoading.value
+        ? Scaffold(
+            backgroundColor: CustomColors.mainBlue,
+            body: Center(
+                child: Column(
+              children: [
+                _title(),
+                _resultBox(),
+              ],
+            )),
+          )
+        : FullSizeLoadingIndicator(
+            backgroundColor: CustomColors.mainBlue.withOpacity(0.5),
+          );
   }
 }
-
-
-// import 'package:flutter/material.dart';
-// import 'package:flutter_svg/flutter_svg.dart';
-// import 'package:get/get.dart';
-// import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
-// import 'package:ggsb_project/src/features/result/controllers/result_page_controller.dart';
-// import 'package:ggsb_project/src/models/study_time_model.dart';
-// import 'package:ggsb_project/src/models/user_model.dart';
-// import 'package:ggsb_project/src/repositories/study_time_repository.dart';
-// import 'package:ggsb_project/src/utils/custom_color.dart';
-// import 'package:intl/intl.dart';
-//
-// class ResultPage extends GetView<ResultPageController> {
-//   const ResultPage({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: CustomColors.mainBlue,
-//       body: Center(
-//         child: Column(
-//           children: [
-//             _buildTitle(),
-//             Expanded(
-//               child: Obx(() {
-//                 if (controller.isLoading.value) {
-//                   return CircularProgressIndicator();
-//                 } else {
-//                   return _buildResultBox(controller.userStudyTimes);
-//                 }
-//               }),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-//
-//   Widget _buildTitle() {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(vertical: 50.0),
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.start,
-//         children: [
-//           SafeArea(
-//             child: Container(
-//               child: SvgPicture.asset('assets/images/caption_logo.svg'),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-//
-//   Widget _buildResultBox(List<StudyTimeModel> userStudyTimes) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 36.0),
-//       child: Expanded(
-//         child: Container(
-//           padding: EdgeInsets.all(10),
-//           decoration: BoxDecoration(
-//             borderRadius: BorderRadius.circular(25),
-//             color: CustomColors.whiteBackground,
-//           ),
-//           child: Column(
-//             children: [
-//               Text(
-//                 '${DateFormat('yyyy - MM - dd').format(DateTime.now())}',
-//                 style: TextStyle(fontSize: 10),
-//               ),
-//               SizedBox(height: 15),
-//               ListView.builder(
-//                 shrinkWrap: true,
-//                 itemCount: userStudyTimes.length,
-//                 itemBuilder: (context, index) {
-//                   return _buildStudyTimeItem(userStudyTimes[index]);
-//                 },
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-//
-//   Widget _buildStudyTimeItem(StudyTimeModel studyTime) {
-//     return ListTile(
-//       title: Text('User ID: ${AuthController.to.user.value}'),
-//       subtitle: Text('Study Time: ${studyTime.totalSeconds} seconds'),
-//     );
-//   }
-// }
-//
-// class ResultPageController extends GetxController {
-//   final StudyTimeRepository _repository = StudyTimeRepository();
-//   var isLoading = true.obs;
-//   var userStudyTimes = <StudyTimeModel>[].obs;
-//
-//   @override
-//   void onInit() {
-//     super.onInit();
-//     fetchUserStudyTimes();
-//   }
-//
-//   void fetchUserStudyTimes() async {
-//     try {
-//       isLoading.value = true;
-//       final UserModel currentUser = Get.arguments ?? UserModel(); // Get current user
-//       final String uid = currentUser.uid ?? ''; // Get current user's UID
-//       final DateTime yesterday = DateTime.now().subtract(Duration(days: 1));
-//       final String formattedDate = DateFormat('yyyy-MM-dd').format(yesterday);
-//
-//       final studyTimes = await _repository.getStudyTimeModel(uid, formattedDate);
-//       // if (studyTimes != null) {
-//       //   userStudyTimes.assignAll(studyTimes);
-//       // }
-//     } catch (e) {
-//       print('Error fetching study times: $e');
-//     } finally {
-//       isLoading.value = false;
-//     }
-//   }
-// }
-
-
