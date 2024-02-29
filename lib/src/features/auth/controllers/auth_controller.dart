@@ -62,7 +62,7 @@ class AuthController extends GetxController {
   // }
 
   Future<void> updateStudyTimeModelAdCount(String uid) async {
-    print('스터디타임모델 업데이트');
+    // print('스터디타임모델 업데이트');
     DateTime now = DateTime.now();
     StudyTimeModel? studyTimeData =
         await StudyTimeRepository().getStudyTimeModel(
@@ -70,10 +70,11 @@ class AuthController extends GetxController {
       DateUtil().dateTimeToString(now),
     );
     if (studyTimeData == null) {
-      print('스터디타임모델 없음 아직');
+      // print('스터디타임모델 없음 아직');
       //만약 없으면 새로 만들기
       StudyTimeModel newStudyTimeModel = StudyTimeModel(
         uid: user.value.uid,
+        nickname: user.value.nickname,
         date: DateUtil().dateTimeToString(now),
         totalSeconds: 0,
         startTime: DateUtil.standardRefreshTime(now),

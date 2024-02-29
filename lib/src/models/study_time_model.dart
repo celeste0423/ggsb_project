@@ -1,5 +1,6 @@
 class StudyTimeModel {
   final String? uid;
+  final String? nickname;
   final String? date;
   final int? totalSeconds;
   final DateTime? startTime;
@@ -7,6 +8,7 @@ class StudyTimeModel {
 
   StudyTimeModel({
     this.uid,
+    this.nickname,
     this.date,
     this.totalSeconds,
     this.startTime,
@@ -16,6 +18,7 @@ class StudyTimeModel {
   factory StudyTimeModel.fromJson(Map<String, dynamic> json) {
     return StudyTimeModel(
       uid: json['uid'] == null ? null : json['uid'] as String,
+      nickname: json['nickname'] == null ? null : json['nickname'] as String,
       date: json['date'] == null ? null : json['date'] as String,
       totalSeconds:
           json['totalSeconds'] == null ? null : json['totalSeconds'] as int,
@@ -27,6 +30,7 @@ class StudyTimeModel {
   Map<String, dynamic> toJson() {
     return {
       'uid': uid,
+      'nickname': nickname,
       'date': date,
       'totalSeconds': totalSeconds,
       'startTime': startTime,
@@ -36,6 +40,7 @@ class StudyTimeModel {
 
   StudyTimeModel copyWith({
     String? uid,
+    String? nickname,
     String? date,
     int? totalSeconds,
     int? totalLiveSeconds,
@@ -44,6 +49,7 @@ class StudyTimeModel {
   }) {
     return StudyTimeModel(
       uid: uid ?? this.uid,
+      nickname: nickname ?? this.nickname,
       date: date ?? this.date,
       totalSeconds: totalSeconds ?? this.totalSeconds,
       startTime: startTime ?? this.startTime,
