@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:ggsb_project/src/app.dart';
 import 'package:ggsb_project/src/constants/service_urls.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
+import 'package:ggsb_project/src/features/auth/pages/agreement_page.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/character_model.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
@@ -154,6 +155,7 @@ class SignupPageController extends GetxController {
     isSchoolLoading(false);
   }
 
+
   Future<void> signUpButton() async {
     isSignupLoading(true);
     checkLoginType();
@@ -183,10 +185,15 @@ class SignupPageController extends GetxController {
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
+      // 회원가입 처리
       await AuthController.to.signUp(userData);
       isSignupLoading(false);
+
+      // 회원가입 성공 후 Agreement? 페이지로 이동
+      Get.off(() => AgreementPage());
     }
   }
+
 
   Future<void> profileEditButton() async {
     isSignupLoading(true);
@@ -225,7 +232,6 @@ class SignupPageController extends GetxController {
         );
         RoomStreamRepository().updateRoomStream(updatedRoomStreamModel);
       }
-      Get.off(() => App());
     }
   }
 }

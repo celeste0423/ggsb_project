@@ -247,10 +247,11 @@ class StorePageController extends GetxController
     cash(AuthController.to.user.value.cash!);
   }
 
+
   void onRiveInit(Artboard artboard) {
     isPageLoading(true);
     final riveController =
-        StateMachineController.fromArtboard(artboard, 'character');
+    StateMachineController.fromArtboard(artboard, 'character');
     artboard.addController(riveController!);
     actionState = riveController.findInput<double>('action') as SMINumber;
     characterHat = riveController.findInput<double>('hat') as SMINumber;
@@ -259,7 +260,6 @@ class StorePageController extends GetxController
     _riveCharacterInit();
     isPageLoading(false);
   }
-
   void _riveCharacterInit() {
     UserModel userModel = AuthController.to.user.value;
     CharacterModel characterModel = userModel.characterData!;
@@ -369,6 +369,7 @@ class StorePageController extends GetxController
       );
     }
   }
+
 
   void itemButton(int categoryIndex, int itemIndex) {
     _selectIndex(categoryIndex, itemIndex);
