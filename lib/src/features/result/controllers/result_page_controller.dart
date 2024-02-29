@@ -22,6 +22,7 @@ class ResultPageController extends GetxController
   List<List<StudyTimeModel?>> studyTimeModelList = [];
 
   late TabController roomTabController;
+  int indicatorCount = 0;
 
   ScreenshotController screenshotController = ScreenshotController();
 
@@ -51,9 +52,11 @@ class ResultPageController extends GetxController
       length: roomModelList.length,
       vsync: this,
     );
+    indicatorCount = roomModelList.length;
+    update(['tabIndicator']);
     roomTabController.addListener(
       () {
-        int index = roomTabController.index;
+        update(['tabIndicator']);
       },
     );
   }
@@ -89,8 +92,8 @@ class ResultPageController extends GetxController
     SocialShare.shareInstagramStory(
       appId: '1095966244764492',
       imagePath: path!,
-      backgroundTopColor: "#ffffff",
-      backgroundBottomColor: "#000000",
+      backgroundTopColor: "#5FA3D4",
+      backgroundBottomColor: "#5FA3D4",
     ).then((value) => print(value));
     // SocialShare.shareFacebookStory(
     //   appId: '1095966244764492',

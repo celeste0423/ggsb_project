@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/home/pages/home_page.dart';
 import 'package:ggsb_project/src/features/my/pages/my_page.dart';
 import 'package:ggsb_project/src/features/ranking/pages/ranking_page.dart';
+import 'package:ggsb_project/src/features/result/pages/result_page.dart';
 import 'package:ggsb_project/src/features/room_list/pages/room_list_page.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
+import 'package:ggsb_project/src/utils/date_util.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -14,21 +18,40 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> with SingleTickerProviderStateMixin {
+  late SharedPreferences prefs;
+
+  @override
+  void initState() {
+    super.initState();
+    _prefsInit();
+  }
+
+  void _prefsInit() async {
+    prefs = await SharedPreferences.getInstance();
+    String? lastDate = prefs.getString('lastDate');
+    if (lastDate != null) {
+      if (lastDate == DateUtil().dateTimeToString(DateUtil().getYesterday())) {
+        Get.to(() => const ResultPage());
+      }
+    }
+    prefs.setString('lastDate', DateUtil().dateTimeToString(DateTime.now()));
+  }
+
   late final TabController _tabController =
       TabController(length: 4, vsync: this);
 
   Widget _tabBar() {
     return AnimatedContainer(
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       height: 85,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(20),
           topRight: Radius.circular(20),
         ),
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, -10),
+            offset: const Offset(0, -10),
             blurRadius: 10,
             color: _tabController.index == 0
                 ? Colors.transparent
@@ -107,7 +130,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
     return Scaffold(
       body: TabBarView(
         controller: _tabController,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         viewportFraction: 1,
         children: const [
           HomePage(),

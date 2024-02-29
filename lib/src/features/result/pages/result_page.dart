@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -14,6 +15,20 @@ import 'package:screenshot/screenshot.dart';
 class ResultPage extends GetView<ResultPageController> {
   const ResultPage({super.key});
 
+  Widget _backButton() {
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      onPressed: () {
+        Get.back();
+      },
+      child: const Icon(
+        Icons.close,
+        color: Colors.white,
+        size: 25,
+      ),
+    );
+  }
+
   Widget _title() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 50),
@@ -23,12 +38,9 @@ class ResultPage extends GetView<ResultPageController> {
 
   Widget _resultBox() {
     return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: TabBarView(
-          controller: controller.roomTabController,
-          children: _resultBoxList(),
-        ),
+      child: TabBarView(
+        controller: controller.roomTabController,
+        children: _resultBoxList(),
       ),
     );
   }
@@ -37,27 +49,39 @@ class ResultPage extends GetView<ResultPageController> {
     return List.generate(controller.roomModelList.length, (roomIndex) {
       return Container(
         padding: const EdgeInsets.all(10),
+        margin: const EdgeInsets.symmetric(horizontal: 30),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
           color: CustomColors.whiteBackground,
         ),
-        child: Column(
-          children: [
-            Text(
-              '${DateFormat('yyyy - MM - dd').format(DateTime.now())}',
-              style: const TextStyle(fontSize: 10),
-            ),
-            const SizedBox(height: 15),
-            FutureBuilder(
-              future: controller.getStudyTimeList(roomIndex),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return loadingIndicator();
-                } else if (snapshot.hasError) {
-                  return const Text('오류 발생');
-                } else {
-                  return SingleChildScrollView(
-                    child: Column(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Text(
+                '${DateFormat('yyyy - MM - dd').format(DateTime.now())}',
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: CustomColors.greyText,
+                ),
+              ),
+              const SizedBox(height: 15),
+              Text(
+                controller.roomModelList[roomIndex]!.roomName!,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: CustomColors.blackText,
+                ),
+              ),
+              FutureBuilder(
+                future: controller.getStudyTimeList(roomIndex),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return loadingIndicator();
+                  } else if (snapshot.hasError) {
+                    return const Text('오류 발생');
+                  } else {
+                    return Column(
                       children: List.generate(
                         snapshot.data!.length,
                         (userIndex) {
@@ -70,12 +94,12 @@ class ResultPage extends GetView<ResultPageController> {
                           );
                         },
                       ),
-                    ),
-                  );
-                }
-              },
-            ),
-          ],
+                    );
+                  }
+                },
+              ),
+            ],
+          ),
         ),
       );
     });
@@ -84,7 +108,7 @@ class ResultPage extends GetView<ResultPageController> {
   Widget _timeCard(String nickname, String time, int index) {
     return index == 0
         ? SizedBox(
-            height: 350,
+            height: 320,
             child: Column(
               children: [
                 const SizedBox(
@@ -112,7 +136,7 @@ class ResultPage extends GetView<ResultPageController> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.symmetric(vertical: 20),
+                  margin: const EdgeInsets.only(top: 10),
                   width: 50,
                   height: 2,
                   decoration: BoxDecoration(
@@ -145,9 +169,40 @@ class ResultPage extends GetView<ResultPageController> {
           );
   }
 
+  Widget _tabIndicator() {
+    return GetBuilder<ResultPageController>(
+      id: 'tabIndicator',
+      builder: (controller) {
+        return Visibility(
+          visible: controller.indicatorCount != 1,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 25),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                controller.indicatorCount,
+                (index) => Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 7),
+                  width: 4,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: controller.roomTabController.index == index
+                        ? Colors.white
+                        : Colors.white.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(3),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Widget _shareButton() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
+      padding: const EdgeInsets.only(left: 30, right: 30, bottom: 50),
       child: Row(
         children: [
           Expanded(
@@ -200,20 +255,30 @@ class ResultPage extends GetView<ResultPageController> {
           ? Scaffold(
               backgroundColor: CustomColors.mainBlue,
               body: SafeArea(
-                child: Column(
+                child: Stack(
                   children: [
-                    Expanded(
-                      child: Screenshot(
-                        controller: controller.screenshotController,
-                        child: Column(
-                          children: [
-                            _title(),
-                            _resultBox(),
-                          ],
+                    Column(
+                      children: [
+                        Expanded(
+                          child: Screenshot(
+                            controller: controller.screenshotController,
+                            child: Column(
+                              children: [
+                                _title(),
+                                _resultBox(),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
+                        _tabIndicator(),
+                        _shareButton(),
+                      ],
                     ),
-                    _shareButton(),
+                    Positioned(
+                      right: 20,
+                      top: 10,
+                      child: _backButton(),
+                    ),
                   ],
                 ),
               ),
