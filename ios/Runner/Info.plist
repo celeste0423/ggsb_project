@@ -23,7 +23,6 @@
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleURLTypes</key>
-    <-- facebook login, google login -->
     <array>
       <dict>
         <key>CFBundleTypeRole</key>
