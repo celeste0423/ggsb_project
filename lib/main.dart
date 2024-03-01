@@ -31,7 +31,7 @@ void main() async {
   //광고 init
   MobileAds.instance.initialize();
   //Amplitude analytics 설정
-  AmplitudeAnalytics().init();
+  // AmplitudeAnalytics().init();
   //새벽 4시에 초기화
   Cron().schedule(Schedule.parse('01 04 * * *'), () async {
     print("새벽 4시입니다.");
