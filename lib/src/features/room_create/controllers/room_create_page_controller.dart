@@ -113,7 +113,7 @@ class RoomCreatePageController extends GetxController {
               ],
       );
       UserRepository().updateUserModel(updatedUserModel);
-      RoomListPageController.to.checkIsRoomList();
+      RoomListPageController().checkIsRoomList();
       Get.back();
     }
   }

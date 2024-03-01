@@ -73,6 +73,7 @@ dependencies:
   social_share: ^2.3.1
   screenshot: ^2.1.0
   path_provider: ^2.1.2
+  upgrader: ^9.0.0
 
 
 dev_dependencies:
