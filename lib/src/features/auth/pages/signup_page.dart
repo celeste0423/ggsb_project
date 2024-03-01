@@ -110,7 +110,7 @@ class SignupPage extends GetView<SignupPageController> {
                       child: Container(
                         width: 280,
                         height: 280,
-                        padding: const EdgeInsets.only(left: 6, bottom: 10),
+                        padding: const EdgeInsets.only(left: 0, bottom: 10),
                         child: RiveAnimation.asset(
                           'assets/riv/character.riv',
                           stateMachines: ["character"],
