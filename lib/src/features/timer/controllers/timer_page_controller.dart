@@ -380,7 +380,7 @@ class TimerPageController extends GetxController
           updatedCharacterModel,
           AuthController.to.user.value,
         );
-        HomePageController().riveCharacterInit();
+        HomePageController.to.riveCharacterInit();
       }
     });
   }
