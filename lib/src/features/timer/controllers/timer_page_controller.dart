@@ -448,6 +448,8 @@ class TimerPageController extends GetxController
   void onClose() {
     super.onClose();
     _secondsTimer.cancel();
+    if (Platform.isAndroid) {
     _appLifecycleListener.dispose();
+    }
   }
 }
