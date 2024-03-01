@@ -272,7 +272,7 @@ class TimerPageController extends GetxController
 
   //button
 
-  Future<void> startButton() async {
+  void startButton() async {
     DateTime now = DateTime.now();
     isTimer(true);
     //상단바 색상
@@ -283,28 +283,30 @@ class TimerPageController extends GetxController
     await _updateStudyTimeModelAtStart(now);
 
     //방별 roomStream 설정
-    roomList.forEach((RoomModel roomModel) async {
-      RoomStreamModel roomStreamModel =
-          await RoomStreamRepository().getRoomStream(
-        roomModel.roomId!,
-        AuthController.to.user.value.uid!,
-      );
-      CharacterModel updatedCharacterModel =
-          roomStreamModel.characterData!.copyWith(
-        actionState: 1,
-      );
-      RoomStreamModel updatedRoomStreamModel = roomStreamModel.copyWith(
-        isTimer: true,
-        startTime: now,
-        characterData: updatedCharacterModel,
-      );
-      if (roomModel.roomType == 'day') {
-        updatedRoomStreamModel = updatedRoomStreamModel.copyWith(
-          totalSeconds: AuthController.to.studyTime.totalSeconds,
+    roomList.forEach(
+      (RoomModel roomModel) async {
+        RoomStreamModel roomStreamModel =
+            await RoomStreamRepository().getRoomStream(
+          roomModel.roomId!,
+          AuthController.to.user.value.uid!,
         );
-      }
-      await RoomStreamRepository().updateRoomStream(updatedRoomStreamModel);
-    });
+        CharacterModel updatedCharacterModel =
+            roomStreamModel.characterData!.copyWith(
+          actionState: 1,
+        );
+        RoomStreamModel updatedRoomStreamModel = roomStreamModel.copyWith(
+          isTimer: true,
+          startTime: now,
+          characterData: updatedCharacterModel,
+        );
+        if (roomModel.roomType == 'day') {
+          updatedRoomStreamModel = updatedRoomStreamModel.copyWith(
+            totalSeconds: AuthController.to.studyTime.totalSeconds,
+          );
+        }
+        await RoomStreamRepository().updateRoomStream(updatedRoomStreamModel);
+      },
+    );
   }
 
   Future<void> _updateStudyTimeModelAtEnd(DateTime now, int totalSec) async {
@@ -331,7 +333,7 @@ class TimerPageController extends GetxController
     }
   }
 
-  Future<void> stopButton() async {
+  void stopButton() async {
     DateTime now = DateTime.now();
     int totalSecRoomStream = 0;
 
@@ -449,7 +451,7 @@ class TimerPageController extends GetxController
     super.onClose();
     _secondsTimer.cancel();
     if (Platform.isAndroid) {
-    _appLifecycleListener.dispose();
+      _appLifecycleListener.dispose();
     }
   }
 }

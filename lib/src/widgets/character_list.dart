@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ggsb_project/src/models/character_model.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
+import 'package:ggsb_project/src/widgets/full_size_loading_indicator.dart';
 import 'package:rive/rive.dart';
 
 class CharacterList extends StatefulWidget {
@@ -22,9 +23,14 @@ class _CharacterListState extends State<CharacterList> {
   late List<List<SMINumber?>> stateMachineList;
   late List<StateMachineController?> riveControllers;
 
+  bool isLoading = false;
+
   @override
   void initState() {
     super.initState();
+    setState(() {
+      isLoading = true;
+    });
     stateMachineList = List<List<SMINumber?>>.generate(
       widget.roomStreamList.length,
       (roomStreamIndex) => List<SMINumber?>.generate(
@@ -36,13 +42,27 @@ class _CharacterListState extends State<CharacterList> {
       widget.roomStreamList.length,
       (index) => null,
     );
+    setState(() {
+      isLoading = false;
+    });
+    print('로딩');
+  }
+
+  @override
+  void didUpdateWidget(CharacterList oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.roomStreamList != widget.roomStreamList) {
+      for (int index = 0; index < widget.roomStreamList.length; index++) {
+        riveCharacterInit(index);
+      }
+    }
   }
 
   Widget _characterCard(int index) {
     int length = widget.roomStreamList.length;
     return SizedBox(
-      width: 110 + length * 20,
-      height: 110 + length * 20,
+      width: 210 - length * 20,
+      height: 210 - length * 20,
       child: Stack(
         children: [
           RiveAnimation.asset(
@@ -150,25 +170,26 @@ class _CharacterListState extends State<CharacterList> {
 
   @override
   Widget build(BuildContext context) {
-    for (int index = 0; index < widget.roomStreamList.length; index++) {
-      riveCharacterInit(index);
-    }
-    return Stack(
-      children: [
-        PieChart(
-          PieChartData(
-            centerSpaceRadius: 113,
-            borderData: FlBorderData(show: false),
-            sections: _chartData(),
-          ),
-        ),
-        CircularMotion.builder(
-          itemCount: widget.roomStreamList.length,
-          builder: (context, index) {
-            return _characterCard(index);
-          },
-        ),
-      ],
-    );
+    return !isLoading
+        ? Stack(
+            children: [
+              PieChart(
+                PieChartData(
+                  centerSpaceRadius: 113,
+                  borderData: FlBorderData(show: false),
+                  sections: _chartData(),
+                ),
+              ),
+              CircularMotion.builder(
+                itemCount: widget.roomStreamList.length,
+                builder: (context, index) {
+                  return _characterCard(index);
+                },
+              ),
+            ],
+          )
+        : const FullSizeLoadingIndicator(
+            backgroundColor: Colors.transparent,
+          );
   }
 }
