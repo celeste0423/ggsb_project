@@ -184,6 +184,7 @@ class SignupPageController extends GetxController {
         isTimer: false,
         totalSeconds: 0,
         cash: 0,
+        roomIdList: [],
         characterData: baseCharacterData,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),

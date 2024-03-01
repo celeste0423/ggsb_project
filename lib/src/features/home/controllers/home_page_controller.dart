@@ -3,6 +3,7 @@ import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart'
 import 'package:ggsb_project/src/features/room_create/pages/room_create_page.dart';
 import 'package:ggsb_project/src/features/store/pages/store_page.dart';
 import 'package:ggsb_project/src/features/timer/pages/timer_page.dart';
+import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/character_model.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
@@ -115,11 +116,15 @@ class HomePageController extends GetxController {
     Get.to(() => const StorePage());
   }
 
-  void addRoomButton() {
-    Get.to(() => RoomCreatePage(), transition: Transition.rightToLeft);
+  void timerPageButton() {
+    if (AuthController.to.user.value.roomIdList!.isEmpty) {
+      openAlertDialog(title: '방 없음', content: '방을 먼저 만들거나 가입해주세요.');
+    } else {
+      Get.to(() => TimerPage());
+    }
   }
 
-  void timerPageButton() {
-    Get.to(() => TimerPage());
+  void addRoomButton() {
+    Get.to(() => RoomCreatePage(), transition: Transition.rightToLeft);
   }
 }

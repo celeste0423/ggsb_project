@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/binding/init_binding.dart';
 import 'package:ggsb_project/src/features/store/controllers/store_page_controller.dart';
@@ -135,8 +136,8 @@ class AuthController extends GetxController {
   }
 
   Future<String?> getDeviceToken() async {
-    // String? token = await FirebaseMessaging.instance.getToken();
-    String? token = null;
+    String? token = await FirebaseMessaging.instance.getToken();
+    // String? token = null;
     return token;
   }
 

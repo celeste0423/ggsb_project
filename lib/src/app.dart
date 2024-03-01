@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/home/pages/home_page.dart';
 import 'package:ggsb_project/src/features/my/pages/my_page.dart';
 import 'package:ggsb_project/src/features/ranking/pages/ranking_page.dart';
@@ -29,7 +30,8 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
   void _prefsInit() async {
     prefs = await SharedPreferences.getInstance();
     String? lastDate = prefs.getString('lastDate');
-    if (lastDate != null) {
+    if (lastDate != null &&
+        AuthController.to.user.value.roomIdList!.isNotEmpty) {
       if (lastDate == DateUtil().dateTimeToString(DateUtil().getYesterday())) {
         Get.to(() => const ResultPage());
       }
