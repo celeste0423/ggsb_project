@@ -5,11 +5,11 @@ class ServiceUrls {
 
   //개인정보 처리방침
   static String personalInformationPolicyNotionUrl =
-      'https://grove-cinema-63d.notion.site/3321fe3cfde94e41a118da9d4f80fae9?pvs=4';
+      'https://gonggeum.notion.site/3321fe3cfde94e41a118da9d4f80fae9';
 
   //서비스 이용약관
   static String serviceTermsNotionUrl =
-      'https://gongg4eum.notion.site/8cea7f4559f34aa691a1198f0faf8d3b';
+      'https://gonggeum.notion.site/8cea7f4559f34aa691a1198f0faf8d3b';
 
   //카카오톡 채팅
   static String kakaoChatUrl = 'http://pf.kakao.com/_xjxndSG/chat';

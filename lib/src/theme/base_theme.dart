@@ -46,6 +46,29 @@ ThemeData baseTheme(BuildContext context) {
     radioTheme: RadioThemeData(
       fillColor: MaterialStateProperty.all<Color>(CustomColors.mainBlue),
     ),
+    //checkbox
+    checkboxTheme: CheckboxThemeData(
+      fillColor: MaterialStateProperty.resolveWith<Color>(
+        (Set<MaterialState> states) {
+          // 체크 안한 상태일 때
+          if (states.contains(MaterialState.selected)) {
+            return CustomColors.mainBlue; // 체크박스 채우기 색상
+          } else {
+            return Colors.white; // 테두리 색상
+          }
+        },
+      ),
+      checkColor: MaterialStateProperty.resolveWith<Color>(
+        (Set<MaterialState> states) {
+          // 체크한 상태일 때
+          if (states.contains(MaterialState.selected)) {
+            return Colors.white; // 체크 모양 색상
+          } else {
+            return Colors.white;
+          }
+        },
+      ),
+    ),
   );
   return base;
 }

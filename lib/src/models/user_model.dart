@@ -15,23 +15,24 @@ class UserModel {
   final CharacterModel? characterData;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final bool? isMarketingAgreed;
 
-  UserModel({
-    this.uid,
-    this.deviceToken,
-    this.nickname,
-    this.loginType,
-    this.email,
-    this.gender,
-    this.school,
-    this.isTimer,
-    this.totalSeconds,
-    this.cash,
-    this.roomIdList,
-    this.characterData,
-    this.createdAt,
-    this.updatedAt,
-  });
+  UserModel(
+      {this.uid,
+      this.deviceToken,
+      this.nickname,
+      this.loginType,
+      this.email,
+      this.gender,
+      this.school,
+      this.isTimer,
+      this.totalSeconds,
+      this.cash,
+      this.roomIdList,
+      this.characterData,
+      this.createdAt,
+      this.updatedAt,
+      this.isMarketingAgreed});
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
@@ -55,6 +56,9 @@ class UserModel {
           : CharacterModel.fromJson(json['characterData']),
       createdAt: json['createdAt'] == null ? null : json["createdAt"].toDate(),
       updatedAt: json['updatedAt'] == null ? null : json["updatedAt"].toDate(),
+      isMarketingAgreed: json['isMarketingAgreed'] == null
+          ? null
+          : json['isMarketingAgreed'] as bool,
     );
   }
 
@@ -74,6 +78,7 @@ class UserModel {
       'characterData': characterData == null ? null : characterData!.toJson(),
       'createdAt': createdAt,
       'updatedAt': updatedAt,
+      'isMarketingAgreed': isMarketingAgreed,
     };
   }
 
@@ -92,6 +97,7 @@ class UserModel {
     CharacterModel? characterData,
     DateTime? createdAt,
     DateTime? updatedAt,
+    bool? isMarketingAgreed,
   }) {
     return UserModel(
       uid: uid ?? this.uid,
@@ -107,7 +113,8 @@ class UserModel {
       roomIdList: roomIdList ?? this.roomIdList,
       characterData: characterData ?? this.characterData,
       createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isMarketingAgreed: isMarketingAgreed ?? this.isMarketingAgreed,
     );
   }
 }

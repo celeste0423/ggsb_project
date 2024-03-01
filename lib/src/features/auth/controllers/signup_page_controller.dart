@@ -4,10 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
-import 'package:ggsb_project/src/app.dart';
 import 'package:ggsb_project/src/constants/service_urls.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
-import 'package:ggsb_project/src/features/auth/pages/agreement_page.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/character_model.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
@@ -40,6 +38,9 @@ class SignupPageController extends GetxController {
   late RxList<dynamic> schoolNameList = [nullSchoolName].obs;
 
   Rx<bool> isMale = true.obs;
+
+  Rx<bool> isTermAgreed = false.obs;
+  Rx<bool> isMarketingAgreed = false.obs;
 
   @override
   void onInit() async {
@@ -155,13 +156,15 @@ class SignupPageController extends GetxController {
     isSchoolLoading(false);
   }
 
-
   Future<void> signUpButton() async {
     isSignupLoading(true);
     checkLoginType();
     if (nicknameController.text == '') {
       isSignupLoading(false);
       openAlertDialog(title: '닉네임을 입력해주세요');
+    } else if (!isTermAgreed.value) {
+      isSignupLoading(false);
+      openAlertDialog(title: '이용약관 및 개인정보처리방침에 동의해주세요');
     } else {
       CharacterModel baseCharacterData = CharacterModel(
         actionState: 0,
@@ -184,16 +187,13 @@ class SignupPageController extends GetxController {
         characterData: baseCharacterData,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
+        isMarketingAgreed: isMarketingAgreed.value,
       );
       // 회원가입 처리
       await AuthController.to.signUp(userData);
       isSignupLoading(false);
-
-      // 회원가입 성공 후 Agreement? 페이지로 이동
-      Get.off(() => AgreementPage());
     }
   }
-
 
   Future<void> profileEditButton() async {
     isSignupLoading(true);
