@@ -276,7 +276,7 @@ class TimerPageController extends GetxController
     DateTime now = DateTime.now();
     isTimer(true);
     //상단바 색상
-    await StatusBarControl.setColor(CustomColors.mainBlack, animated: true);
+    // await StatusBarControl.setColor(CustomColors.mainBlack, animated: true);
     // await StatusBarControl.setStyle(StatusBarStyle.LIGHT_CONTENT);
 
     //개인 StudyTimeModel 설정
