@@ -82,13 +82,13 @@ class SignupPage extends GetView<SignupPageController> {
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(
-          horizontal: 20,
+          horizontal: 25,
         ),
         decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
-            topRight: Radius.circular(40),
-            topLeft: Radius.circular(40),
+            topRight: Radius.circular(30),
+            topLeft: Radius.circular(30),
           ),
         ),
         child: SingleChildScrollView(
@@ -530,7 +530,7 @@ class SignupPage extends GetView<SignupPageController> {
                           }
                         },
                     ),
-                    const TextSpan(text: '에 동의합니다.'),
+                    const TextSpan(text: ' 동의'),
                   ],
                 ),
               ),
