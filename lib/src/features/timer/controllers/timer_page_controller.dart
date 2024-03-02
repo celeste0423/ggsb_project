@@ -321,8 +321,9 @@ class TimerPageController extends GetxController
     if (diffSec > 3600 * 17) {
       //한번에 측정한 시간이 17시간을 초과했을경우 측정 시간 0으로 초기화
       openAlertDialog(
-          title: '시간 초과',
-          content: '한번에 측정한 시간이 17시간이 초과했습니다. 부정 시간 측정으로 간주하여 기록이 삭제됩니다.');
+        title: '시간 초과',
+        content: '한번에 측정한 시간이 17시간이 초과했습니다. 부정 시간 측정으로 간주하여 기록이 삭제됩니다.',
+      );
       diffSec = 0;
     } else {
       await _updateStudyTimeModelAtEnd(now, totalSec);

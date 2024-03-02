@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/study_time_model.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
@@ -23,6 +24,36 @@ class StudyTimeRepository {
         content: e.toString(),
       );
     }
+  }
+
+  Future<List<StudyTimeModel>> getUncashedStudyTimeModelExceptToday(
+      String uid) async {
+    List<StudyTimeModel> uncashedStudyTimes = [];
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .collection('studyTime')
+          .where('isCashed', isEqualTo: false)
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        for (DocumentSnapshot doc in querySnapshot.docs) {
+          String date = doc.id;
+          // Check if the date is not equal to DateToday
+          if (date != DateUtil().dateTimeToString(DateTime.now())) {
+            uncashedStudyTimes.add(
+              StudyTimeModel.fromJson(doc.data() as Map<String, dynamic>),
+            );
+          }
+        }
+      }
+    } catch (e) {
+      openAlertDialog(
+        title: '시간 정보를 가져오는데 실패했습니다.',
+        content: e.toString(),
+      );
+    }
+    return uncashedStudyTimes;
   }
 
   Future<void> uploadStudyTimeModel(
@@ -93,8 +124,11 @@ class StudyTimeRepository {
         if (!found) {
           // 해당하는 날짜의 데이터가 없는 경우 새로운 StudyTimeModel을 생성하여 추가
           StudyTimeModel newModel = StudyTimeModel(
+            uid: AuthController.to.user.value.uid,
+            nickname: AuthController.to.user.value.nickname,
             date: DateUtil().dateTimeToString(date),
             totalSeconds: 0,
+            isCashed: true,
           );
           newTimeModels.add(newModel);
         }

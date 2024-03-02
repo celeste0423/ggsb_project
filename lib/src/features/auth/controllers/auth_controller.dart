@@ -83,6 +83,7 @@ class AuthController extends GetxController {
           startTime: DateUtil.standardRefreshTime(now),
           //다음날 들어온 사람 때문에
           lastTime: null,
+          isCashed: false,
         );
         StudyTimeRepository().uploadStudyTimeModel(newStudyTimeModel);
         studyTime = newStudyTimeModel;

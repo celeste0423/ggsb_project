@@ -5,6 +5,7 @@ class StudyTimeModel {
   final int? totalSeconds;
   final DateTime? startTime;
   final DateTime? lastTime;
+  final bool? isCashed;
 
   StudyTimeModel({
     this.uid,
@@ -13,6 +14,7 @@ class StudyTimeModel {
     this.totalSeconds,
     this.startTime,
     this.lastTime,
+    this.isCashed,
   });
 
   factory StudyTimeModel.fromJson(Map<String, dynamic> json) {
@@ -24,6 +26,7 @@ class StudyTimeModel {
           json['totalSeconds'] == null ? null : json['totalSeconds'] as int,
       startTime: json['startTime'] == null ? null : json["startTime"].toDate(),
       lastTime: json['lastTime'] == null ? null : json["lastTime"].toDate(),
+      isCashed: json['isCashed'] == null ? null : json['isCashed'] as bool,
     );
   }
 
@@ -35,6 +38,7 @@ class StudyTimeModel {
       'totalSeconds': totalSeconds,
       'startTime': startTime,
       'lastTime': lastTime,
+      'isCashed': isCashed,
     };
   }
 
@@ -46,6 +50,7 @@ class StudyTimeModel {
     int? totalLiveSeconds,
     DateTime? startTime,
     DateTime? lastTime,
+    bool? isCashed,
   }) {
     return StudyTimeModel(
       uid: uid ?? this.uid,
@@ -54,6 +59,7 @@ class StudyTimeModel {
       totalSeconds: totalSeconds ?? this.totalSeconds,
       startTime: startTime ?? this.startTime,
       lastTime: lastTime ?? this.lastTime,
+      isCashed: isCashed ?? this.isCashed,
     );
   }
 }

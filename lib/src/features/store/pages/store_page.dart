@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/store/controllers/store_page_controller.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
+import 'package:ggsb_project/src/utils/number_util.dart';
 import 'package:ggsb_project/src/widgets/full_size_loading_indicator.dart';
 import 'package:ggsb_project/src/widgets/main_button.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
@@ -13,6 +14,56 @@ import 'package:rive/rive.dart';
 
 class StorePage extends GetView<StorePageController> {
   const StorePage({Key? key});
+
+  Widget cashDialog(int addedCash) {
+    return Dialog(
+      insetPadding:
+          EdgeInsets.symmetric(horizontal: 30, vertical: Get.height / 4),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            const Text(
+              '축하합니다',
+              style: TextStyle(
+                color: CustomColors.mainBlack,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Image.asset(
+              'assets/icons/gold_coin.png',
+              width: Get.height / 3 - 130,
+              height: Get.height / 3 - 130,
+            ),
+            Text(
+              'x${addedCash}',
+              style: const TextStyle(
+                color: CustomColors.mainBlue,
+                fontSize: 14,
+              ),
+            ),
+            Text(
+              '총 공부시간 ${addedCash}분에 대한 코인이 지급되었습니다',
+              textAlign: TextAlign.left,
+              style: const TextStyle(
+                color: CustomColors.mainBlack,
+                fontSize: 14,
+              ),
+            ),
+            MainButton(
+              buttonText: '확인',
+              height: 45,
+              onTap: () {
+                Get.back();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   PreferredSizeWidget _appBar() {
     return AppBar(
@@ -110,7 +161,7 @@ class StorePage extends GetView<StorePageController> {
           const SizedBox(width: 5),
           Obx(
             () => Text(
-              controller.cash.value.toString(),
+              NumberUtil.formatNumber(controller.cash.value),
               style: const TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w600,

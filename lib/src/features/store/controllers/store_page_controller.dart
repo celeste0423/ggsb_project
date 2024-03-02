@@ -6,10 +6,14 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/home/controllers/home_page_controller.dart';
+import 'package:ggsb_project/src/features/store/pages/store_page.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/character_model.dart';
+import 'package:ggsb_project/src/models/study_time_model.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
+import 'package:ggsb_project/src/repositories/study_time_repository.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
+import 'package:ggsb_project/src/utils/seconds_util.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:rive/rive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,6 +25,7 @@ class StorePageController extends GetxController
   Rx<bool> isPageLoading = false.obs;
   Rx<bool> isItemChanged = false.obs;
 
+  List<StudyTimeModel> uncashedStudyTimeList = [];
   Rx<int> cash = AuthController.to.user.value.cash!.obs;
 
   Map<String, String> unitId = kReleaseMode
@@ -186,6 +191,7 @@ class StorePageController extends GetxController
     _rewardedAdInit();
     _categoryTabControllerInit();
     _getIsItemUnlockedList();
+    _checkUncashedStudyTime();
     isPageLoading(false);
   }
 
@@ -221,6 +227,25 @@ class StorePageController extends GetxController
         isItemUnlockedList[categoryIndex][itemIndex](isUnlocked);
       }
     }
+  }
+
+  void _checkUncashedStudyTime() async {
+    uncashedStudyTimeList =
+        await StudyTimeRepository().getUncashedStudyTimeModelExceptToday(
+      AuthController.to.user.value.uid!,
+    );
+    int totalAddedTime = 0;
+    if (uncashedStudyTimeList.isNotEmpty) {
+      for (StudyTimeModel studyTimeModel in uncashedStudyTimeList) {
+        int studyTimeInMinute = SecondsUtil.convertToMinutes(
+          studyTimeModel.totalSeconds!,
+        );
+        totalAddedTime += studyTimeInMinute;
+      }
+      Get.dialog(const StorePage().cashDialog(totalAddedTime));
+      updateCash(totalAddedTime);
+    }
+    // Get.dialog(const StorePage().cashDialog(300));
   }
 
   //on init
