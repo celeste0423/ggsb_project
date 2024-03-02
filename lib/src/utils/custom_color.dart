@@ -49,7 +49,7 @@ class CustomColors {
   static const Color redCharacter = Color(0xFFFF6868);
   static const Color yellowCharacter = Color(0xFFFDCD61);
   static const Color orangeCharacter = Color(0xFFFFA95A);
-  static const Color purpleCharacter = Color(0xFFEE9D7B);
+  static const Color purpleCharacter = Color(0xFF9975BD);
   static const Color greyCharacter = Color(0xFFC7C7C7);
   static const Color blackCharacter = Color(0xFF232323);
 
