@@ -7,6 +7,7 @@ import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/home/controllers/home_page_controller.dart';
+import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/character_model.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
@@ -22,7 +23,6 @@ import 'package:ggsb_project/src/utils/live_seconds_util.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:status_bar_control/status_bar_control.dart';
 
 class TimerPageController extends GetxController
     with GetTickerProviderStateMixin {
@@ -255,29 +255,11 @@ class TimerPageController extends GetxController
     return difference.abs() >= const Duration(hours: 4);
   }
 
-  Future _updateStudyTimeModelAtStart(DateTime now) async {
-    //isTimer update
-    UserModel updatedUserModel = AuthController.to.user.value.copyWith(
-      isTimer: true,
-    );
-    AuthController.to.updateUserModel(updatedUserModel);
-    // AuthController.to.user(updatedUserModel);
-    //model update
-    StudyTimeModel updatedStudyTimeModel = AuthController.to.studyTime.copyWith(
-      startTime: now,
-    );
-    StudyTimeRepository().updateStudyTimeModel(updatedStudyTimeModel);
-    AuthController.to.studyTime = updatedStudyTimeModel;
-  }
-
   //button
 
   void startButton() async {
     DateTime now = DateTime.now();
     isTimer(true);
-    //상단바 색상
-    // await StatusBarControl.setColor(CustomColors.mainBlack, animated: true);
-    // await StatusBarControl.setStyle(StatusBarStyle.LIGHT_CONTENT);
 
     //개인 StudyTimeModel 설정
     await _updateStudyTimeModelAtStart(now);
@@ -309,28 +291,18 @@ class TimerPageController extends GetxController
     );
   }
 
-  Future<void> _updateStudyTimeModelAtEnd(DateTime now, int totalSec) async {
+  Future _updateStudyTimeModelAtStart(DateTime now) async {
     //isTimer update
     UserModel updatedUserModel = AuthController.to.user.value.copyWith(
-      isTimer: false,
+      isTimer: true,
     );
     AuthController.to.updateUserModel(updatedUserModel);
-    AuthController.to.user(updatedUserModel);
-    //studyTime update
-    StudyTimeModel studyTimeModel = AuthController.to.studyTime;
-    if (DateUtil().calculateDateDifference(studyTimeModel.startTime!, now) >=
-        1) {
-      //시간 측정중 하루가 넘어감
-      datePassed(now);
-    } else {
-      StudyTimeModel updatedStudyTimeModel =
-          AuthController.to.studyTime.copyWith(
-        lastTime: now,
-        totalSeconds: totalSec,
-      );
-      StudyTimeRepository().uploadStudyTimeModel(updatedStudyTimeModel);
-      AuthController.to.studyTime = updatedStudyTimeModel;
-    }
+    //model update
+    StudyTimeModel updatedStudyTimeModel = AuthController.to.studyTime.copyWith(
+      startTime: now,
+    );
+    StudyTimeRepository().updateStudyTimeModel(updatedStudyTimeModel);
+    AuthController.to.studyTime = updatedStudyTimeModel;
   }
 
   void stopButton() async {
@@ -338,9 +310,6 @@ class TimerPageController extends GetxController
     int totalSecRoomStream = 0;
 
     isTimer(false);
-    //상단바 색상
-    await StatusBarControl.setColor(Colors.white, animated: true);
-    // await StatusBarControl.setStyle(StatusBarStyle.DARK_CONTENT);
 
     int diffSec = SecondsUtil.calculateDifferenceInSeconds(
       AuthController.to.studyTime.startTime!,
@@ -349,8 +318,15 @@ class TimerPageController extends GetxController
     int totalSec = AuthController.to.studyTime.totalSeconds! + diffSec;
 
     //개인 studyTimeModel 업로드
-    await _updateStudyTimeModelAtEnd(now, totalSec);
-
+    if (diffSec > 3600 * 17) {
+      //한번에 측정한 시간이 17시간을 초과했을경우 측정 시간 0으로 초기화
+      openAlertDialog(
+          title: '시간 초과',
+          content: '한번에 측정한 시간이 17시간이 초과했습니다. 부정 시간 측정으로 간주하여 기록이 삭제됩니다.');
+      diffSec = 0;
+    } else {
+      await _updateStudyTimeModelAtEnd(now, totalSec);
+    }
     HomePageController.to.totalTime(totalLiveTime.value);
 
     //방별 roomStream 설정
@@ -387,34 +363,28 @@ class TimerPageController extends GetxController
     });
   }
 
-  // Future<void> datePassedWhileIsTimer(DateTime now) async {
-  //   //Todo: 만약 유저가 24시간 이상 타이머를 켜놓는다면 이슈 발생
-  //   final fourAM = DateUtil.standardRefreshTime(now);
-  //   TimeModel previousTimeModel = AuthController.to.timeModel.value;
-  //   // 전날 startTime부터 새벽 4시까지 공부한 분량 계산
-  //   final previousDiffSec =
-  //       previousTimeModel.startTime!.difference(fourAM).inSeconds;
-  //   final previousTotalSec = previousTimeModel.totalSeconds! + previousDiffSec;
-  //   // 전 day doc에 업데이트
-  //   final previousUpdatedTimeModel = previousTimeModel.copyWith(
-  //     isTimer: false,
-  //     lastTime: fourAM,
-  //     totalSeconds: previousTotalSec,
-  //   );
-  //   await TimeRepository().updateTimeModel(previousUpdatedTimeModel);
-  //
-  //   // 오늘자의 새벽 4시부터 lastTime까지의 seconds 차이 계산
-  //   final todayDiffSec = now.difference(fourAM).inSeconds;
-  //   // 오늘자 day doc에 업데이트
-  //   final todayUpdatedTimeModel = previousTimeModel.copyWith(
-  //     day: DateUtil.getDayOfWeek(now),
-  //     isTimer: false,
-  //     startTime: fourAM,
-  //     lastTime: now,
-  //     totalSeconds: todayDiffSec,
-  //   );
-  //   await TimeRepository().updateTimeModel(todayUpdatedTimeModel);
-  // }
+  Future<void> _updateStudyTimeModelAtEnd(DateTime now, int totalSec) async {
+    //isTimer update
+    UserModel updatedUserModel = AuthController.to.user.value.copyWith(
+      isTimer: false,
+    );
+    AuthController.to.updateUserModel(updatedUserModel);
+    //studyTime update
+    StudyTimeModel studyTimeModel = AuthController.to.studyTime;
+    if (DateUtil().calculateDateDifference(studyTimeModel.startTime!, now) >=
+        1) {
+      //시간 측정중 하루가 넘어감
+      datePassed(now);
+    } else {
+      StudyTimeModel updatedStudyTimeModel =
+          AuthController.to.studyTime.copyWith(
+        lastTime: now,
+        totalSeconds: totalSec,
+      );
+      StudyTimeRepository().uploadStudyTimeModel(updatedStudyTimeModel);
+      AuthController.to.studyTime = updatedStudyTimeModel;
+    }
+  }
 
   Future<void> datePassed(DateTime now) async {
     //Todo: 만약 유저가 24시간 이상 타이머를 켜놓는다면 이슈 발생

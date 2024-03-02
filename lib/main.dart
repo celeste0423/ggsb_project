@@ -1,4 +1,3 @@
-import 'package:cron/cron.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,9 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/binding/init_binding.dart';
-import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/overlay/pages/overlay_page.dart';
-import 'package:ggsb_project/src/helpers/amplitude_analytics.dart';
 import 'package:ggsb_project/src/root.dart';
 import 'package:ggsb_project/src/theme/base_theme.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -33,12 +30,12 @@ void main() async {
   //Amplitude analytics 설정
   // AmplitudeAnalytics().init();
   //새벽 4시에 초기화
-  Cron().schedule(Schedule.parse('01 04 * * *'), () async {
-    print("새벽 4시입니다.");
-    if (!AuthController.to.user.value.isTimer!) {
-      AuthController.to.loginUser(AuthController.to.user.value.uid!);
-    }
-  });
+  // Cron().schedule(Schedule.parse('01 04 * * *'), () async {
+  //   print("새벽 4시입니다.");
+  //   if (!AuthController.to.user.value.isTimer!) {
+  //     AuthController.to.loginUser(AuthController.to.user.value.uid!);
+  //   }
+  // });
   //화면 회전 불가
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
@@ -49,17 +46,17 @@ void main() async {
 Future<void> _initNotificationSetting() async {
   final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   //안드로이드 초기 세팅
-  final AndroidInitializationSettings androidInitializationSettings =
+  const AndroidInitializationSettings androidInitializationSettings =
       AndroidInitializationSettings('@mipmap/ic_launcher');
   //ios 초기 세팅
-  final DarwinInitializationSettings darwinInitializationSettings =
+  const DarwinInitializationSettings darwinInitializationSettings =
       DarwinInitializationSettings(
     requestAlertPermission: true,
     requestBadgePermission: true,
     requestSoundPermission: true,
   );
   //notification 초기 세팅
-  final InitializationSettings initializationSettings = InitializationSettings(
+  const InitializationSettings initializationSettings = InitializationSettings(
     android: androidInitializationSettings,
     iOS: darwinInitializationSettings,
   );
@@ -70,7 +67,7 @@ Future<void> _initNotificationSetting() async {
 @pragma('vm:entry-point')
 void overlayMain() {
   runApp(
-    MaterialApp(
+    const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: OverlayPage(),
     ),
@@ -88,7 +85,7 @@ class MyApp extends StatelessWidget {
       initialBinding: InitBinding(),
       title: 'GongGeomSeungBu',
       theme: baseTheme(context),
-      home: Root(),
+      home: const Root(),
     );
   }
 }
