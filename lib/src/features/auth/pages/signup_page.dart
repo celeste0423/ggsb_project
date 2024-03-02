@@ -77,330 +77,167 @@ class SignupPage extends GetView<SignupPageController> {
     );
   }
 
-
   Widget _inputTab() {
     return Expanded(
-      child: SingleChildScrollView(
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 25),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30),
-              topLeft: Radius.circular(30),
-            ),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 25,
+        ),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(30),
+            topLeft: Radius.circular(30),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: 20),
-              Container(
-                width: 200,
-                height: 200,
-                decoration: BoxDecoration(
-                  color: CustomColors.lightGreyBackground,
-                  borderRadius: BorderRadius.circular(100),
-                ),
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(100)),
-                  child: OverflowBox(
-                    maxHeight: double.infinity,
-                    maxWidth: double.infinity,
-                    alignment: Alignment.topCenter,
-                    child: Container(
-                      width: 280,
-                      height: 280,
-                      padding: const EdgeInsets.only(left: 0, bottom: 10),
-                      child: RiveAnimation.asset(
-                        'assets/riv/character.riv',
-                        stateMachines: ["character"],
-                        onInit: controller.onRiveInit,
+        ),
+        child: SingleChildScrollView(
+          child: SizedBox(
+            height: Get.height - 270,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const SizedBox(),
+                Container(
+                  width: 200,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    color: CustomColors.lightGreyBackground,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(100)),
+                    child: OverflowBox(
+                      maxHeight: double.infinity,
+                      maxWidth: double.infinity,
+                      alignment: Alignment.topCenter,
+                      child: Container(
+                        width: 280,
+                        height: 280,
+                        padding: const EdgeInsets.only(left: 0, bottom: 10),
+                        child: RiveAnimation.asset(
+                          'assets/riv/character.riv',
+                          stateMachines: ["character"],
+                          onInit: controller.onRiveInit,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              TextFieldBox(
-                textEditingController: controller.nicknameController,
-                backgroundColor: CustomColors.lightGreyBackground,
-                hintText: '닉네임(2~8자)',
-                maxLength: 8,
-                textInputAction: TextInputAction.next,
-                onSubmitted: (_) => FocusScope.of(Get.context!).unfocus(),
-                autoFocus: controller.isProfileEditing == null ? true : false,
-              ),
-              _schoolSelectButton(),
-              SizedBox(height: 20),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Obx(() {
-                    return Row(
-                      children: [
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              controller.isMale(true);
-                            },
-                            child: AnimatedContainer(
-                              height: 55,
-                              decoration: BoxDecoration(
-                                color: controller.isMale.value
-                                    ? CustomColors.mainBlack
-                                    : CustomColors.lightGreyBackground,
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(20),
+                TextFieldBox(
+                  textEditingController: controller.nicknameController,
+                  backgroundColor: CustomColors.lightGreyBackground,
+                  hintText: '닉네임(2~8자)',
+                  maxLength: 8,
+                  textInputAction: TextInputAction.next,
+                  onSubmitted: (_) => FocusScope.of(Get.context!).unfocus(),
+                  autoFocus: controller.isProfileEditing == null ? true : false,
+                ),
+                _schoolSelectButton(),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Obx(() {
+                      return Row(
+                        children: [
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                controller.isMale(true);
+                              },
+                              child: AnimatedContainer(
+                                height: 55,
+                                decoration: BoxDecoration(
+                                  color: controller.isMale.value
+                                      ? CustomColors.mainBlack
+                                      : CustomColors.lightGreyBackground,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(20)),
                                 ),
-                              ),
-                              duration: const Duration(milliseconds: 300),
-                              child: Center(
-                                child: Text(
-                                  '남',
-                                  style: TextStyle(
-                                    color: controller.isMale.value
-                                        ? Colors.white
-                                        : CustomColors.lightGreyText,
-                                    fontSize: 16,
+                                duration: const Duration(milliseconds: 300),
+                                child: Center(
+                                  child: Text(
+                                    '남',
+                                    style: TextStyle(
+                                      color: controller.isMale.value
+                                          ? Colors.white
+                                          : CustomColors.lightGreyText,
+                                      fontSize: 16,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        const SizedBox(width: 20),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              controller.isMale(false);
-                            },
-                            child: AnimatedContainer(
-                              height: 55,
-                              decoration: BoxDecoration(
-                                color: controller.isMale.value
-                                    ? CustomColors.lightGreyBackground
-                                    : CustomColors.mainBlack,
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(20),
+                          const SizedBox(width: 20),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                controller.isMale(false);
+                              },
+                              child: AnimatedContainer(
+                                height: 55,
+                                decoration: BoxDecoration(
+                                  color: controller.isMale.value
+                                      ? CustomColors.lightGreyBackground
+                                      : CustomColors.mainBlack,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(20)),
                                 ),
-                              ),
-                              duration: const Duration(milliseconds: 300),
-                              child: Center(
-                                child: Text(
-                                  '여',
-                                  style: TextStyle(
-                                    color: controller.isMale.value
-                                        ? CustomColors.lightGreyText
-                                        : Colors.white,
-                                    fontSize: 16,
+                                duration: const Duration(milliseconds: 300),
+                                child: Center(
+                                  child: Text(
+                                    '여',
+                                    style: TextStyle(
+                                      color: controller.isMale.value
+                                          ? CustomColors.lightGreyText
+                                          : Colors.white,
+                                      fontSize: 16,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    );
-                  }),
-                  Visibility(
-                    visible: controller.isProfileEditing == null,
-                    child: _termsAgreement(),
-                  ),
-                  SizedBox(height: 20),
-                  controller.isProfileEditing == null
-                      ? MainButton(
-                    buttonText: '승부 시작 !',
-                    onTap: () {
-                      controller.signUpButton();
-                    },
-                    textStyle: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                        ],
+                      );
+                    }),
+                    Visibility(
+                      visible: controller.isProfileEditing == null,
+                      child: _termsAgreement(),
                     ),
-                  )
-                      : MainButton(
-                    buttonText: '수정 완료',
-                    onTap: () {
-                      controller.profileEditButton();
-                    },
-                    textStyle: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-            ],
+                    controller.isProfileEditing == null
+                        ? MainButton(
+                            buttonText: '승부 시작 !',
+                            onTap: () {
+                              controller.signUpButton();
+                            },
+                            textStyle: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          )
+                        : MainButton(
+                            buttonText: '수정 완료',
+                            onTap: () {
+                              controller.profileEditButton();
+                            },
+                            textStyle: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
-
-  // Widget _inputTab() {
-  //   return Expanded(
-  //     child: Container(
-  //       width: double.infinity,
-  //       padding: const EdgeInsets.symmetric(
-  //         horizontal: 25,
-  //       ),
-  //       decoration: const BoxDecoration(
-  //         color: Colors.white,
-  //         borderRadius: BorderRadius.only(
-  //           topRight: Radius.circular(30),
-  //           topLeft: Radius.circular(30),
-  //         ),
-  //       ),
-  //       child: SingleChildScrollView(
-  //         child: SizedBox(
-  //           height: Get.height - 270,
-  //           child: Column(
-  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //             children: [
-  //               const SizedBox(),
-  //               Container(
-  //                 width: 200,
-  //                 height: 200,
-  //                 decoration: BoxDecoration(
-  //                   color: CustomColors.lightGreyBackground,
-  //                   borderRadius: BorderRadius.circular(100),
-  //                 ),
-  //                 child: ClipRRect(
-  //                   borderRadius: const BorderRadius.all(Radius.circular(100)),
-  //                   child: OverflowBox(
-  //                     maxHeight: double.infinity,
-  //                     maxWidth: double.infinity,
-  //                     alignment: Alignment.topCenter,
-  //                     child: Container(
-  //                       width: 280,
-  //                       height: 280,
-  //                       padding: const EdgeInsets.only(left: 0, bottom: 10),
-  //                       child: RiveAnimation.asset(
-  //                         'assets/riv/character.riv',
-  //                         stateMachines: ["character"],
-  //                         onInit: controller.onRiveInit,
-  //                       ),
-  //                     ),
-  //                   ),
-  //                 ),
-  //               ),
-  //               TextFieldBox(
-  //                 textEditingController: controller.nicknameController,
-  //                 backgroundColor: CustomColors.lightGreyBackground,
-  //                 hintText: '닉네임(2~8자)',
-  //                 maxLength: 8,
-  //                 textInputAction: TextInputAction.next,
-  //                 onSubmitted: (_) => FocusScope.of(Get.context!).unfocus(),
-  //                 autoFocus: controller.isProfileEditing == null ? true : false,
-  //               ),
-  //               _schoolSelectButton(),
-  //               Column(
-  //                 mainAxisAlignment: MainAxisAlignment.center,
-  //                 children: [
-  //                   Obx(() {
-  //                     return Row(
-  //                       children: [
-  //                         Expanded(
-  //                           child: GestureDetector(
-  //                             onTap: () {
-  //                               controller.isMale(true);
-  //                             },
-  //                             child: AnimatedContainer(
-  //                               height: 55,
-  //                               decoration: BoxDecoration(
-  //                                 color: controller.isMale.value
-  //                                     ? CustomColors.mainBlack
-  //                                     : CustomColors.lightGreyBackground,
-  //                                 borderRadius: const BorderRadius.all(
-  //                                     Radius.circular(20)),
-  //                               ),
-  //                               duration: const Duration(milliseconds: 300),
-  //                               child: Center(
-  //                                 child: Text(
-  //                                   '남',
-  //                                   style: TextStyle(
-  //                                     color: controller.isMale.value
-  //                                         ? Colors.white
-  //                                         : CustomColors.lightGreyText,
-  //                                     fontSize: 16,
-  //                                   ),
-  //                                 ),
-  //                               ),
-  //                             ),
-  //                           ),
-  //                         ),
-  //                         const SizedBox(width: 20),
-  //                         Expanded(
-  //                           child: GestureDetector(
-  //                             onTap: () {
-  //                               controller.isMale(false);
-  //                             },
-  //                             child: AnimatedContainer(
-  //                               height: 55,
-  //                               decoration: BoxDecoration(
-  //                                 color: controller.isMale.value
-  //                                     ? CustomColors.lightGreyBackground
-  //                                     : CustomColors.mainBlack,
-  //                                 borderRadius: const BorderRadius.all(
-  //                                     Radius.circular(20)),
-  //                               ),
-  //                               duration: const Duration(milliseconds: 300),
-  //                               child: Center(
-  //                                 child: Text(
-  //                                   '여',
-  //                                   style: TextStyle(
-  //                                     color: controller.isMale.value
-  //                                         ? CustomColors.lightGreyText
-  //                                         : Colors.white,
-  //                                     fontSize: 16,
-  //                                   ),
-  //                                 ),
-  //                               ),
-  //                             ),
-  //                           ),
-  //                         ),
-  //                       ],
-  //                     );
-  //                   }),
-  //                   Visibility(
-  //                     visible: controller.isProfileEditing == null,
-  //                     child: _termsAgreement(),
-  //                   ),
-  //                   controller.isProfileEditing == null
-  //                       ? MainButton(
-  //                           buttonText: '승부 시작 !',
-  //                           onTap: () {
-  //                             controller.signUpButton();
-  //                           },
-  //                           textStyle: const TextStyle(
-  //                             color: Colors.white,
-  //                             fontWeight: FontWeight.bold,
-  //                             fontSize: 16,
-  //                           ),
-  //                         )
-  //                       : MainButton(
-  //                           buttonText: '수정 완료',
-  //                           onTap: () {
-  //                             controller.profileEditButton();
-  //                           },
-  //                           textStyle: const TextStyle(
-  //                             color: Colors.white,
-  //                             fontWeight: FontWeight.bold,
-  //                             fontSize: 16,
-  //                           ),
-  //                         ),
-  //                 ],
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget _schoolSelectButton() {
     return CupertinoButton(
