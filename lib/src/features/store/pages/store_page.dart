@@ -29,13 +29,17 @@ class StorePage extends GetView<StorePageController> {
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: 20),
-          child: ImageIconButton(
-            assetPath: 'assets/icons/check.svg',
-            iconColor: CustomColors.greyBackground,
-            height: 17,
-            onTap: () {
-              controller.completeButton();
-            },
+          child: Obx(
+            () => ImageIconButton(
+              assetPath: 'assets/icons/check.svg',
+              iconColor: controller.isItemChanged.value
+                  ? CustomColors.mainBlue
+                  : CustomColors.lightGreyBackground,
+              height: 17,
+              onTap: () {
+                controller.completeButton();
+              },
+            ),
           ),
         ),
       ],
@@ -45,38 +49,38 @@ class StorePage extends GetView<StorePageController> {
   Widget _adBox() {
     return Container(
       color: CustomColors.whiteBackground,
-      padding: const EdgeInsets.symmetric(horizontal: 20,),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 20,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-
           CupertinoButton(
             padding: EdgeInsets.zero,
             onPressed: () {
               controller.adButton();
             },
             child: Obx(
-                  () => Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4),
-                    child: ChatBubble(
-                      clipper: ChatBubbleClipper4(type: BubbleType.sendBubble),
-                      alignment: Alignment.centerRight,
-                      backGroundColor: controller.rewardedAdCount.value == 0
-                          ? CustomColors.greyBackground
-                          : CustomColors.mainBlue,
-                      child: Text(
-                        '광고로 코인 충전 (${controller.rewardedAdCount.value}/10)',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 11,
-                        ),
-                      ),
+              () => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: ChatBubble(
+                  clipper: ChatBubbleClipper4(type: BubbleType.sendBubble),
+                  alignment: Alignment.centerRight,
+                  backGroundColor: controller.rewardedAdCount.value == 0
+                      ? CustomColors.greyBackground
+                      : CustomColors.mainBlue,
+                  child: Text(
+                    '광고로 코인 충전 (${controller.rewardedAdCount.value}/10)',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 11,
                     ),
                   ),
+                ),
+              ),
             ),
           ),
-
           Stack(
             alignment: Alignment.centerLeft,
             children: [
@@ -89,24 +93,21 @@ class StorePage extends GetView<StorePageController> {
                 ),
               ),
               Positioned(
-                left: 10,
-                top: 10,
-                child: Container(
-                  width: 12,
-                  height: 12,
-                  padding: const EdgeInsets.all(2.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(90),
-                    color: CustomColors.mainBlue,
-                  ),
-                  child: Image.asset('assets/icons/plus.png'),
-                )
-              ),
+                  left: 10,
+                  top: 10,
+                  child: Container(
+                    width: 12,
+                    height: 12,
+                    padding: const EdgeInsets.all(2.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(90),
+                      color: CustomColors.mainBlue,
+                    ),
+                    child: Image.asset('assets/icons/plus.png'),
+                  )),
             ],
           ),
-
           const SizedBox(width: 5),
-
           Obx(
             () => Text(
               controller.cash.value.toString(),
@@ -227,6 +228,7 @@ class StorePage extends GetView<StorePageController> {
                       itemIndex,
                       controller.itemList[categoryIndex][itemIndex][1],
                       controller.itemList[categoryIndex][itemIndex][2],
+                      controller.itemList[categoryIndex][itemIndex][3],
                     );
                   },
                   itemCount: controller.itemList[categoryIndex].length,
@@ -243,6 +245,7 @@ class StorePage extends GetView<StorePageController> {
     int categoryIndex,
     int itemIndex,
     var assetPath,
+    String name,
     int price,
   ) {
     return CupertinoButton(
@@ -295,6 +298,15 @@ class StorePage extends GetView<StorePageController> {
                               ),
                             ),
                       Visibility(
+                        visible: name != '',
+                        child: Text(
+                          name,
+                          style: const TextStyle(
+                            color: CustomColors.blackText,
+                          ),
+                        ),
+                      ),
+                      Visibility(
                         visible: !controller
                             .isItemUnlockedList[categoryIndex][itemIndex].value,
                         child: Row(
@@ -325,8 +337,6 @@ class StorePage extends GetView<StorePageController> {
       ),
     );
   }
-
-
 
   @override
   Widget build(BuildContext context) {

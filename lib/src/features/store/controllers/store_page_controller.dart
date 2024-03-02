@@ -19,6 +19,7 @@ class StorePageController extends GetxController
   static StorePageController get to => Get.find();
 
   Rx<bool> isPageLoading = false.obs;
+  Rx<bool> isItemChanged = false.obs;
 
   Rx<int> cash = AuthController.to.user.value.cash!.obs;
 
@@ -52,22 +53,26 @@ class StorePageController extends GetxController
       [
         'base',
         'base',
+        '맨 머리',
         0,
       ],
       [
         'eraserHat',
         'assets/items/hat/eraser_hat.png',
-        12,
+        '지우개 헬맷',
+        600,
       ],
       [
         'pencilHat',
         'assets/items/hat/pencil_hat.png',
-        10,
+        '연필 바이킹 투구',
+        800,
       ],
       [
         'highlighterHat',
         'assets/items/hat/highlighter_hat.png',
-        10,
+        '형광펜 갓',
+        800,
       ],
     ],
     //방패 종류
@@ -75,22 +80,26 @@ class StorePageController extends GetxController
       [
         'base',
         'assets/items/shield/shield.png',
-        10,
+        '강철 방패',
+        0,
       ],
       [
         'diamondShield',
         'assets/items/shield/diamond_shield.png',
-        10,
+        '다이아몬드 방패',
+        500,
       ],
       [
         'skullShield',
         'assets/items/shield/skull_shield.png',
-        10,
+        '해골 방패',
+        500,
       ],
       [
         'starShield',
         'assets/items/shield/star_shield.png',
-        10,
+        '별 방패',
+        500,
       ],
     ],
     //색 종류
@@ -98,51 +107,61 @@ class StorePageController extends GetxController
       [
         'base',
         CustomColors.baseCharacter,
+        '',
         0,
       ],
       [
         'pinkColor',
         CustomColors.pinkCharacter,
+        '',
         10,
       ],
       [
         'greenColor',
         CustomColors.greenCharacter,
+        '',
         10,
       ],
       [
         'lightblueColor',
         CustomColors.lightBlueCharacter,
+        '',
         10,
       ],
       [
         'redColor',
         CustomColors.redCharacter,
+        '',
         10,
       ],
       [
         'yellowColor',
         CustomColors.yellowCharacter,
+        '',
         10,
       ],
       [
         'orangeColor',
         CustomColors.orangeCharacter,
+        '',
         10,
       ],
       [
         'purpleColor',
         CustomColors.purpleCharacter,
+        '',
         10,
       ],
       [
         'greyColor',
         CustomColors.greyCharacter,
+        '',
         10,
       ],
       [
         'blackColor',
         CustomColors.blackCharacter,
+        '',
         10,
       ],
     ],
@@ -269,6 +288,8 @@ class StorePageController extends GetxController
   }
 
   void _selectIndex(int categoryIndex, int itemIndex) {
+    UserModel userModel = AuthController.to.user.value;
+    CharacterModel characterModel = userModel.characterData!;
     selectedIndex[categoryIndex](itemIndex);
     if (!isItemUnlockedList[categoryIndex][itemIndex].value) {
       isPurchaseButton(true);
@@ -288,6 +309,15 @@ class StorePageController extends GetxController
         {
           characterColor!.value = itemIndex.toDouble();
         }
+    }
+    bool isHatDiff = characterHat!.value.toInt() != characterModel.hat;
+    bool isShieldDiff = characterShield!.value.toInt() != characterModel.shield;
+    bool isColorDiff =
+        characterColor!.value.toInt() != characterModel.bodyColor;
+    if (isHatDiff || isShieldDiff || isColorDiff) {
+      isItemChanged(true);
+    } else {
+      isItemChanged(false);
     }
   }
 
