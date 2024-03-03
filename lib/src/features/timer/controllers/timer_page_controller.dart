@@ -52,22 +52,6 @@ class TimerPageController extends GetxController
   List<RoomStreamModel> roomStreamList = [];
   List<RoomStreamModel> liveRoomStreamList = [];
 
-  String toOrdinal(int number) {
-    if (number % 100 >= 11 && number % 100 <= 13) {
-      return '$number' + 'th';
-    }
-    switch (number % 10) {
-      case 1:
-        return '$number' + 'st';
-      case 2:
-        return '$number' + 'nd';
-      case 3:
-        return '$number' + 'rd';
-      default:
-        return '$number' + 'th';
-    }
-  }
-
   int indicatorCount = 0;
 
   @override

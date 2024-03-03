@@ -7,6 +7,7 @@ import 'package:ggsb_project/src/features/timer/controllers/timer_page_controlle
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
+import 'package:ggsb_project/src/utils/number_util.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
 import 'package:ggsb_project/src/widgets/character_list.dart';
 import 'package:ggsb_project/src/widgets/full_size_loading_indicator.dart';
@@ -256,7 +257,7 @@ class TimerPage extends GetView<TimerPageController> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            controller.toOrdinal(index + 1),
+            NumberUtil.toOrdinal(index + 1),
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w800,

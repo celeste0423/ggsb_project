@@ -10,7 +10,6 @@ import 'package:ggsb_project/src/models/study_time_model.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:ggsb_project/src/repositories/room_repository.dart';
 import 'package:ggsb_project/src/repositories/study_time_repository.dart';
-import 'package:ggsb_project/src/repositories/user_repository.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:rive/rive.dart';
@@ -25,7 +24,7 @@ class ResultPageController extends GetxController
 
   List<RoomModel> roomModelList = [];
   List<List<StudyTimeModel?>> studyTimeModelList = [];
-  List<String> firstUidList = [];
+  late StudyTimeModel myStudyTime;
 
   SMINumber? characterHat;
   SMINumber? characterColor;
@@ -65,24 +64,22 @@ class ResultPageController extends GetxController
     roomTabController.addListener(
       () {
         update(['tabIndicator']);
-        _riveCharacterInit(firstUidList[roomTabController.index]);
       },
     );
   }
 
-  void onRiveInit(Artboard artboard, String uid) async {
+  void onRiveInit(Artboard artboard) {
     final riveController =
         StateMachineController.fromArtboard(artboard, 'character');
-    // riveController!.isActive = false;
     artboard.addController(riveController!);
-    characterColor = riveController.findInput<double>('color') as SMINumber;
     characterHat = riveController.findInput<double>('hat') as SMINumber;
-    await _riveCharacterInit(uid);
+    characterColor = riveController.findInput<double>('color') as SMINumber;
+    riveCharacterInit();
   }
 
-  Future<void> _riveCharacterInit(String uid) async {
-    UserModel? userModel = await UserRepository.getUserData(uid);
-    CharacterModel characterModel = userModel!.characterData!;
+  void riveCharacterInit() {
+    UserModel userModel = AuthController.to.user.value;
+    CharacterModel characterModel = userModel.characterData!;
     characterHat!.value = characterModel.hat!.toDouble();
     characterColor!.value = characterModel.bodyColor!.toDouble();
   }
@@ -91,11 +88,15 @@ class ResultPageController extends GetxController
     List<StudyTimeModel?> modelList = [];
     for (String uid in roomModelList[index].uidList!) {
       String yesterday = DateUtil().dateTimeToString(
-        DateUtil().getYesterday(),
+        // DateUtil().getYesterday(),
+        DateTime.now(),
       );
       StudyTimeModel? studyTimeModel =
           await StudyTimeRepository().getStudyTimeModel(uid, yesterday);
       modelList.add(studyTimeModel);
+      if (studyTimeModel!.uid == AuthController.to.user.value.uid) {
+        myStudyTime = studyTimeModel;
+      }
     }
     return modelList;
   }

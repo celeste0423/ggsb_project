@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/result/controllers/result_page_controller.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
+import 'package:ggsb_project/src/utils/number_util.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
 import 'package:ggsb_project/src/widgets/full_size_loading_indicator.dart';
 import 'package:ggsb_project/src/widgets/loading_indicator.dart';
@@ -82,22 +84,113 @@ class ResultPage extends GetView<ResultPageController> {
                   } else if (snapshot.hasError) {
                     return const Text('오류 발생');
                   } else {
-                    controller.firstUidList.add(snapshot.data![0]!.uid!);
+                    print(snapshot.data!.length);
                     return Column(
-                      children: List.generate(
-                        snapshot.data!.length,
-                        (userIndex) {
-                          return _timeCard(
-                            snapshot.data![userIndex]!.uid!,
-                            snapshot.data![userIndex]!.nickname!,
-                            // SecondsUtil.convertToDigitString(
-                            //     snapshot.data![userIndex]!.totalSeconds!),
-                            SecondsUtil.convertToDigitString(
-                                snapshot.data![userIndex]!.totalSeconds!),
-                            userIndex,
-                          );
-                        },
-                      ),
+                      children: [
+                        SizedBox(
+                          height: (Get.height - 120 - 130 - 20) / 2,
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: (Get.height - 120 - 130 - 20) / 2 - 150,
+                                child: RiveAnimation.asset(
+                                  'assets/riv/character.riv',
+                                  stateMachines: ["character"],
+                                  onInit: (artboard) {
+                                    controller.onRiveInit(artboard);
+                                  },
+                                ),
+                              ),
+                              Image.asset('assets/icons/trophy.png',
+                                  height: 20),
+                              Text(
+                                AuthController.to.user.value.nickname!,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: CustomColors.mainBlue,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Text(
+                                SecondsUtil.convertToDigitString(
+                                    controller.myStudyTime.totalSeconds!),
+                                style: const TextStyle(
+                                  fontSize: 30,
+                                  color: CustomColors.blackText,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.only(top: 10),
+                                width: 50,
+                                height: 2,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(2),
+                                  color: CustomColors.lightGreyBackground,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        snapshot.data!.length > 3
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Column(
+                                    children: List.generate(
+                                      snapshot.data!.length > 3
+                                          ? 3
+                                          : snapshot.data!.length,
+                                      (userIndex) {
+                                        return _timeCard(
+                                          snapshot.data![userIndex]!.uid!,
+                                          snapshot.data![userIndex]!.nickname!,
+                                          SecondsUtil.convertToDigitString(
+                                              snapshot.data![userIndex]!
+                                                  .totalSeconds!),
+                                          userIndex,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  Column(
+                                    children: List.generate(
+                                      snapshot.data!.length - 3 < 0
+                                          ? 0
+                                          : snapshot.data!.length - 3,
+                                      (userIndex) {
+                                        return _timeCard(
+                                          snapshot.data![userIndex + 3]!.uid!,
+                                          snapshot
+                                              .data![userIndex + 3]!.nickname!,
+                                          SecondsUtil.convertToDigitString(
+                                              snapshot.data![userIndex + 3]!
+                                                  .totalSeconds!),
+                                          userIndex + 3,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : Column(
+                                children: List.generate(
+                                  snapshot.data!.length > 3
+                                      ? 3
+                                      : snapshot.data!.length,
+                                  (userIndex) {
+                                    return _timeCard(
+                                      snapshot.data![userIndex]!.uid!,
+                                      snapshot.data![userIndex]!.nickname!,
+                                      SecondsUtil.convertToDigitString(snapshot
+                                          .data![userIndex]!.totalSeconds!),
+                                      userIndex,
+                                    );
+                                  },
+                                ),
+                              ),
+                      ],
                     );
                   }
                 },
@@ -110,70 +203,46 @@ class ResultPage extends GetView<ResultPageController> {
   }
 
   Widget _timeCard(String uid, String nickname, String time, int index) {
-    return index == 0
-        ? SizedBox(
-            height: 320,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 180,
-                  child: RiveAnimation.asset(
-                    'assets/riv/character.riv',
-                    stateMachines: ["character"],
-                    onInit: (artboard) {
-                      controller.onRiveInit(artboard, uid);
-                    },
-                  ),
+    return Container(
+      height: (Get.height - 120 - 130 - 20) / 6 - 40,
+      margin: EdgeInsets.symmetric(vertical: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                NumberUtil.toOrdinal(index + 1),
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: CustomColors.mainBlue,
+                  fontWeight: FontWeight.w600,
                 ),
-                Image.asset('assets/icons/trophy.png', width: 20),
-                Text(
-                  nickname,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: CustomColors.mainBlue,
-                    fontWeight: FontWeight.w600,
-                  ),
+              ),
+              SizedBox(width: 10),
+              Text(
+                nickname,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: uid == AuthController.to.user.value.uid
+                      ? CustomColors.mainBlue
+                      : CustomColors.mainBlack,
+                  fontWeight: FontWeight.w600,
                 ),
-                Text(
-                  time,
-                  style: const TextStyle(
-                    fontSize: 30,
-                    color: CustomColors.blackText,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 10),
-                  width: 50,
-                  height: 2,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(2),
-                    color: CustomColors.lightGreyBackground,
-                  ),
-                ),
-              ],
+              ),
+            ],
+          ),
+          Text(
+            time,
+            style: const TextStyle(
+              fontSize: 14,
+              color: CustomColors.greyText,
             ),
-          )
-        : SizedBox(
-            height: 70,
-            child: Column(
-              children: [
-                Text(
-                  nickname,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: CustomColors.mainBlue,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Text(
-                  time,
-                  style: const TextStyle(
-                      fontSize: 20, color: CustomColors.greyText),
-                ),
-              ],
-            ),
-          );
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _tabIndicator() {
@@ -183,7 +252,7 @@ class ResultPage extends GetView<ResultPageController> {
         return Visibility(
           visible: controller.indicatorCount != 1,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 25),
+            padding: const EdgeInsets.only(top: 10, bottom: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
@@ -209,7 +278,12 @@ class ResultPage extends GetView<ResultPageController> {
 
   Widget _shareButton() {
     return Padding(
-      padding: const EdgeInsets.only(left: 30, right: 30, bottom: 50),
+      padding: EdgeInsets.only(
+        left: 30,
+        right: 30,
+        bottom: 30,
+        top: controller.indicatorCount != 1 ? 0 : 30,
+      ),
       child: Row(
         children: [
           Expanded(
@@ -228,7 +302,7 @@ class ResultPage extends GetView<ResultPageController> {
                 color: CustomColors.whiteText,
               ),
               backgroundColor: CustomColors.blackRoom,
-              height: 70,
+              height: 60,
             ),
           ),
           const SizedBox(width: 10),
@@ -248,7 +322,7 @@ class ResultPage extends GetView<ResultPageController> {
                 fontSize: 14,
               ),
               backgroundColor: CustomColors.whiteBackground,
-              height: 70,
+              height: 60,
             ),
           ),
         ],
@@ -279,8 +353,12 @@ class ResultPage extends GetView<ResultPageController> {
                             ),
                           ),
                         ),
-                        _tabIndicator(),
-                        _shareButton(),
+                        Column(
+                          children: [
+                            _tabIndicator(),
+                            _shareButton(),
+                          ],
+                        ),
                       ],
                     ),
                     Positioned(
