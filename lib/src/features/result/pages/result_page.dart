@@ -57,26 +57,26 @@ class ResultPage extends GetView<ResultPageController> {
           borderRadius: BorderRadius.circular(25),
           color: CustomColors.whiteBackground,
         ),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Text(
-                DateFormat('yyyy - MM - dd').format(DateUtil().getYesterday()),
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: CustomColors.greyText,
-                ),
+        child: Column(
+          children: [
+            Text(
+              DateFormat('yyyy - MM - dd').format(DateUtil().getYesterday()),
+              style: const TextStyle(
+                fontSize: 12,
+                color: CustomColors.greyText,
               ),
-              const SizedBox(height: 15),
-              Text(
-                controller.roomModelList[roomIndex]!.roomName!,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: CustomColors.blackText,
-                ),
+            ),
+            const SizedBox(height: 15),
+            Text(
+              controller.roomModelList[roomIndex]!.roomName!,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: CustomColors.blackText,
               ),
-              FutureBuilder(
+            ),
+            Expanded(
+              child: FutureBuilder(
                 future: controller.getStudyTimeList(roomIndex),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -87,8 +87,7 @@ class ResultPage extends GetView<ResultPageController> {
                     print(snapshot.data!.length);
                     return Column(
                       children: [
-                        SizedBox(
-                          height: (Get.height - 120 - 130 - 20) / 2,
+                        Expanded(
                           child: Column(
                             children: [
                               SizedBox(
@@ -132,116 +131,74 @@ class ResultPage extends GetView<ResultPageController> {
                             ],
                           ),
                         ),
-                        snapshot.data!.length > 3
-                            ? Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Column(
-                                    children: List.generate(
-                                      snapshot.data!.length > 3
-                                          ? 3
-                                          : snapshot.data!.length,
-                                      (userIndex) {
-                                        return _timeCard(
-                                          snapshot.data![userIndex]!.uid!,
-                                          snapshot.data![userIndex]!.nickname!,
-                                          SecondsUtil.convertToDigitString(
-                                              snapshot.data![userIndex]!
-                                                  .totalSeconds!),
-                                          userIndex,
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                  Column(
-                                    children: List.generate(
-                                      snapshot.data!.length - 3 < 0
-                                          ? 0
-                                          : snapshot.data!.length - 3,
-                                      (userIndex) {
-                                        return _timeCard(
-                                          snapshot.data![userIndex + 3]!.uid!,
-                                          snapshot
-                                              .data![userIndex + 3]!.nickname!,
-                                          SecondsUtil.convertToDigitString(
-                                              snapshot.data![userIndex + 3]!
-                                                  .totalSeconds!),
-                                          userIndex + 3,
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              )
-                            : Column(
-                                children: List.generate(
-                                  snapshot.data!.length > 3
-                                      ? 3
-                                      : snapshot.data!.length,
-                                  (userIndex) {
-                                    return _timeCard(
-                                      snapshot.data![userIndex]!.uid!,
-                                      snapshot.data![userIndex]!.nickname!,
-                                      SecondsUtil.convertToDigitString(snapshot
-                                          .data![userIndex]!.totalSeconds!),
-                                      userIndex,
-                                    );
-                                  },
-                                ),
-                              ),
+                        Expanded(
+                          child: GridView.count(
+                            shrinkWrap: true,
+                            crossAxisCount: 2,
+                            childAspectRatio: 2,
+                            children: List.generate(
+                              snapshot.data!.length,
+                              (userIndex) {
+                                return _timeCard(
+                                  snapshot.data![userIndex]!.uid!,
+                                  snapshot.data![userIndex]!.nickname!,
+                                  SecondsUtil.convertToDigitString(
+                                      snapshot.data![userIndex]!.totalSeconds!),
+                                  userIndex,
+                                );
+                              },
+                            ),
+                          ),
+                        ),
                       ],
                     );
                   }
                 },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       );
     });
   }
 
   Widget _timeCard(String uid, String nickname, String time, int index) {
-    return Container(
-      height: (Get.height - 120 - 130 - 20) / 6 - 40,
-      margin: EdgeInsets.symmetric(vertical: 5),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                NumberUtil.toOrdinal(index + 1),
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: CustomColors.mainBlue,
-                  fontWeight: FontWeight.w600,
-                ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              NumberUtil.toOrdinal(index + 1),
+              style: const TextStyle(
+                fontSize: 14,
+                color: CustomColors.mainBlue,
+                fontWeight: FontWeight.w600,
               ),
-              SizedBox(width: 10),
-              Text(
-                nickname,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: uid == AuthController.to.user.value.uid
-                      ? CustomColors.mainBlue
-                      : CustomColors.mainBlack,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
-          Text(
-            time,
-            style: const TextStyle(
-              fontSize: 14,
-              color: CustomColors.greyText,
             ),
+            SizedBox(width: 10),
+            Text(
+              nickname,
+              style: TextStyle(
+                fontSize: 14,
+                color: uid == AuthController.to.user.value.uid
+                    ? CustomColors.mainBlue
+                    : CustomColors.mainBlack,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+        Text(
+          time,
+          style: const TextStyle(
+            fontSize: 14,
+            color: CustomColors.greyText,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
