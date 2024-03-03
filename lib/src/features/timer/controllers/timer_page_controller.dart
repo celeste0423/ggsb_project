@@ -187,20 +187,18 @@ class TimerPageController extends GetxController
   void arrangeSnapshot(
     AsyncSnapshot<List<RoomStreamModel>> snapshot,
     RoomModel roomModel,
-  ) {
+  ) async {
     roomStreamList = snapshot.data!;
     liveRoomStreamList = List.from(roomStreamList);
     DateTime now = DateTime.now();
     // liveRoomStreamList에 대한 totalLiveSeconds 계산
     for (int i = 0; i < liveRoomStreamList.length; i++) {
-      liveRoomStreamList[i] = LiveSecondsUtil.calcTotalLiveSecInRoomStream(
+      liveRoomStreamList[i] = LiveSecondsUtil().calcTotalLiveSecInRoomStream(
         liveRoomStreamList[i],
         now,
       );
       //4시간 이상 접속을 안했을 경우 sleepy 실행
       _checkSleepy(liveRoomStreamList[i]);
-      //17시간 이상 측정중일경우 기록 삭제
-      _deleteStudyTime(liveRoomStreamList[i]);
     }
     // totalLiveSeconds를 기준으로 리스트를 큰 순서대로 정렬
     liveRoomStreamList.sort(
@@ -240,8 +238,6 @@ class TimerPageController extends GetxController
     Duration difference = firstTime.difference(secondTime);
     return difference.abs() >= const Duration(hours: 4);
   }
-
-  void _deleteStudyTime(RoomStreamModel roomStreamModel) {}
 
   //button
 
@@ -306,7 +302,7 @@ class TimerPageController extends GetxController
     int totalSec = AuthController.to.studyTime.totalSeconds! + diffSec;
 
     //개인 studyTimeModel 업로드
-    if (diffSec > 3600 * 17) {
+    if (diffSec > LiveSecondsUtil.deletionCriteria) {
       //한번에 측정한 시간이 17시간을 초과했을경우 측정 시간 0으로 초기화
       openAlertDialog(
         title: '시간 초과',
