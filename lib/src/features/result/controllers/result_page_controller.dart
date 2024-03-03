@@ -88,8 +88,8 @@ class ResultPageController extends GetxController
     List<StudyTimeModel?> modelList = [];
     for (String uid in roomModelList[index].uidList!) {
       String yesterday = DateUtil().dateTimeToString(
-        // DateUtil().getYesterday(),
-        DateTime.now(),
+        DateUtil().getYesterday(),
+        // DateTime.now(),
       );
       StudyTimeModel? studyTimeModel =
           await StudyTimeRepository().getStudyTimeModel(uid, yesterday);
@@ -98,6 +98,8 @@ class ResultPageController extends GetxController
         myStudyTime = studyTimeModel;
       }
     }
+    // totalSeconds 값을 기준으로 정렬
+    modelList.sort((b, a) => (a!.totalSeconds!).compareTo(b!.totalSeconds!));
     return modelList;
   }
 

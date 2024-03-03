@@ -199,6 +199,8 @@ class TimerPageController extends GetxController
       );
       //4시간 이상 접속을 안했을 경우 sleepy 실행
       _checkSleepy(liveRoomStreamList[i]);
+      //17시간 이상 측정중일경우 기록 삭제
+      _deleteStudyTime(liveRoomStreamList[i]);
     }
     // totalLiveSeconds를 기준으로 리스트를 큰 순서대로 정렬
     liveRoomStreamList.sort(
@@ -238,6 +240,8 @@ class TimerPageController extends GetxController
     Duration difference = firstTime.difference(secondTime);
     return difference.abs() >= const Duration(hours: 4);
   }
+
+  void _deleteStudyTime(RoomStreamModel roomStreamModel) {}
 
   //button
 
