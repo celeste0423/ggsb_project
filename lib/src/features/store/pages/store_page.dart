@@ -16,8 +16,8 @@ class StorePage extends GetView<StorePageController> {
   const StorePage({Key? key});
 
   Widget cashDialog(int addedCash) {
-    double desiredWidth = 100;
-    double desiredHeight = 100;
+    double desiredWidth = 3 - 130;
+    double desiredHeight = 3 - 130;
     return Dialog(
       insetPadding:
           EdgeInsets.symmetric(horizontal: 30, vertical: Get.height / 4),
