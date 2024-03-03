@@ -245,7 +245,7 @@ class StorePageController extends GetxController
       Get.dialog(const StorePage().cashDialog(totalAddedTime));
       updateCash(totalAddedTime);
     }
-    // Get.dialog(const StorePage().cashDialog(300));
+    Get.dialog(const StorePage().cashDialog(300));
   }
 
   //on init
