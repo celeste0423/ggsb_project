@@ -37,30 +37,20 @@ class RoomListPage extends GetView<RoomListPageController> {
   Widget _sayingBox() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-      child: GestureDetector(
-        onTap: () {
-          controller.getSaying();
-        },
-        child: Container(
-          height: 80,
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          decoration: BoxDecoration(
-            color: CustomColors.lightGreyBackground,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Center(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Obx(
-                () => Text(
-                  controller.saying.value,
-                  style: const TextStyle(
-                    color: CustomColors.blackText,
-                    fontSize: 12,
-                  ),
-                ),
-              ),
+      child: Container(
+        height: 80,
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        decoration: BoxDecoration(
+          color: CustomColors.lightGreyBackground,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: const Center(
+          child: Text(
+            '시작이 반이다\n -아리스토텔레스',
+            style: TextStyle(
+              color: CustomColors.blackText,
+              fontSize: 12,
             ),
           ),
         ),
@@ -78,18 +68,21 @@ class RoomListPage extends GetView<RoomListPageController> {
   //       child: Container(
   //         height: 80,
   //         width: double.infinity,
-  //         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+  //         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
   //         decoration: BoxDecoration(
   //           color: CustomColors.lightGreyBackground,
   //           borderRadius: BorderRadius.circular(20),
   //         ),
   //         child: Center(
-  //           child: Obx(
-  //             () => Text(
-  //               controller.saying.value,
-  //               style: TextStyle(
-  //                 color: CustomColors.blackText,
-  //                 fontSize: 12,
+  //           child: SingleChildScrollView(
+  //             scrollDirection: Axis.vertical,
+  //             child: Obx(
+  //                   () => Text(
+  //                 controller.saying.value,
+  //                 style: const TextStyle(
+  //                   color: CustomColors.blackText,
+  //                   fontSize: 12,
+  //                 ),
   //               ),
   //             ),
   //           ),
