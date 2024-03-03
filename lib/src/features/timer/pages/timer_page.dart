@@ -7,6 +7,7 @@ import 'package:ggsb_project/src/features/timer/controllers/timer_page_controlle
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
+import 'package:ggsb_project/src/utils/number_util.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
 import 'package:ggsb_project/src/widgets/character_list.dart';
 import 'package:ggsb_project/src/widgets/full_size_loading_indicator.dart';
@@ -50,8 +51,7 @@ class TimerPage extends GetView<TimerPageController> {
   Widget _map() {
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
-      height: 300,
-      width: 300,
+      height: Get.width - 100,
       child: Obx(
         () {
           return controller.noRooms.value
@@ -87,9 +87,10 @@ class TimerPage extends GetView<TimerPageController> {
             return const Text('불러오는 중 에러가 발생했습니다.');
           } else {
             return Container(
-              padding: const EdgeInsets.only(bottom: 10, top: 10),
-              height: 322,
-              width: 322,
+              height: Get.width - 100,
+              width: Get.width - 100,
+              margin: const EdgeInsets.symmetric(horizontal: 50),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(160),
                 color: CustomColors.lightGreyBackground,
@@ -256,7 +257,7 @@ class TimerPage extends GetView<TimerPageController> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            controller.toOrdinal(index + 1),
+            NumberUtil.toOrdinal(index + 1),
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w800,
@@ -328,7 +329,9 @@ class TimerPage extends GetView<TimerPageController> {
         () => AnimatedContainer(
           duration: const Duration(milliseconds: 500),
           curve: Curves.easeInOutCubic,
-          height: controller.isTimer.value ? Get.height : Get.height - 445,
+          height: controller.isTimer.value
+              ? Get.height
+              : Get.height - (Get.width - 100) - 145,
           width: Get.width,
           decoration: BoxDecoration(
             color: CustomColors.mainBlack,

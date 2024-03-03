@@ -52,22 +52,6 @@ class TimerPageController extends GetxController
   List<RoomStreamModel> roomStreamList = [];
   List<RoomStreamModel> liveRoomStreamList = [];
 
-  String toOrdinal(int number) {
-    if (number % 100 >= 11 && number % 100 <= 13) {
-      return '$number' + 'th';
-    }
-    switch (number % 10) {
-      case 1:
-        return '$number' + 'st';
-      case 2:
-        return '$number' + 'nd';
-      case 3:
-        return '$number' + 'rd';
-      default:
-        return '$number' + 'th';
-    }
-  }
-
   int indicatorCount = 0;
 
   @override
@@ -203,13 +187,13 @@ class TimerPageController extends GetxController
   void arrangeSnapshot(
     AsyncSnapshot<List<RoomStreamModel>> snapshot,
     RoomModel roomModel,
-  ) {
+  ) async {
     roomStreamList = snapshot.data!;
     liveRoomStreamList = List.from(roomStreamList);
     DateTime now = DateTime.now();
     // liveRoomStreamList에 대한 totalLiveSeconds 계산
     for (int i = 0; i < liveRoomStreamList.length; i++) {
-      liveRoomStreamList[i] = LiveSecondsUtil.calcTotalLiveSecInRoomStream(
+      liveRoomStreamList[i] = LiveSecondsUtil().calcTotalLiveSecInRoomStream(
         liveRoomStreamList[i],
         now,
       );
@@ -318,7 +302,7 @@ class TimerPageController extends GetxController
     int totalSec = AuthController.to.studyTime.totalSeconds! + diffSec;
 
     //개인 studyTimeModel 업로드
-    if (diffSec > 3600 * 17) {
+    if (diffSec > LiveSecondsUtil.deletionCriteria) {
       //한번에 측정한 시간이 17시간을 초과했을경우 측정 시간 0으로 초기화
       openAlertDialog(
         title: '시간 초과',

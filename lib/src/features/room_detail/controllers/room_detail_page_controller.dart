@@ -54,14 +54,14 @@ class RoomDetailPageController extends GetxController {
     return RoomStreamRepository().roomStreamListStream(roomModel.roomId!);
   }
 
-  void arrangeSnapshot(AsyncSnapshot<List<RoomStreamModel>> snapshot) {
+  void arrangeSnapshot(AsyncSnapshot<List<RoomStreamModel>> snapshot) async {
     roomStreamList = snapshot.data!;
     liveRoomStreamList = List.from(roomStreamList);
     DateTime now = DateTime.now();
     // liveRoomStreamList에 대한 totalLiveSeconds 계산
     for (int i = 0; i < liveRoomStreamList.length; i++) {
-      liveRoomStreamList[i] = LiveSecondsUtil.calcTotalLiveSecInRoomStream(
-          liveRoomStreamList[i], now);
+      liveRoomStreamList[i] = LiveSecondsUtil()
+          .calcTotalLiveSecInRoomStream(liveRoomStreamList[i], now);
     }
     // totalLiveSeconds를 기준으로 리스트를 큰 순서대로 정렬
     liveRoomStreamList

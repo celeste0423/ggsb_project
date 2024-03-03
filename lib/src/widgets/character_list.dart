@@ -1,6 +1,7 @@
 import 'package:circular_motion/circular_motion.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ggsb_project/src/models/character_model.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
@@ -45,7 +46,7 @@ class _CharacterListState extends State<CharacterList> {
     setState(() {
       isLoading = false;
     });
-    print('로딩');
+    // print('로딩');
   }
 
   @override
@@ -175,7 +176,7 @@ class _CharacterListState extends State<CharacterList> {
             children: [
               PieChart(
                 PieChartData(
-                  centerSpaceRadius: 113,
+                  centerSpaceRadius: (Get.width - 100) / 2 - 40,
                   borderData: FlBorderData(show: false),
                   sections: _chartData(),
                 ),
