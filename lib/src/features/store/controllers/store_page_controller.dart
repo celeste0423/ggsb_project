@@ -53,7 +53,7 @@ class StorePageController extends GetxController
   late TabController categoryTabController;
 
   List<List<List<dynamic>>> itemList = [
-    //id, path , price , isUnlocked
+    //id, path , name , price
     [
       //모자 종류
       [
@@ -244,8 +244,10 @@ class StorePageController extends GetxController
         );
         totalAddedTime += studyTimeInMinute;
       }
-      Get.dialog(const StorePage().cashDialog(totalAddedTime));
-      updateCash(totalAddedTime);
+      if (totalAddedTime > 0) {
+        Get.dialog(const StorePage().cashDialog(totalAddedTime));
+        updateCash(totalAddedTime);
+      }
     }
     // Get.dialog(const StorePage().cashDialog(300));
   }
@@ -385,15 +387,15 @@ class StorePageController extends GetxController
     int categoryIndex = categoryTabController.index;
     int itemIndex = selectedIndex[categoryIndex].value;
     List<dynamic> selectedItem = itemList[categoryIndex][itemIndex];
-    if (cash.value < selectedItem[2]) {
+    if (cash.value < selectedItem[3]) {
       openAlertDialog(title: '코인이 부족합니다.');
     } else {
       openAlertDialog(
         title: '상품을 구매하시겠습니까?',
-        content: '총 ${selectedItem[2]}코인이 소모됩니다.',
+        content: '총 ${selectedItem[3]}코인이 소모됩니다.',
         mainfunction: () {
           isPageLoading(true);
-          updateCash(-selectedItem[2]);
+          updateCash(-selectedItem[3]);
           CharacterModel characterData =
               AuthController.to.user.value.characterData!;
           String itemId = selectedItem[0];
