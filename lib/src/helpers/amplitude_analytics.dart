@@ -8,5 +8,10 @@ class AmplitudeAnalytics {
     // Initialize SDK
     analytics.init(dotenv.env['AMPLITUDE_SECRET_API_KEY'] ?? '');
     analytics.logEvent('Sign Up');
+    // analytics.logEvent('MyApp startup', eventProperties: {
+    //   'friend_num': 10,
+    //   'is_heavy_user': true
+    // });
+    // Amplitude.getInstance().logEvent('BUTTON_CLICKED');
   }
 }
