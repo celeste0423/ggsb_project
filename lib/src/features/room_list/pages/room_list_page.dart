@@ -47,7 +47,8 @@ class RoomListPage extends GetView<RoomListPageController> {
         ),
         child: const Center(
           child: Text(
-            '시작이 반이다\n -아리스토텔레스',
+            ' 끝날 때까지 항상 불가능해 보인다\n– 넬슨 만델라-',
+            textAlign: TextAlign.center,
             style: TextStyle(
               color: CustomColors.blackText,
               fontSize: 12,
