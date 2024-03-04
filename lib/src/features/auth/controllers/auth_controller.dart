@@ -64,14 +64,14 @@ class AuthController extends GetxController {
 
   Future<void> updateStudyTimeModelAdCount(String uid) async {
     // print('스터디타임모델 업데이트');
+    DateTime now = DateTime.now();
+    StudyTimeModel? studyTimeData =
+        await StudyTimeRepository().getStudyTimeModel(
+      uid,
+      DateUtil().dateTimeToString(now),
+    );
     if (AuthController.to.user.value.isTimer == false) {
       //공부 중일경우 새 타이머를 안만듦
-      DateTime now = DateTime.now();
-      StudyTimeModel? studyTimeData =
-          await StudyTimeRepository().getStudyTimeModel(
-        uid,
-        DateUtil().dateTimeToString(now),
-      );
       if (studyTimeData == null) {
         // print('스터디타임모델 없음 아직');
         //만약 없으면 새로 만들기
@@ -86,15 +86,13 @@ class AuthController extends GetxController {
           isCashed: false,
         );
         StudyTimeRepository().uploadStudyTimeModel(newStudyTimeModel);
-        studyTime = newStudyTimeModel;
+        studyTimeData = newStudyTimeModel;
         //광고 보기 횟수 초기화
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setInt('rewardedAdCount', StorePageController.totalAdCount);
-      } else {
-        //있으면 기존 모델 업데이트
-        studyTime = studyTimeData;
       }
     }
+    studyTime = studyTimeData!;
   }
 
   Future<UserModel?> updateAuthController(String uid) async {
