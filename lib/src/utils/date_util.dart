@@ -154,7 +154,7 @@ class DateUtil {
       return dateA.compareTo(dateB);
     });
     for (StudyTimeModel studyTimeModel in studyTimeModelList) {
-      print('스터디모델 순서정렬 ${studyTimeModel.date}');
+      // print('스터디모델 순서정렬 ${studyTimeModel.date}');
     }
     return studyTimeModelList;
   }

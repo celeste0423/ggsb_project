@@ -47,7 +47,7 @@ class MyPageController extends GetxController {
   }
 
   Stream<List<StudyTimeModel>> timeModelStream() {
-    print('스트림 받아옴');
+    // print('스트림 받아옴');
     return StudyTimeRepository()
         .studyTimeListStream(AuthController.to.user.value.uid!, DateTime.now());
   }

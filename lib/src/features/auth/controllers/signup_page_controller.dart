@@ -76,7 +76,7 @@ class SignupPageController extends GetxController {
   Future<void> checkIsProfileLoading() async {
     if (isProfileEditing != null) {
       nicknameController.text = AuthController.to.user.value.nickname!;
-      schoolName.value = AuthController.to.user.value.school!;
+      schoolName.value = AuthController.to.user.value.school ?? nullSchoolName;
       if (AuthController.to.user.value.gender == 'female') {
         isMale(false);
       }

@@ -202,10 +202,9 @@ class SignupPage extends GetView<SignupPageController> {
                         ],
                       );
                     }),
-                    Visibility(
-                      visible: controller.isProfileEditing == null,
-                      child: _termsAgreement(),
-                    ),
+                    controller.isProfileEditing == null
+                        ? _termsAgreement()
+                        : const SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 20),
                       child: controller.isProfileEditing == null

@@ -140,7 +140,7 @@ class StudyTimeRepository {
       DateTime endDate = now.subtract(Duration(days: 6));
       for (int i = 0; i < 7; i++) {
         DateTime date = endDate.add(Duration(days: i));
-        print('날짜 ${DateUtil().dateTimeToString(date)}');
+        // print('날짜 ${DateUtil().dateTimeToString(date)}');
         bool found = false;
         for (var model in timeModels) {
           if (model.date == DateUtil().dateTimeToString(date)) {
