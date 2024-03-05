@@ -394,11 +394,13 @@ class TimerPageController extends GetxController
     // 오늘자 date doc에 업데이트
     final todayUpdatedTimeModel = previousTimeModel.copyWith(
       date: DateUtil().dateTimeToString(now),
+      createdAt: now,
       startTime: fourAMToday,
       lastTime: now,
       totalSeconds: todayDiffSec,
+      isCashed: false,
     );
-    await StudyTimeRepository().updateStudyTimeModel(todayUpdatedTimeModel);
+    await StudyTimeRepository().uploadStudyTimeModel(todayUpdatedTimeModel);
   }
 
   @override

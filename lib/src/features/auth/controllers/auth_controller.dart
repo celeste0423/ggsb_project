@@ -79,6 +79,7 @@ class AuthController extends GetxController {
           uid: user.value.uid,
           nickname: user.value.nickname,
           date: DateUtil().dateTimeToString(now),
+          createdAt: now,
           totalSeconds: 0,
           startTime: DateUtil.standardRefreshTime(now),
           //다음날 들어온 사람 때문에
@@ -91,6 +92,10 @@ class AuthController extends GetxController {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setInt('rewardedAdCount', StorePageController.totalAdCount);
       }
+    } else {
+      StudyTimeModel? latestStudyTimeModel = await StudyTimeRepository()
+          .getLatestStudyTimeModel(AuthController.to.user.value.uid!);
+      studyTimeData = latestStudyTimeModel;
     }
     studyTime = studyTimeData!;
   }

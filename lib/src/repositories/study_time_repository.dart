@@ -26,6 +26,34 @@ class StudyTimeRepository {
     }
   }
 
+  Future<StudyTimeModel?> getLatestStudyTimeModel(String uid) async {
+    try {
+      QuerySnapshot timeDocs = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .collection('studyTime')
+          .orderBy('createdAt', descending: true) // createdAt 기준으로 내림차순 정렬
+          .limit(1) // 최신 데이터 한 개만 가져오기
+          .get();
+
+      if (timeDocs.docs.isNotEmpty) {
+        // 시간 정보가 존재하면 가장 최신의 정보를 반환
+        return StudyTimeModel.fromJson(
+            timeDocs.docs.first.data() as Map<String, dynamic>);
+      } else {
+        // 시간 정보가 없으면 null 반환
+        return null;
+      }
+    } catch (e) {
+      // 오류 발생 시 경고창 표시
+      openAlertDialog(
+        title: '최신 시간 정보를 가져오는데 실패했습니다.',
+        content: e.toString(),
+      );
+      return null; // 오류 발생 시 null 반환
+    }
+  }
+
   Future<List<StudyTimeModel>> getUncashedStudyTimeModelExceptToday(
       String uid) async {
     List<StudyTimeModel> uncashedStudyTimes = [];
