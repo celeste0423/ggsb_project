@@ -235,6 +235,7 @@ class SettingPage extends GetView<SettingPageController> {
               children: [
                 IconButton(
                   icon: const Icon(Icons.close),
+                  iconSize: 15,
                   onPressed: () {
                     Get.back(); // 팝업 닫기
                   },
@@ -242,7 +243,7 @@ class SettingPage extends GetView<SettingPageController> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
               child: Row(
                 children: [
                   icon,
