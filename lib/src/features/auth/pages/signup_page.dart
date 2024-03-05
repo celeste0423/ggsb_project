@@ -93,7 +93,7 @@ class SignupPage extends GetView<SignupPageController> {
         ),
         child: SingleChildScrollView(
           child: SizedBox(
-            height: Get.height - 270,
+            height: Get.height - 240 < 620 ? 620 : Get.height - 240,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -202,33 +202,35 @@ class SignupPage extends GetView<SignupPageController> {
                         ],
                       );
                     }),
-                    Visibility(
-                      visible: controller.isProfileEditing == null,
-                      child: _termsAgreement(),
-                    ),
                     controller.isProfileEditing == null
-                        ? MainButton(
-                            buttonText: '승부 시작 !',
-                            onTap: () {
-                              controller.signUpButton();
-                            },
-                            textStyle: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                        ? _termsAgreement()
+                        : const SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: controller.isProfileEditing == null
+                          ? MainButton(
+                              buttonText: '승부 시작 !',
+                              onTap: () {
+                                controller.signUpButton();
+                              },
+                              textStyle: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            )
+                          : MainButton(
+                              buttonText: '수정 완료',
+                              onTap: () {
+                                controller.profileEditButton();
+                              },
+                              textStyle: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
                             ),
-                          )
-                        : MainButton(
-                            buttonText: '수정 완료',
-                            onTap: () {
-                              controller.profileEditButton();
-                            },
-                            textStyle: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
+                    ),
                   ],
                 ),
               ],
@@ -577,17 +579,18 @@ class SignupPage extends GetView<SignupPageController> {
 
   @override
   Widget build(BuildContext context) {
+    print('높이 ${Get.height}');
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     Get.put(SignupPageController());
     controller.uid(uid);
     controller.email(email);
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      backgroundColor: CustomColors.mainBlue,
-      appBar: _appBar(),
-      body: Stack(
-        children: [
-          Column(
+    return Stack(
+      children: [
+        Scaffold(
+          resizeToAvoidBottomInset: true,
+          backgroundColor: CustomColors.mainBlue,
+          appBar: _appBar(),
+          body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: MediaQuery.of(Get.context!).padding.top),
@@ -596,16 +599,16 @@ class SignupPage extends GetView<SignupPageController> {
               _inputTab(),
             ],
           ),
-          Obx(
-            () => Visibility(
-              visible: controller.isSignupLoading.value,
-              child: FullSizeLoadingIndicator(
-                backgroundColor: Colors.black.withOpacity(0.5),
-              ),
+        ),
+        Obx(
+          () => Visibility(
+            visible: controller.isSignupLoading.value,
+            child: FullSizeLoadingIndicator(
+              backgroundColor: Colors.black.withOpacity(0.5),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

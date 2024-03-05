@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
-import 'package:ggsb_project/src/features/auth/pages/signup_page.dart';
 import 'package:ggsb_project/src/features/my/controllers/my_page_controller.dart';
 import 'package:ggsb_project/src/features/setting/pages/setting_page.dart';
+import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/study_time_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
@@ -41,14 +41,7 @@ class MyPage extends GetView<MyPageController> {
               ),
               CupertinoButton(
                 onPressed: () {
-                  // Get.dialog(_profileEditDialog());
-                  Get.to(
-                    () => SignupPage(
-                      uid: AuthController.to.user.value.uid!,
-                      email: AuthController.to.user.value.email!,
-                    ),
-                    arguments: true,
-                  );
+                  controller.profileEditButton();
                 },
                 padding: const EdgeInsets.symmetric(
                   vertical: 5,
@@ -217,7 +210,9 @@ class MyPage extends GetView<MyPageController> {
           ),
           '기록 분석',
           () {
-            controller.dataAnalyzeButton();
+            openAlertDialog(title: '추후 구현 예정입니다.');
+            // Get.to(() => const DataAnalyzePage());
+            // Get.dialog(_ResultRoomDialog());
           },
         ),
         const SizedBox(height: 40),
@@ -246,7 +241,7 @@ class MyPage extends GetView<MyPageController> {
             height: 30,
           ),
           '문의하기',
-          controller.onKakaoChannelPressed,
+          controller.kakaoChannelButton,
         ),
       ],
     );
