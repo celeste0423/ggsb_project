@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
-import 'package:ggsb_project/src/features/auth/pages/signup_page.dart';
 import 'package:ggsb_project/src/features/my/controllers/my_page_controller.dart';
 import 'package:ggsb_project/src/features/setting/pages/setting_page.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
@@ -42,14 +41,7 @@ class MyPage extends GetView<MyPageController> {
               ),
               CupertinoButton(
                 onPressed: () {
-                  // Get.dialog(_profileEditDialog());
-                  Get.to(
-                    () => SignupPage(
-                      uid: AuthController.to.user.value.uid!,
-                      email: AuthController.to.user.value.email!,
-                    ),
-                    arguments: true,
-                  );
+                  controller.profileEditButton();
                 },
                 padding: const EdgeInsets.symmetric(
                   vertical: 5,
@@ -249,7 +241,7 @@ class MyPage extends GetView<MyPageController> {
             height: 30,
           ),
           '문의하기',
-          controller.onKakaoChannelPressed,
+          controller.kakaoChannelButton,
         ),
       ],
     );

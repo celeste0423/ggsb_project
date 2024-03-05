@@ -233,6 +233,7 @@ class SignupPageController extends GetxController {
         );
         RoomStreamRepository().updateRoomStream(updatedRoomStreamModel);
       }
+      Get.back();
     }
   }
 }
