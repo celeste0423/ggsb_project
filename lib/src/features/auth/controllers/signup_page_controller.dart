@@ -46,7 +46,7 @@ class SignupPageController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    Analytics().logEvent('view_signup', null);
+    Analytics().logEvent('view__signup', null);
     await checkIsProfileLoading();
   }
 
