@@ -16,6 +16,8 @@ class StorePage extends GetView<StorePageController> {
   const StorePage({Key? key});
 
   Widget cashDialog(int addedCash) {
+    double desiredWidth = 3 - 130;
+    double desiredHeight = 3 - 130;
     return Dialog(
       insetPadding:
           EdgeInsets.symmetric(horizontal: 30, vertical: Get.height / 4),
@@ -32,19 +34,19 @@ class StorePage extends GetView<StorePageController> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            // SizedBox(
-            //   width: Get.height / 3 - 130,
-            //   height: Get.height / 3 - 130, // 원하는 높이 값으로 변경
-            //   child: const RiveAnimation.asset(
-            //     'assets/riv/coin.riv',
-            //   ),
-            // ),
-
-            Image.asset(
-              'assets/icons/gold_coin.png',
-              width: Get.height / 3 - 130,
-              height: Get.height / 3 - 130,
+            Container(
+              width: desiredWidth,
+              height: desiredHeight, // 원하는 높이 값으로 변경
+              child: RiveAnimation.asset(
+                'assets/riv/coin.riv',
+              ),
             ),
+
+            // Image.asset(
+            //   'assets/icons/gold_coin.png',
+            //   width: Get.height / 3 - 130,
+            //   height: Get.height / 3 - 130,
+            // ),
             Text(
               'x${addedCash}',
               style: const TextStyle(

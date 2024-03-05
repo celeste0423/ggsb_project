@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/room_list/controllers/room_list_page_controller.dart';
-import 'package:ggsb_project/src/helpers/firebase_analytics.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
@@ -115,7 +114,6 @@ class RoomCreatePageController extends GetxController {
       );
       UserRepository().updateUserModel(updatedUserModel);
       RoomListPageController.to.checkIsRoomList();
-      Analytics().logEvent('create_room', {'room_type': roomType.value});
       Get.back();
     }
   }

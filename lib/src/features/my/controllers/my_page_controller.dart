@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:ggsb_project/src/constants/service_urls.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/result/pages/result_page.dart';
-import 'package:ggsb_project/src/helpers/firebase_analytics.dart';
-import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/character_model.dart';
 import 'package:ggsb_project/src/models/study_time_model.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
@@ -73,13 +71,6 @@ class MyPageController extends GetxController {
     } else {
       throw '카카오톡 채널을 열 수 없습니다.';
     }
-  }
-
-  void dataAnalyzeButton() {
-    Analytics().logEvent('click_analyze', null);
-    openAlertDialog(title: '추후 구현 예정입니다.');
-    // Get.to(() => const DataAnalyzePage());
-    // Get.dialog(_ResultRoomDialog());
   }
 
   void resultCheckButton() {

@@ -24,10 +24,10 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _isResultPage();
+    _prefsInit();
   }
 
-  void _isResultPage() async {
+  void _prefsInit() async {
     prefs = await SharedPreferences.getInstance();
     String? lastDate = prefs.getString('lastDate');
     if (lastDate != null &&
