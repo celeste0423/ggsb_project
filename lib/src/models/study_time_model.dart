@@ -24,8 +24,7 @@ class StudyTimeModel {
       uid: json['uid'] == null ? null : json['uid'] as String,
       nickname: json['nickname'] == null ? null : json['nickname'] as String,
       date: json['date'] == null ? null : json['date'] as String,
-      createdAt:
-          json['createdAt'] == null ? null : json['createdAt'] as DateTime,
+      createdAt: json['createdAt'] == null ? null : json['createdAt'].toDate(),
       totalSeconds:
           json['totalSeconds'] == null ? null : json['totalSeconds'] as int,
       startTime: json['startTime'] == null ? null : json["startTime"].toDate(),
