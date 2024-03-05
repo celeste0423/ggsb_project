@@ -401,6 +401,7 @@ class TimerPageController extends GetxController
       isCashed: false,
     );
     await StudyTimeRepository().uploadStudyTimeModel(todayUpdatedTimeModel);
+    AuthController.to.studyTime = todayUpdatedTimeModel;
   }
 
   @override
