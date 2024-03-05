@@ -93,7 +93,7 @@ class SignupPage extends GetView<SignupPageController> {
         ),
         child: SingleChildScrollView(
           child: SizedBox(
-            height: Get.height - 270,
+            height: Get.height - 270 < 640 ? 640 : Get.height - 270,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -206,29 +206,32 @@ class SignupPage extends GetView<SignupPageController> {
                       visible: controller.isProfileEditing == null,
                       child: _termsAgreement(),
                     ),
-                    controller.isProfileEditing == null
-                        ? MainButton(
-                            buttonText: '승부 시작 !',
-                            onTap: () {
-                              controller.signUpButton();
-                            },
-                            textStyle: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: controller.isProfileEditing == null
+                          ? MainButton(
+                              buttonText: '승부 시작 !',
+                              onTap: () {
+                                controller.signUpButton();
+                              },
+                              textStyle: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            )
+                          : MainButton(
+                              buttonText: '수정 완료',
+                              onTap: () {
+                                controller.profileEditButton();
+                              },
+                              textStyle: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
                             ),
-                          )
-                        : MainButton(
-                            buttonText: '수정 완료',
-                            onTap: () {
-                              controller.profileEditButton();
-                            },
-                            textStyle: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
+                    ),
                   ],
                 ),
               ],
