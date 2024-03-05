@@ -93,7 +93,7 @@ class SignupPage extends GetView<SignupPageController> {
         ),
         child: SingleChildScrollView(
           child: SizedBox(
-            height: Get.height - 270 < 640 ? 640 : Get.height - 270,
+            height: Get.height - 280 < 620 ? 620 : Get.height - 270,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -580,6 +580,7 @@ class SignupPage extends GetView<SignupPageController> {
 
   @override
   Widget build(BuildContext context) {
+    print('높이 ${Get.height}');
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     Get.put(SignupPageController());
     controller.uid(uid);
