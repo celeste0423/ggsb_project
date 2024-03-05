@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/constants/service_urls.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
-import 'package:ggsb_project/src/helpers/firebase_analytics.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
@@ -124,7 +123,7 @@ class RoomListPageController extends GetxController {
         AuthController.to.user(updatedUserModel);
         checkIsRoomList();
         joinRoomIdController.clear();
-        Analytics().logEvent('join_room', {'room_owner': roomModel.creatorUid});
+        // Analytics().logEvent('join_room', {'room_owner': roomModel.creatorUid});
         Get.back();
         isRoomListLoading(false);
       }
