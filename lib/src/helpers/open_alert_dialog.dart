@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 
 openAlertDialog({
-  required String title,
+  String? title,
   String? content,
   String? btnText,
   Color? mainBtnColor,
@@ -11,61 +11,67 @@ openAlertDialog({
   VoidCallback? mainfunction,
   VoidCallback? secondfunction,
 }) {
-  return Get.dialog(AlertDialog(
-    title: Text(
-      title,
-      style: TextStyle(
-        color: CustomColors.blackText,
-        fontSize: 15,
-      ),
-    ),
-    content: content == null
-        ? null
-        : Text(
-            content,
-            style: TextStyle(
-              color: CustomColors.darkGreyText,
-              fontSize: 13,
-            ),
-          ),
-    contentPadding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-    actions: [
-      secondButtonText != null
-          ? TextButton(
-              onPressed: () {
-                if (secondfunction != null) {
-                  secondfunction();
-                } else {
-                  Get.back();
-                }
-              },
-              child: Text(
-                secondButtonText,
-                style: TextStyle(
-                  fontSize: 13,
-                  color: CustomColors.greyText,
-                ),
-              ),
-            )
-          : Container(),
-      TextButton(
-        onPressed: () {
-          if (mainfunction != null) {
-            mainfunction();
-          } else {
-            Get.back();
-          }
-        },
-        child: Text(
-          btnText ?? "확인",
-          style: TextStyle(
-            fontSize: 13,
-            color: mainBtnColor ?? CustomColors.mainBlue,
-          ),
+  return Get.dialog(
+    AlertDialog(
+      titlePadding:
+          const EdgeInsets.only(top: 30, left: 30, right: 20, bottom: 10),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+      title: Text(
+        title ?? '',
+        style: const TextStyle(
+          color: CustomColors.blackText,
+          fontSize: 15,
         ),
       ),
-    ],
-  ));
+      content: content == null
+          ? null
+          : Text(
+              content,
+              style: const TextStyle(
+                color: CustomColors.darkGreyText,
+                fontSize: 13,
+              ),
+            ),
+      // contentPadding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+      actions: [
+        Visibility(
+          visible: secondButtonText != null,
+          child: TextButton(
+            onPressed: () {
+              if (secondfunction != null) {
+                secondfunction();
+              } else {
+                Get.back();
+              }
+            },
+            child: Text(
+              secondButtonText ?? '',
+              style: const TextStyle(
+                fontSize: 13,
+                color: CustomColors.greyText,
+              ),
+            ),
+          ),
+        ),
+        TextButton(
+          onPressed: () {
+            if (mainfunction != null) {
+              mainfunction();
+            } else {
+              Get.back();
+            }
+          },
+          child: Text(
+            btnText ?? "확인",
+            style: TextStyle(
+              fontSize: 13,
+              color: mainBtnColor ?? CustomColors.mainBlue,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 }
 
 Future<bool> openBoolAlertDialog({
@@ -85,7 +91,7 @@ Future<bool> openBoolAlertDialog({
       child: AlertDialog(
         title: Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             color: CustomColors.blackText,
             fontSize: 15,
           ),
@@ -94,7 +100,7 @@ Future<bool> openBoolAlertDialog({
             ? null
             : Text(
                 content,
-                style: TextStyle(
+                style: const TextStyle(
                   color: CustomColors.darkGreyText,
                   fontSize: 13,
                 ),
@@ -110,7 +116,7 @@ Future<bool> openBoolAlertDialog({
                   },
                   child: Text(
                     secondButtonText,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 13,
                       color: CustomColors.greyText,
                     ),
@@ -125,7 +131,7 @@ Future<bool> openBoolAlertDialog({
             },
             child: Text(
               btnText ?? "확인",
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 13,
                 color: CustomColors.mainBlue,
               ),

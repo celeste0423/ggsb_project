@@ -307,9 +307,11 @@ class MyPage extends GetView<MyPageController> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               MainButton(
-                  buttonText: '결과 확인', onTap: controller.resultCheckButton),
+                buttonText: '결과 확인',
+                onTap: controller.resultCheckButton,
+              ),
             ],
           ),
         ),
