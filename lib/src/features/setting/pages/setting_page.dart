@@ -220,6 +220,7 @@ class SettingPage extends GetView<SettingPageController> {
         break;
     }
 
+
     return Dialog(
       child: Container(
         decoration: BoxDecoration(
@@ -246,23 +247,76 @@ class SettingPage extends GetView<SettingPageController> {
                 children: [
                   icon,
                   const SizedBox(width: 20),
-                  Center(
-                    child: Text(
-                      AuthController.to.user.value.email ?? '',
-                      style: const TextStyle(
-                        color: CustomColors.blackText,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                  Expanded(
+                    child: Center(
+                      child: FittedBox(
+                        child: Text(
+                          AuthController.to.user.value.email ?? '',
+                          style: const TextStyle(
+                            color: CustomColors.blackText,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-          ], // Column의 children 리스트 마감
+          ],
         ),
       ),
     );
+
+    // return Dialog(
+    //   child: Container(
+    //     decoration: BoxDecoration(
+    //       borderRadius: BorderRadius.circular(20),
+    //       color: CustomColors.whiteBackground,
+    //     ),
+    //     child: Column(
+    //       mainAxisSize: MainAxisSize.min,
+    //       children: [
+    //         Row(
+    //           mainAxisAlignment: MainAxisAlignment.end,
+    //           children: [
+    //             IconButton(
+    //               icon: const Icon(Icons.close),
+    //               onPressed: () {
+    //                 Get.back();
+    //               },
+    //             ),
+    //           ],
+    //         ),
+    //         Padding(
+    //           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+    //           child: SingleChildScrollView(
+    //             scrollDirection: Axis.horizontal,
+    //             child: Row(
+    //               children: [
+    //                 icon,
+    //                 const SizedBox(width: 20),
+    //                 Center(
+    //                   child: FittedBox(
+    //                     child: Text(
+    //                       AuthController.to.user.value.email ?? '',
+    //                       style: const TextStyle(
+    //                         color: CustomColors.blackText,
+    //                         fontSize: 16,
+    //                         fontWeight: FontWeight.bold,
+    //                       ),
+    //                     ),
+    //                   ),
+    //                 ),
+    //               ],
+    //             ),
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
   }
 
   @override

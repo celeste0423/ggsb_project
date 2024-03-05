@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
-import 'package:ggsb_project/src/helpers/firebase_analytics.dart';
+import 'package:ggsb_project/src/helpers/amplitude_analytics.dart';
+import 'package:ggsb_project/src/helpers/google_analytics.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/character_model.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
@@ -41,7 +42,8 @@ class ResultPageController extends GetxController
     isPageLoading(true);
     roomModelList = await _getRoomList();
     await _initRoomTabController();
-    Analytics().logEvent('view_result', null);
+    GoogleAnalytics().logEvent('view_result', null);
+    AmplitudeAnalytics().logEvent('view_result', null);
     isPageLoading(false);
   }
 
@@ -126,7 +128,8 @@ class ResultPageController extends GetxController
       backgroundTopColor: "#5FA3D4",
       backgroundBottomColor: "#5FA3D4",
     ).then((value) => print(value));
-    Analytics().logEvent('share_insta', null);
+    GoogleAnalytics().logEvent('share_insta', null);
+    AmplitudeAnalytics().logEvent('share_insta', null);
     // SocialShare.shareFacebookStory(
     //   appId: '1095966244764492',
     //   imagePath: path!,

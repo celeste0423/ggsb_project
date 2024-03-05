@@ -6,7 +6,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/constants/service_urls.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
-import 'package:ggsb_project/src/helpers/firebase_analytics.dart';
+import 'package:ggsb_project/src/helpers/amplitude_analytics.dart';
+import 'package:ggsb_project/src/helpers/google_analytics.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/character_model.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
@@ -46,7 +47,8 @@ class SignupPageController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    Analytics().logEvent('view_signup', null);
+    GoogleAnalytics().logEvent('view_signup', null);
+    AmplitudeAnalytics().logEvent('view_signup', null);
     await checkIsProfileLoading();
   }
 
@@ -193,7 +195,7 @@ class SignupPageController extends GetxController {
       );
       // 회원가입 처리
       await AuthController.to.signUp(userData);
-      Analytics().logEvent('signup', {
+      GoogleAnalytics().logEvent('signup', {
         'school': schoolName.value,
         'gender': isMale.value ? 'male' : 'female'
       });
