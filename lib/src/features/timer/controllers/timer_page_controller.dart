@@ -273,7 +273,8 @@ class TimerPageController extends GetxController
         await RoomStreamRepository().updateRoomStream(updatedRoomStreamModel);
       },
     );
-    // Analytics().logEvent('start_timer', null);
+    // GoogleAnalytics().logEvent('start_timer', null);
+    // AmplitudeAnalytics().logEvent('start_timer', null);
   }
 
   Future _updateStudyTimeModelAtStart(DateTime now) async {
@@ -347,7 +348,8 @@ class TimerPageController extends GetxController
         HomePageController.to.riveCharacterInit();
       }
     });
-    // Analytics().logEvent('end_timer', null);
+    // GoogleAnalytics().logEvent('end_timer', null);
+    // AmplitudeAnalytics().logEvent('end_timer', null);
   }
 
   Future<void> _updateStudyTimeModelAtEnd(DateTime now, int totalSec) async {

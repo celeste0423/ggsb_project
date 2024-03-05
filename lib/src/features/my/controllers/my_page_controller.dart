@@ -4,7 +4,8 @@ import 'package:ggsb_project/src/constants/service_urls.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/auth/pages/signup_page.dart';
 import 'package:ggsb_project/src/features/result/pages/result_page.dart';
-import 'package:ggsb_project/src/helpers/firebase_analytics.dart';
+import 'package:ggsb_project/src/helpers/amplitude_analytics.dart';
+import 'package:ggsb_project/src/helpers/google_analytics.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/character_model.dart';
 import 'package:ggsb_project/src/models/study_time_model.dart';
@@ -77,7 +78,8 @@ class MyPageController extends GetxController {
   }
 
   void dataAnalyzeButton() {
-    Analytics().logEvent('click_analyze', null);
+    GoogleAnalytics().logEvent('click_analyze', null);
+    AmplitudeAnalytics().logEvent('click_analyze', null);
     openAlertDialog(title: '추후 구현 예정입니다.');
     // Get.to(() => const DataAnalyzePage());
     // Get.dialog(_ResultRoomDialog());

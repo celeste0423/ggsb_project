@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,12 +7,14 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/binding/init_binding.dart';
 import 'package:ggsb_project/src/features/overlay/pages/overlay_page.dart';
+import 'package:ggsb_project/src/helpers/google_analytics.dart';
 import 'package:ggsb_project/src/root.dart';
 import 'package:ggsb_project/src/theme/base_theme.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import 'firebase_options.dart';
+import 'src/helpers/amplitude_analytics.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,8 +30,10 @@ void main() async {
   await dotenv.load(fileName: ".env");
   //광고 init
   MobileAds.instance.initialize();
+  //firebase analytics init
+  GoogleAnalytics().init();
   //Amplitude analytics 설정
-  // AmplitudeAnalytics().init();
+  AmplitudeAnalytics().init();
   //새벽 4시에 초기화
   // Cron().schedule(Schedule.parse('01 04 * * *'), () async {
   //   print("새벽 4시입니다.");

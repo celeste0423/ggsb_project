@@ -1,9 +1,13 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 
-class Analytics {
-  Analytics();
+class GoogleAnalytics {
+  GoogleAnalytics();
 
   static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+
+  Future<void> init() async {
+    analytics.setAnalyticsCollectionEnabled(true);
+  }
 
   Future<void> logEvent(
     String name,
