@@ -40,6 +40,17 @@ class HomePage extends GetView<HomePageController> {
             height: 25,
           ),
         ),
+        CupertinoButton(
+          padding: EdgeInsets.only(right: 20),
+          onPressed: () {
+            controller.EventPageButton();
+          },
+          child: Image.asset(
+            'assets/icons/store.png',
+            color: CustomColors.mainBlack,
+            height: 25,
+          ),
+        ),
       ],
     );
   }
