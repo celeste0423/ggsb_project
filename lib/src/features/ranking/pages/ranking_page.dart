@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/ranking/controllers/ranking_page_controller.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
 
-class RankingPage extends GetView<ShopPageController> {
+class RankingPage extends GetView<RankingPageController> {
   const RankingPage({super.key});
 
   PreferredSizeWidget _appBar() {
@@ -17,7 +17,7 @@ class RankingPage extends GetView<ShopPageController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(ShopPageController());
+    Get.put(RankingPageController());
     return Scaffold(
       appBar: _appBar(),
       body: Center(
