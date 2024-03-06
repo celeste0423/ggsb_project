@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
+import 'package:get/get.dart';
+import 'package:ggsb_project/src/features/admin/pages/event_create_page.dart';
 import 'package:ggsb_project/src/repositories/user_repository.dart';
 import 'package:ggsb_project/src/widgets/main_button.dart';
 
@@ -18,10 +19,10 @@ class AdminPage extends StatelessWidget {
           child: Column(
             children: [
               MainButton(
-                buttonText: '알림 보내기',
+                buttonText: '이벤트 업로드',
                 backgroundColor: Colors.grey,
                 onTap: () {
-                  openAlertDialog(title: '기능 추가중');
+                  Get.to(() => EventCreatePage());
                 },
               ),
               MainButton(
