@@ -43,10 +43,10 @@ class HomePage extends GetView<HomePageController> {
         CupertinoButton(
           padding: EdgeInsets.only(right: 20),
           onPressed: () {
-            controller.EventPageButton();
+            // controller.EventPageButton();
           },
           child: Image.asset(
-            'assets/icons/store.png',
+            'assets/icons/event.png',
             color: CustomColors.mainBlack,
             height: 25,
           ),
