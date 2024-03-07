@@ -62,6 +62,14 @@ class EventCreatePage extends GetView<EventCreatePageController> {
     );
   }
 
+  Widget _contentUrlTextField() {
+    return TextFieldBox(
+      textEditingController: controller.imgUrlController,
+      hintText: 'content Url을 넣어주세요',
+      backgroundColor: CustomColors.lightGreyBackground,
+    );
+  }
+
   Widget _addButton() {
     return MainButton(
       buttonText: '방 완성',
@@ -96,6 +104,8 @@ class EventCreatePage extends GetView<EventCreatePageController> {
                   _contentTextField(),
                   const SizedBox(height: 30),
                   _imgUrlTextField(),
+                  const SizedBox(height: 30),
+                  _contentUrlTextField(),
                   const SizedBox(height: 30),
                 ],
               ),

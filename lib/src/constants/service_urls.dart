@@ -3,6 +3,9 @@ class ServiceUrls {
   static String noticeNotionUrl =
       'https://gonggeum.notion.site/3321fe3cfde94e41a118da9d4f80fae9';
 
+  //인스타 주소
+  static String ggsbInstagram = 'https://www.instagram.com/ggsb._.official/';
+
   //개인정보 처리방침
   static String personalInformationPolicyNotionUrl =
       'https://gonggeum.notion.site/3321fe3cfde94e41a118da9d4f80fae9';

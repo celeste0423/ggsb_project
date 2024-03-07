@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
-import 'package:ggsb_project/src/features/notification/pages/event_page.dart';
+import 'package:ggsb_project/src/features/event/pages/event_page.dart';
 import 'package:ggsb_project/src/features/room_create/pages/room_create_page.dart';
 import 'package:ggsb_project/src/features/store/pages/store_page.dart';
 import 'package:ggsb_project/src/features/timer/pages/timer_page.dart';

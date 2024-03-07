@@ -23,7 +23,7 @@ class RankingPage extends GetView<RankingPageController> {
       body: Center(
         child: Container(
           color: Colors.white,
-          child: Text('추후 구현 예정입니다'),
+          child: Text('곧 출시됩니다'),
         ),
       ),
     );

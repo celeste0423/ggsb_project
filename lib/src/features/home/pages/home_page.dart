@@ -30,23 +30,23 @@ class HomePage extends GetView<HomePageController> {
       ),
       actions: [
         CupertinoButton(
-          padding: EdgeInsets.only(right: 20),
+          padding: const EdgeInsets.only(right: 20),
           onPressed: () {
-            controller.storePageButton();
+            controller.EventPageButton();
           },
           child: Image.asset(
-            'assets/icons/store.png',
+            'assets/icons/event.png',
             color: CustomColors.mainBlack,
             height: 25,
           ),
         ),
         CupertinoButton(
-          padding: EdgeInsets.only(right: 20),
+          padding: const EdgeInsets.only(right: 20),
           onPressed: () {
-            // controller.EventPageButton();
+            controller.storePageButton();
           },
           child: Image.asset(
-            'assets/icons/event.png',
+            'assets/icons/store.png',
             color: CustomColors.mainBlack,
             height: 25,
           ),

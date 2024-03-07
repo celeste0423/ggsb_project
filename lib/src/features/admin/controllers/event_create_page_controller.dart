@@ -12,6 +12,7 @@ class EventCreatePageController extends GetxController {
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
   TextEditingController imgUrlController = TextEditingController();
+  TextEditingController contentUrlController = TextEditingController();
 
   Rx<bool> isPageLoading = false.obs;
 
@@ -30,6 +31,7 @@ class EventCreatePageController extends GetxController {
         title: titleController.text,
         content: contentController.text,
         imgUrl: imgUrlController.text,
+        contentUrl: contentUrlController.text,
         createdAt: DateTime.now(),
       );
       EventRepository().createEvent(eventModel);
