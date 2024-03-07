@@ -131,8 +131,9 @@ class ResultPage extends GetView<ResultPageController> {
                             ],
                           ),
                         ),
+
                         Expanded(
-                          child: GridView.count(
+                          child: snapshot.data!.length==1 ? _resultBox():GridView.count(
                             shrinkWrap: true,
                             crossAxisCount: 2,
                             childAspectRatio: 2,
@@ -150,6 +151,7 @@ class ResultPage extends GetView<ResultPageController> {
                             ),
                           ),
                         ),
+
                       ],
                     );
                   }
