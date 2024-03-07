@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/home/controllers/home_page_controller.dart';
 import 'package:ggsb_project/src/features/store/pages/store_page.dart';
+import 'package:ggsb_project/src/helpers/amplitude_analytics.dart';
+import 'package:ggsb_project/src/helpers/google_analytics.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/character_model.dart';
 import 'package:ggsb_project/src/models/study_time_model.dart';
@@ -192,8 +194,8 @@ class StorePageController extends GetxController
     _categoryTabControllerInit();
     _getIsItemUnlockedList();
     _checkUncashedStudyTime();
-    // GoogleAnalytics().logEvent('view_store', null);
-    // AmplitudeAnalytics().logEvent('view_store', null);
+    GoogleAnalytics().logEvent('view_store', null);
+    AmplitudeAnalytics().logEvent('view_store', null);
     isPageLoading(false);
   }
 
@@ -283,8 +285,8 @@ class StorePageController extends GetxController
     prefs.setInt('rewardedAdCount', rewardedAdCount.value - 1);
     rewardedAdCount(rewardedAdCount.value - 1);
     if (reward.amount > 0) {
-      // GoogleAnalytics().logEvent('view_result', null);
-      // AmplitudeAnalytics().logEvent('view_result', null);
+      GoogleAnalytics().logEvent('view_result', null);
+      AmplitudeAnalytics().logEvent('view_result', null);
       updateCash(10);
       openAlertDialog(title: '보상 지급됨', content: '10코인 지급되었습니다.');
     }
@@ -423,8 +425,10 @@ class StorePageController extends GetxController
                 characterColor!.value = itemIndex.toDouble();
               }
           }
-          // GoogleAnalytics().logEvent('purchase_item', {'category': categoryIndex});
-          // AmplitudeAnalytics().logEvent('purchase_item', {'category': categoryIndex});
+          GoogleAnalytics()
+              .logEvent('purchase_item', {'category': categoryIndex});
+          AmplitudeAnalytics()
+              .logEvent('purchase_item', {'category': categoryIndex});
           isPageLoading(false);
           Get.back();
         },

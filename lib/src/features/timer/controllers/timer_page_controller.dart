@@ -7,6 +7,8 @@ import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/home/controllers/home_page_controller.dart';
+import 'package:ggsb_project/src/helpers/amplitude_analytics.dart';
+import 'package:ggsb_project/src/helpers/google_analytics.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/character_model.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
@@ -273,8 +275,8 @@ class TimerPageController extends GetxController
         await RoomStreamRepository().updateRoomStream(updatedRoomStreamModel);
       },
     );
-    // GoogleAnalytics().logEvent('start_timer', null);
-    // AmplitudeAnalytics().logEvent('start_timer', null);
+    GoogleAnalytics().logEvent('start_timer', null);
+    AmplitudeAnalytics().logEvent('start_timer', null);
   }
 
   Future _updateStudyTimeModelAtStart(DateTime now) async {
@@ -348,8 +350,8 @@ class TimerPageController extends GetxController
         HomePageController.to.riveCharacterInit();
       }
     });
-    // GoogleAnalytics().logEvent('end_timer', null);
-    // AmplitudeAnalytics().logEvent('end_timer', null);
+    GoogleAnalytics().logEvent('end_timer', null);
+    AmplitudeAnalytics().logEvent('end_timer', null);
   }
 
   Future<void> _updateStudyTimeModelAtEnd(DateTime now, int totalSec) async {
