@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ggsb_project/src/features/admin/controllers/event_create_page_controller.dart';
+import 'package:ggsb_project/src/features/admin/controllers/coupon_create_page_controller.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/widgets/full_size_loading_indicator.dart';
 import 'package:ggsb_project/src/widgets/main_button.dart';
@@ -8,13 +8,13 @@ import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
 import 'package:ggsb_project/src/widgets/text_field_box.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
 
-class EventCreatePage extends GetView<EventCreatePageController> {
-  const EventCreatePage({super.key});
+class CouponCreatePage extends GetView<CouponCreateController> {
+  const CouponCreatePage({super.key});
 
   PreferredSizeWidget _appBar() {
     return AppBar(
       leadingWidth: 75,
-      title: TitleText(text: '새 이벤트'),
+      title: TitleText(text: '새 쿠폰'),
       leading: ImageIconButton(
         assetPath: 'assets/icons/back.svg',
         onTap: () {
@@ -38,41 +38,25 @@ class EventCreatePage extends GetView<EventCreatePageController> {
     );
   }
 
-  Widget _titleTextField() {
+  Widget _codeTextField() {
     return TextFieldBox(
-      textEditingController: controller.titleController,
-      hintText: '제목을 설정해주세요(중복 금지)',
+      textEditingController: controller.codeController,
+      hintText: '쿠폰 코드를 설정해주세요(중복 금지)',
       backgroundColor: CustomColors.lightGreyBackground,
     );
   }
 
-  Widget _contentTextField() {
+  Widget _cashTextField() {
     return TextFieldBox(
-      textEditingController: controller.contentController,
-      hintText: '내용을 설정해주세요',
-      backgroundColor: CustomColors.lightGreyBackground,
-    );
-  }
-
-  Widget _imgUrlTextField() {
-    return TextFieldBox(
-      textEditingController: controller.imgUrlController,
-      hintText: 'imgUrl을 넣어주세요',
-      backgroundColor: CustomColors.lightGreyBackground,
-    );
-  }
-
-  Widget _contentUrlTextField() {
-    return TextFieldBox(
-      textEditingController: controller.imgUrlController,
-      hintText: 'content Url을 넣어주세요',
+      textEditingController: controller.cashController,
+      hintText: '지급할 코인 수량을 설정해주세요',
       backgroundColor: CustomColors.lightGreyBackground,
     );
   }
 
   Widget _addButton() {
     return MainButton(
-      buttonText: '이벤트 업로드',
+      buttonText: '쿠폰 완성',
       width: Get.width - 40,
       textStyle: const TextStyle(
         fontWeight: FontWeight.w600,
@@ -86,7 +70,7 @@ class EventCreatePage extends GetView<EventCreatePageController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(EventCreatePageController());
+    Get.put(CouponCreateController);
     return Stack(
       children: [
         Scaffold(
@@ -99,13 +83,9 @@ class EventCreatePage extends GetView<EventCreatePageController> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   _title(),
-                  _titleTextField(),
+                  _codeTextField(),
                   const SizedBox(height: 30),
-                  _contentTextField(),
-                  const SizedBox(height: 30),
-                  _imgUrlTextField(),
-                  const SizedBox(height: 30),
-                  _contentUrlTextField(),
+                  _cashTextField(),
                   const SizedBox(height: 30),
                 ],
               ),
