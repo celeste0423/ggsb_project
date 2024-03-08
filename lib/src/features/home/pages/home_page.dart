@@ -29,17 +29,18 @@ class HomePage extends GetView<HomePageController> {
         ),
       ),
       actions: [
-        CupertinoButton(
-          padding: const EdgeInsets.only(right: 20),
-          onPressed: () {
-            controller.EventPageButton();
-          },
-          child: Image.asset(
-            'assets/icons/event.png',
-            color: CustomColors.mainBlack,
-            height: 25,
-          ),
-        ),
+        // 이벤트 페이지 이동 버튼
+        // CupertinoButton(
+        //   padding: const EdgeInsets.only(right: 20),
+        //   onPressed: () {
+        //     controller.EventPageButton();
+        //   },
+        //   child: Image.asset(
+        //     'assets/icons/event.png',
+        //     color: CustomColors.mainBlack,
+        //     height: 25,
+        //   ),
+        // ),
         CupertinoButton(
           padding: const EdgeInsets.only(right: 20),
           onPressed: () {
