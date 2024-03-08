@@ -30,17 +30,17 @@ class HomePage extends GetView<HomePageController> {
       ),
       actions: [
         // 이벤트 페이지 이동 버튼
-        // CupertinoButton(
-        //   padding: const EdgeInsets.only(right: 20),
-        //   onPressed: () {
-        //     controller.EventPageButton();
-        //   },
-        //   child: Image.asset(
-        //     'assets/icons/event.png',
-        //     color: CustomColors.mainBlack,
-        //     height: 25,
-        //   ),
-        // ),
+        CupertinoButton(
+          padding: const EdgeInsets.only(right: 20),
+          onPressed: () {
+            controller.EventPageButton();
+          },
+          child: Image.asset(
+            'assets/icons/event_calendar.png',
+            color: CustomColors.mainBlack,
+            height: 25,
+          ),
+        ),
         CupertinoButton(
           padding: const EdgeInsets.only(right: 20),
           onPressed: () {
@@ -49,7 +49,7 @@ class HomePage extends GetView<HomePageController> {
           child: Image.asset(
             'assets/icons/store.png',
             color: CustomColors.mainBlack,
-            height: 25,
+            height: 22,
           ),
         ),
       ],

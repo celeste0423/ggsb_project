@@ -117,11 +117,10 @@ class HomePageController extends GetxController {
     Get.to(() => const StorePage());
   }
 
-
   //이벤트 페이지 이동
-  // void EventPageButton() {
-  //   Get.to(() => const EventPage());
-  // }
+  void EventPageButton() {
+    Get.to(() => const EventPage());
+  }
 
   void timerPageButton() {
     if (AuthController.to.user.value.roomIdList!.isEmpty) {
