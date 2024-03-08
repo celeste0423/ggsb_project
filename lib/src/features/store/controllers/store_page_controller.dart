@@ -37,7 +37,8 @@ class StorePageController extends GetxController
         }
       : {
           //test ad 재생시 필요한 unit id
-          'ios': 'ca-app-pub-3940256099942544/1712485313',
+          // 'ios': 'ca-app-pub-3940256099942544/1712485313',
+          'ios': 'ca-app-pub-4277973972015514~5037008521',
           'android': 'ca-app-pub-3940256099942544/5224354917',
         };
   late SharedPreferences prefs;
