@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/result/controllers/result_page_controller.dart';
+import 'package:ggsb_project/src/models/study_time_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
 import 'package:ggsb_project/src/utils/number_util.dart';
@@ -85,75 +86,7 @@ class ResultPage extends GetView<ResultPageController> {
                     return const Text('오류 발생');
                   } else {
                     print(snapshot.data!.length);
-                    return Column(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: (Get.height - 120 - 130 - 20) / 2 - 150,
-                                child: RiveAnimation.asset(
-                                  'assets/riv/character.riv',
-                                  stateMachines: ["character"],
-                                  onInit: (artboard) {
-                                    controller.onRiveInit(artboard);
-                                  },
-                                ),
-                              ),
-                              Image.asset('assets/icons/trophy.png',
-                                  height: 20),
-                              Text(
-                                AuthController.to.user.value.nickname!,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: CustomColors.mainBlue,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              Text(
-                                SecondsUtil.convertToDigitString(
-                                    controller.myStudyTime.totalSeconds!),
-                                style: const TextStyle(
-                                  fontSize: 30,
-                                  color: CustomColors.blackText,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(top: 10),
-                                width: 50,
-                                height: 2,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(2),
-                                  color: CustomColors.lightGreyBackground,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        Expanded(
-                          child: snapshot.data!.length==1 ? _resultBox():GridView.count(
-                            shrinkWrap: true,
-                            crossAxisCount: 2,
-                            childAspectRatio: 2,
-                            children: List.generate(
-                              snapshot.data!.length,
-                              (userIndex) {
-                                return _timeCard(
-                                  snapshot.data![userIndex]!.uid!,
-                                  snapshot.data![userIndex]!.nickname!,
-                                  SecondsUtil.convertToDigitString(
-                                      snapshot.data![userIndex]!.totalSeconds!),
-                                  userIndex,
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-
-                      ],
-                    );
+                    return _timeCardList(snapshot);
                   }
                 },
               ),
@@ -162,6 +95,86 @@ class ResultPage extends GetView<ResultPageController> {
         ),
       );
     });
+  }
+
+
+  Widget _timeCardList(AsyncSnapshot<List<StudyTimeModel?>> snapshot){
+    return Column(
+      children: [
+        Expanded(
+          child: Column(
+            children: [
+              SizedBox(
+                height: (Get.height - 120 - 130 - 20) / 2 - 150,
+                child: RiveAnimation.asset(
+                  'assets/riv/character.riv',
+                  stateMachines: ["character"],
+                  onInit: (artboard) {
+                    controller.onRiveInit(artboard);
+                  },
+                ),
+              ),
+              Image.asset('assets/icons/trophy.png',
+                  height: 20),
+              Text(
+                AuthController.to.user.value.nickname!,
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: CustomColors.mainBlue,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              Text(
+                SecondsUtil.convertToDigitString(
+                    controller.myStudyTime.totalSeconds!),
+                style: const TextStyle(
+                  fontSize: 30,
+                  color: CustomColors.blackText,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 10),
+                width: 50,
+                height: 2,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(2),
+                  color: CustomColors.lightGreyBackground,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Expanded(
+          child: snapshot.data!.length == 1
+              ? _timeCard(
+            AuthController.to.user.value.uid!,
+            AuthController.to.user.value.nickname!,
+            SecondsUtil.convertToDigitString(
+                snapshot.data![0]!.totalSeconds!),
+            0,
+          )
+              : GridView.count(
+            shrinkWrap: true,
+            crossAxisCount: 2,
+            childAspectRatio: 2,
+            children: List.generate(
+              snapshot.data!.length,
+                  (userIndex) {
+                return _timeCard(
+                  snapshot.data![userIndex]!.uid!,
+                  snapshot.data![userIndex]!.nickname!,
+                  SecondsUtil.convertToDigitString(
+                      snapshot.data![userIndex]!
+                          .totalSeconds!),
+                  userIndex,
+                );
+              },
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   Widget _timeCard(String uid, String nickname, String time, int index) {
@@ -203,6 +216,9 @@ class ResultPage extends GetView<ResultPageController> {
       ],
     );
   }
+
+
+
 
   Widget _tabIndicator() {
     return GetBuilder<ResultPageController>(
