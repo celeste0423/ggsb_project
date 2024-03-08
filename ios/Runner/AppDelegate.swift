@@ -1,10 +1,10 @@
 import UIKit
 import Flutter
 
-import ManagedSettings
-import DeviceActivity
-import FamilyControls
-import SwiftUI
+//import ManagedSettings
+//import DeviceActivity
+//import FamilyControls
+//import SwiftUI
 
 var globalMethodCall = ""
 
