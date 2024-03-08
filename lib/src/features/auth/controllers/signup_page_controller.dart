@@ -39,8 +39,6 @@ class SignupPageController extends GetxController {
   String selectedSchoolType = 'elem_list';
   late RxList<dynamic> schoolNameList = [nullSchoolName].obs;
 
-  Rx<bool> isMale = true.obs;
-
   Rx<bool> isTermAgreed = false.obs;
   Rx<bool> isMarketingAgreed = false.obs;
 
@@ -80,9 +78,6 @@ class SignupPageController extends GetxController {
     if (isProfileEditing != null) {
       nicknameController.text = AuthController.to.user.value.nickname!;
       schoolName.value = AuthController.to.user.value.school!;
-      if (AuthController.to.user.value.gender == 'female') {
-        isMale(false);
-      }
     }
   }
 
@@ -182,7 +177,6 @@ class SignupPageController extends GetxController {
         nickname: nicknameController.text,
         loginType: loginType,
         email: email.value,
-        gender: isMale.value ? 'male' : 'female',
         school: schoolName.value == nullSchoolName ? null : schoolName.value,
         isTimer: false,
         totalSeconds: 0,
@@ -197,7 +191,6 @@ class SignupPageController extends GetxController {
       await AuthController.to.signUp(userData);
       GoogleAnalytics().logEvent('signup', {
         'school': schoolName.value,
-        'gender': isMale.value ? 'male' : 'female'
       });
       isSignupLoading(false);
     }
@@ -214,7 +207,6 @@ class SignupPageController extends GetxController {
       UserModel userData = AuthController.to.user.value.copyWith(
         nickname: nicknameController.text,
         school: schoolName.value == nullSchoolName ? null : schoolName.value,
-        gender: isMale.value ? 'male' : 'female',
         updatedAt: DateTime.now(),
       );
       await AuthController.to.updateUserModel(userData);

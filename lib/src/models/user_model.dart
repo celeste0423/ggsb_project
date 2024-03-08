@@ -6,7 +6,6 @@ class UserModel {
   final String? nickname;
   final String? loginType;
   final String? email;
-  final String? gender;
   final String? school;
   final bool? isTimer;
   final int? totalSeconds;
@@ -23,7 +22,6 @@ class UserModel {
       this.nickname,
       this.loginType,
       this.email,
-      this.gender,
       this.school,
       this.isTimer,
       this.totalSeconds,
@@ -42,7 +40,6 @@ class UserModel {
       nickname: json['nickname'] == null ? null : json['nickname'] as String,
       loginType: json['loginType'] == null ? null : json['loginType'] as String,
       email: json['email'] == null ? null : json['email'] as String,
-      gender: json['gender'] == null ? null : json['gender'] as String,
       school: json['school'] == null ? null : json['school'] as String,
       isTimer: json['isTimer'] == null ? null : json['isTimer'] as bool,
       totalSeconds:
@@ -69,7 +66,6 @@ class UserModel {
       'nickname': nickname,
       'loginType': loginType,
       'email': email,
-      'gender': gender,
       'school': school,
       'isTimer': isTimer,
       'totalSeconds': totalSeconds,
@@ -88,7 +84,6 @@ class UserModel {
     String? nickname,
     String? loginType,
     String? email,
-    String? gender,
     String? school,
     bool? isTimer,
     int? totalSeconds,
@@ -105,7 +100,6 @@ class UserModel {
       nickname: nickname ?? this.nickname,
       loginType: loginType ?? this.loginType,
       email: email ?? this.email,
-      gender: gender ?? this.gender,
       isTimer: isTimer ?? this.isTimer,
       school: school ?? this.school,
       totalSeconds: totalSeconds ?? this.totalSeconds,

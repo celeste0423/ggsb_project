@@ -35,12 +35,22 @@ class EventPage extends GetView<EventPageController> {
         } else if (snapshot.hasError) {
           return const Text('에러 발생');
         } else {
-          return ListView.builder(
-            itemCount: snapshot.data!.length,
-            itemBuilder: (BuildContext context, int index) {
-              return _eventCard(snapshot.data![index]);
-            },
-          );
+          return snapshot.data!.isEmpty
+              ? const Center(
+                  child: Text(
+                    '아직 이벤트가 없습니다.',
+                    style: TextStyle(
+                      color: CustomColors.mainBlack,
+                      fontSize: 16,
+                    ),
+                  ),
+                )
+              : ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return _eventCard(snapshot.data![index]);
+                  },
+                );
         }
       },
     );
