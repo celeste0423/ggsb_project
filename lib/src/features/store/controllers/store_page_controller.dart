@@ -278,7 +278,8 @@ class StorePageController extends GetxController
         onAdFailedToLoad: (LoadAdError err) {
           print('Failed to load a rewarded ad: ${err.message}');
           print('Failed to load a rewarded ad: ${err.code}');
-          openAlertDialog(title: '광고 표시 오류', content: 'code ${err.code} : ${err.message}');
+          openAlertDialog(
+              title: '광고 표시 오류', content: 'code ${err.code} : ${err.message}');
           isPageLoading(false);
         },
       ),
@@ -380,6 +381,8 @@ class StorePageController extends GetxController
       openAlertDialog(title: '장착 불가', content: '아이템을 구매 후 이용해주세요');
     }
   }
+
+  void couponButton() {}
 
   void adButton() {
     if (rewardedAdCount.value != 0) {
