@@ -93,7 +93,7 @@ class SignupPage extends GetView<SignupPageController> {
         ),
         child: SingleChildScrollView(
           child: SizedBox(
-            height: Get.height - 240 < 620 ? 620 : Get.height - 240,
+            height: Get.height - 240 < 520 ? 520 : Get.height - 240,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
