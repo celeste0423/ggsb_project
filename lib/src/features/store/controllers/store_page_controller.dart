@@ -37,8 +37,8 @@ class StorePageController extends GetxController
         }
       : {
           //test ad 재생시 필요한 unit id
-          // 'ios': 'ca-app-pub-3940256099942544/1712485313',
-          'ios': 'ca-app-pub-4277973972015514~5037008521',
+          'ios': 'ca-app-pub-3940256099942544/1712485313',
+          // 'ios': 'ca-app-pub-4277973972015514/9159268122',
           'android': 'ca-app-pub-3940256099942544/5224354917',
         };
   late SharedPreferences prefs;
@@ -275,8 +275,11 @@ class StorePageController extends GetxController
           });
           isPageLoading(false);
         },
-        onAdFailedToLoad: (err) {
+        onAdFailedToLoad: (LoadAdError err) {
           print('Failed to load a rewarded ad: ${err.message}');
+          print('Failed to load a rewarded ad: ${err.code}');
+          openAlertDialog(title: '광고 표시 오류', content: 'code ${err.code} : ${err.message}');
+          isPageLoading(false);
         },
       ),
     );
