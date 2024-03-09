@@ -116,32 +116,32 @@ class StorePage extends GetView<StorePageController> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          CupertinoButton(
-            padding: EdgeInsets.zero,
-            onPressed: () {
-              controller.adButton();
-            },
-            child: Obx(
-              () => Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: ChatBubble(
-                  clipper: ChatBubbleClipper4(type: BubbleType.sendBubble),
-                  alignment: Alignment.centerRight,
-                  backGroundColor: controller.rewardedAdCount.value == 0
-                      ? CustomColors.greyBackground
-                      : CustomColors.mainBlue,
-                  child: Text(
-                    '광고로 코인 충전 (${controller.rewardedAdCount.value}/10)',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 11,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // CupertinoButton(
+          //   padding: EdgeInsets.zero,
+          //   onPressed: () {
+          //     controller.adButton();
+          //   },
+          //   child: Obx(
+          //     () => Padding(
+          //       padding: const EdgeInsets.symmetric(horizontal: 4),
+          //       child: ChatBubble(
+          //         clipper: ChatBubbleClipper4(type: BubbleType.sendBubble),
+          //         alignment: Alignment.centerRight,
+          //         backGroundColor: controller.rewardedAdCount.value == 0
+          //             ? CustomColors.greyBackground
+          //             : CustomColors.mainBlue,
+          //         child: Text(
+          //           '광고로 코인 충전 (${controller.rewardedAdCount.value}/10)',
+          //           textAlign: TextAlign.center,
+          //           style: const TextStyle(
+          //             color: Colors.white,
+          //             fontSize: 11,
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
           Stack(
             alignment: Alignment.centerLeft,
             children: [
