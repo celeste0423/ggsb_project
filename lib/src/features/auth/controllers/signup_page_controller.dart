@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/constants/service_urls.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
@@ -20,6 +21,7 @@ import 'package:rive/rive.dart';
 
 class SignupPageController extends GetxController {
   bool? isProfileEditing = Get.arguments;
+  late KeyboardVisibilityController keyboardVisibilityController;
 
   Rx<String> uid = ''.obs;
   Rx<String> email = ''.obs;
@@ -45,6 +47,7 @@ class SignupPageController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    keyboardVisibilityController = KeyboardVisibilityController();
     GoogleAnalytics().logEvent('view_signup', null);
     AmplitudeAnalytics().logEvent('view_signup', null);
     await checkIsProfileLoading();
@@ -77,7 +80,7 @@ class SignupPageController extends GetxController {
   Future<void> checkIsProfileLoading() async {
     if (isProfileEditing != null) {
       nicknameController.text = AuthController.to.user.value.nickname!;
-      schoolName.value = AuthController.to.user.value.school!;
+      schoolName.value = AuthController.to.user.value.school ?? nullSchoolName;
     }
   }
 
@@ -148,6 +151,7 @@ class SignupPageController extends GetxController {
 
   void schoolSearchButton() async {
     isSchoolLoading(true);
+    FocusManager.instance.primaryFocus?.unfocus();
     schoolNameList(
         await searchSchools(schoolSearchController.text, selectedSchoolType));
     print(schoolNameList.value);

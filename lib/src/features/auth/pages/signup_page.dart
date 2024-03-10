@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/constants/service_urls.dart';
@@ -236,146 +237,148 @@ class SignupPage extends GetView<SignupPageController> {
       insetPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
-        child: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 30),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: Text(
-                    '학교 이름을 검색해주세요',
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: CustomColors.blackText,
-                      fontWeight: FontWeight.w800,
+        child: KeyboardDismissOnTap(
+          child: Stack(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 30),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: Text(
+                      '학교 이름을 검색해주세요',
+                      style: TextStyle(
+                        fontSize: 25,
+                        color: CustomColors.blackText,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                   ),
-                ),
-                FittedBox(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      _schoolTypeSelector('elem_list', '초등학교'),
-                      _schoolTypeSelector('midd_list', '중학교'),
-                      _schoolTypeSelector('high_list', '고등학교'),
-                      _schoolTypeSelector('univ_list', '대학교'),
-                    ],
+                  FittedBox(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        _schoolTypeSelector('elem_list', '초등학교'),
+                        _schoolTypeSelector('midd_list', '중학교'),
+                        _schoolTypeSelector('high_list', '고등학교'),
+                        _schoolTypeSelector('univ_list', '대학교'),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: controller.schoolSearchController,
-                        cursorColor: Colors.black.withOpacity(0.5),
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: CustomColors.blackText,
-                        ),
-                        decoration: const InputDecoration(
-                          hintText: '검색어를 입력하세요',
-                          hintStyle: TextStyle(
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: controller.schoolSearchController,
+                          cursorColor: Colors.black.withOpacity(0.5),
+                          style: const TextStyle(
                             fontSize: 16,
-                            color: CustomColors.lightGreyText,
+                            color: CustomColors.blackText,
                           ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: CustomColors.mainBlue,
-                              width: 2,
+                          decoration: const InputDecoration(
+                            hintText: '검색어를 입력하세요',
+                            hintStyle: TextStyle(
+                              fontSize: 16,
+                              color: CustomColors.lightGreyText,
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: CustomColors.mainBlue,
+                                width: 2,
+                              ),
                             ),
                           ),
+                          onSubmitted: (_) {
+                            controller.schoolSearchButton();
+                          },
+                          textInputAction: TextInputAction.search,
                         ),
-                        onSubmitted: (_) {
+                      ),
+                      CupertinoButton(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        onPressed: () {
                           controller.schoolSearchButton();
                         },
-                        textInputAction: TextInputAction.search,
+                        child: const Icon(
+                          Icons.search,
+                          color: CustomColors.blackText,
+                        ),
                       ),
-                    ),
-                    CupertinoButton(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      onPressed: () {
-                        controller.schoolSearchButton();
-                      },
-                      child: const Icon(
-                        Icons.search,
-                        color: CustomColors.blackText,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Expanded(
-                  child: Obx(() {
-                    if (controller.isSchoolLoading.value) {
-                      return Center(child: loadingIndicator());
-                    } else if (controller.schoolNameList.isEmpty) {
-                      return const Center(child: Text('검색 결과가 없습니다'));
-                    } else {
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: controller.schoolNameList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return controller.schoolNameList[index] ==
-                                  controller.nullSchoolName
-                              ? SizedBox(
-                                  height: Get.height - 250,
-                                  child: const Center(
-                                    child: Text('학교를 선택하세요'),
-                                  ),
-                                )
-                              : CupertinoButton(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 5),
-                                  onPressed: () {
-                                    controller.schoolName(
-                                        controller.schoolNameList[index]);
-                                    Get.back();
-                                  },
-                                  child: Container(
-                                    width: double.infinity,
-                                    height: 50,
-                                    padding: const EdgeInsets.only(left: 20),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(20),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Expanded(
+                    child: Obx(() {
+                      if (controller.isSchoolLoading.value) {
+                        return Center(child: loadingIndicator());
+                      } else if (controller.schoolNameList.isEmpty) {
+                        return const Center(child: Text('검색 결과가 없습니다'));
+                      } else {
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: controller.schoolNameList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return controller.schoolNameList[index] ==
+                                    controller.nullSchoolName
+                                ? SizedBox(
+                                    height: Get.height - 250,
+                                    child: const Center(
+                                      child: Text('학교를 선택하세요'),
                                     ),
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        controller.schoolNameList[index],
-                                        style: const TextStyle(
-                                          color: CustomColors.mainBlack,
-                                          fontSize: 15,
+                                  )
+                                : CupertinoButton(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 5),
+                                    onPressed: () {
+                                      controller.schoolName(
+                                          controller.schoolNameList[index]);
+                                      Get.back();
+                                    },
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 50,
+                                      padding: const EdgeInsets.only(left: 20),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          controller.schoolNameList[index],
+                                          style: const TextStyle(
+                                            color: CustomColors.mainBlack,
+                                            fontSize: 15,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                );
-                        },
-                      );
-                    }
-                  }),
-                ),
-              ],
-            ),
-            Positioned(
-              right: 0,
-              top: 0,
-              child: CupertinoButton(
-                padding: EdgeInsets.zero,
-                onPressed: () {
-                  Get.back();
-                },
-                child: const Icon(
-                  Icons.close,
-                  color: CustomColors.greyBackground,
+                                  );
+                          },
+                        );
+                      }
+                    }),
+                  ),
+                ],
+              ),
+              Positioned(
+                right: 0,
+                top: 0,
+                child: CupertinoButton(
+                  padding: EdgeInsets.zero,
+                  onPressed: () {
+                    Get.back();
+                  },
+                  child: const Icon(
+                    Icons.close,
+                    color: CustomColors.greyBackground,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -514,25 +517,26 @@ class SignupPage extends GetView<SignupPageController> {
 
   @override
   Widget build(BuildContext context) {
-    print('높이 ${Get.height}');
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     Get.put(SignupPageController());
     controller.uid(uid);
     controller.email(email);
     return Stack(
       children: [
-        Scaffold(
-          resizeToAvoidBottomInset: true,
-          backgroundColor: CustomColors.mainBlue,
-          appBar: _appBar(),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: MediaQuery.of(Get.context!).padding.top),
-              _announcementText(),
-              const SizedBox(height: 30),
-              _inputTab(),
-            ],
+        KeyboardDismissOnTap(
+          child: Scaffold(
+            resizeToAvoidBottomInset: true,
+            backgroundColor: CustomColors.mainBlue,
+            appBar: _appBar(),
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: MediaQuery.of(Get.context!).padding.top),
+                _announcementText(),
+                const SizedBox(height: 30),
+                _inputTab(),
+              ],
+            ),
           ),
         ),
         Obx(
