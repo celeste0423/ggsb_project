@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/room_detail/controllers/room_detail_page_controller.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
-import 'package:ggsb_project/src/utils/live_seconds_util.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
 import 'package:ggsb_project/src/widgets/character_list.dart';
 import 'package:ggsb_project/src/widgets/full_size_loading_indicator.dart';
@@ -150,12 +149,8 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
     double percent =
         controller.liveRoomStreamList[index].totalLiveSeconds != null
             ? controller.roomBestSeconds != 0
-                ? (LiveSecondsUtil().whetherTimerZeroInInt(
-                      controller.liveRoomStreamList[index],
-                      controller.roomModel,
-                      DateTime.now(),
-                    ) /
-                    (controller.roomBestSeconds).toDouble())
+                ? controller.liveRoomStreamList[index].totalLiveSeconds! /
+                    (controller.roomBestSeconds).toDouble()
                 : 0
             : 0;
     return Stack(
@@ -193,12 +188,7 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                   ),
                   Text(
                     SecondsUtil.convertToDigitString(
-                      //날짜 지났을 때는 시간 0으로 출력
-                      LiveSecondsUtil().whetherTimerZeroInInt(
-                        controller.liveRoomStreamList[index],
-                        controller.roomModel,
-                        DateTime.now(),
-                      ),
+                      controller.liveRoomStreamList[index].totalLiveSeconds!,
                     ),
                     style: TextStyle(
                       color: controller.liveRoomStreamList[index].isTimer!

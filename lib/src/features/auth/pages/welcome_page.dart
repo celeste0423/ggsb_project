@@ -122,7 +122,7 @@ class WelcomePage extends GetView<WelcomePageController> {
             ),
             TextField(
               controller: controller.guestPasswordController,
-              decoration: const InputDecoration(labelText: '비밀번호'),
+              decoration: const InputDecoration(labelText: '비밀번호(6자리 이상)'),
               obscureText: true,
             ),
             const SizedBox(height: 16.0),
