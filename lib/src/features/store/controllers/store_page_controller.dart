@@ -239,17 +239,19 @@ class StorePageController extends GetxController
         await StudyTimeRepository().getUncashedStudyTimeModelExceptToday(
       AuthController.to.user.value.uid!,
     );
-    int totalAddedTime = 0;
     if (uncashedStudyTimeList.isNotEmpty) {
       for (StudyTimeModel studyTimeModel in uncashedStudyTimeList) {
         int studyTimeInMinute = SecondsUtil.convertToMinutes(
           studyTimeModel.totalSeconds!,
         );
-        totalAddedTime += studyTimeInMinute;
-      }
-      if (totalAddedTime > 0) {
-        Get.dialog(const StorePage().cashDialog(totalAddedTime));
-        updateCash(totalAddedTime);
+        if (studyTimeInMinute > 0) {
+          Get.dialog(const StorePage().cashDialog(studyTimeInMinute));
+          updateCash(studyTimeInMinute);
+          StudyTimeModel updatedStudyTimeModel = studyTimeModel.copyWith(
+            isCashed: true,
+          );
+          StudyTimeRepository().updateStudyTimeModel(updatedStudyTimeModel);
+        }
       }
     }
     // Get.dialog(const StorePage().cashDialog(300));
