@@ -117,31 +117,42 @@ class StorePage extends GetView<StorePageController> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           // CupertinoButton(
-          //   padding: EdgeInsets.zero,
+          //   padding: const EdgeInsets.only(right: 20),
           //   onPressed: () {
-          //     controller.adButton();
+          //     controller.couponButton();
           //   },
-          //   child: Obx(
-          //     () => Padding(
-          //       padding: const EdgeInsets.symmetric(horizontal: 4),
-          //       child: ChatBubble(
-          //         clipper: ChatBubbleClipper4(type: BubbleType.sendBubble),
-          //         alignment: Alignment.centerRight,
-          //         backGroundColor: controller.rewardedAdCount.value == 0
-          //             ? CustomColors.greyBackground
-          //             : CustomColors.mainBlue,
-          //         child: Text(
-          //           '광고로 코인 충전 (${controller.rewardedAdCount.value}/10)',
-          //           textAlign: TextAlign.center,
-          //           style: const TextStyle(
-          //             color: Colors.white,
-          //             fontSize: 11,
-          //           ),
-          //         ),
-          //       ),
-          //     ),
+          //   child: Image.asset(
+          //     'assets/icons/coupon.png',
+          //     color: CustomColors.greyBackground,
+          //     height: 22,
           //   ),
           // ),
+          CupertinoButton(
+            padding: EdgeInsets.zero,
+            onPressed: () {
+              controller.adButton();
+            },
+            child: Obx(
+              () => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: ChatBubble(
+                  clipper: ChatBubbleClipper4(type: BubbleType.sendBubble),
+                  alignment: Alignment.centerRight,
+                  backGroundColor: controller.rewardedAdCount.value == 0
+                      ? CustomColors.greyBackground
+                      : CustomColors.mainBlue,
+                  child: Text(
+                    '광고로 코인 충전 (${controller.rewardedAdCount.value}/10)',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 11,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
           Stack(
             alignment: Alignment.centerLeft,
             children: [
