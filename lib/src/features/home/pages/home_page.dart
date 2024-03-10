@@ -57,23 +57,26 @@ class HomePage extends GetView<HomePageController> {
   }
 
   Widget _characterBox() {
-    return Container(
-      width: 300,
-      height: 300,
-      decoration: BoxDecoration(
-        color: CustomColors.lightGreyBackground,
-        borderRadius: BorderRadius.circular(150),
-      ),
-      child: CupertinoButton(
-        padding: EdgeInsets.zero,
-        onPressed: () {
-          controller.storePageButton();
-          // controller.shareScreen();
-        },
-        child: RiveAnimation.asset(
-          'assets/riv/character.riv',
-          stateMachines: ["character"],
-          onInit: controller.onRiveInit,
+    return Expanded(
+      child: Container(
+        // width: 300,
+        // height: 300,
+        margin: const EdgeInsets.symmetric(horizontal: 30),
+        decoration: BoxDecoration(
+          color: CustomColors.lightGreyBackground,
+          borderRadius: BorderRadius.circular(300),
+        ),
+        child: CupertinoButton(
+          padding: EdgeInsets.zero,
+          onPressed: () {
+            controller.storePageButton();
+            // controller.shareScreen();
+          },
+          child: RiveAnimation.asset(
+            'assets/riv/character.riv',
+            stateMachines: ["character"],
+            onInit: controller.onRiveInit,
+          ),
         ),
       ),
     );
