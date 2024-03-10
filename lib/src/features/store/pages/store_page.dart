@@ -127,53 +127,59 @@ class StorePage extends GetView<StorePageController> {
             onPressed: () {
               controller.adButton();
             },
-            child: Obx(
-              () => Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: ChatBubble(
-                  clipper: ChatBubbleClipper4(type: BubbleType.sendBubble),
-                  alignment: Alignment.centerRight,
-                  backGroundColor: controller.rewardedAdCount.value == 0
-                      ? CustomColors.greyBackground
-                      : CustomColors.mainBlue,
-                  child: Text(
-                    '광고로 코인 충전 (${controller.rewardedAdCount.value}/10)',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 11,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Obx(
+                  () => Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: ChatBubble(
+                      clipper: ChatBubbleClipper4(type: BubbleType.sendBubble),
+                      alignment: Alignment.centerRight,
+                      backGroundColor: controller.rewardedAdCount.value == 0
+                          ? CustomColors.greyBackground
+                          : CustomColors.mainBlue,
+                      child: Text(
+                        '광고로 코인 충전 (${controller.rewardedAdCount.value}/10)',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 11,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
+                Stack(
+                  alignment: Alignment.centerLeft,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 3, bottom: 3),
+                      child: Image.asset(
+                        'assets/icons/gold_coin.png',
+                        width: 20,
+                        height: 20,
+                      ),
+                    ),
+                    Positioned(
+                        left: 10,
+                        top: 10,
+                        child: Container(
+                          width: 12,
+                          height: 12,
+                          padding: const EdgeInsets.all(2.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(90),
+                            color: CustomColors.mainBlue,
+                          ),
+                          child: Image.asset('assets/icons/plus.png'),
+                        )),
+                  ],
+                ),
+              ],
             ),
           ),
-          Stack(
-            alignment: Alignment.centerLeft,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 3, bottom: 3),
-                child: Image.asset(
-                  'assets/icons/gold_coin.png',
-                  width: 20,
-                  height: 20,
-                ),
-              ),
-              Positioned(
-                  left: 10,
-                  top: 10,
-                  child: Container(
-                    width: 12,
-                    height: 12,
-                    padding: const EdgeInsets.all(2.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(90),
-                      color: CustomColors.mainBlue,
-                    ),
-                    child: Image.asset('assets/icons/plus.png'),
-                  )),
-            ],
-          ),
+
           const SizedBox(width: 5),
           Obx(
             () => Text(

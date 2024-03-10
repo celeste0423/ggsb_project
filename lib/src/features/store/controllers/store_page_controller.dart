@@ -278,8 +278,8 @@ class StorePageController extends GetxController
           isPageLoading(false);
         },
         onAdFailedToLoad: (LoadAdError err) {
-          print('Failed to load a rewarded ad: ${err.message}');
-          print('Failed to load a rewarded ad: ${err.code}');
+          // print('Failed to load a rewarded ad: ${err.message}');
+          // print('Failed to load a rewarded ad: ${err.code}');
           openAlertDialog(
               title: '광고 표시 오류', content: 'code ${err.code} : ${err.message}');
           isPageLoading(false);
