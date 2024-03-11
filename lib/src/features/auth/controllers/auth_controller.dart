@@ -100,15 +100,14 @@ class AuthController extends GetxController {
     studyTime = studyTimeData!;
   }
 
-  Future<UserModel?> updateAuthController(String uid) async {
+  Future<void> updateLocalUserModel() async {
     // print('로그인 중');
-    var userData = await UserRepository.getUserData(uid);
-    // print('유저 데이터 ${userData}');
+    var userData = await UserRepository.getUserData(user.value.uid!);
+    print('유저 데이터 ${userData!.roomIdList}');
     if (userData != null) {
       user(userData);
-      InitBinding.additionalBinding();
+      // InitBinding.additionalBinding();
     }
-    return userData;
   }
 
   Future<void> updateUserModel(UserModel userModel) async {

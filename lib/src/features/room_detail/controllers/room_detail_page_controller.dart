@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
-import 'package:ggsb_project/src/features/room_list/controllers/room_list_page_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
@@ -26,28 +25,31 @@ class RoomDetailPageController extends GetxController {
   List<RoomStreamModel> roomStreamList = [];
   List<RoomStreamModel> liveRoomStreamList = [];
   int roomBestSeconds = 0;
+
   // int roomTotalSeconds = 0;
 
   @override
   void onInit() async {
     super.onInit();
 
-    _secondsTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _secondsTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       update(['roomUserListTimer']);
     });
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       backgroundAnimation(true);
     });
   }
 
   Future<void> deleteUser(RoomStreamModel roomStreamModel) async {
     //유저 정보에서 방리스트 삭제
-    UserRepository.removeRoomId(roomStreamModel.uid!, roomStreamModel.roomId!);
+    await UserRepository.removeRoomId(
+        roomStreamModel.uid!, roomStreamModel.roomId!);
     //roomStream 삭제
-    RoomStreamRepository()
+    await RoomStreamRepository()
         .deleteRoomStream(roomStreamModel.roomId!, roomStreamModel.uid!);
     //roomModel에서 uid 삭제
-    RoomRepository().removeUid(roomStreamModel.roomId!, roomStreamModel.uid!);
+    await RoomRepository()
+        .removeUid(roomStreamModel.roomId!, roomStreamModel.uid!);
   }
 
   Stream<List<RoomStreamModel>> roomUserListStream() {
@@ -73,7 +75,7 @@ class RoomDetailPageController extends GetxController {
   }
 
   Future<bool> backButton() async {
-    RoomListPageController().checkIsRoomList();
+    // RoomListPageController().checkIsRoomList();
     Get.back();
     return true; // 뒤로 가기를 허용할지 여부를 반환
   }
@@ -87,36 +89,44 @@ class RoomDetailPageController extends GetxController {
       secondButtonText: '취소',
       mainfunction: () async {
         isPageLoading(true);
-        await deleteUser(roomStreamModel);
-        RoomListPageController().checkIsRoomList();
+        if (!roomStreamModel.isTimer!) {
+          await deleteUser(roomStreamModel);
+          // RoomListPageController().checkIsRoomList();
+          Get.back();
+        } else {
+          Get.back();
+          openAlertDialog(
+            title: '내보낼 수 없음',
+            content: '해당 유저는 현재 타이머가 실행중입니다.',
+          );
+        }
         isPageLoading(false);
-        Get.back();
-      },
-      secondfunction: () {
-        Get.back();
       },
     );
   }
 
-  void outOfRoomButton() {
+  void outOfRoomButton() async {
     RoomStreamModel roomStreamModel = RoomStreamModel(
       uid: AuthController.to.user.value.uid,
       roomId: roomModel.roomId,
     );
-    deleteUser(roomStreamModel);
-    RoomListPageController().checkIsRoomList();
+    await deleteUser(roomStreamModel);
+    // RoomListPageController().checkIsRoomList();
+    AuthController.to.updateLocalUserModel();
+    // Get.offAll(const App());
     Get.back();
   }
 
-  void deleteRoomButton() {
+  void deleteRoomButton() async {
     //모든 유저에 대해 roomId 삭제
     for (String uid in roomModel.uidList!) {
       UserRepository.removeRoomId(uid, roomModel.roomId!);
     }
     //roomModel 삭제
     RoomRepository().deleteRoomModel(roomModel);
-    //방 리스트 새로고침
-    RoomListPageController().checkIsRoomList();
+    //유저 정보 반영
+    AuthController.to.updateLocalUserModel();
+    // Get.offAll(const App());
     Get.back();
   }
 

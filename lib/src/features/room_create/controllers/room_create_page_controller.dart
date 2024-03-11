@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
-import 'package:ggsb_project/src/features/room_list/controllers/room_list_page_controller.dart';
 import 'package:ggsb_project/src/helpers/amplitude_analytics.dart';
 import 'package:ggsb_project/src/helpers/google_analytics.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
@@ -11,13 +10,12 @@ import 'package:ggsb_project/src/models/room_stream_model.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:ggsb_project/src/repositories/room_repository.dart';
 import 'package:ggsb_project/src/repositories/room_stream_repository.dart';
-import 'package:ggsb_project/src/repositories/user_repository.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:uuid/uuid.dart';
 
 class RoomCreatePageController extends GetxController {
   static RoomCreatePageController get to => Get.find();
-  Uuid uuid = Uuid();
+  Uuid uuid = const Uuid();
 
   TextEditingController roomNameController = TextEditingController();
 
@@ -114,10 +112,11 @@ class RoomCreatePageController extends GetxController {
                 roomId.value,
               ],
       );
-      UserRepository().updateUserModel(updatedUserModel);
-      RoomListPageController.to.checkIsRoomList();
+      AuthController.to.updateUserModel(updatedUserModel);
+      // RoomListPageController.to.checkIsRoomList();
       GoogleAnalytics().logEvent('create_room', {'room_type': roomType.value});
-      AmplitudeAnalytics().logEvent('create_room', {'room_type': roomType.value});
+      AmplitudeAnalytics()
+          .logEvent('create_room', {'room_type': roomType.value});
       Get.back();
     }
   }
