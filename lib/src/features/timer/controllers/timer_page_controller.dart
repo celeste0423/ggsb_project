@@ -24,6 +24,7 @@ import 'package:ggsb_project/src/utils/date_util.dart';
 import 'package:ggsb_project/src/utils/live_seconds_util.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
 import 'package:intl/intl.dart';
+import 'package:rive/rive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TimerPageController extends GetxController
@@ -40,6 +41,9 @@ class TimerPageController extends GetxController
 
   final Rx<String> today =
       DateFormat('M/d E', 'ko_KR').format(DateTime.now()).obs;
+
+  late List<List<SMINumber?>> stateMachineList;
+  late List<StateMachineController?> riveControllers;
 
   AnimateIconController animateIconController = AnimateIconController();
   Rx<Color> playButtonColor = CustomColors.mainBlue.obs;
@@ -67,6 +71,7 @@ class TimerPageController extends GetxController
     });
     await _initRoomTabController();
     await _initOverlay();
+    _initRiveControllerLIst();
   }
 
   Future<void> getRoomList() async {
@@ -180,6 +185,21 @@ class TimerPageController extends GetxController
     }
   }
 
+  void _initRiveControllerLIst() {
+    stateMachineList = List<List<SMINumber?>>.generate(
+      roomStreamList.length,
+      (roomStreamIndex) => List<SMINumber?>.generate(
+        4,
+        (stateMachineIndex) => null,
+      ),
+    );
+    riveControllers = List.generate(
+      roomStreamList.length,
+      (index) => null,
+    );
+    // rootBundle.load('assets/riv')
+  }
+
   //init
 
   Stream<List<RoomStreamModel>> roomListStream(String roomId) {
@@ -239,6 +259,50 @@ class TimerPageController extends GetxController
     }
     Duration difference = firstTime.difference(secondTime);
     return difference.abs() >= const Duration(hours: 4);
+  }
+
+  void onRiveInit(Artboard artboard, int index) {
+    riveControllers[index] =
+        StateMachineController.fromArtboard(artboard, 'character');
+    artboard.addController(riveControllers[index]!);
+    for (int stateMachineIndex = 0;
+        stateMachineIndex < 4;
+        stateMachineIndex++) {
+      stateMachineList[index][stateMachineIndex] = riveControllers[index]!
+              .findInput<double>(_getInputNameByIndex(stateMachineIndex))
+          as SMINumber;
+    }
+    riveCharacterInit(index);
+  }
+
+  String _getInputNameByIndex(int index) {
+    switch (index) {
+      case 0:
+        return 'action';
+      case 1:
+        return 'hat';
+      case 2:
+        return 'shield';
+      case 3:
+        return 'color';
+      default:
+        throw Exception('Invalid index: $index');
+    }
+  }
+
+  void riveCharacterInit(int controllerIndex) {
+    if (stateMachineList[0][0] != null) {
+      CharacterModel characterModel =
+          roomStreamList[controllerIndex].characterData!;
+      stateMachineList[controllerIndex][0]!.value =
+          characterModel.actionState!.toDouble();
+      stateMachineList[controllerIndex][1]!.value =
+          characterModel.hat!.toDouble();
+      stateMachineList[controllerIndex][2]!.value =
+          characterModel.shield!.toDouble();
+      stateMachineList[controllerIndex][3]!.value =
+          characterModel.bodyColor!.toDouble();
+    }
   }
 
   //button
