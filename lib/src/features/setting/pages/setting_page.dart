@@ -215,6 +215,12 @@ class SettingPage extends GetView<SettingPageController> {
           height: 30,
         );
         break;
+      case 'guest':
+        icon = SvgPicture.asset(
+          'assets/icons/guest.svg',
+          height: 40,
+        );
+        break;
       default:
         icon = const SizedBox(); // 기본값은 빈 위젯
         break;
