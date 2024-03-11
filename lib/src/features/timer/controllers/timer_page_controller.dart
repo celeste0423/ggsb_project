@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:animate_icons/animate_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
@@ -42,6 +43,7 @@ class TimerPageController extends GetxController
   final Rx<String> today =
       DateFormat('M/d E', 'ko_KR').format(DateTime.now()).obs;
 
+  late List<Artboard?> characterArtboardList;
   late List<List<SMINumber?>> stateMachineList;
   late List<StateMachineController?> riveControllers;
 
@@ -71,7 +73,6 @@ class TimerPageController extends GetxController
     });
     await _initRoomTabController();
     await _initOverlay();
-    _initRiveControllerLIst();
   }
 
   Future<void> getRoomList() async {
@@ -185,7 +186,7 @@ class TimerPageController extends GetxController
     }
   }
 
-  void _initRiveControllerLIst() {
+  void initRiveControllerList() {
     stateMachineList = List<List<SMINumber?>>.generate(
       roomStreamList.length,
       (roomStreamIndex) => List<SMINumber?>.generate(
@@ -197,7 +198,31 @@ class TimerPageController extends GetxController
       roomStreamList.length,
       (index) => null,
     );
-    // rootBundle.load('assets/riv')
+    rootBundle.load('assets/riv/character.riv').then((data) async {
+      characterArtboardList = List.generate(
+        roomStreamList.length,
+        (index) {
+          final artboard = RiveFile.import(data).mainArtboard;
+          riveControllers[index] = StateMachineController.fromArtboard(
+            artboard,
+            'character',
+          );
+          if (riveControllers[index] != null) {
+            artboard.addController(riveControllers[index]!);
+          }
+          for (int stateMachineIndex = 0;
+              stateMachineIndex < 4;
+              stateMachineIndex++) {
+            stateMachineList[index][stateMachineIndex] = riveControllers[index]!
+                    .findInput<double>(_getInputNameByIndex(stateMachineIndex))
+                as SMINumber;
+          }
+          riveCharacterInit(index);
+          return artboard;
+        },
+      );
+      // print('길이 ${roomStreamList.length}');
+    });
   }
 
   //init
@@ -261,19 +286,19 @@ class TimerPageController extends GetxController
     return difference.abs() >= const Duration(hours: 4);
   }
 
-  void onRiveInit(Artboard artboard, int index) {
-    riveControllers[index] =
-        StateMachineController.fromArtboard(artboard, 'character');
-    artboard.addController(riveControllers[index]!);
-    for (int stateMachineIndex = 0;
-        stateMachineIndex < 4;
-        stateMachineIndex++) {
-      stateMachineList[index][stateMachineIndex] = riveControllers[index]!
-              .findInput<double>(_getInputNameByIndex(stateMachineIndex))
-          as SMINumber;
-    }
-    riveCharacterInit(index);
-  }
+  // void onRiveInit(Artboard artboard, int index) {
+  //   riveControllers[index] =
+  //       StateMachineController.fromArtboard(artboard, 'character');
+  //   artboard.addController(riveControllers[index]!);
+  //   for (int stateMachineIndex = 0;
+  //       stateMachineIndex < 4;
+  //       stateMachineIndex++) {
+  //     stateMachineList[index][stateMachineIndex] = riveControllers[index]!
+  //             .findInput<double>(_getInputNameByIndex(stateMachineIndex))
+  //         as SMINumber;
+  //   }
+  //   riveCharacterInit(index);
+  // }
 
   String _getInputNameByIndex(int index) {
     switch (index) {
@@ -294,6 +319,7 @@ class TimerPageController extends GetxController
     if (stateMachineList[0][0] != null) {
       CharacterModel characterModel =
           roomStreamList[controllerIndex].characterData!;
+      print('캐릭터 정보 받아옴 ${characterModel.toJson()}');
       stateMachineList[controllerIndex][0]!.value =
           characterModel.actionState!.toDouble();
       stateMachineList[controllerIndex][1]!.value =

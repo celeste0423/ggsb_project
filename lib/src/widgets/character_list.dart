@@ -2,6 +2,7 @@ import 'package:circular_motion/circular_motion.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ggsb_project/src/models/character_model.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/widgets/full_size_loading_indicator.dart';
@@ -32,9 +33,8 @@ import 'package:rive/rive.dart';
 
 Widget characterList(
   bool isLoading,
-  List<List<SMINumber?>> stateMachineList,
-  List<StateMachineController?> riveControllers,
   List<RoomStreamModel> roomStreamList,
+  List<Artboard?> artboardList,
 ) {
   return !isLoading
       ? Stack(
@@ -52,9 +52,7 @@ Widget characterList(
                 return _characterCard(
                   index,
                   roomStreamList.length,
-                  stateMachineList,
-                  riveControllers,
-                  roomStreamList,
+                  artboardList[index]!,
                 );
               },
             ),
@@ -68,77 +66,67 @@ Widget characterList(
 Widget _characterCard(
   int index,
   int length,
-  List<List<SMINumber?>> stateMachineList,
-  List<StateMachineController?> riveControllers,
-  List<RoomStreamModel> roomStreamList,
+  Artboard artboard,
 ) {
   return SizedBox(
     width: 210 - length * 20,
     height: 210 - length * 20,
-    child: RiveAnimation.asset(
-      'assets/riv/character.riv',
-      stateMachines: ["character"],
-      // onInit: (artboard) => onRiveInit(
-      //   artboard,
-      //   index,
-      //   stateMachineList,
-      //   riveControllers,
-      //   roomStreamList,
-      // ),
+    child: Rive(
+      artboard: artboard.instance(),
     ),
   );
 }
 
-// void onRiveInit(
-//   Artboard artboard,
-//   int index,
-//   List<List<SMINumber?>> stateMachineList,
-//   List<StateMachineController?> riveControllers,
-//   List<RoomStreamModel> roomStreamList,
-// ) {
-//   riveControllers[index] =
-//       StateMachineController.fromArtboard(artboard, 'character');
-//   artboard.addController(riveControllers[index]!);
-//   for (int stateMachineIndex = 0; stateMachineIndex < 4; stateMachineIndex++) {
-//     stateMachineList[index][stateMachineIndex] = riveControllers[index]!
-//             .findInput<double>(_getInputNameByIndex(stateMachineIndex))
-//         as SMINumber;
-//   }
-//   riveCharacterInit(index, stateMachineList, roomStreamList);
-// }
-//
-// String _getInputNameByIndex(int index) {
-//   switch (index) {
-//     case 0:
-//       return 'action';
-//     case 1:
-//       return 'hat';
-//     case 2:
-//       return 'shield';
-//     case 3:
-//       return 'color';
-//     default:
-//       throw Exception('Invalid index: $index');
-//   }
-// }
-//
-// void riveCharacterInit(
-//     int controllerIndex,
-//     List<List<SMINumber?>> stateMachineList,
-//     List<RoomStreamModel> roomStreamList) {
-//   if (stateMachineList[0][0] != null) {
-//     CharacterModel characterModel =
-//         roomStreamList[controllerIndex].characterData!;
-//     stateMachineList[controllerIndex][0]!.value =
-//         characterModel.actionState!.toDouble();
-//     stateMachineList[controllerIndex][1]!.value =
-//         characterModel.hat!.toDouble();
-//     stateMachineList[controllerIndex][2]!.value =
-//         characterModel.shield!.toDouble();
-//     stateMachineList[controllerIndex][3]!.value =
-//         characterModel.bodyColor!.toDouble();
-//   }
-// }
+void onRiveInit(
+  Artboard artboard,
+  int index,
+  List<List<SMINumber?>> stateMachineList,
+  List<StateMachineController?> riveControllers,
+  List<RoomStreamModel> roomStreamList,
+) {
+  riveControllers[index] =
+      StateMachineController.fromArtboard(artboard, 'character');
+  artboard.addController(riveControllers[index]!);
+  for (int stateMachineIndex = 0; stateMachineIndex < 4; stateMachineIndex++) {
+    stateMachineList[index][stateMachineIndex] = riveControllers[index]!
+            .findInput<double>(_getInputNameByIndex(stateMachineIndex))
+        as SMINumber;
+  }
+  riveCharacterInit(index, stateMachineList, roomStreamList);
+}
+
+String _getInputNameByIndex(int index) {
+  switch (index) {
+    case 0:
+      return 'action';
+    case 1:
+      return 'hat';
+    case 2:
+      return 'shield';
+    case 3:
+      return 'color';
+    default:
+      throw Exception('Invalid index: $index');
+  }
+}
+
+void riveCharacterInit(
+    int controllerIndex,
+    List<List<SMINumber?>> stateMachineList,
+    List<RoomStreamModel> roomStreamList) {
+  if (stateMachineList[0][0] != null) {
+    CharacterModel characterModel =
+        roomStreamList[controllerIndex].characterData!;
+    stateMachineList[controllerIndex][0]!.value =
+        characterModel.actionState!.toDouble();
+    stateMachineList[controllerIndex][1]!.value =
+        characterModel.hat!.toDouble();
+    stateMachineList[controllerIndex][2]!.value =
+        characterModel.shield!.toDouble();
+    stateMachineList[controllerIndex][3]!.value =
+        characterModel.bodyColor!.toDouble();
+  }
+}
 
 List<PieChartSectionData> _chartData(List<RoomStreamModel> roomStreamList) {
   return List.generate(

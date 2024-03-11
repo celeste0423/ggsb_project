@@ -99,11 +99,11 @@ class TimerPage extends GetView<TimerPageController> {
                 id: 'roomListTimer',
                 builder: (controller) {
                   controller.arrangeSnapshot(snapshot, roomModel);
+                  controller.initRiveControllerList();
                   return characterList(
                     false,
-                    controller.stateMachineList,
-                    controller.riveControllers,
                     controller.roomStreamList,
+                    controller.characterArtboardList,
                   );
                 },
               ),
