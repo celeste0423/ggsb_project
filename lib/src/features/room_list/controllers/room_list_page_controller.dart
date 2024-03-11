@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:ggsb_project/src/constants/service_urls.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/helpers/amplitude_analytics.dart';
 import 'package:ggsb_project/src/helpers/google_analytics.dart';
@@ -12,9 +9,6 @@ import 'package:ggsb_project/src/models/room_stream_model.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:ggsb_project/src/repositories/room_repository.dart';
 import 'package:ggsb_project/src/repositories/room_stream_repository.dart';
-import 'package:ggsb_project/src/repositories/user_repository.dart';
-import 'package:html/parser.dart' as parser;
-import 'package:http/http.dart' as http;
 
 class RoomListPageController extends GetxController {
   static RoomListPageController get to => Get.find();
@@ -29,20 +23,20 @@ class RoomListPageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    checkIsRoomList();
-    getSaying();
+    // isRoomListLoading(true);
+    // checkIsRoomList();
+    // isRoomListLoading(false);
   }
 
-  void checkIsRoomList() async {
-    isRoomListLoading(true);
-    await AuthController.to
-        .updateAuthController(AuthController.to.user.value.uid!);
-    isNoRoomList(AuthController.to.user.value.roomIdList == null ||
-        AuthController.to.user.value.roomIdList!.isEmpty);
-    isRoomListLoading(false);
-  }
+  // void checkIsRoomList() {
+  //   // await AuthController.to
+  //   //     .updateAuthController(AuthController.to.user.value.uid!);
+  //   isNoRoomList(AuthController.to.user.value.roomIdList == null ||
+  //       AuthController.to.user.value.roomIdList!.isEmpty);
+  // }
 
   Future<List<RoomModel>> getRoomList() async {
+    print('방리스트${AuthController.to.user.value.roomIdList}');
     if (AuthController.to.user.value.roomIdList == null) {
       isNoRoomList(true);
       return [];
@@ -54,23 +48,23 @@ class RoomListPageController extends GetxController {
     }
   }
 
-  Future<void> getSaying() async {
-    String apiUrl = ServiceUrls.sayingUrl;
-    http.Response response = await http.get(Uri.parse(apiUrl));
-
-    if (response.statusCode == 200) {
-      final responseByte =
-          utf8.decode(response.bodyBytes, allowMalformed: true);
-      final document = parser.parse(responseByte);
-      final element = document.getElementsByTagName('p')[0].text;
-      // print('명언 ${element}');
-      saying(element.toString());
-    } else {
-      throw openAlertDialog(
-          title: '명언 로드에 실패했습니다.',
-          content: '에러코드: ${response.statusCode.toString()}');
-    }
-  }
+  // Future<void> getSaying() async {
+  //   String apiUrl = ServiceUrls.sayingUrl;
+  //   http.Response response = await http.get(Uri.parse(apiUrl));
+  //
+  //   if (response.statusCode == 200) {
+  //     final responseByte =
+  //         utf8.decode(response.bodyBytes, allowMalformed: true);
+  //     final document = parser.parse(responseByte);
+  //     final element = document.getElementsByTagName('p')[0].text;
+  //     // print('명언 ${element}');
+  //     saying(element.toString());
+  //   } else {
+  //     throw openAlertDialog(
+  //         title: '명언 로드에 실패했습니다.',
+  //         content: '에러코드: ${response.statusCode.toString()}');
+  //   }
+  // }
 
   Future<void> joinRoomButton() async {
     if (joinRoomIdController.text == '') {
@@ -95,7 +89,7 @@ class RoomListPageController extends GetxController {
             AuthController.to.user.value.uid!,
           ],
         );
-        RoomRepository().updateRoomModel(updatedRoomModel);
+        await RoomRepository().updateRoomModel(updatedRoomModel);
         //RoomStream업로드
         RoomStreamModel newRoomStreamModel = RoomStreamModel(
           uid: AuthController.to.user.value.uid,
@@ -107,11 +101,8 @@ class RoomListPageController extends GetxController {
           lastTime: null,
           characterData: AuthController.to.user.value.characterData,
         );
-        RoomStreamRepository().uploadRoomStream(newRoomStreamModel);
+        await RoomStreamRepository().uploadRoomStream(newRoomStreamModel);
         //유저 정보 업데이트
-        await AuthController.to
-            .updateAuthController(AuthController.to.user.value.uid!);
-        isNoRoomList(AuthController.to.user.value.roomIdList != null);
         UserModel userModel = AuthController.to.user.value;
         UserModel updatedUserModel = userModel.copyWith(
           roomIdList: userModel.roomIdList == null
@@ -121,15 +112,22 @@ class RoomListPageController extends GetxController {
                   joinRoomIdController.text,
                 ],
         );
-        UserRepository().updateUserModel(updatedUserModel);
-        AuthController.to.user(updatedUserModel);
-        checkIsRoomList();
-        joinRoomIdController.clear();
-        GoogleAnalytics().logEvent('join_room', {'room_owner': roomModel.creatorUid});
-        AmplitudeAnalytics().logEvent('join_room', {'room_owner': roomModel.creatorUid});
+        await AuthController.to.updateUserModel(updatedUserModel);
+        isNoRoomList(AuthController.to.user.value.roomIdList!.isEmpty);
+        // checkIsRoomList();
+        // joinRoomIdController.clear();
+        GoogleAnalytics()
+            .logEvent('join_room', {'room_owner': roomModel.creatorUid});
+        AmplitudeAnalytics()
+            .logEvent('join_room', {'room_owner': roomModel.creatorUid});
         Get.back();
         isRoomListLoading(false);
       }
     }
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
   }
 }
