@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/event/pages/event_page.dart';
@@ -119,6 +121,7 @@ class HomePageController extends GetxController {
 
   //이벤트 페이지 이동
   void EventPageButton() {
+    FirebaseCrashlytics.instance.crash();
     Get.to(() => const EventPage());
   }
 
