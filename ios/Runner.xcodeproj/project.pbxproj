@@ -214,7 +214,6 @@
 				E03F909F990984969BD0C9B2 /* [CP] Embed Pods Frameworks */,
 				24F73695AEE7EF6AF9855E0F /* [CP] Copy Pods Resources */,
 				2DEB1574614AE195F450FD55 /* [firebase_crashlytics] Crashlytics Upload Symbols */,
-				0D6621D52BA0F63300B878E0 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -287,23 +286,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0D6621D52BA0F63300B878E0 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "${PODS_ROOT}/Fabric/run\n";
-		};
 		24F73695AEE7EF6AF9855E0F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
