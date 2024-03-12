@@ -142,6 +142,9 @@ class TimerPageController extends GetxController
       // 이전에 저장된 탭 인덱스가 있는지 확인
       int? lastIndex = prefs.getInt('roomTabIndex');
       if (lastIndex != null) {
+        if(lastIndex == 0){
+          playButtonColor(CustomColors.nameToRoomColor(roomList[0].color!));
+        }
         roomTabController.index = lastIndex;
       }
     }
