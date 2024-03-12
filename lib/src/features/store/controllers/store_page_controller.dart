@@ -241,7 +241,7 @@ class StorePageController extends GetxController
     );
     if (uncashedStudyTimeList.isNotEmpty) {
       for (StudyTimeModel studyTimeModel in uncashedStudyTimeList) {
-        int studyTimeInMinute = SecondsUtil.convertToMinutes(
+        int studyTimeInMinute = SecondsUtil.convertToTotalMinutes(
           studyTimeModel.totalSeconds!,
         );
         if (studyTimeInMinute > 0) {
