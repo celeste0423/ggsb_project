@@ -86,6 +86,7 @@ class TimerPage extends GetView<TimerPageController> {
           } else if (snapshot.hasError) {
             return const Text('불러오는 중 에러가 발생했습니다.');
           } else {
+            controller.arrangeSnapshot(snapshot, roomModel);
             return Container(
               height: Get.width - 100,
               width: Get.width - 100,
@@ -95,14 +96,8 @@ class TimerPage extends GetView<TimerPageController> {
                 borderRadius: BorderRadius.circular(160),
                 color: CustomColors.lightGreyBackground,
               ),
-              child: GetBuilder<TimerPageController>(
-                id: 'roomListTimer',
-                builder: (controller) {
-                  controller.arrangeSnapshot(snapshot, roomModel);
-                  return CharacterList(
-                    roomStreamList: controller.liveRoomStreamList,
-                  );
-                },
+              child: CharacterList(
+                roomStreamList: controller.liveRoomStreamList,
               ),
             );
           }

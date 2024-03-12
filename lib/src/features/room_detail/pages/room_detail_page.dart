@@ -101,40 +101,43 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                 } else if (snapshot.hasError) {
                   return const Text('불러오는 중 에러가 발생했습니다.');
                 } else {
-                  return GetBuilder<RoomDetailPageController>(
-                    id: 'roomUserListTimer',
-                    builder: (controller) {
-                      controller.arrangeSnapshot(snapshot);
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 100),
-                        itemCount: controller.roomStreamList.length + 1,
-                        itemBuilder: (context, index) {
-                          if (index == 0) {
-                            return Container(
-                              height: Get.width - 60,
-                              margin: const EdgeInsets.symmetric(vertical: 20),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: [
-                                  BoxShadow(
-                                    offset: const Offset(0, 4),
-                                    blurRadius: 4,
-                                    color: Colors.black.withOpacity(0.1),
-                                  ),
-                                ],
-                              ),
-                              child: CharacterList(
-                                roomStreamList: controller.liveRoomStreamList,
-                              ),
+                  controller.arrangeSnapshot(snapshot);
+                  return Column(
+                    children: [
+                      Container(
+                        height: Get.width - 60,
+                        margin: const EdgeInsets.symmetric(vertical: 20),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: const Offset(0, 4),
+                              blurRadius: 4,
+                              color: Colors.black.withOpacity(0.1),
+                            ),
+                          ],
+                        ),
+                        child: CharacterList(
+                          roomStreamList: controller.liveRoomStreamList,
+                        ),
+                      ),
+                      Expanded(
+                        child: GetBuilder<RoomDetailPageController>(
+                          id: 'roomUserListTimer',
+                          builder: (controller) {
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 100),
+                              itemCount: controller.roomStreamList.length,
+                              itemBuilder: (context, index) {
+                                return _rankingCard(index);
+                              },
                             );
-                          } else {
-                            return _rankingCard(index - 1);
-                          }
-                        },
-                      );
-                    },
+                          },
+                        ),
+                      ),
+                    ],
                   );
                 }
               },
