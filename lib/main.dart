@@ -1,8 +1,9 @@
 import 'dart:async';
+import 'dart:isolate';
 
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -38,29 +39,29 @@ void main() async {
   //Amplitude analytics 설정
   AmplitudeAnalytics().init();
   //crashlytics
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-  runZonedGuarded(
-        () {
-      // 새벽 4시에 초기화
-      // Cron().schedule(Schedule.parse('01 04 * * *'), () async {
-      //   print("새벽 4시입니다.");
-      //   if (!AuthController.to.user.value.isTimer!) {
-      //     AuthController.to.loginUser(AuthController.to.user.value.uid!);
-      //   }
-      // });
-
-      // 화면 회전 불가 설정
-      SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-          .then((_) {
-        runApp(const MyApp());
-      });
-    },
-        (error, stack) => FirebaseCrashlytics.instance.recordError(
-      error,
-      stack,
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+    // This is for catching errors, including normal-level errors
+    // FirebaseCrashlytics.instance.recordFlutterError(errorDetails);
+  };
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
+  //Errors outside of Flutter(aspect of context)
+  Isolate.current.addErrorListener(RawReceivePort((pair) async {
+    final List<dynamic> errorAndStacktrace = pair;
+    await FirebaseCrashlytics.instance.recordError(
+      errorAndStacktrace.first,
+      errorAndStacktrace.last,
       fatal: true,
-    ),
-  );
+    );
+  }).sendPort);
+
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(const MyApp());
+  });
 }
 
 Future<void> _initNotificationSetting() async {
