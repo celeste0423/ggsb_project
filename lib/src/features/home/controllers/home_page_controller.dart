@@ -121,7 +121,6 @@ class HomePageController extends GetxController {
 
   //이벤트 페이지 이동
   void EventPageButton() {
-    FirebaseCrashlytics.instance.crash();
     Get.to(() => const EventPage());
   }
 
