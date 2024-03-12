@@ -79,6 +79,7 @@ class TimerPage extends GetView<TimerPageController> {
       return StreamBuilder(
         stream: controller.roomListStream(roomModel.roomId!),
         builder: (context, snapshot) {
+          controller.arrangeSnapshot(snapshot, roomModel);
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: loadingIndicator(),
@@ -95,14 +96,8 @@ class TimerPage extends GetView<TimerPageController> {
                 borderRadius: BorderRadius.circular(160),
                 color: CustomColors.lightGreyBackground,
               ),
-              child: GetBuilder<TimerPageController>(
-                id: 'roomListTimer',
-                builder: (controller) {
-                  controller.arrangeSnapshot(snapshot, roomModel);
-                  return CharacterList(
-                    roomStreamList: controller.liveRoomStreamList,
-                  );
-                },
+              child: CharacterList(
+                roomStreamList: controller.liveRoomStreamList,
               ),
             );
           }

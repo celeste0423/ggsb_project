@@ -69,32 +69,6 @@ class _CharacterListState extends State<CharacterList> {
             stateMachines: ["character"],
             onInit: (artboard) => onRiveInit(artboard, index),
           ),
-          // Positioned(
-          //   bottom: 0,
-          //   left: 0,
-          //   child: SizedBox(
-          //     width: 110 + length * 20,
-          //     child: Center(
-          //       child: Container(
-          //         height: 25,
-          //         padding: const EdgeInsets.symmetric(horizontal: 15),
-          //         decoration: BoxDecoration(
-          //           color: CustomColors.bodyColorToRoomColor(
-          //             widget.roomStreamList[index].characterData!.bodyColor!,
-          //           ),
-          //           borderRadius: BorderRadius.circular(10),
-          //         ),
-          //         child: Text(
-          //           widget.roomStreamList[index].nickname!,
-          //           textAlign: TextAlign.center,
-          //           style: const TextStyle(
-          //             color: CustomColors.whiteText,
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );
@@ -130,7 +104,7 @@ class _CharacterListState extends State<CharacterList> {
   }
 
   void riveCharacterInit(int controllerIndex) {
-    if (stateMachineList[0][0] != null) {
+    if (stateMachineList[controllerIndex][0] != null) {
       CharacterModel characterModel =
           widget.roomStreamList[controllerIndex].characterData!;
       stateMachineList[controllerIndex][0]!.value =
@@ -163,11 +137,7 @@ class _CharacterListState extends State<CharacterList> {
             color: CustomColors.whiteText,
           ),
           // badgeWidget: _characterCard(index),
-          badgeWidget: Container(
-            color: Colors.red,
-            width: 10,
-            height: 10,
-          ),
+          badgeWidget: _characterCard(index),
         );
       },
     );
@@ -177,7 +147,7 @@ class _CharacterListState extends State<CharacterList> {
   Widget build(BuildContext context) {
     return PieChart(
       PieChartData(
-        centerSpaceRadius: (Get.width - 100) / 2 - 40,
+        centerSpaceRadius: (Get.width - 100) / 2 - 80,
         borderData: FlBorderData(show: false),
         sections: _chartData(),
       ),
