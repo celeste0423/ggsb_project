@@ -4,6 +4,8 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
     //firebase analytics설정
     id 'com.google.gms.google-services'
+    //crashlytics 설정
+    id 'com.google.firebase.crashlytics'
 }
 
 def localProperties = new Properties()
@@ -96,6 +98,7 @@ dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
     implementation 'androidx.window:window:1.0.0'
     implementation 'androidx.window:window-java:1.0.0'
+    //analytics 설정
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.android.support:multidex:1.0.3'
 }
-//crashlytics 설정
-apply plugin: 'com.google.firebase.crashlytics'
