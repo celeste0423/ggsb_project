@@ -1,35 +1,37 @@
+import 'package:circular_motion/circular_motion.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/models/character_model.dart';
 import 'package:ggsb_project/src/models/room_stream_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
+import 'package:ggsb_project/src/widgets/full_size_loading_indicator.dart';
 import 'package:rive/rive.dart';
 
-class CharacterList extends StatefulWidget {
+class OldCharacterList extends StatefulWidget {
   final List<RoomStreamModel> roomStreamList;
 
-  const CharacterList({
+  const OldCharacterList({
     Key? key,
     required this.roomStreamList,
   }) : super(key: key);
 
   @override
-  State<CharacterList> createState() => _CharacterListState();
+  State<OldCharacterList> createState() => _OldCharacterListState();
 }
 
-class _CharacterListState extends State<CharacterList> {
+class _OldCharacterListState extends State<OldCharacterList> {
   late List<List<SMINumber?>> stateMachineList;
   late List<StateMachineController?> riveControllers;
 
-  // bool isLoading = false;
+  bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    // setState(() {
-    //   isLoading = true;
-    // });
+    setState(() {
+      isLoading = true;
+    });
     stateMachineList = List<List<SMINumber?>>.generate(
       widget.roomStreamList.length,
       (roomStreamIndex) => List<SMINumber?>.generate(
@@ -41,14 +43,14 @@ class _CharacterListState extends State<CharacterList> {
       widget.roomStreamList.length,
       (index) => null,
     );
-    // setState(() {
-    //   isLoading = false;
-    // });
+    setState(() {
+      isLoading = false;
+    });
     // print('로딩');
   }
 
   @override
-  void didUpdateWidget(CharacterList oldWidget) {
+  void didUpdateWidget(OldCharacterList oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.roomStreamList != widget.roomStreamList) {
       for (int index = 0; index < widget.roomStreamList.length; index++) {
@@ -162,12 +164,6 @@ class _CharacterListState extends State<CharacterList> {
           titleStyle: const TextStyle(
             color: CustomColors.whiteText,
           ),
-          // badgeWidget: _characterCard(index),
-          badgeWidget: Container(
-            color: Colors.red,
-            width: 10,
-            height: 10,
-          ),
         );
       },
     );
@@ -175,12 +171,26 @@ class _CharacterListState extends State<CharacterList> {
 
   @override
   Widget build(BuildContext context) {
-    return PieChart(
-      PieChartData(
-        centerSpaceRadius: (Get.width - 100) / 2 - 40,
-        borderData: FlBorderData(show: false),
-        sections: _chartData(),
-      ),
-    );
+    return !isLoading
+        ? Stack(
+            children: [
+              PieChart(
+                PieChartData(
+                  centerSpaceRadius: (Get.width - 100) / 2 - 40,
+                  borderData: FlBorderData(show: false),
+                  sections: _chartData(),
+                ),
+              ),
+              CircularMotion.builder(
+                itemCount: widget.roomStreamList.length,
+                builder: (context, index) {
+                  return _characterCard(index);
+                },
+              ),
+            ],
+          )
+        : const FullSizeLoadingIndicator(
+            backgroundColor: Colors.transparent,
+          );
   }
 }
