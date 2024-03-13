@@ -69,6 +69,10 @@ class RoomListPageController extends GetxController {
   Future<void> joinRoomButton() async {
     if (joinRoomIdController.text == '') {
       openAlertDialog(title: '방 초대 코드를 입력해주세요');
+    } else if (AuthController.to.user.value.roomIdList!
+        .contains(joinRoomIdController.text)) {
+      //이미 해당 방에 들어가 있을 경우
+      openAlertDialog(title: '가입 불가', content: '이미 가입되어 있는 방입니다.');
     } else {
       isRoomListLoading(true);
       RoomModel? roomModel =
