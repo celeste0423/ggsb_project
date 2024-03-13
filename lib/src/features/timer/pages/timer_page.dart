@@ -87,7 +87,7 @@ class TimerPage extends GetView<TimerPageController> {
                 builder: (controller) {
                   return PieChart(
                     PieChartData(
-                      centerSpaceRadius: (Get.width - 100) / 2 - 40,
+                      centerSpaceRadius: (Get.width - 100) / 2 - 60,
                       borderData: FlBorderData(show: false),
                       sections: _chartData(controller.liveRoomStreamList),
                     ),
@@ -107,7 +107,7 @@ class TimerPage extends GetView<TimerPageController> {
       roomStreamList.length,
       (index) {
         return PieChartSectionData(
-          radius: 35,
+          radius: 55,
           color: CustomColors.bodyColorToRoomColor(
             roomStreamList[index].characterData!.bodyColor!,
           ),

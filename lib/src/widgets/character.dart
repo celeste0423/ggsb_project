@@ -48,8 +48,8 @@ class _CharacterState extends State<Character> {
   Widget _characterCard(int length, String roomId, String uid) {
     // print('카드 빌드');
     return SizedBox(
-      width: 210 - length * 20,
-      height: 210 - length * 20,
+      width: 210 - length * 18,
+      height: 210 - length * 18,
       child: StreamBuilder(
         stream: RoomStreamRepository()
             .getRoomStreamAsStream(roomId, uid)
