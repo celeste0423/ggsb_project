@@ -36,8 +36,8 @@ class RoomListPageController extends GetxController {
   // }
 
   Future<List<RoomModel>> getRoomList() async {
-    print('방리스트${AuthController.to.user.value.roomIdList}');
-    if (AuthController.to.user.value.roomIdList == null) {
+    // print('방리스트${AuthController.to.user.value.roomIdList}');
+    if (AuthController.to.user.value.roomIdList!.isEmpty) {
       isNoRoomList(true);
       return [];
     } else {

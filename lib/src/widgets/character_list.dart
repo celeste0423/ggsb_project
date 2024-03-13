@@ -24,14 +24,14 @@ class _CharacterListState extends State<CharacterList> {
   late List<List<SMINumber?>> stateMachineList;
   late List<StateMachineController?> riveControllers;
 
-  bool isLoading = false;
+  // bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    setState(() {
-      isLoading = true;
-    });
+    // setState(() {
+    //   isLoading = true;
+    // });
     stateMachineList = List<List<SMINumber?>>.generate(
       widget.roomStreamList.length,
       (roomStreamIndex) => List<SMINumber?>.generate(
@@ -43,9 +43,9 @@ class _CharacterListState extends State<CharacterList> {
       widget.roomStreamList.length,
       (index) => null,
     );
-    setState(() {
-      isLoading = false;
-    });
+    // setState(() {
+    //   isLoading = false;
+    // });
     // print('로딩');
   }
 
@@ -171,8 +171,7 @@ class _CharacterListState extends State<CharacterList> {
 
   @override
   Widget build(BuildContext context) {
-    return !isLoading
-        ? Stack(
+    return Stack(
             children: [
               PieChart(
                 PieChartData(
@@ -188,9 +187,6 @@ class _CharacterListState extends State<CharacterList> {
                 },
               ),
             ],
-          )
-        : const FullSizeLoadingIndicator(
-            backgroundColor: Colors.transparent,
           );
   }
 }
