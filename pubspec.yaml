@@ -75,6 +75,7 @@ dependencies:
   upgrader: ^9.0.0
   flutter_keyboard_visibility: ^6.0.0
   firebase_crashlytics: ^3.4.18
+  rxdart: ^0.27.7
 
 
 dev_dependencies:

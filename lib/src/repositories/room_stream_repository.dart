@@ -26,6 +26,32 @@ class RoomStreamRepository {
     }
   }
 
+  Stream<RoomStreamModel> getRoomStreamAsStream(String roomId, String uid) {
+    // print('스트림 받아옴');
+    try {
+      return FirebaseFirestore.instance
+          .collection('rooms')
+          .doc(roomId)
+          .collection('roomStream')
+          .doc(uid)
+          .snapshots()
+          .map((snapshot) {
+        if (snapshot.exists) {
+          return RoomStreamModel.fromJson(
+              snapshot.data() as Map<String, dynamic>);
+        } else {
+          throw StateError('RoomStream이 없음');
+        }
+      });
+    } catch (e) {
+      openAlertDialog(
+        title: '룸스트림 정보를 가져오는 중에 오류가 발생했습니다.',
+        content: e.toString(),
+      );
+      throw StateError('룸스트림 정보를 가져오는 중에 오류가 발생했습니다.');
+    }
+  }
+
   Future<void> uploadRoomStream(
     RoomStreamModel roomStreamModel,
   ) async {

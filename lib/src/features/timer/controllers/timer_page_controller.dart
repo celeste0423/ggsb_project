@@ -46,7 +46,6 @@ class TimerPageController extends GetxController
 
   Rx<String> totalLiveTime = '00:00:00'.obs;
 
-  Rx<bool> noRooms = false.obs;
   late List<RoomModel> roomList;
   late TabController roomTabController;
   int activeIndex = 0;
@@ -71,19 +70,15 @@ class TimerPageController extends GetxController
 
   Future<void> getRoomList() async {
     isPageLoading(true);
-    noRooms(AuthController.to.user.value.roomIdList == null ||
-        AuthController.to.user.value.roomIdList!.isEmpty);
-    if (!noRooms.value) {
-      roomList = await RoomRepository()
-          .getRoomList(AuthController.to.user.value.roomIdList!);
-    }
+    roomList = await RoomRepository()
+        .getRoomList(AuthController.to.user.value.roomIdList!);
     //기본 탭 세팅
     roomTabController = TabController(
       initialIndex: 0,
-      length: noRooms.value ? 0 : roomList.length,
+      length: roomList.length,
       vsync: this,
     );
-    indicatorCount = noRooms.value ? 0 : roomList.length;
+    indicatorCount = roomList.length;
     update(['tabIndicator']);
     isPageLoading(false);
   }
@@ -142,7 +137,7 @@ class TimerPageController extends GetxController
       // 이전에 저장된 탭 인덱스가 있는지 확인
       int? lastIndex = prefs.getInt('roomTabIndex');
       if (lastIndex != null) {
-        if(lastIndex == 0){
+        if (lastIndex == 0) {
           playButtonColor(CustomColors.nameToRoomColor(roomList[0].color!));
         }
         roomTabController.index = lastIndex;
