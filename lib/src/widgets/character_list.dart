@@ -21,6 +21,7 @@ class CharacterList extends StatelessWidget {
             roomStreamId: roomModel.uidList![index],
             roomId: roomModel.roomId!,
             length: roomModel.uidList!.length,
+            index: index,
           );
         }),
       ),

@@ -10,12 +10,14 @@ class Character extends StatefulWidget {
   final String roomId;
   final String roomStreamId;
   final int length;
+  final int index;
 
   const Character({
     Key? key,
     required this.roomStreamId,
     required this.roomId,
     required this.length,
+    required this.index,
   }) : super(key: key);
 
   @override
@@ -46,16 +48,16 @@ class _CharacterState extends State<Character> {
   // }
 
   Widget _characterCard(int length, String roomId, String uid) {
-    // print('카드 빌드');
+    print('카드 빌드');
     return SizedBox(
       width: 210 - length * 18,
       height: 210 - length * 18,
       child: StreamBuilder(
         stream: RoomStreamRepository()
             .getRoomStreamAsStream(roomId, uid)
-            .debounceTime(const Duration(milliseconds: 1000)),
+            .debounceTime(Duration(milliseconds: widget.index * 500)),
         builder: (context, snapshot) {
-          // print('바뀜 ${uid} ${roomId}');
+          print('바뀜 ${uid} ${roomId}');
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: loadingIndicator(),

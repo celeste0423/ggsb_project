@@ -83,16 +83,17 @@ class TimerPage extends GetView<TimerPageController> {
         child: Stack(
           children: [
             GetBuilder<TimerPageController>(
-                id: 'roomListTimer',
-                builder: (controller) {
-                  return PieChart(
-                    PieChartData(
-                      centerSpaceRadius: (Get.width - 100) / 2 - 60,
-                      borderData: FlBorderData(show: false),
-                      sections: _chartData(controller.liveRoomStreamList),
-                    ),
-                  );
-                }),
+              id: 'roomListTimer',
+              builder: (controller) {
+                return PieChart(
+                  PieChartData(
+                    centerSpaceRadius: (Get.width - 100) / 2 - 60,
+                    borderData: FlBorderData(show: false),
+                    sections: _chartData(controller.liveRoomStreamList),
+                  ),
+                );
+              },
+            ),
             CharacterList(
               roomModel: roomModel,
             ),
