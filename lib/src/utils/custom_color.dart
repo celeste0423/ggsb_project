@@ -43,12 +43,12 @@ class CustomColors {
 
   //캐릭터 색
   static const Color baseCharacter = Color(0xFF696CBB);
-  static const Color pinkCharacter = Color(0xFFFF81BD);
-  static const Color greenCharacter = Color(0xFF62D067);
+  static const Color pinkCharacter = Color(0xFFC38AAD);
+  static const Color greenCharacter = Color(0xFFA0CC97);
   static const Color lightBlueCharacter = Color(0xFFA2D1DA);
-  static const Color redCharacter = Color(0xFFFF6868);
-  static const Color yellowCharacter = Color(0xFFFDCD61);
-  static const Color orangeCharacter = Color(0xFFFFA95A);
+  static const Color redCharacter = Color(0xFFCE8D8E);
+  static const Color yellowCharacter = Color(0xFFD2D29E);
+  static const Color orangeCharacter = Color(0xFFD7A38C);
   static const Color purpleCharacter = Color(0xFF9975BD);
   static const Color greyCharacter = Color(0xFFC7C7C7);
   static const Color blackCharacter = Color(0xFF232323);
