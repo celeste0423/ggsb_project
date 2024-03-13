@@ -95,7 +95,7 @@ class TimerPageController extends GetxController
     StudyTimeModel studyTimeModel = AuthController.to.studyTime;
     // print(
     //     '이전 전체 시간 ${studyTimeModel.totalSeconds}, ${AuthController.to.user.value.isTimer}');
-    if (AuthController.to.user.value.isTimer == false) {
+    if (isTimer.value == false) {
       liveTotalSeconds = studyTimeModel.totalSeconds!;
     } else {
       // print('시간 확인 ${AuthController.to.studyTimeModel.value.toJson()}');
