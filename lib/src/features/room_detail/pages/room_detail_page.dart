@@ -1,11 +1,14 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/room_detail/controllers/room_detail_page_controller.dart';
+import 'package:ggsb_project/src/models/room_stream_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
+import 'package:ggsb_project/src/widgets/character_list.dart';
 import 'package:ggsb_project/src/widgets/full_size_loading_indicator.dart';
 import 'package:ggsb_project/src/widgets/loading_indicator.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
@@ -117,9 +120,27 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                             ),
                           ],
                         ),
-                        // child: CharacterList(
-                        //   roomStreamList: controller.liveRoomStreamList,
-                        // ),
+                        child: Stack(
+                          children: [
+                            GetBuilder<RoomDetailPageController>(
+                              id: 'roomListTimer',
+                              builder: (controller) {
+                                return PieChart(
+                                  PieChartData(
+                                    centerSpaceRadius:
+                                        (Get.width - 100) / 2 - 60,
+                                    borderData: FlBorderData(show: false),
+                                    sections: _chartData(
+                                        controller.liveRoomStreamList),
+                                  ),
+                                );
+                              },
+                            ),
+                            CharacterList(
+                              roomModel: controller.roomModel,
+                            ),
+                          ],
+                        ),
                       ),
                       Expanded(
                         child: GetBuilder<RoomDetailPageController>(
@@ -144,6 +165,29 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
           ),
         ],
       ),
+    );
+  }
+
+  List<PieChartSectionData> _chartData(List<RoomStreamModel> roomStreamList) {
+    return List.generate(
+      roomStreamList.length,
+      (index) {
+        return PieChartSectionData(
+          radius: 55,
+          color: CustomColors.bodyColorToRoomColor(
+            roomStreamList[index].characterData!.bodyColor!,
+          ),
+          // borderSide: BorderSide(
+          //   color: Colors.white,
+          //   width: 3,
+          // ),
+          title: roomStreamList[index].nickname,
+          value: roomStreamList[index].totalLiveSeconds!.toDouble(),
+          titleStyle: const TextStyle(
+            color: CustomColors.whiteText,
+          ),
+        );
+      },
     );
   }
 
