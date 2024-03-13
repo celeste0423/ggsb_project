@@ -1,4 +1,5 @@
 import 'package:animate_icons/animate_icons.dart' as animate_icon;
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -6,6 +7,7 @@ import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart'
 import 'package:ggsb_project/src/features/timer/controllers/timer_page_controller.dart';
 import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
+import 'package:ggsb_project/src/models/room_stream_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/number_util.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
@@ -78,11 +80,49 @@ class TimerPage extends GetView<TimerPageController> {
           borderRadius: BorderRadius.circular(160),
           color: CustomColors.lightGreyBackground,
         ),
-        child: CharacterList(
-          roomModel: roomModel,
+        child: Stack(
+          children: [
+            GetBuilder<TimerPageController>(
+                id: 'roomListTimer',
+                builder: (controller) {
+                  return PieChart(
+                    PieChartData(
+                      centerSpaceRadius: (Get.width - 100) / 2 - 40,
+                      borderData: FlBorderData(show: false),
+                      sections: _chartData(controller.liveRoomStreamList),
+                    ),
+                  );
+                }),
+            CharacterList(
+              roomModel: roomModel,
+            ),
+          ],
         ),
       );
     }).toList();
+  }
+
+  List<PieChartSectionData> _chartData(List<RoomStreamModel> roomStreamList) {
+    return List.generate(
+      roomStreamList.length,
+      (index) {
+        return PieChartSectionData(
+          radius: 35,
+          color: CustomColors.bodyColorToRoomColor(
+            roomStreamList[index].characterData!.bodyColor!,
+          ),
+          // borderSide: BorderSide(
+          //   color: Colors.white,
+          //   width: 3,
+          // ),
+          title: roomStreamList[index].nickname,
+          value: roomStreamList[index].totalLiveSeconds!.toDouble(),
+          titleStyle: const TextStyle(
+            color: CustomColors.whiteText,
+          ),
+        );
+      },
+    );
   }
 
   Widget _time() {

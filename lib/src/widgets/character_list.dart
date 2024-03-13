@@ -13,30 +13,17 @@ class CharacterList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        // PieChart(
-        //   PieChartData(
-        //     centerSpaceRadius: (Get.width - 100) / 2 - 40,
-        //     borderData: FlBorderData(show: false),
-        //     sections: _chartData(),
-        //   ),
-        // ),
-        CircularMotion(
-          children: List.generate(roomModel.uidList!.length, (index) {
-            return Character(
-              roomStreamId: roomModel.uidList![index],
-              roomId: roomModel.roomId!,
-              length: roomModel.uidList!.length,
-            );
-          }),
-        ),
-        // Character(
-        //   roomStreamId: widget.roomModel.uidList![0],
-        //   roomId: widget.roomModel.roomId!,
-        //   length: widget.roomModel.uidList!.length,
-        // ),
-      ],
+    return Padding(
+      padding: EdgeInsets.all(roomModel.uidList!.length * 3),
+      child: CircularMotion(
+        children: List.generate(roomModel.uidList!.length, (index) {
+          return Character(
+            roomStreamId: roomModel.uidList![index],
+            roomId: roomModel.roomId!,
+            length: roomModel.uidList!.length,
+          );
+        }),
+      ),
     );
   }
 }
