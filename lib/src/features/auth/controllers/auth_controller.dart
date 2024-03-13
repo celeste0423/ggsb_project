@@ -115,6 +115,10 @@ class AuthController extends GetxController {
     await UserRepository().updateUserModel(userModel);
   }
 
+  Future<void> updateOnlineUserModel(UserModel userModel) async {
+    await UserRepository().updateUserModel(userModel);
+  }
+
   Future<void> updateCharacterModel(
     CharacterModel characterModel,
     UserModel userModel,

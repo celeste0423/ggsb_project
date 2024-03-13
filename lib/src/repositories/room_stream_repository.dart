@@ -26,7 +26,8 @@ class RoomStreamRepository {
     }
   }
 
-  Stream<RoomStreamModel> getRoomStreamAsStream(String roomId, String uid) {
+  static Stream<RoomStreamModel> getRoomStreamAsStream(
+      String roomId, String uid) {
     // print('스트림 받아옴');
     try {
       return FirebaseFirestore.instance
