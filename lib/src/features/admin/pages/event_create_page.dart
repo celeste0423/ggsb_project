@@ -64,7 +64,7 @@ class EventCreatePage extends GetView<EventCreatePageController> {
 
   Widget _contentUrlTextField() {
     return TextFieldBox(
-      textEditingController: controller.imgUrlController,
+      textEditingController: controller.contentUrlController,
       hintText: 'content Url을 넣어주세요',
       backgroundColor: CustomColors.lightGreyBackground,
     );
