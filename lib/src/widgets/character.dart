@@ -54,7 +54,7 @@ class _CharacterState extends State<Character> {
       height: 210 - length * 18,
       child: StreamBuilder(
         stream: RoomStreamRepository.getRoomStreamAsStream(roomId, uid)
-            .debounceTime(Duration(milliseconds: 500)),
+            .debounceTime(const Duration(milliseconds: 500)),
         builder: (context, snapshot) {
           // print('바뀜 ${widget.index}');
           if (snapshot.connectionState == ConnectionState.waiting) {

@@ -103,7 +103,7 @@ class AuthController extends GetxController {
   Future<void> updateLocalUserModel() async {
     // print('로그인 중');
     var userData = await UserRepository.getUserData(user.value.uid!);
-    print('유저 데이터 ${userData!.roomIdList}');
+    // print('유저 데이터 ${userData!.roomIdList}');
     if (userData != null) {
       user(userData);
       // InitBinding.additionalBinding();
@@ -154,7 +154,7 @@ class AuthController extends GetxController {
   // 애플 로그인
   Future<UserCredential> signInWithApple() async {
     bool isAvailable = await SignInWithApple.isAvailable();
-    print('애플 로그인 isAvailable: ${isAvailable}');
+    // print('애플 로그인 isAvailable: ${isAvailable}');
 
     if (isAvailable) {
       return await UserRepository.iosSignInWithApple();
@@ -182,7 +182,7 @@ class AuthController extends GetxController {
   Future<void> signUp(UserModel userData) async {
     await UserRepository.signup(userData);
     await loginUser(userData.uid!);
-    print('uid야 ${user.value.uid}');
+    // print('uid야 ${user.value.uid}');
   }
 
   @override
