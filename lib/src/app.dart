@@ -37,6 +37,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
       }
     }
     prefs.setString('lastDate', DateUtil().dateTimeToString(DateTime.now()));
+    // Get.to(() => const ResultPage());
   }
 
   late final TabController _tabController =
