@@ -15,7 +15,7 @@ import 'package:rive/rive.dart';
 class StorePage extends GetView<StorePageController> {
   const StorePage({Key? key});
 
-  Widget cashDialog(int addedCash) {
+  Widget cashDialog(String date, int addedCash) {
     return Dialog(
       insetPadding:
           EdgeInsets.symmetric(horizontal: 30, vertical: Get.height / 4),
@@ -50,7 +50,7 @@ class StorePage extends GetView<StorePageController> {
               ),
             ),
             Text(
-              '총 공부시간 ${addedCash}분에 대한 코인이 지급되었습니다',
+              '${date} 공부시간 ${addedCash}분에 대한 코인이 지급되었습니다',
               textAlign: TextAlign.left,
               style: const TextStyle(
                 color: CustomColors.mainBlack,

@@ -251,7 +251,10 @@ class StorePageController extends GetxController
           );
           await StudyTimeRepository()
               .updateStudyTimeModel(updatedStudyTimeModel);
-          Get.dialog(const StorePage().cashDialog(studyTimeInMinute));
+          Get.dialog(const StorePage().cashDialog(
+            studyTimeModel.date!,
+            studyTimeInMinute,
+          ));
         }
       }
     }
