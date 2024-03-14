@@ -96,7 +96,7 @@ class MyPageController extends GetxController {
   }
 
   void resultCheckButton() {
-    Get.to(() => ResultPage());
+    Get.to(() => const ResultPage());
   }
 
   @override

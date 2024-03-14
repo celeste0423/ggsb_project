@@ -97,8 +97,7 @@ class ResultPage extends GetView<ResultPageController> {
     });
   }
 
-
-  Widget _timeCardList(AsyncSnapshot<List<StudyTimeModel?>> snapshot){
+  Widget _timeCardList(AsyncSnapshot<List<StudyTimeModel?>> snapshot) {
     return Column(
       children: [
         Expanded(
@@ -114,8 +113,7 @@ class ResultPage extends GetView<ResultPageController> {
                   },
                 ),
               ),
-              Image.asset('assets/icons/trophy.png',
-                  height: 20),
+              Image.asset('assets/icons/trophy.png', height: 20),
               Text(
                 AuthController.to.user.value.nickname!,
                 style: const TextStyle(
@@ -126,7 +124,7 @@ class ResultPage extends GetView<ResultPageController> {
               ),
               Text(
                 SecondsUtil.convertToDigitString(
-                    controller.myStudyTime.totalSeconds!),
+                    controller.myStudyTime.totalSeconds ?? 0),
                 style: const TextStyle(
                   fontSize: 30,
                   color: CustomColors.blackText,
@@ -148,30 +146,29 @@ class ResultPage extends GetView<ResultPageController> {
         Expanded(
           child: snapshot.data!.length == 1
               ? _timeCard(
-            AuthController.to.user.value.uid!,
-            AuthController.to.user.value.nickname!,
-            SecondsUtil.convertToDigitString(
-                snapshot.data![0]!.totalSeconds!),
-            0,
-          )
-              : GridView.count(
-            shrinkWrap: true,
-            crossAxisCount: 2,
-            childAspectRatio: 2,
-            children: List.generate(
-              snapshot.data!.length,
-                  (userIndex) {
-                return _timeCard(
-                  snapshot.data![userIndex]!.uid!,
-                  snapshot.data![userIndex]!.nickname!,
+                  AuthController.to.user.value.uid!,
+                  AuthController.to.user.value.nickname!,
                   SecondsUtil.convertToDigitString(
-                      snapshot.data![userIndex]!
-                          .totalSeconds!),
-                  userIndex,
-                );
-              },
-            ),
-          ),
+                      snapshot.data![0]!.totalSeconds!),
+                  0,
+                )
+              : GridView.count(
+                  shrinkWrap: true,
+                  crossAxisCount: 2,
+                  childAspectRatio: 2,
+                  children: List.generate(
+                    snapshot.data!.length,
+                    (userIndex) {
+                      return _timeCard(
+                        snapshot.data![userIndex]!.uid!,
+                        snapshot.data![userIndex]!.nickname!,
+                        SecondsUtil.convertToDigitString(
+                            snapshot.data![userIndex]!.totalSeconds!),
+                        userIndex,
+                      );
+                    },
+                  ),
+                ),
         ),
       ],
     );
@@ -216,9 +213,6 @@ class ResultPage extends GetView<ResultPageController> {
       ],
     );
   }
-
-
-
 
   Widget _tabIndicator() {
     return GetBuilder<ResultPageController>(

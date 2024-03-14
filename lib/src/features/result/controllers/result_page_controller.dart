@@ -27,7 +27,7 @@ class ResultPageController extends GetxController
 
   List<RoomModel> roomModelList = [];
   List<List<StudyTimeModel?>> studyTimeModelList = [];
-  late StudyTimeModel myStudyTime;
+  StudyTimeModel myStudyTime = StudyTimeModel();
 
   SMINumber? characterHat;
   SMINumber? characterColor;
