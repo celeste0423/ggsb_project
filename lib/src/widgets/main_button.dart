@@ -30,7 +30,6 @@ class MainButton extends StatelessWidget {
       child: Container(
           width: width,
           height: height ?? 55,
-          padding: const EdgeInsets.symmetric(horizontal: 30),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             color: backgroundColor ?? CustomColors.mainBlue,
@@ -40,7 +39,7 @@ class MainButton extends StatelessWidget {
                   child: Text(
                     buttonText,
                     style: textStyle ??
-                        TextStyle(
+                        const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
                         ),
@@ -50,11 +49,11 @@ class MainButton extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     icon!,
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Text(
                       buttonText,
                       style: textStyle ??
-                          TextStyle(
+                          const TextStyle(
                             color: Colors.white,
                             fontSize: 16,
                           ),
@@ -65,23 +64,3 @@ class MainButton extends StatelessWidget {
   }
 }
 
-// Widget mainButton(
-//   String text,
-//   Function()? onPressed,
-//     [double? x, Color? color]
-// ) {
-//   return SizedBox(
-//     height: 50,
-//     width: x ?? double.infinity,
-//     child: ElevatedButton(
-//       style: ElevatedButton.styleFrom(
-//         backgroundColor: color, // Background color
-//       ),
-//       onPressed: onPressed,
-//       child: Text(
-//         text,
-//         style: TextStyle(fontSize: 35, color: Colors.white),
-//       ),
-//     ),
-//   );
-// }
