@@ -60,20 +60,8 @@ class LiveSecondsUtil {
     RoomStreamRepository().updateRoomStream(updatedRoomStreamModel);
   }
 
-//   int whetherTimerZeroInInt(
-//     RoomStreamModel liveRoomStreamModel,
-//     RoomModel roomModel,
-//     DateTime now,
-//   ) {
-//     // print(
-//     //     '날짜 차이 ${DateUtil().calculateDateDifference(liveRoomStreamModel.lastTime ?? now, now)}');
-//     // print('마지막 날짜 ${liveRoomStreamModel.lastTime}');
-//     if (roomModel.roomType == 'day' &&
-//         DateUtil().calculateDateDifference(
-//                 liveRoomStreamModel.lastTime ?? now, now) >=
-//             1) {
-//       return 0;
-//     }
-//     return liveRoomStreamModel.totalLiveSeconds!;
-//   }
+
 }
+
+
+
