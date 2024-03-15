@@ -126,7 +126,7 @@ class ResultPage extends GetView<ResultPageController> {
                 SecondsUtil.convertToDigitString(
                     controller.myStudyTime.totalSeconds ?? 0),
                 style: const TextStyle(
-                  fontSize: 30,
+                  fontSize: 20,
                   color: CustomColors.blackText,
                   fontWeight: FontWeight.w800,
                 ),
