@@ -11,6 +11,7 @@ class Character extends StatefulWidget {
   final String roomStreamId;
   final int length;
   final int index;
+  final RiveFile riveFile;
 
   const Character({
     Key? key,
@@ -18,6 +19,7 @@ class Character extends StatefulWidget {
     required this.roomId,
     required this.length,
     required this.index,
+    required this.riveFile,
   }) : super(key: key);
 
   @override
@@ -61,8 +63,8 @@ class _CharacterState extends State<Character> {
             if (!isFirstLoad) {
               riveCharacterInit(snapshot.data!);
             }
-            return RiveAnimation.asset(
-              'assets/riv/character.riv',
+            return RiveAnimation.direct(
+              widget.riveFile,
               stateMachines: ["character"],
               onInit: (artboard) => onRiveInit(artboard, snapshot.data!),
             );

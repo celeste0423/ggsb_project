@@ -2,13 +2,16 @@ import 'package:circular_motion/circular_motion.dart';
 import 'package:flutter/material.dart';
 import 'package:ggsb_project/src/models/room_model.dart';
 import 'package:ggsb_project/src/widgets/character.dart';
+import 'package:rive/rive.dart';
 
 class CharacterList extends StatelessWidget {
   final RoomModel roomModel;
+  final RiveFile riveFile;
 
   const CharacterList({
     Key? key,
     required this.roomModel,
+    required this.riveFile,
   }) : super(key: key);
 
   @override
@@ -22,6 +25,7 @@ class CharacterList extends StatelessWidget {
             roomId: roomModel.roomId!,
             length: roomModel.uidList!.length,
             index: index,
+            riveFile: riveFile,
           );
         }),
       ),
