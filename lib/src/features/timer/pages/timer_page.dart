@@ -94,8 +94,22 @@ class TimerPage extends GetView<TimerPageController> {
                 );
               },
             ),
-            CharacterList(
-              roomModel: roomModel,
+            FutureBuilder(
+              future: controller.getRiveFile(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: loadingIndicator(),
+                  );
+                } else if (snapshot.hasError) {
+                  return const Text('에러 발생');
+                } else {
+                  return CharacterList(
+                    roomModel: roomModel,
+                    riveFile: snapshot.data!,
+                  );
+                }
+              },
             ),
           ],
         ),

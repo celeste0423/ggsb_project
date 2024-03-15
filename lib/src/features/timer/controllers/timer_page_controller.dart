@@ -24,6 +24,7 @@ import 'package:ggsb_project/src/utils/date_util.dart';
 import 'package:ggsb_project/src/utils/live_seconds_util.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
 import 'package:intl/intl.dart';
+import 'package:rive/rive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TimerPageController extends GetxController
@@ -176,6 +177,10 @@ class TimerPageController extends GetxController
           }
       }
     }
+  }
+
+  Future<RiveFile> getRiveFile() async {
+    return await RiveFile.asset('assets/riv/character.riv');
   }
 
   //init
