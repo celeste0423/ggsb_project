@@ -245,12 +245,16 @@ class StorePageController extends GetxController
           studyTimeModel.totalSeconds!,
         );
         if (studyTimeInMinute > 0) {
-          Get.dialog(const StorePage().cashDialog(studyTimeInMinute));
           updateCash(studyTimeInMinute);
           StudyTimeModel updatedStudyTimeModel = studyTimeModel.copyWith(
             isCashed: true,
           );
-          StudyTimeRepository().updateStudyTimeModel(updatedStudyTimeModel);
+          await StudyTimeRepository()
+              .updateStudyTimeModel(updatedStudyTimeModel);
+          Get.dialog(const StorePage().cashDialog(
+            studyTimeModel.date!,
+            studyTimeInMinute,
+          ));
         }
       }
     }

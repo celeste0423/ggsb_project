@@ -84,6 +84,34 @@ class StudyTimeRepository {
     return uncashedStudyTimes;
   }
 
+  Future<List<StudyTimeModel>> getStudyTimeInRange(
+    String uid,
+    DateTime startTime,
+    DateTime endTime,
+  ) async {
+    List<StudyTimeModel> studyTimeModels = [];
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .collection('studyTime') // 적절한 컬렉션 경로로 변경해야 합니다.
+          .where('createdAt', isGreaterThanOrEqualTo: startTime)
+          .where('createdAt', isLessThanOrEqualTo: endTime)
+          .get();
+      studyTimeModels = querySnapshot.docs.map(
+        (doc) {
+          return StudyTimeModel.fromJson(doc.data() as Map<String, dynamic>);
+        },
+      ).toList();
+    } catch (e) {
+      openAlertDialog(
+        title: '시간 정보를 가져오는데 실패했습니다.',
+        content: e.toString(),
+      );
+    }
+    return studyTimeModels;
+  }
+
   Future<void> uploadStudyTimeModel(
     StudyTimeModel studyTimeModel,
   ) async {

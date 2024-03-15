@@ -12,6 +12,7 @@ import 'package:ggsb_project/src/models/study_time_model.dart';
 import 'package:ggsb_project/src/models/user_model.dart';
 import 'package:ggsb_project/src/repositories/room_repository.dart';
 import 'package:ggsb_project/src/repositories/study_time_repository.dart';
+import 'package:ggsb_project/src/repositories/user_repository.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:rive/rive.dart';
@@ -26,7 +27,7 @@ class ResultPageController extends GetxController
 
   List<RoomModel> roomModelList = [];
   List<List<StudyTimeModel?>> studyTimeModelList = [];
-  late StudyTimeModel myStudyTime;
+  StudyTimeModel myStudyTime = StudyTimeModel();
 
   SMINumber? characterHat;
   SMINumber? characterColor;
@@ -97,9 +98,21 @@ class ResultPageController extends GetxController
       );
       StudyTimeModel? studyTimeModel =
           await StudyTimeRepository().getStudyTimeModel(uid, yesterday);
-      modelList.add(studyTimeModel);
-      if (studyTimeModel!.uid == AuthController.to.user.value.uid) {
-        myStudyTime = studyTimeModel;
+      if (studyTimeModel != null) {
+        modelList.add(studyTimeModel);
+        if (studyTimeModel.uid == AuthController.to.user.value.uid) {
+          myStudyTime = studyTimeModel;
+        }
+      } else {
+        UserModel? userModel = await UserRepository.getUserData(uid);
+        if (userModel != null) {
+          StudyTimeModel nullStudyTimeModel = StudyTimeModel(
+            uid: uid,
+            nickname: userModel.nickname,
+            totalSeconds: 0,
+          );
+          modelList.add(nullStudyTimeModel);
+        }
       }
     }
     // totalSeconds 값을 기준으로 정렬

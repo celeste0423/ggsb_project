@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
+import 'package:ggsb_project/src/features/data_analyze/page/data_analyze_page.dart';
 import 'package:ggsb_project/src/features/my/controllers/my_page_controller.dart';
+import 'package:ggsb_project/src/features/result/pages/result_page.dart';
 import 'package:ggsb_project/src/features/setting/pages/setting_page.dart';
-import 'package:ggsb_project/src/helpers/open_alert_dialog.dart';
 import 'package:ggsb_project/src/models/study_time_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/date_util.dart';
 import 'package:ggsb_project/src/widgets/loading_indicator.dart';
-import 'package:ggsb_project/src/widgets/main_button.dart';
 import 'package:ggsb_project/src/widgets/title_text.dart';
 import 'package:rive/rive.dart';
 
@@ -210,18 +210,28 @@ class MyPage extends GetView<MyPageController> {
           ),
           '기록 분석',
           () {
-            openAlertDialog(title: '추후 구현 예정입니다.');
-            // Get.to(() => const DataAnalyzePage());
-            // Get.dialog(_ResultRoomDialog());
+            // openAlertDialog(title: '추후 구현 예정입니다.');
+            Get.to(() => const DataAnalyzePage());
           },
         ),
-        const SizedBox(height: 40),
+        _button(
+          const Icon(
+            Icons.analytics_outlined,
+            size: 30,
+            color: CustomColors.mainBlack,
+          ),
+          '결과 보기',
+          () {
+            // openAlertDialog(title: '추후 구현 예정입니다.');
+            Get.to(() => const ResultPage());
+          },
+        ),
         Container(
           color: CustomColors.lightGreyBackground,
+          margin: const EdgeInsets.symmetric(vertical: 10),
           width: 100,
           height: 1,
         ),
-        const SizedBox(height: 40),
         _button(
           Image.asset(
             'assets/icons/my_settings.png',
@@ -233,7 +243,6 @@ class MyPage extends GetView<MyPageController> {
             Get.to(() => const SettingPage());
           },
         ),
-        const SizedBox(height: 10),
         _button(
           Image.asset(
             'assets/icons/my_report.png',
@@ -249,7 +258,7 @@ class MyPage extends GetView<MyPageController> {
 
   Widget _button(Widget icon, String text, VoidCallback onTap) {
     return CupertinoButton(
-      padding: EdgeInsets.zero,
+      padding: const EdgeInsets.symmetric(vertical: 5),
       onPressed: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -278,42 +287,6 @@ class MyPage extends GetView<MyPageController> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _ResultRoomDialog() {
-    return Dialog(
-      child: Container(
-        height: 150,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        decoration: BoxDecoration(
-          color: CustomColors.whiteBackground,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                child: Text(
-                  '방에 참가하기',
-                  style: TextStyle(
-                    color: CustomColors.blackText,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              MainButton(
-                buttonText: '결과 확인',
-                onTap: controller.resultCheckButton,
-              ),
-            ],
-          ),
         ),
       ),
     );
