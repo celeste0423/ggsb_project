@@ -25,7 +25,12 @@ class Character extends StatefulWidget {
 }
 
 class _CharacterState extends State<Character> {
-  late List<SMINumber?> stateMachineList;
+  bool isFirstLoad = true;
+
+  SMINumber? actionState;
+  SMINumber? characterHat;
+  SMINumber? characterShield;
+  SMINumber? characterColor;
   late StateMachineController? riveController;
 
   // bool isLoading = false;
@@ -33,22 +38,10 @@ class _CharacterState extends State<Character> {
   @override
   void initState() {
     super.initState();
-    stateMachineList =
-        List<SMINumber?>.generate(4, (stateMachineIndex) => null);
   }
 
-  // @override
-  // void didUpdateWidget(Character oldWidget) {
-  //   super.didUpdateWidget(oldWidget);
-  //   if (oldWidget.roomStreamList != widget.roomStreamList) {
-  //     for (int index = 0; index < widget.roomStreamList.length; index++) {
-  //       riveCharacterInit(index);
-  //     }
-  //   }
-  // }
-
   Widget _characterCard(int length, String roomId, String uid) {
-    // print('카드 빌드');
+    print('카드 빌드');
     return SizedBox(
       width: 210 - length * 18,
       height: 210 - length * 18,
@@ -56,15 +49,18 @@ class _CharacterState extends State<Character> {
         stream: RoomStreamRepository.getRoomStreamAsStream(roomId, uid)
             .debounceTime(const Duration(milliseconds: 500)),
         builder: (context, snapshot) {
-          // print('바뀜 ${widget.index}');
           if (snapshot.connectionState == ConnectionState.waiting) {
+            print('스트림 로딩중 ${widget.index}');
             return Center(
               child: loadingIndicator(),
             );
           } else if (snapshot.hasError) {
             return const Text('불러오는 중 에러가 발생했습니다.');
           } else {
-            riveCharacterInit(snapshot.data!);
+            print('스트림 완료 ${widget.index}');
+            if (!isFirstLoad) {
+              riveCharacterInit(snapshot.data!);
+            }
             return RiveAnimation.asset(
               'assets/riv/character.riv',
               stateMachines: ["character"],
@@ -79,39 +75,23 @@ class _CharacterState extends State<Character> {
   void onRiveInit(Artboard artboard, RoomStreamModel roomStreamModel) {
     riveController = StateMachineController.fromArtboard(artboard, 'character');
     artboard.addController(riveController!);
-    for (int stateMachineIndex = 0;
-        stateMachineIndex < 4;
-        stateMachineIndex++) {
-      stateMachineList[stateMachineIndex] = riveController!
-              .findInput<double>(_getInputNameByIndex(stateMachineIndex))
-          as SMINumber;
-    }
+    actionState = riveController!.findInput<double>('action') as SMINumber;
+    characterHat = riveController!.findInput<double>('hat') as SMINumber;
+    characterShield = riveController!.findInput<double>('shield') as SMINumber;
+    characterColor = riveController!.findInput<double>('color') as SMINumber;
     riveCharacterInit(roomStreamModel);
   }
 
-  String _getInputNameByIndex(int index) {
-    switch (index) {
-      case 0:
-        return 'action';
-      case 1:
-        return 'hat';
-      case 2:
-        return 'shield';
-      case 3:
-        return 'color';
-      default:
-        throw Exception('Invalid index: $index');
-    }
-  }
-
   void riveCharacterInit(RoomStreamModel roomStreamModel) {
-    if (stateMachineList[0] != null) {
+    if (riveController != null) {
       CharacterModel characterModel = roomStreamModel.characterData!;
-      stateMachineList[0]!.value = characterModel.actionState!.toDouble();
-      stateMachineList[1]!.value = characterModel.hat!.toDouble();
-      stateMachineList[2]!.value = characterModel.shield!.toDouble();
-      stateMachineList[3]!.value = characterModel.bodyColor!.toDouble();
+      actionState!.value = characterModel.actionState!.toDouble();
+      characterHat!.value = characterModel.hat!.toDouble();
+      characterShield!.value = characterModel.shield!.toDouble();
+      characterColor!.value = characterModel.bodyColor!.toDouble();
     }
+    isFirstLoad = false;
+    print('캐릭터 init');
   }
 
   // PieChartSectionData chartData() {
