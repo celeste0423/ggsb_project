@@ -40,6 +40,7 @@ class StorePageController extends GetxController
           'ios': 'ca-app-pub-3940256099942544/1712485313',
           // 'ios': 'ca-app-pub-4277973972015514/9159268122',
           'android': 'ca-app-pub-3940256099942544/5224354917',
+          // 'android': 'ca-app-pub-4277973972015514/4144397558',
         };
   late SharedPreferences prefs;
   static int totalAdCount = 10;
