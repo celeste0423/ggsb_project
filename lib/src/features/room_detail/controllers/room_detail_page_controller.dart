@@ -12,6 +12,7 @@ import 'package:ggsb_project/src/repositories/room_stream_repository.dart';
 import 'package:ggsb_project/src/repositories/user_repository.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/live_seconds_util.dart';
+import 'package:rive/rive.dart';
 
 class RoomDetailPageController extends GetxController {
   static RoomDetailPageController get to => Get.find();
@@ -31,13 +32,16 @@ class RoomDetailPageController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-
     _secondsTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       update(['roomUserListTimer']);
     });
     Future.delayed(const Duration(milliseconds: 100), () {
       backgroundAnimation(true);
     });
+  }
+
+  Future<RiveFile> getRiveFile() async {
+    return await RiveFile.asset('assets/riv/character.riv');
   }
 
   Future<void> deleteUser(RoomStreamModel roomStreamModel) async {

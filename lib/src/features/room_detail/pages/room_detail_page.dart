@@ -8,6 +8,7 @@ import 'package:ggsb_project/src/features/room_detail/controllers/room_detail_pa
 import 'package:ggsb_project/src/models/room_stream_model.dart';
 import 'package:ggsb_project/src/utils/custom_color.dart';
 import 'package:ggsb_project/src/utils/seconds_util.dart';
+import 'package:ggsb_project/src/widgets/character_list.dart';
 import 'package:ggsb_project/src/widgets/full_size_loading_indicator.dart';
 import 'package:ggsb_project/src/widgets/loading_indicator.dart';
 import 'package:ggsb_project/src/widgets/svg_icon_button.dart';
@@ -135,9 +136,23 @@ class RoomDetailPage extends GetView<RoomDetailPageController> {
                                 );
                               },
                             ),
-                            // CharacterList(
-                            //   roomModel: controller.roomModel,
-                            // ),
+                            FutureBuilder(
+                              future: controller.getRiveFile(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return Center(
+                                    child: loadingIndicator(),
+                                  );
+                                } else if (snapshot.hasError) {
+                                  return const Text('에러 발생');
+                                } else {
+                                  return CharacterList(
+                                    roomModel: controller.roomModel,
+                                    riveFile: snapshot.data!,
+                                  );
+                                }
+                              },
+                            ),
                           ],
                         ),
                       ),
