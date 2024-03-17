@@ -368,24 +368,27 @@ class StorePageController extends GetxController
   }
 
   void completeButton() {
-    UserModel userModel = AuthController.to.user.value;
-    CharacterModel characterModel = userModel.characterData!;
-    int hatIndex = selectedIndex[0].value;
-    int shieldIndex = selectedIndex[1].value;
-    int bodyColorIndex = selectedIndex[2].value;
-    if (isItemUnlockedList[0][hatIndex].value &&
-        isItemUnlockedList[1][shieldIndex].value &&
-        isItemUnlockedList[2][bodyColorIndex].value) {
-      CharacterModel updatedCharacterModel = characterModel.copyWith(
-        hat: hatIndex,
-        shield: shieldIndex,
-        bodyColor: bodyColorIndex,
-      );
-      AuthController.to.updateCharacterModel(updatedCharacterModel, userModel);
-      HomePageController.to.riveCharacterInit();
-      Get.back();
-    } else {
-      openAlertDialog(title: '장착 불가', content: '아이템을 구매 후 이용해주세요');
+    if (isItemChanged.value) {
+      UserModel userModel = AuthController.to.user.value;
+      CharacterModel characterModel = userModel.characterData!;
+      int hatIndex = selectedIndex[0].value;
+      int shieldIndex = selectedIndex[1].value;
+      int bodyColorIndex = selectedIndex[2].value;
+      if (isItemUnlockedList[0][hatIndex].value &&
+          isItemUnlockedList[1][shieldIndex].value &&
+          isItemUnlockedList[2][bodyColorIndex].value) {
+        CharacterModel updatedCharacterModel = characterModel.copyWith(
+          hat: hatIndex,
+          shield: shieldIndex,
+          bodyColor: bodyColorIndex,
+        );
+        AuthController.to
+            .updateCharacterModel(updatedCharacterModel, userModel);
+        HomePageController.to.riveCharacterInit();
+        Get.back();
+      } else {
+        openAlertDialog(title: '장착 불가', content: '아이템을 구매 후 이용해주세요');
+      }
     }
   }
 
