@@ -1,10 +1,10 @@
 import UIKit
 import Flutter
 
-//import ManagedSettings
-//import DeviceActivity
-//import FamilyControls
-//import SwiftUI
+import ManagedSettings
+import DeviceActivity
+import FamilyControls
+import SwiftUI
 
 var globalMethodCall = ""
 
@@ -20,62 +20,65 @@ var globalMethodCall = ""
     }
     
     //screentime 설정
-//      let controller: FlutterViewController = window?.rootViewController as! FlutterViewController
-//      // メソッドチャンネル名
-//      let METHOD_CHANNEL_NAME = "flutter_screentime"
-//      // FlutterMethodChannel
-//      let methodChannel = FlutterMethodChannel(name: METHOD_CHANNEL_NAME, binaryMessenger: controller as! FlutterBinaryMessenger)
-//
+      let controller: FlutterViewController = window?.rootViewController as! FlutterViewController
+      let METHOD_CHANNEL_NAME = "flutter_screentime"
+      // FlutterMethodChannel
+      let methodChannel = FlutterMethodChannel(name: METHOD_CHANNEL_NAME, binaryMessenger: controller as! FlutterBinaryMessenger)
+
 //      @StateObject var model = MyModel.shared
 //      @StateObject var store = ManagedSettingsStore()
-//      // setMethodCallHandlerでコールバックを登録
-//      methodChannel.setMethodCallHandler {
-//          (call: FlutterMethodCall, result: @escaping FlutterResult) in
-//          Task {
-//              print("Task")
-//              do {
-//                  if #available(iOS 16.0, *) {
-//                      print("try requestAuthorization")
-//                      try await AuthorizationCenter.shared.requestAuthorization(for: FamilyControlsMember.individual)
-//                      print("requestAuthorization success")
-//                      switch AuthorizationCenter.shared.authorizationStatus {
-//                      case .notDetermined:
-//                          print("not determined")
-//                      case .denied:
-//                          print("denied")
-//                      case .approved:
-//                          print("approved")
-//                      @unknown default:
-//                          break
-//                      }
-//                  } else {
-//                      // Fallback on earlier versions
-//                  }
-//              } catch {
-//                  print("Error requestAuthorization: ", error)
-//              }
-//          }
+      methodChannel.setMethodCallHandler {
+          (call: FlutterMethodCall, result: @escaping FlutterResult) in
+          Task {
+              print("Task")
+              do {
+                  if #available(iOS 16.0, *) {
+                      print("try requestAuthorization")
+                      try await AuthorizationCenter.shared.requestAuthorization(for: FamilyControlsMember.individual)
+                      print("requestAuthorization success")
+                      switch AuthorizationCenter.shared.authorizationStatus {
+                      case .notDetermined:
+                          print("not determined")
+                      case .denied:
+                          print("denied")
+                      case .approved:
+                          print("approved")
+                      @unknown default:
+                          break
+                      }
+                  } else {
+                      // Fallback on earlier versions
+                  }
+              } catch {
+                  print("Error requestAuthorization: ", error)
+              }
+          }
           
-//          func discourageAllApps() {
-//                  // FamilyControls의 ShieldSettings를 사용하여 모든 앱을 discourage
-//                  let shieldSettings = ShieldSettings(restrictions: .allApps)
-//                  
-//                  // FamilyControls를 통해 설정된 제한을 적용
-//                  do {
-//                      try shieldSettings.apply()
-//                      print("All apps except mine are discouraged.")
-//                  } catch {
-//                      print("Failed to apply restrictions:", error.localizedDescription)
-//                  }
-//              }
+          func discourageAllApps() {
+                  // FamilyControls의 ShieldSettings를 사용하여 모든 앱을 discourage
+                  let store = ManagedSettingsStore()
+              store.shield.applicationCategories = .all()
+              store.shield.webDomainCategories = .all()
+              }
+          func encourageAllApps() {
+                  // FamilyControls의 ShieldSettings를 사용하여 모든 앱을 discourage
+                  let store = ManagedSettingsStore()
+              store.clearAllSettings()
+              }
           
-//          switch call.method {
-////          case "allAppsDiscourage":
-////              globalMethodCall = "allAppsDiscourage"
-////              discourageAllApps()
-////              print("allAppsDiscourage")
-////              result(nil)
-////              
+          switch call.method {
+          case "allAppsDiscourage":
+              globalMethodCall = "allAppsDiscourage"
+              discourageAllApps()
+              print("allAppsDiscourage")
+              result(nil)
+              
+          case "allAppsEncourage":
+              globalMethodCall = "allAppsEncourage"
+              encourageAllApps()
+              print("allAppsEncourage")
+              result(nil)
+              
 //          case "selectAppsToDiscourage":
 //              globalMethodCall = "selectAppsToDiscourage"
 //              let vc = UIHostingController(rootView: ContentView()
@@ -94,11 +97,11 @@ var globalMethodCall = ""
 //
 //              print("selectAppsToEncourage")
 //              result(nil)
-//          default:
-//              print("no method")
-//              result(FlutterMethodNotImplemented)
-//          }
-//      }
+          default:
+              print("no method")
+              result(FlutterMethodNotImplemented)
+          }
+      }
       
       
       

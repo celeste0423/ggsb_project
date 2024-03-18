@@ -42,7 +42,6 @@ class TimerPage extends GetView<TimerPageController> {
             assetPath: 'assets/icons/back.svg',
             onTap: () {
               Get.back();
-              // MethodChannel('flutter_screentime').invokeMethod('selectAppsToDiscourage');
             },
           ),
         ),
@@ -327,7 +326,7 @@ class TimerPage extends GetView<TimerPageController> {
             children: List.generate(
               controller.indicatorCount,
               (index) => Container(
-                margin: const EdgeInsets.symmetric(horizontal: 7),
+                margin: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
                 width: 4,
                 height: 4,
                 decoration: BoxDecoration(

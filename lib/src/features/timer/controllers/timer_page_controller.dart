@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:animate_icons/animate_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
@@ -162,7 +163,10 @@ class TimerPageController extends GetxController
   void _onLifecycleChanged(AppLifecycleState state) async {
     if (isTimer.value) {
       switch (state) {
-        case AppLifecycleState.inactive: //ios용
+        case AppLifecycleState.inactive: {
+          //ios용
+          MethodChannel('flutter_screentime').invokeMethod('allAppsDiscourage');
+        }
         case AppLifecycleState.detached:
         case AppLifecycleState.hidden:
         case AppLifecycleState.paused:
@@ -278,6 +282,7 @@ class TimerPageController extends GetxController
         await RoomStreamRepository().updateRoomStream(updatedRoomStreamModel);
       },
     );
+    MethodChannel('flutter_screentime').invokeMethod('allAppsDiscourage');
     GoogleAnalytics().logEvent('start_timer', null);
     AmplitudeAnalytics().logEvent('start_timer', null);
   }
@@ -353,6 +358,7 @@ class TimerPageController extends GetxController
         HomePageController.to.riveCharacterInit();
       }
     });
+    MethodChannel('flutter_screentime').invokeMethod('allAppsEncourage');
     GoogleAnalytics().logEvent('end_timer', null);
     AmplitudeAnalytics().logEvent('end_timer', null);
   }
