@@ -23,11 +23,11 @@ class EventRepository {
           .orderBy('createdAt', descending: true)
           .get();
       if (querySnapshot.docs.isNotEmpty) {
-        querySnapshot.docs.forEach((document) {
+        for (var document in querySnapshot.docs) {
           EventModel event =
               EventModel.fromJson(document.data() as Map<String, dynamic>);
           events.add(event);
-        });
+        }
       }
     } catch (e) {
       openAlertDialog(

@@ -8,10 +8,6 @@ import 'package:url_launcher/url_launcher.dart';
 class EventPageController extends GetxController {
   static EventPageController get to => Get.find();
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   Future<List<EventModel>> getEventList() async {
     return await EventRepository().getEventList();

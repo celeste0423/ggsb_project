@@ -11,7 +11,7 @@ import 'package:uuid/uuid.dart';
 
 class UserRepository {
   static Future<UserCredential> appleFlutterWebAuth() async {
-    final clientState = Uuid().v4();
+    final clientState = const Uuid().v4();
     final url = Uri.https(
       'appleid.apple.com',
       '/auth/authorize',
@@ -135,7 +135,7 @@ class UserRepository {
   //게스트 로그인
   Future signUpWithEmailAndPassword(String email, String password) async {
     try {
-      print('게스트 회원가입 시작, ${email} ${password}');
+      print('게스트 회원가입 시작, $email $password');
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,

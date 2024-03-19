@@ -27,7 +27,7 @@ class DateUtil {
     // 입력된 DateTime 객체가 새벽 4시 이전인지 확인
     if (date.isBefore(fourAM)) {
       // 새벽 4시 이전이라면 이전 날의 요일을 반환
-      DateTime previousDay = date.subtract(Duration(days: 1));
+      DateTime previousDay = date.subtract(const Duration(days: 1));
       List<String> daysOfWeek = [
         'Monday',
         'Tuesday',
@@ -77,7 +77,7 @@ class DateUtil {
     if (startDate.isBefore(standardRefreshTime(startDate)) &&
         endDate.isAfter(standardRefreshTime(endDate))) {
       // 시작일을 하루 전으로 설정
-      startDate = startDate.subtract(Duration(days: 1));
+      startDate = startDate.subtract(const Duration(days: 1));
     }
     // 날짜 차이 계산
     int difference = daysBetween(startDate, endDate);
@@ -163,7 +163,7 @@ class DateUtil {
     // dateTime이 standardRefreshTime 이전인지 확인
     if (dateTime.isBefore(standardRefreshTime(dateTime))) {
       // 이전이면 전날로 설정
-      dateTime = dateTime.subtract(Duration(days: 1));
+      dateTime = dateTime.subtract(const Duration(days: 1));
     }
 
     // 날짜를 문자열로 변환하여 반환
@@ -179,6 +179,6 @@ class DateUtil {
   }
 
   DateTime getYesterday() {
-    return DateTime.now().subtract(Duration(days: 1));
+    return DateTime.now().subtract(const Duration(days: 1));
   }
 }

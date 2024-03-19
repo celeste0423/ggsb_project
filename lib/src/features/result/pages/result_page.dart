@@ -69,7 +69,7 @@ class ResultPage extends GetView<ResultPageController> {
             ),
             const SizedBox(height: 15),
             Text(
-              controller.roomModelList[roomIndex]!.roomName!,
+              controller.roomModelList[roomIndex].roomName!,
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -107,7 +107,7 @@ class ResultPage extends GetView<ResultPageController> {
                 height: (Get.height - 120 - 130 - 20) / 2 - 150,
                 child: RiveAnimation.asset(
                   'assets/riv/character.riv',
-                  stateMachines: ["character"],
+                  stateMachines: const ["character"],
                   onInit: (artboard) {
                     controller.onRiveInit(artboard);
                   },
@@ -190,7 +190,7 @@ class ResultPage extends GetView<ResultPageController> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Text(
               nickname,
               style: TextStyle(

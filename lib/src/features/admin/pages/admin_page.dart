@@ -11,7 +11,7 @@ class AdminPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('관리자 페이지'),
+        title: const Text('관리자 페이지'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -22,7 +22,7 @@ class AdminPage extends StatelessWidget {
                 buttonText: '이벤트 업로드',
                 backgroundColor: Colors.grey,
                 onTap: () {
-                  Get.to(() => EventCreatePage());
+                  Get.to(() => const EventCreatePage());
                 },
               ),
               MainButton(

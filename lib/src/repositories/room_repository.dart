@@ -51,6 +51,7 @@ class RoomRepository {
     } catch (e) {
       openAlertDialog(title: '방 정보 가져오기에 실패했습니다.');
     }
+    return null;
   }
 
   Future<void> updateRoomModel(RoomModel roomModel) async {

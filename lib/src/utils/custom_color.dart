@@ -76,7 +76,7 @@ class CustomColors {
       case 9:
         return blackCharacter;
       default:
-        return Color(0xFF000000);
+        return const Color(0xFF000000);
     }
   }
 
@@ -152,7 +152,7 @@ class CustomColors {
       case 'blackRoom':
         return blackRoom;
       default:
-        return Color(0xFF000000);
+        return const Color(0xFF000000);
     }
   }
 }

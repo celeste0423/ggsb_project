@@ -165,7 +165,7 @@ class TimerPageController extends GetxController
       switch (state) {
         case AppLifecycleState.inactive: {
           //ios용
-          MethodChannel('flutter_screentime').invokeMethod('allAppsDiscourage');
+          const MethodChannel('flutter_screentime').invokeMethod('allAppsDiscourage');
         }
         case AppLifecycleState.detached:
         case AppLifecycleState.hidden:
@@ -282,7 +282,7 @@ class TimerPageController extends GetxController
         await RoomStreamRepository().updateRoomStream(updatedRoomStreamModel);
       },
     );
-    MethodChannel('flutter_screentime').invokeMethod('allAppsDiscourage');
+    const MethodChannel('flutter_screentime').invokeMethod('allAppsDiscourage');
     GoogleAnalytics().logEvent('start_timer', null);
     AmplitudeAnalytics().logEvent('start_timer', null);
   }
@@ -358,7 +358,7 @@ class TimerPageController extends GetxController
         HomePageController.to.riveCharacterInit();
       }
     });
-    MethodChannel('flutter_screentime').invokeMethod('allAppsEncourage');
+    const MethodChannel('flutter_screentime').invokeMethod('allAppsEncourage');
     GoogleAnalytics().logEvent('end_timer', null);
     AmplitudeAnalytics().logEvent('end_timer', null);
   }

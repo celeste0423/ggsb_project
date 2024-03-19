@@ -458,8 +458,4 @@ class StorePageController extends GetxController
     _selectIndex(categoryIndex, itemIndex);
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 }

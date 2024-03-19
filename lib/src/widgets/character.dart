@@ -65,7 +65,7 @@ class _CharacterState extends State<Character> {
             }
             return RiveAnimation.direct(
               widget.riveFile,
-              stateMachines: ["character"],
+              stateMachines: const ["character"],
               onInit: (artboard) => onRiveInit(artboard, snapshot.data!),
             );
           }

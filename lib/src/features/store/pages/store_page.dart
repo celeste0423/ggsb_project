@@ -13,7 +13,7 @@ import 'package:ggsb_project/src/widgets/title_text.dart';
 import 'package:rive/rive.dart';
 
 class StorePage extends GetView<StorePageController> {
-  const StorePage({Key? key});
+  const StorePage({super.key});
 
   Widget cashDialog(String date, int addedCash) {
     return Dialog(
@@ -43,14 +43,14 @@ class StorePage extends GetView<StorePageController> {
               height: Get.height / 3 - 130,
             ),
             Text(
-              'x${addedCash}',
+              'x$addedCash',
               style: const TextStyle(
                 color: CustomColors.mainBlue,
                 fontSize: 14,
               ),
             ),
             Text(
-              '${date} 공부시간 ${addedCash}분에 대한 코인이 지급되었습니다',
+              '$date 공부시간 $addedCash분에 대한 코인이 지급되었습니다',
               textAlign: TextAlign.left,
               style: const TextStyle(
                 color: CustomColors.mainBlack,
@@ -201,7 +201,7 @@ class StorePage extends GetView<StorePageController> {
         children: [
           RiveAnimation.asset(
             'assets/riv/character.riv',
-            stateMachines: ["character"],
+            stateMachines: const ["character"],
             onInit: controller.onRiveInit,
           ),
           Obx(

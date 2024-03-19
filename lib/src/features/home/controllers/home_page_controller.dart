@@ -1,5 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:get/get.dart';
 import 'package:ggsb_project/src/features/auth/controllers/auth_controller.dart';
 import 'package:ggsb_project/src/features/event/pages/event_page.dart';
@@ -128,11 +126,11 @@ class HomePageController extends GetxController {
     if (AuthController.to.user.value.roomIdList!.isEmpty) {
       openAlertDialog(title: '방 없음', content: '방을 먼저 만들거나 가입해주세요.');
     } else {
-      Get.to(() => TimerPage());
+      Get.to(() => const TimerPage());
     }
   }
 
   void addRoomButton() {
-    Get.to(() => RoomCreatePage(), transition: Transition.rightToLeft);
+    Get.to(() => const RoomCreatePage(), transition: Transition.rightToLeft);
   }
 }

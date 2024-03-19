@@ -24,6 +24,7 @@ class StudyTimeRepository {
         content: e.toString(),
       );
     }
+    return null;
   }
 
   Future<StudyTimeModel?> getLatestStudyTimeModel(String uid) async {
@@ -165,7 +166,7 @@ class StudyTimeRepository {
       }
       // 오늘부터 7일 전까지의 날짜에 해당하는지 검사하여 필요한 경우에 추가
       List<StudyTimeModel> newTimeModels = [];
-      DateTime endDate = now.subtract(Duration(days: 6));
+      DateTime endDate = now.subtract(const Duration(days: 6));
       for (int i = 0; i < 7; i++) {
         DateTime date = endDate.add(Duration(days: i));
         // print('날짜 ${DateUtil().dateTimeToString(date)}');

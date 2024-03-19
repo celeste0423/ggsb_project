@@ -20,13 +20,6 @@ class RoomListPageController extends GetxController {
 
   TextEditingController joinRoomIdController = TextEditingController();
 
-  @override
-  void onInit() {
-    super.onInit();
-    // isRoomListLoading(true);
-    // checkIsRoomList();
-    // isRoomListLoading(false);
-  }
 
   // void checkIsRoomList() {
   //   // await AuthController.to
@@ -76,7 +69,7 @@ class RoomListPageController extends GetxController {
     } else {
       isRoomListLoading(true);
       RoomModel? roomModel =
-          await RoomRepository().getRoomModel(joinRoomIdController.text!);
+          await RoomRepository().getRoomModel(joinRoomIdController.text);
       if (roomModel == null) {
         Get.back();
         openAlertDialog(title: '방 정보가 없습니다.');
@@ -130,8 +123,4 @@ class RoomListPageController extends GetxController {
     }
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 }

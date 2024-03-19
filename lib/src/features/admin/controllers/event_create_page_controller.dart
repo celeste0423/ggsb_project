@@ -7,7 +7,7 @@ import 'package:uuid/uuid.dart';
 
 class EventCreatePageController extends GetxController {
   static EventCreatePageController get to => Get.find();
-  Uuid uuid = Uuid();
+  Uuid uuid = const Uuid();
 
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
@@ -16,10 +16,6 @@ class EventCreatePageController extends GetxController {
 
   Rx<bool> isPageLoading = false.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   Future<void> addEventButton() async {
     if (titleController.text == '') {

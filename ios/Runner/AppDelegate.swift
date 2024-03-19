@@ -61,7 +61,7 @@ var globalMethodCall = ""
               store.shield.webDomainCategories = .all()
               }
           func encourageAllApps() {
-                  // FamilyControls의 ShieldSettings를 사용하여 모든 앱을 discourage
+                  // FamilyControls의 ShieldSettings를 사용하여 모든 앱을 encourage
                   let store = ManagedSettingsStore()
               store.clearAllSettings()
               }

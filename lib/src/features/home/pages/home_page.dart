@@ -74,7 +74,7 @@ class HomePage extends GetView<HomePageController> {
           },
           child: RiveAnimation.asset(
             'assets/riv/character.riv',
-            stateMachines: ["character"],
+            stateMachines: const ["character"],
             onInit: controller.onRiveInit,
           ),
         ),

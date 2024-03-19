@@ -7,17 +7,13 @@ import 'package:uuid/uuid.dart';
 
 class CouponCreateController extends GetxController {
   static CouponCreateController get to => Get.find();
-  Uuid uuid = Uuid();
+  Uuid uuid = const Uuid();
 
   TextEditingController codeController = TextEditingController();
   TextEditingController cashController = TextEditingController();
 
   Rx<bool> isPageLoading = false.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   Future<void> addEventButton() async {
     if (codeController.text == '') {
